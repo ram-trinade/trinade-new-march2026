@@ -177,29 +177,53 @@ export default function ContactContent() {
 
   return (
     <div className="relative">
-      {/* Atmospheric overlays */}
-      <div
-        className="pointer-events-none absolute"
-        style={{
-          top: '10%',
-          right: '10%',
-          width: '50%',
-          height: '50%',
-          background: 'radial-gradient(ellipse, rgba(0,212,170,0.04), transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-      />
-      <div
-        className="pointer-events-none absolute"
-        style={{
-          top: '20%',
-          left: '-5%',
-          width: '40%',
-          height: '40%',
-          background: 'radial-gradient(ellipse, rgba(180,130,55,0.03), transparent 70%)',
-          filter: 'blur(50px)',
-        }}
-      />
+      {/* ═══ ATMOSPHERIC DEPTH LAYERS ═══ */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Teal orb — upper right */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-5%',
+            right: '5%',
+            width: '55%',
+            height: '50%',
+            background: 'radial-gradient(ellipse at center, rgba(0,212,170,0.07) 0%, rgba(22,74,50,0.035) 40%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        {/* Amber orb — left */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '15%',
+            left: '-8%',
+            width: '45%',
+            height: '45%',
+            background: 'radial-gradient(ellipse at center, rgba(180,130,55,0.055) 0%, rgba(180,130,55,0.02) 35%, transparent 65%)',
+            filter: 'blur(50px)',
+          }}
+        />
+        {/* Deep green glow — center-bottom */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '20%',
+            width: '55%',
+            height: '45%',
+            background: 'radial-gradient(ellipse at center, rgba(13,80,50,0.06) 0%, rgba(6,14,9,0.03) 40%, transparent 70%)',
+            filter: 'blur(55px)',
+          }}
+        />
+        {/* Subtle vignette */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: '0',
+            background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 35%, rgba(6,14,9,0.3) 100%)',
+          }}
+        />
+      </div>
 
       {/* ===== Section 1: Contact Form ===== */}
       <section className="pt-40 pb-24 px-[calc(12.5vw+0.8rem)]">

@@ -9,14 +9,33 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website + **Contact page** (`/contact`) + **Team page** (`/team`). Homepage: Bold hero ("Built for What's Next." — Manrope 700), CENTER-ALIGNED navbar, Trusted By, What We Do, Products bento, Stats counters, Testimonials, reveal animation border, Datawizz-inspired footer. **Team page**: Solid dark bg (no WebGL), cinematic 100vh intro (clean typography, no sweep lines/particles), 8 click-to-expand member rows with scoped gradient separators, dynamic portrait resize, bio reveal with AnimatePresence, plus/cross toggle. **WebGL architecture**: Fixed canvas on homepage (hero + footer visible, middle sections opaque), footer `withBackground` prop embeds own WebGL on team/contact pages. **Git checkpoint system active** (commit `781315d`).
+- Done: Full multi-section corporate website + **Contact page** (`/contact`) + **Team page** (`/team`). Homepage: Bold hero ("Built for What's Next." — Manrope 700), CENTER-ALIGNED navbar, Trusted By, What We Do, Products bento, Stats counters, Testimonials, reveal animation border, Datawizz-inspired footer. **Team page**: Solid dark bg with atmospheric gradient orbs (no WebGL), cinematic 100vh intro, 8 click-to-expand member rows. **Contact page**: Atmospheric gradient orbs behind form. **WebGL architecture**: Fixed canvas on homepage (hero + footer visible, middle sections opaque), footer `withBackground` prop embeds own WebGL on team/contact pages. **Atmospheric depth**: CSS radial-gradient orbs (teal, amber, deep green) with blur filters on all non-WebGL pages. **Git checkpoint system active**.
 - In progress: None
 - Blocked: None
 - Next step: Build About page, inner product/service pages
 
 ---
 
-## 2026-03-07 — Team page CTA removal + footer WebGL fix + logo home link (Checkpoint: `pending`)
+## 2026-03-07 — Atmospheric depth layers for team + contact pages (Checkpoint: `ffc1f2b`)
+### Goal
+- Fix team and contact pages appearing as flat black backgrounds — add atmospheric depth to replace removed WebGL
+### Root Cause
+- When WebGL was removed from team/contact pages (commit `781315d`), no atmospheric depth layers were added
+- `team-content.tsx`: Zero atmospheric layers — just flat `bg-[#060e09]`
+- `contact-content.tsx`: Had atmospheric overlays but at only 0.03-0.04 opacity (invisible)
+### Work done
+1. **team-content.tsx** — Added 5 atmospheric gradient layers inside the section element: teal orb upper-right (0.06), amber orb mid-left (0.05), deep green center (0.07), teal accent lower-right (0.04), vignette (0.35). All with `filter: blur()` for soft diffusion.
+2. **contact-content.tsx** — Replaced weak overlays (0.03-0.04) with 4 stronger layers: teal orb (0.07), amber orb (0.055), deep green center-bottom (0.06), vignette (0.3).
+### Files modified
+- `components/team-content.tsx` — +60 lines atmospheric depth layers
+- `components/contact-content.tsx` — Replaced 23 weak overlay lines with 47 stronger gradient layers
+### Verified
+- Team page: subtle green/teal/amber depth visible behind content, no longer flat black
+- Contact page: atmospheric gradients visible behind form, matching site aesthetic
+
+---
+
+## 2026-03-07 — Team page CTA removal + footer WebGL fix + logo home link (Checkpoint: `e61e9b1`)
 ### Goal
 - Remove closing CTA section ("This is just the beginning" + "See Open Positions") from team page
 - Fix footer WebGL background visibility on team/contact pages (z-index layering issue)

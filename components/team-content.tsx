@@ -279,6 +279,66 @@ export default function TeamContent() {
 
   return (
     <section className="relative z-10 bg-[#060e09]">
+      {/* ═══ ATMOSPHERIC DEPTH LAYERS ═══ */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Teal orb — upper right */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-5%',
+            right: '-8%',
+            width: '55%',
+            height: '50%',
+            background: 'radial-gradient(ellipse at center, rgba(0,212,170,0.06) 0%, rgba(22,74,50,0.03) 40%, transparent 70%)',
+            filter: 'blur(60px)',
+          }}
+        />
+        {/* Amber orb — mid left */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '25%',
+            left: '-10%',
+            width: '45%',
+            height: '40%',
+            background: 'radial-gradient(ellipse at center, rgba(180,130,55,0.05) 0%, rgba(180,130,55,0.02) 35%, transparent 65%)',
+            filter: 'blur(50px)',
+          }}
+        />
+        {/* Deep green glow — center */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '30%',
+            width: '50%',
+            height: '45%',
+            background: 'radial-gradient(ellipse at center, rgba(13,80,50,0.07) 0%, rgba(6,14,9,0.03) 40%, transparent 70%)',
+            filter: 'blur(55px)',
+          }}
+        />
+        {/* Teal accent — lower right */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '10%',
+            right: '5%',
+            width: '40%',
+            height: '35%',
+            background: 'radial-gradient(ellipse at center, rgba(0,212,170,0.04) 0%, transparent 60%)',
+            filter: 'blur(45px)',
+          }}
+        />
+        {/* Subtle vignette */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 35%, rgba(6,14,9,0.35) 100%)',
+          }}
+        />
+      </div>
+
       {/* ═══ CINEMATIC INTRO — clean typographic hero ═══ */}
       <div
         ref={introRef}
