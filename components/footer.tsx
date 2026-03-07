@@ -1,0 +1,327 @@
+'use client'
+
+import { useRef } from 'react'
+import dynamic from 'next/dynamic'
+import { motion, useInView } from 'motion/react'
+
+const OrganicBackground = dynamic(
+  () => import('@/components/organic-background'),
+  { ssr: false }
+)
+
+const navColumns = [
+  {
+    title: 'Products',
+    links: ['AI Platform', 'Analytics', 'Integrations', 'API'],
+  },
+  {
+    title: 'Solutions',
+    links: ['Enterprise', 'Startups', 'Healthcare', 'Finance'],
+  },
+  {
+    title: 'Resources',
+    links: ['Documentation', 'Blog', 'Case Studies', 'Support'],
+  },
+  {
+    title: 'Company',
+    links: ['About', 'Careers', 'Press', 'Contact'],
+  },
+]
+
+const socialLinks = [
+  { name: 'LinkedIn', href: '#' },
+  { name: 'Facebook', href: '#' },
+  { name: 'Twitter', href: '#' },
+]
+
+function FadeUp({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode
+  delay?: number
+  className?: string
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 32 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export default function Footer({ withBackground = false }: { withBackground?: boolean }) {
+  const trinadeRef = useRef<HTMLDivElement>(null)
+  const trinadeInView = useInView(trinadeRef, { once: true, margin: '-40px' })
+
+  return (
+    <footer className="footer-atmosphere relative bg-[#060e09]/50 overflow-hidden">
+      {/* ===== WEBGL BACKGROUND (when embedded) ===== */}
+      {withBackground && (
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <OrganicBackground />
+        </div>
+      )}
+
+      {/* ===== ATMOSPHERIC BACKGROUND LAYERS ===== */}
+
+      {/* Layer 2: Large ambient orb — upper left (warm/amber tint, like hero light3) */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '-10%',
+          left: '-5%',
+          width: '60%',
+          height: '55%',
+          background:
+            'radial-gradient(ellipse at center, rgba(180,130,55,0.04) 0%, rgba(180,130,55,0.015) 35%, transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+
+      {/* Layer 3: Teal glow orb — center-right (hero's main green glow) */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '20%',
+          right: '-8%',
+          width: '55%',
+          height: '60%',
+          background:
+            'radial-gradient(ellipse at center, rgba(0,212,170,0.05) 0%, rgba(22,74,50,0.04) 30%, transparent 65%)',
+          filter: 'blur(60px)',
+        }}
+      />
+
+      {/* Layer 4: Deep green glow — bottom-left (like hero's light1 spot) */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: '5%',
+          left: '10%',
+          width: '50%',
+          height: '45%',
+          background:
+            'radial-gradient(ellipse at center, rgba(13,80,50,0.07) 0%, rgba(6,14,9,0.03) 40%, transparent 70%)',
+          filter: 'blur(50px)',
+        }}
+      />
+
+      {/* Layer 5: Accent glow behind TRINADE text area — teal bleed */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: '8%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '80%',
+          height: '35%',
+          background:
+            'radial-gradient(ellipse 80% 50% at 50% 60%, rgba(0,212,170,0.035) 0%, rgba(22,74,50,0.02) 40%, transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+      />
+
+      {/* Layer 6: Subtle lime accent spill — top-right edge (like hero curve highlights) */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '5%',
+          right: '15%',
+          width: '25%',
+          height: '20%',
+          background:
+            'radial-gradient(ellipse at center, rgba(200,230,78,0.02) 0%, transparent 60%)',
+          filter: 'blur(35px)',
+        }}
+      />
+
+      {/* Layer 7: Horizontal "ribbon echo" — a faint band suggesting the organic curves bleeding down */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '0',
+          left: '0',
+          right: '0',
+          height: '180px',
+          background: `
+            linear-gradient(
+              180deg,
+              rgba(22,74,50,0.06) 0%,
+              rgba(13,31,24,0.03) 40%,
+              transparent 100%
+            )
+          `,
+          maskImage: 'linear-gradient(90deg, transparent 5%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.5) 75%, transparent 95%)',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent 5%, rgba(0,0,0,0.6) 25%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.5) 75%, transparent 95%)',
+        }}
+      />
+
+      {/* Layer 8: Very subtle vignette (like hero's post-processing vignette) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 75% 65% at 50% 50%, transparent 40%, rgba(6,14,9,0.4) 100%)',
+        }}
+      />
+
+      {/* ===== END ATMOSPHERIC LAYERS ===== */}
+
+      {/* Top separator line */}
+      <div className="relative w-full h-px bg-white/[0.08]" />
+
+      {/* Contact CTA area */}
+      <div className="relative px-[calc(12.5vw+0.8rem)] pt-24 pb-20">
+        <FadeUp>
+          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-8">
+            <span className="text-[#00d4aa]">&#10022;</span>
+            Contact Us
+          </span>
+        </FadeUp>
+
+        <FadeUp delay={0.1}>
+          <h2 className="text-[clamp(2.4rem,5vw,4.8rem)] font-light leading-[1.08] tracking-[-0.025em] max-w-[52ch]">
+            <span className="text-white/95">
+              Interested in working together
+            </span>
+            <span className="text-white/40">
+              , trying out the platform or simply learning more?
+            </span>
+          </h2>
+        </FadeUp>
+      </div>
+
+      {/* Middle row — contact + nav links */}
+      <div className="relative px-[calc(12.5vw+0.8rem)] pb-20">
+        <div className="w-full h-px bg-white/[0.06] mb-12" />
+
+        <div className="flex flex-col lg:flex-row justify-between gap-12">
+          {/* Left — email contact */}
+          <FadeUp delay={0.15} className="shrink-0">
+            <p className="text-sm text-white/50 tracking-[0.04em] uppercase mb-3">
+              Contact Trinade at:
+            </p>
+            <a
+              href="mailto:hello@trinade.ai"
+              className="group inline-flex items-center gap-2 text-xl text-white/90 hover:text-[#00d4aa] transition-colors duration-300"
+            >
+              hello@trinade.ai
+              <svg
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M4 12L12 4M12 4H5M12 4v7" />
+              </svg>
+            </a>
+          </FadeUp>
+
+          {/* Right — nav columns */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 lg:gap-14">
+            {navColumns.map((col, colIndex) => (
+              <FadeUp key={col.title} delay={0.2 + colIndex * 0.05}>
+                <h4 className="text-sm font-medium text-white/90 mb-4 tracking-[0.02em]">
+                  {col.title}
+                </h4>
+                <ul className="space-y-2.5">
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <a
+                        href="#"
+                        className="text-sm text-white/45 hover:text-white/80 transition-colors duration-300"
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Giant TRINADE text */}
+      <div className="relative px-[calc(12.5vw+0.8rem)] pb-16 pt-8">
+        {/* Subtle gradient glow behind text */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 60% at 50% 55%, rgba(0,212,170,0.06) 0%, rgba(80,40,160,0.04) 40%, transparent 70%)',
+          }}
+        />
+
+        <motion.div
+          ref={trinadeRef}
+          initial={{ opacity: 0, y: 48, scale: 0.97 }}
+          animate={
+            trinadeInView
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 48, scale: 0.97 }
+          }
+          transition={{
+            duration: 1,
+            delay: 0.1,
+            ease: [0.25, 0.1, 0.25, 1],
+          }}
+          className="relative"
+        >
+          <h3
+            className="text-[15vw] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
+            style={{ fontFamily: 'var(--font-display)' }}
+            aria-hidden="true"
+          >
+            TRINADE
+          </h3>
+        </motion.div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="relative px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
+        <div className="w-full h-px bg-white/[0.06] mb-6" />
+
+        <FadeUp delay={0.3}>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-white/40">
+                &copy; 2026 Trinade AI Technologies. All rights reserved.
+              </p>
+              <span className="hidden sm:block text-white/20">|</span>
+            </div>
+
+            <div className="flex items-center gap-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  className="text-sm text-white/45 hover:text-white/80 transition-colors duration-300"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {social.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </footer>
+  )
+}

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!--
+    V3: "Nested Profiles" — tweak of #17 (nested arches)
+    Three concentric head profile curves, nested inside each other.
+    The innermost has a small neural web. Ultra-minimal, monoline.
+  -->
+  <g stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Outer profile (largest) -->
+    <path d="
+      M 188,420
+      C 178,400 172,376 172,350
+      C 172,338 166,326 156,318
+      C 144,308 136,292 138,272
+      C 140,250 148,228 162,208
+      C 174,190 180,168 180,146
+      C 180,118 190,92 208,72
+      C 226,52 250,42 278,38
+      C 310,34 342,42 368,62
+      C 394,82 412,114 418,152
+      C 424,192 416,236 396,270
+      C 380,296 358,315 332,326
+      C 320,331 312,342 308,358
+      C 302,378 292,392 278,398
+    " stroke-width="1.2" opacity="0.25"/>
+
+    <!-- Middle profile -->
+    <path d="
+      M 208,400
+      C 198,382 194,360 194,340
+      C 194,328 188,318 180,310
+      C 168,302 162,288 164,270
+      C 166,250 174,232 186,214
+      C 196,198 202,178 202,158
+      C 202,132 210,110 226,92
+      C 242,74 264,66 288,64
+      C 316,62 344,70 366,88
+      C 386,106 400,134 404,168
+      C 408,204 400,242 384,272
+      C 370,294 350,310 328,318
+      C 318,322 310,332 306,346
+      C 302,362 294,374 282,380
+    " stroke-width="1.2" opacity="0.5"/>
+
+    <!-- Inner profile (smallest, boldest) -->
+    <path d="
+      M 228,382
+      C 220,366 216,346 216,328
+      C 216,318 212,308 204,302
+      C 194,294 188,282 190,266
+      C 192,248 198,232 210,216
+      C 218,202 224,186 224,168
+      C 224,146 230,126 244,110
+      C 258,94 278,86 300,86
+      C 324,86 346,94 364,112
+      C 380,128 390,152 392,180
+      C 394,210 388,242 374,266
+      C 362,286 344,300 326,306
+      C 316,310 310,318 306,330
+      C 302,344 296,356 286,362
+    " stroke-width="1.2" opacity="1"/>
+
+    <!-- Neural web inside innermost head cranium -->
+    <g stroke-width="0.7" opacity="0.5">
+      <!-- Triangle connections -->
+      <path d="M 300,100 L 340,130 L 310,155 Z"/>
+      <path d="M 310,155 L 370,160 L 340,130"/>
+      <path d="M 310,155 L 280,140 L 300,100"/>
+      <path d="M 280,140 L 260,170 L 310,155"/>
+      <path d="M 310,155 L 340,195 L 370,160"/>
+      <path d="M 310,155 L 280,195 L 340,195"/>
+      <path d="M 260,170 L 280,195 L 240,200"/>
+      <path d="M 280,195 L 310,230 L 340,195"/>
+      <path d="M 310,230 L 360,225 L 340,195"/>
+    </g>
+  </g>
+
+  <!-- Neural nodes — teal at key junctions -->
+  <circle cx="300" cy="100" r="2.5" fill="#FFFFFF"/>
+  <circle cx="340" cy="130" r="2" fill="#FFFFFF"/>
+  <circle cx="280" cy="140" r="2" fill="#FFFFFF"/>
+  <circle cx="310" cy="155" r="4" fill="#00d4aa"/>
+  <circle cx="370" cy="160" r="2" fill="#FFFFFF"/>
+  <circle cx="260" cy="170" r="2" fill="#FFFFFF"/>
+  <circle cx="280" cy="195" r="2.5" fill="#FFFFFF"/>
+  <circle cx="340" cy="195" r="2.5" fill="#FFFFFF"/>
+  <circle cx="240" cy="200" r="2" fill="#FFFFFF"/>
+  <circle cx="310" cy="230" r="2.5" fill="#FFFFFF"/>
+  <circle cx="360" cy="225" r="2" fill="#FFFFFF"/>
+</svg>

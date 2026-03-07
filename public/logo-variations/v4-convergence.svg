@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!--
+    V4: "Convergence" — ORIGINAL concept
+    Three minimal profile curves emerge from different directions,
+    converging at a central neural cluster. Each line subtly suggests
+    a head profile (slight nose notch). Ultra-premium, mark-like.
+  -->
+  <g stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Profile curve 1 (top-left, descending) -->
+    <path d="
+      M 120,110
+      C 140,115 165,130 185,155
+      C 200,175 210,195 225,215
+      C 215,210 210,218 215,225
+      C 220,232 230,240 245,248
+    " opacity="0.9"/>
+
+    <!-- Profile curve 2 (left, horizontal approach) -->
+    <path d="
+      M 95,285
+      C 115,282 140,275 165,265
+      C 185,258 200,248 215,240
+      C 210,245 208,252 215,258
+      C 222,264 235,262 245,258
+    " opacity="0.7"/>
+
+    <!-- Profile curve 3 (bottom-left, ascending) -->
+    <path d="
+      M 140,420
+      C 155,405 175,385 195,362
+      C 210,345 222,328 235,310
+      C 228,315 225,322 230,328
+      C 236,332 244,330 252,322
+      C 258,310 260,298 258,285
+    " opacity="0.5"/>
+
+    <!-- Central neural cluster -->
+    <g stroke-width="0.8" opacity="0.6">
+      <!-- Triangle mesh at convergence -->
+      <path d="M 256,252 L 285,235 L 295,268 Z"/>
+      <path d="M 256,252 L 295,268 L 275,298 Z"/>
+      <path d="M 256,252 L 275,298 L 248,290 Z"/>
+      <path d="M 256,252 L 248,290 L 232,270 Z"/>
+      <path d="M 256,252 L 232,270 L 235,242 Z"/>
+      <path d="M 256,252 L 235,242 L 250,225 Z"/>
+      <path d="M 256,252 L 250,225 L 278,222 Z"/>
+      <path d="M 256,252 L 278,222 L 285,235 Z"/>
+
+      <!-- Outer radiating connections -->
+      <path d="M 285,235 L 315,218"/>
+      <path d="M 295,268 L 328,275"/>
+      <path d="M 275,298 L 290,330"/>
+      <path d="M 248,290 L 240,325"/>
+      <path d="M 232,270 L 205,280"/>
+      <path d="M 235,242 L 210,228"/>
+      <path d="M 250,225 L 242,198"/>
+      <path d="M 278,222 L 292,195"/>
+    </g>
+  </g>
+
+  <!-- Neural nodes -->
+  <g fill="#FFFFFF">
+    <circle cx="285" cy="235" r="2.5"/>
+    <circle cx="295" cy="268" r="2.5"/>
+    <circle cx="275" cy="298" r="2.5"/>
+    <circle cx="248" cy="290" r="2.5"/>
+    <circle cx="232" cy="270" r="2.5"/>
+    <circle cx="235" cy="242" r="2.5"/>
+    <circle cx="250" cy="225" r="2.5"/>
+    <circle cx="278" cy="222" r="2.5"/>
+    <!-- Outer ring -->
+    <circle cx="315" cy="218" r="1.8"/>
+    <circle cx="328" cy="275" r="1.8"/>
+    <circle cx="290" cy="330" r="1.8"/>
+    <circle cx="240" cy="325" r="1.8"/>
+    <circle cx="205" cy="280" r="1.8"/>
+    <circle cx="210" cy="228" r="1.8"/>
+    <circle cx="242" cy="198" r="1.8"/>
+    <circle cx="292" cy="195" r="1.8"/>
+  </g>
+
+  <!-- Central convergence node — teal -->
+  <circle cx="256" cy="252" r="6" fill="#00d4aa"/>
+</svg>

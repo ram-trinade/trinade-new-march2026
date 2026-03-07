@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!--
+    V2: "Neural Bloom" — tweak of #11 (head + wave patterns)
+    Single refined head profile. From the cranium center,
+    3 neural pathways branch outward = Trinity.
+    Central node is teal. Organic yet structured.
+  -->
+  <g stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Head profile outline — bold, clean -->
+    <path d="
+      M 232,82
+      C 266,72 306,80 336,108
+      C 362,132 378,170 380,214
+      C 382,258 370,298 348,328
+      C 332,350 312,365 290,372
+      C 278,376 270,386 265,400
+      C 260,416 252,428 240,434
+      C 224,442 208,436 200,424
+      C 192,412 188,396 188,380
+      C 188,368 182,356 172,348
+      C 160,338 152,322 152,304
+      C 152,282 158,260 170,238
+      C 180,218 186,196 186,174
+      C 186,148 194,124 210,106
+      C 222,92 232,82 232,82 Z
+    " stroke-width="1.5"/>
+
+    <!-- Neural Pathway 1 (top-right — ascending) -->
+    <path d="M 290,180 C 310,160 340,145 370,138" stroke-width="1" opacity="0.7"/>
+    <path d="M 310,160 C 325,150 348,150 368,158" stroke-width="0.8" opacity="0.5"/>
+    <path d="M 340,145 C 355,130 372,128 390,135" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Neural Pathway 2 (right — horizontal spread) -->
+    <path d="M 290,180 C 320,185 355,195 380,215" stroke-width="1" opacity="0.7"/>
+    <path d="M 320,185 C 345,198 365,220 372,245" stroke-width="0.8" opacity="0.5"/>
+    <path d="M 355,195 C 378,205 395,225 400,250" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Neural Pathway 3 (bottom-right — descending) -->
+    <path d="M 290,180 C 310,205 325,240 330,270" stroke-width="1" opacity="0.7"/>
+    <path d="M 310,205 C 330,225 345,258 345,285" stroke-width="0.8" opacity="0.5"/>
+    <path d="M 325,240 C 342,260 352,285 350,310" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Cross-connections between pathways -->
+    <path d="M 310,160 L 320,185" stroke-width="0.6" opacity="0.35"/>
+    <path d="M 340,145 L 355,195" stroke-width="0.6" opacity="0.35"/>
+    <path d="M 320,185 L 310,205" stroke-width="0.6" opacity="0.35"/>
+    <path d="M 355,195 L 325,240" stroke-width="0.6" opacity="0.35"/>
+  </g>
+
+  <!-- Neural nodes -->
+  <g fill="#FFFFFF">
+    <!-- Pathway 1 nodes -->
+    <circle cx="310" cy="160" r="2.5"/>
+    <circle cx="340" cy="145" r="2"/>
+    <circle cx="370" cy="138" r="2"/>
+    <circle cx="368" cy="158" r="1.8"/>
+    <circle cx="390" cy="135" r="1.5"/>
+
+    <!-- Pathway 2 nodes -->
+    <circle cx="320" cy="185" r="2.5"/>
+    <circle cx="355" cy="195" r="2"/>
+    <circle cx="380" cy="215" r="2"/>
+    <circle cx="372" cy="245" r="1.8"/>
+    <circle cx="400" cy="250" r="1.5"/>
+
+    <!-- Pathway 3 nodes -->
+    <circle cx="310" cy="205" r="2.5"/>
+    <circle cx="325" cy="240" r="2"/>
+    <circle cx="330" cy="270" r="2"/>
+    <circle cx="345" cy="285" r="1.8"/>
+    <circle cx="350" cy="310" r="1.5"/>
+  </g>
+
+  <!-- Central origin node — teal accent -->
+  <circle cx="290" cy="180" r="5" fill="#00d4aa"/>
+</svg>

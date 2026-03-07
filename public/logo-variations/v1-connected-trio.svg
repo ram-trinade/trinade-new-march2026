@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!--
+    V1: "Connected Trio"
+    Three minimalist human figures connected by a flowing arc.
+    Middle figure slightly taller for visual prominence.
+    Stroke-based, monochrome white on transparent, single teal accent dot.
+    Clean, minimal, premium brand mark.
+  -->
+  <g stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" fill="none">
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- LEFT FIGURE                             -->
+    <!-- Head Y=152, body ends Y=388             -->
+    <!-- ═══════════════════════════════════════ -->
+
+    <!-- Head -->
+    <circle cx="156" cy="152" r="21"/>
+
+    <!-- Neck + Body — single flowing line with gentle taper/sway -->
+    <path d="
+      M 156,173
+      C 155,186 154,198 154,210
+      C 152,248 149,290 148,326
+      C 147,352 148,370 150,388
+    "/>
+
+    <!-- Left arm — curves outward gently -->
+    <path d="
+      M 154,210
+      C 142,218 130,230 122,246
+    "/>
+
+    <!-- Right arm — reaches toward center figure -->
+    <path d="
+      M 154,210
+      C 166,218 182,228 200,236
+    "/>
+
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- CENTER FIGURE (taller, prominent)       -->
+    <!-- Head Y=134, body ends Y=398             -->
+    <!-- ═══════════════════════════════════════ -->
+
+    <!-- Head — slightly larger radius -->
+    <circle cx="256" cy="134" r="24"/>
+
+    <!-- Neck + Body — elegant single stroke -->
+    <path d="
+      M 256,158
+      C 256,172 255,186 255,200
+      C 253,242 251,288 250,328
+      C 249,358 250,378 252,398
+    "/>
+
+    <!-- Left arm — reaches toward left figure -->
+    <path d="
+      M 255,200
+      C 241,208 226,218 210,228
+    "/>
+
+    <!-- Right arm — reaches toward right figure -->
+    <path d="
+      M 255,200
+      C 269,208 284,218 300,228
+    "/>
+
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- RIGHT FIGURE                            -->
+    <!-- Head Y=152, body ends Y=388             -->
+    <!-- ═══════════════════════════════════════ -->
+
+    <!-- Head -->
+    <circle cx="356" cy="152" r="21"/>
+
+    <!-- Neck + Body — mirrored gentle sway -->
+    <path d="
+      M 356,173
+      C 357,186 358,198 358,210
+      C 360,248 363,290 364,326
+      C 365,352 364,370 362,388
+    "/>
+
+    <!-- Right arm — curves outward gently -->
+    <path d="
+      M 358,210
+      C 370,218 382,230 390,246
+    "/>
+
+    <!-- Left arm — reaches toward center figure -->
+    <path d="
+      M 358,210
+      C 346,218 330,228 312,236
+    "/>
+
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- FLOWING CONNECTION ARC                  -->
+    <!-- Organic wave linking the three figures   -->
+    <!-- across the shoulder/arm zone             -->
+    <!-- ═══════════════════════════════════════ -->
+    <path d="
+      M 122,246
+      C 138,232 168,222 200,236
+      C 220,244 238,248 256,240
+      C 274,248 292,244 312,236
+      C 344,222 374,232 390,246
+    " stroke-width="1.2" opacity="0.8"/>
+
+  </g>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- TEAL ACCENT DOT                         -->
+  <!-- Single point at center connection       -->
+  <!-- ═══════════════════════════════════════ -->
+  <circle cx="256" cy="240" r="3.5" fill="#00d4aa" stroke="none"/>
+
+</svg>

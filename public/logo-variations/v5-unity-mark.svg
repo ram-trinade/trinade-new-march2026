@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!--
+    V5: "Unity Mark" — The definitive Trinade logo mark.
+
+    CONCEPT — THE CROWN OF THREE:
+    Three figures merge into a single crown-like glyph.
+    Three circles (heads) arranged in a triangular formation
+    sit atop three arcs that flow down and converge at a
+    single point. Between each pair of heads, a gentle
+    connecting arc forms a "shoulder bridge," creating a
+    continuous crown silhouette along the top.
+
+    Read from top to bottom:
+    1. Crown/dome: three circles connected by arcs = 3 people
+    2. Body: three stems flowing downward = shared purpose
+    3. Root: single convergence point (teal) = unity
+
+    The whole mark is vertically oriented — tall and elegant
+    like a torch, a tree, or a chalice. It's one continuous
+    visual flow from crown to root.
+
+    AT 32px:
+    - Three dots in a cluster (unmistakable)
+    - Single stem/body shape below
+    - Teal dot at the base
+    That's all that needs to read. And it will.
+
+    STYLE: White strokes on transparent. Stroke-based only.
+    No fills, no opacity games, no fine filigree.
+  -->
+
+  <g stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+    <!--
+      === THREE HEADS ===
+      Tight triangular cluster. Center sits higher (keystone).
+      Left and right are symmetrical, slightly lower and wider.
+      The spacing is deliberate: close enough to read as one
+      group, far enough for each circle to be distinct.
+    -->
+    <circle cx="208" cy="176" r="24" stroke-width="1.5"/>
+    <circle cx="256" cy="152" r="26" stroke-width="1.5"/>
+    <circle cx="304" cy="176" r="24" stroke-width="1.5"/>
+
+    <!--
+      === SHOULDER BRIDGES ===
+      Arcs connecting adjacent heads below their circles.
+      These transform three separate heads into a unified
+      crown/dome silhouette. The concave dip between each
+      pair suggests the negative space of a neck/shoulder.
+    -->
+
+    <!-- Left head to center head: shoulder bridge -->
+    <path
+      d="M 208,200 C 222,216 240,220 256,212"
+      stroke-width="1.5"
+    />
+
+    <!-- Center head to right head: shoulder bridge -->
+    <path
+      d="M 256,212 C 272,220 290,216 304,200"
+      stroke-width="1.5"
+    />
+
+    <!-- Center neck: short connector from head to shoulder junction -->
+    <line x1="256" y1="178" x2="256" y2="212" stroke-width="1.5"/>
+
+    <!--
+      === THREE BODY STEMS ===
+      Each figure's body flows down from beneath its head,
+      curving inward to converge at the base point.
+      Left and right arc gently inward. Center descends straight.
+    -->
+
+    <!-- Left body stem -->
+    <path
+      d="M 208,200
+         C 206,232 210,268 220,296
+         C 232,328 246,354 256,374"
+      stroke-width="1.5"
+    />
+
+    <!-- Center body stem -->
+    <line x1="256" y1="212" x2="256" y2="374" stroke-width="1.5"/>
+
+    <!-- Right body stem -->
+    <path
+      d="M 304,200
+         C 306,232 302,268 292,296
+         C 280,328 266,354 256,374"
+      stroke-width="1.5"
+    />
+
+  </g>
+
+  <!--
+    === TEAL CONVERGENCE POINT ===
+    The single root where all three become one.
+    The only color in the mark — the symbolic heart.
+  -->
+  <circle cx="256" cy="374" r="5.5" fill="#00d4aa"/>
+
+</svg>
