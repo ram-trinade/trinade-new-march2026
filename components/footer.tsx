@@ -12,19 +12,23 @@ const OrganicBackground = dynamic(
 const navColumns = [
   {
     title: 'Products',
-    links: ['AI Platform', 'Analytics', 'Integrations', 'API'],
+    links: [{ name: 'Products', href: '#products' }],
   },
   {
     title: 'Solutions',
-    links: ['Enterprise', 'Startups', 'Healthcare', 'Finance'],
+    links: [{ name: 'Solutions', href: '#solutions' }],
   },
   {
     title: 'Resources',
-    links: ['Documentation', 'Blog', 'Case Studies', 'Support'],
+    links: [{ name: 'Blog', href: '#blog' }],
   },
   {
     title: 'Company',
-    links: ['About', 'Careers', 'Press', 'Contact'],
+    links: [
+      { name: 'About', href: '#about' },
+      { name: 'Team', href: '/team' },
+      { name: 'Contact', href: '/contact' },
+    ],
   },
 ]
 
@@ -185,16 +189,16 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       <div className="relative z-[2] w-full h-px bg-white/[0.08]" />
 
       {/* Contact CTA area */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-14 pb-10">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-24 pb-20">
         <FadeUp>
-          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-5">
+          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-8">
             <span className="text-[#00d4aa]">&#10022;</span>
             Contact Us
           </span>
         </FadeUp>
 
         <FadeUp delay={0.1}>
-          <h2 className="text-[clamp(1.6rem,3vw,2.8rem)] font-light leading-[1.08] tracking-[-0.025em] max-w-[52ch]">
+          <h2 className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.08] tracking-[-0.025em] max-w-[52ch]">
             <span className="text-white/95">
               Interested in working together
             </span>
@@ -206,30 +210,42 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Middle row — contact + nav links */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-10">
-        <div className="w-full h-px bg-white/[0.06] mb-8" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-20">
+        <div className="w-full h-px bg-white/[0.06] mb-12" />
 
         <div className="flex flex-col lg:flex-row justify-between gap-12">
-          {/* Left — email contact */}
-          <FadeUp delay={0.15} className="shrink-0">
-            <p className="text-sm text-white/50 tracking-[0.04em] uppercase mb-3">
-              Contact Trinade at:
+          {/* Left — contact details */}
+          <FadeUp delay={0.15} className="shrink-0 max-w-[320px]">
+            <p className="text-sm text-white/50 tracking-[0.04em] uppercase mb-4">
+              Get in Touch
             </p>
-            <a
-              href="mailto:hello@trinade.ai"
-              className="group inline-flex items-center gap-2 text-xl text-white/90 hover:text-[#00d4aa] transition-colors duration-300"
-            >
-              hello@trinade.ai
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <path d="M4 12L12 4M12 4H5M12 4v7" />
-              </svg>
-            </a>
+            <div className="space-y-4">
+              <div>
+                <p className="text-[13px] text-white/40 mb-1">Address</p>
+                <p className="text-sm text-white/70 leading-relaxed">
+                  #06, Green Valley Apartments, Gorantla,<br />
+                  Guntur, Andhra Pradesh 522034, India
+                </p>
+              </div>
+              <div>
+                <p className="text-[13px] text-white/40 mb-1">Email</p>
+                <a
+                  href="mailto:info@trinade.com"
+                  className="text-sm text-white/80 hover:text-[#00d4aa] transition-colors duration-300"
+                >
+                  info@trinade.com
+                </a>
+              </div>
+              <div>
+                <p className="text-[13px] text-white/40 mb-1">Phone</p>
+                <a
+                  href="tel:+919490754923"
+                  className="text-sm text-white/80 hover:text-[#00d4aa] transition-colors duration-300"
+                >
+                  +91 9490754923
+                </a>
+              </div>
+            </div>
           </FadeUp>
 
           {/* Right — nav columns */}
@@ -241,12 +257,12 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
                 </h4>
                 <ul className="space-y-2.5">
                   {col.links.map((link) => (
-                    <li key={link}>
+                    <li key={link.name}>
                       <a
-                        href="#"
+                        href={link.href}
                         className="text-sm text-white/45 hover:text-white/80 transition-colors duration-300"
                       >
-                        {link}
+                        {link.name}
                       </a>
                     </li>
                   ))}
@@ -258,7 +274,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Giant TRINADE text */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-16 pt-8">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -284,7 +300,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
           className="relative"
         >
           <h3
-            className="text-[12vw] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
+            className="text-[15vw] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
             style={{ fontFamily: 'var(--font-display)' }}
             aria-hidden="true"
           >
@@ -294,8 +310,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-6 pt-3">
-        <div className="w-full h-px bg-white/[0.06] mb-4" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
+        <div className="w-full h-px bg-white/[0.06] mb-6" />
 
         <FadeUp delay={0.3}>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">

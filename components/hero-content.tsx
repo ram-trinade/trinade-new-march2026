@@ -40,7 +40,7 @@ export default function HeroContent() {
           delay: 1.2,
           ease: [0.25, 0.1, 0.25, 1],
         }}
-        className="mt-6 max-w-[600px] text-[16px] leading-[1.7] font-light tracking-[0.01em] text-[#1a1f1a]/55 lg:text-[18px]"
+        className="mt-6 max-w-[600px] text-[16px] leading-[1.7] font-light tracking-[0.01em] text-white/55 lg:text-[18px]"
       >
         From intelligent products to enterprise services — engineered
         thoughtfully, delivered confidently, everywhere it ships.
@@ -59,7 +59,7 @@ export default function HeroContent() {
       >
         <a
           href="#solutions"
-          className="group relative inline-flex items-center gap-3 rounded-full bg-[#1a1f1a]/[0.06] px-8 py-4 text-[14px] font-medium tracking-[0.04em] text-[#1a1f1a] border border-[#1a1f1a]/[0.10] transition-all duration-400 hover:bg-[#1a1f1a]/[0.10] hover:border-[#1a1f1a]/[0.18] hover:shadow-[0_0_40px_rgba(0,212,170,0.08)]"
+          className="group relative inline-flex items-center gap-3 rounded-full bg-white/[0.08] px-8 py-4 text-[14px] font-medium tracking-[0.04em] text-white backdrop-blur-sm border border-white/[0.12] transition-all duration-400 hover:bg-white/[0.14] hover:border-white/[0.22] hover:shadow-[0_0_40px_rgba(200,230,78,0.08)]"
         >
           <span>Explore Solutions</span>
           <svg

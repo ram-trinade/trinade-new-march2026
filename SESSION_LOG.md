@@ -9,10 +9,24 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME**. Homepage starts light (#f5f3ef warm off-white), with dark sections for Products + Stats (#060e09), light Testimonials, dark Footer with WebGL. **Team page** and **Contact page** both light bg. **Footer**: Compact (~720px), copyright "Trinade AI Technologies Pvt Ltd", Privacy Policy + Disclaimer links. WebGL removed from homepage fixed canvas; Footer uses `withBackground` prop for embedded WebGL on all pages. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Full contact details (address, email, phone), nav matching navbar, TRINADE 15vw, copyright "Pvt Ltd" + Privacy Policy + Disclaimer. **Team + Contact pages**: light bg. **Git checkpoint system active**.
 - In progress: None
 - Blocked: None
 - Next step: Build About page, inner product/service pages
+
+---
+
+## 2026-03-07 — Restore hero WebGL + footer content overhaul (Checkpoint: `af4cc5e`)
+### Goal
+- Restore WebGL OrganicBackground behind homepage hero (was removed by mistake)
+- Update footer: nav links match navbar, full contact details, restore TRINADE size + spacing
+### Work done
+1. **WebGL restored**: Fixed OrganicBackground canvas at z-0 on homepage. Hero text restored to white. Light sections wrapped in opaque bg-[#f5f3ef] divs.
+2. **Footer nav**: Matches navbar — Products, Solutions, Resources (Blog), Company (About, Team, Contact) with proper hrefs.
+3. **Footer contact**: Address (#06 Green Valley Apartments, Gorantla, Guntur, AP 522034), email (info@trinade.com), phone (+91 9490754923).
+4. **Footer dimensions**: TRINADE 15vw, CTA heading clamp(2rem,4vw,3.8rem), all padding restored.
+### Files modified
+- `app/page.tsx`, `app/globals.css`, `components/hero-content.tsx`, `components/footer.tsx`
 
 ---
 

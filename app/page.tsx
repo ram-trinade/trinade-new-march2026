@@ -34,25 +34,38 @@ const Testimonials = dynamic(() => import('@/components/testimonials'), {
   ssr: false,
 })
 
+const OrganicBackground = dynamic(() => import('@/components/organic-background'), {
+  ssr: false,
+})
+
 const Footer = dynamic(() => import('@/components/footer'), {
   ssr: false,
 })
 
 export default function Home() {
   return (
-    <SmoothScroll>
-      <Navigation />
-      <main>
-        <HeroSection />
-        <TrustedBy />
-        <WhatWeDo />
-        <div className="relative bg-[#060e09]">
-          <ProductShowcase />
-          <StatsSection />
-        </div>
-        <Testimonials />
-        <Footer withBackground />
-      </main>
-    </SmoothScroll>
+    <div className="relative">
+      <div className="fixed inset-0 z-0">
+        <OrganicBackground />
+      </div>
+      <SmoothScroll>
+        <Navigation />
+        <main>
+          <HeroSection />
+          <div className="relative bg-[#f5f3ef]">
+            <TrustedBy />
+            <WhatWeDo />
+          </div>
+          <div className="relative bg-[#060e09]">
+            <ProductShowcase />
+            <StatsSection />
+          </div>
+          <div className="relative bg-[#f5f3ef]">
+            <Testimonials />
+          </div>
+          <Footer withBackground />
+        </main>
+      </SmoothScroll>
+    </div>
   )
 }
