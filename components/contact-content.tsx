@@ -26,12 +26,12 @@ const subjectOptions = [
 ]
 
 const inputClasses =
-  'bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3.5 text-[14px] text-white placeholder:text-white/30 focus:border-[#00d4aa]/40 focus:bg-white/[0.06] focus:outline-none transition-all duration-300 w-full'
+  'bg-black/[0.03] border border-black/[0.08] rounded-xl px-4 py-3.5 text-[14px] text-[#1a1f1a] placeholder:text-[#1a1f1a]/30 focus:border-[#00d4aa]/40 focus:bg-black/[0.05] focus:outline-none transition-all duration-300 w-full'
 
 const selectClasses =
-  'bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3.5 text-[14px] text-white focus:border-[#00d4aa]/40 focus:bg-white/[0.06] focus:outline-none transition-all duration-300 w-full appearance-none cursor-pointer'
+  'bg-black/[0.03] border border-black/[0.08] rounded-xl px-4 py-3.5 text-[14px] text-[#1a1f1a] focus:border-[#00d4aa]/40 focus:bg-black/[0.05] focus:outline-none transition-all duration-300 w-full appearance-none cursor-pointer'
 
-const labelClasses = 'text-[13px] text-white/60 tracking-[0.02em] mb-2 block'
+const labelClasses = 'text-[13px] text-[#1a1f1a]/70 tracking-[0.02em] mb-2 block'
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -100,18 +100,18 @@ function CountryCodeDropdown({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-3.5 py-3.5 text-[14px] text-white focus:border-[#00d4aa]/40 focus:bg-white/[0.06] focus:outline-none transition-all duration-300 w-full flex items-center justify-between gap-1.5"
+        className="bg-black/[0.03] border border-black/[0.08] rounded-xl px-3.5 py-3.5 text-[14px] text-[#1a1f1a] focus:border-[#00d4aa]/40 focus:bg-black/[0.05] focus:outline-none transition-all duration-300 w-full flex items-center justify-between gap-1.5"
       >
         <span className="flex items-center gap-2 truncate">
           <span className="text-[16px] leading-none">{selected.flag}</span>
-          <span className="text-white/80">{selected.code}</span>
+          <span className="text-[#1a1f1a]/80">{selected.code}</span>
         </span>
         <svg
           width="12"
           height="12"
           viewBox="0 0 12 12"
           fill="none"
-          className={`text-white/40 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+          className={`text-[#1a1f1a]/40 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
         >
           <path
             d="M3 4.5L6 7.5L9 4.5"
@@ -131,7 +131,7 @@ function CountryCodeDropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-white/[0.10] bg-[#0a1a14]/95 shadow-[0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden"
+            className="absolute left-0 right-0 top-full mt-1.5 z-50 rounded-xl border border-black/[0.10] bg-white/95 shadow-[0_8px_32px_rgba(0,0,0,0.1)] overflow-hidden"
             style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
           >
             <div className="max-h-[220px] overflow-y-auto py-1.5 scrollbar-thin">
@@ -146,12 +146,12 @@ function CountryCodeDropdown({
                   className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 text-[13px] transition-colors duration-200 ${
                     cc.code === value
                       ? 'bg-[#00d4aa]/10 text-[#00d4aa]'
-                      : 'text-white/70 hover:bg-white/[0.06] hover:text-white/90'
+                      : 'text-[#1a1f1a]/70 hover:bg-black/[0.04] hover:text-[#1a1f1a]/90'
                   }`}
                 >
                   <span className="text-[16px] leading-none">{cc.flag}</span>
                   <span className="font-medium">{cc.name}</span>
-                  <span className="text-white/35 ml-auto text-[12px]">{cc.code}</span>
+                  <span className="text-[#1a1f1a]/35 ml-auto text-[12px]">{cc.code}</span>
                 </button>
               ))}
             </div>
@@ -177,54 +177,6 @@ export default function ContactContent() {
 
   return (
     <div className="relative">
-      {/* ═══ ATMOSPHERIC DEPTH LAYERS ═══ */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Teal orb — upper right */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-5%',
-            right: '5%',
-            width: '55%',
-            height: '50%',
-            background: 'radial-gradient(ellipse at center, rgba(0,212,170,0.07) 0%, rgba(22,74,50,0.035) 40%, transparent 70%)',
-            filter: 'blur(60px)',
-          }}
-        />
-        {/* Amber orb — left */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '15%',
-            left: '-8%',
-            width: '45%',
-            height: '45%',
-            background: 'radial-gradient(ellipse at center, rgba(180,130,55,0.055) 0%, rgba(180,130,55,0.02) 35%, transparent 65%)',
-            filter: 'blur(50px)',
-          }}
-        />
-        {/* Deep green glow — center-bottom */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '5%',
-            left: '20%',
-            width: '55%',
-            height: '45%',
-            background: 'radial-gradient(ellipse at center, rgba(13,80,50,0.06) 0%, rgba(6,14,9,0.03) 40%, transparent 70%)',
-            filter: 'blur(55px)',
-          }}
-        />
-        {/* Subtle vignette */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: '0',
-            background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 35%, rgba(6,14,9,0.3) 100%)',
-          }}
-        />
-      </div>
-
       {/* ===== Section 1: Contact Form ===== */}
       <section className="pt-40 pb-24 px-[calc(12.5vw+0.8rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 max-w-[1400px] mx-auto">
@@ -245,14 +197,14 @@ export default function ContactContent() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-[clamp(2.4rem,5vw,4.2rem)] font-light leading-[1.08] tracking-[-0.025em]"
             >
-              <span className="text-white/95">Let&apos;s Get</span>{' '}
-              <span className="text-white/40">In Touch.</span>
+              <span className="text-[#1a1f1a]">Let&apos;s Get</span>{' '}
+              <span className="text-[#1a1f1a]/40">In Touch.</span>
             </motion.h1>
 
             <motion.p
               {...fadeUp}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-[15px] text-white/45 leading-relaxed max-w-[420px] mt-6"
+              className="text-[15px] text-[#1a1f1a]/45 leading-relaxed max-w-[420px] mt-6"
             >
               Have a question, idea, or just want to say hello? Fill out the form and we&apos;ll get
               back to you as soon as possible. We&apos;d love to hear from you.
@@ -261,7 +213,7 @@ export default function ContactContent() {
             <motion.p
               {...fadeUp}
               transition={{ duration: 0.7, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-[15px] text-white/45 leading-relaxed mt-4"
+              className="text-[15px] text-[#1a1f1a]/45 leading-relaxed mt-4"
             >
               Or just reach out manually to{' '}
               <a
@@ -354,20 +306,20 @@ export default function ContactContent() {
                   <select
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className={`${selectClasses} ${!subject ? 'text-white/30' : 'text-white'}`}
+                    className={`${selectClasses} ${!subject ? 'text-[#1a1f1a]/30' : 'text-[#1a1f1a]'}`}
                   >
                     {subjectOptions.map((opt, i) => (
                       <option
                         key={opt}
                         value={i === 0 ? '' : opt}
-                        className="bg-[#0d1f18] text-white"
+                        className="bg-white text-[#1a1f1a]"
                       >
                         {opt}
                       </option>
                     ))}
                   </select>
                   <svg
-                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+                    className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#1a1f1a]/40"
                     width="12"
                     height="12"
                     viewBox="0 0 12 12"
@@ -398,7 +350,7 @@ export default function ContactContent() {
                   onChange={(e) => setMessage(e.target.value)}
                   className={`${inputClasses} resize-none`}
                 />
-                <div className="text-[12px] text-white/30 text-right mt-1">
+                <div className="text-[12px] text-[#1a1f1a]/30 text-right mt-1">
                   {message.length}/300
                 </div>
               </motion.div>
@@ -456,7 +408,7 @@ export default function ContactContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-[clamp(2rem,4vw,3.5rem)] font-light text-white/95 text-center"
+              className="text-[clamp(2rem,4vw,3.5rem)] font-light text-[#1a1f1a]/95 text-center"
             >
               Join Our Community
             </motion.h2>
@@ -466,7 +418,7 @@ export default function ContactContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-              className="text-[15px] text-white/45 text-center max-w-[500px] mx-auto mt-4"
+              className="text-[15px] text-[#1a1f1a]/45 text-center max-w-[500px] mx-auto mt-4"
             >
               Connect, learn, and grow with fellow designers and developers.
             </motion.p>
@@ -485,13 +437,13 @@ export default function ContactContent() {
                   delay: 0.15 + index * 0.1,
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
-                className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 text-center transition-all duration-300 hover:bg-white/[0.06] hover:border-white/[0.10] group cursor-pointer"
+                className="bg-black/[0.02] border border-black/[0.06] rounded-2xl p-8 text-center transition-all duration-300 hover:bg-black/[0.04] hover:border-black/[0.10] group cursor-pointer"
               >
-                <div className="text-white/25 group-hover:text-white/40 transition-colors duration-300 mx-auto mb-5 flex justify-center">
+                <div className="text-[#1a1f1a]/25 group-hover:text-[#1a1f1a]/40 transition-colors duration-300 mx-auto mb-5 flex justify-center">
                   {card.icon}
                 </div>
-                <h3 className="text-[16px] font-medium text-white/90 mb-2">{card.name}</h3>
-                <p className="text-[13px] text-white/45 leading-relaxed">{card.description}</p>
+                <h3 className="text-[16px] font-medium text-[#1a1f1a]/90 mb-2">{card.name}</h3>
+                <p className="text-[13px] text-[#1a1f1a]/45 leading-relaxed">{card.description}</p>
               </motion.div>
             ))}
           </div>
@@ -502,7 +454,7 @@ export default function ContactContent() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-[13px] text-white/25 text-center mt-10"
+            className="text-[13px] text-[#1a1f1a]/25 text-center mt-10"
           >
             Be part of a community that connects, learns, and grows together.
           </motion.p>

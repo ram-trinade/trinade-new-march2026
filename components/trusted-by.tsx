@@ -15,9 +15,9 @@ const partners = [
 function LogoPlaceholder({ name }: { name: string }) {
   return (
     <div className="flex items-center gap-1.5 select-none">
-      <div className="w-5 h-5 rounded-md bg-white/[0.08] border border-white/[0.06]" />
+      <div className="w-5 h-5 rounded-md bg-[#1a1f1a]/[0.06] border border-[#1a1f1a]/[0.06]" />
       <span
-        className="text-[15px] font-medium tracking-[-0.01em] text-white/30"
+        className="text-[15px] font-medium tracking-[-0.01em] text-[#1a1f1a]/35"
         style={{ fontFamily: 'var(--font-display)' }}
       >
         {name}
@@ -31,7 +31,7 @@ export default function TrustedBy() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section className="relative py-24 bg-[#060e09]">
+    <section className="relative py-24">
       <div className="px-[calc(12.5vw+0.8rem)]">
         <motion.div
           ref={ref}
@@ -39,7 +39,7 @@ export default function TrustedBy() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <p className="text-center text-[13px] font-medium tracking-[0.12em] uppercase text-white/25 mb-14">
+          <p className="text-center text-[13px] font-medium tracking-[0.12em] uppercase text-[#1a1f1a]/30 mb-14">
             Trusted by forward-thinking teams
           </p>
 
@@ -64,7 +64,7 @@ export default function TrustedBy() {
       </div>
 
       {/* Bottom subtle divider */}
-      <div className="absolute bottom-0 left-[calc(12.5vw+0.8rem)] right-[calc(12.5vw+0.8rem)] h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+      <div className="absolute bottom-0 left-[calc(12.5vw+0.8rem)] right-[calc(12.5vw+0.8rem)] h-px bg-gradient-to-r from-transparent via-[#1a1f1a]/[0.06] to-transparent" />
     </section>
   )
 }

@@ -9,10 +9,41 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website + **Contact page** (`/contact`) + **Team page** (`/team`). Homepage: Bold hero ("Built for What's Next." — Manrope 700), CENTER-ALIGNED navbar, Trusted By, What We Do, Products bento, Stats counters, Testimonials, reveal animation border, Datawizz-inspired footer. **Team page**: Solid dark bg with atmospheric gradient orbs (no WebGL), cinematic 100vh intro, 8 click-to-expand member rows. **Contact page**: Atmospheric gradient orbs behind form. **WebGL architecture**: Fixed canvas on homepage (hero + footer visible, middle sections opaque), footer `withBackground` prop embeds own WebGL on team/contact pages. **Atmospheric depth**: CSS radial-gradient orbs (teal, amber, deep green) with blur filters on all non-WebGL pages. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME**. Homepage starts light (#f5f3ef warm off-white), with dark sections for Products + Stats (#060e09), light Testimonials, dark Footer with WebGL. **Team page** and **Contact page** both light bg. **Footer**: Compact (~720px), copyright "Trinade AI Technologies Pvt Ltd", Privacy Policy + Disclaimer links. WebGL removed from homepage fixed canvas; Footer uses `withBackground` prop for embedded WebGL on all pages. **Git checkpoint system active**.
 - In progress: None
 - Blocked: None
 - Next step: Build About page, inner product/service pages
+
+---
+
+## 2026-03-07 — Light theme + footer updates (Checkpoint: `4aa45c8`)
+### Goal
+- Switch from dark to light background theme across all pages (start light, selective dark sections)
+- Update footer: legal text (Pvt Ltd, Privacy Policy, Disclaimer), reduce size to ~1 viewport
+### Work done
+1. **Light theme — core**: body bg → #f5f3ef, text → #1a1f1a, dark cursor, teal selection. Removed fixed WebGL canvas from homepage. Hero, nav logo text all dark.
+2. **Light theme — sections**: TrustedBy, WhatWeDo, Testimonials switched to light (dark text, dark borders/dividers). Products + Stats stay dark (#060e09 wrapper).
+3. **Light theme — inner pages**: Team + Contact pages bg → #f5f3ef. Removed atmospheric depth layers. All text/inputs/borders adapted for light bg. Portrait cards kept dark gradient accents.
+4. **Footer text**: Copyright → "© 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved." Added Privacy Policy + Disclaimer links in bottom bar.
+5. **Footer sizing**: CTA heading reduced to clamp(1.6rem,3vw,2.8rem). Padding reduced across all sections. TRINADE text 15vw→12vw. Total height ~720px.
+### Files modified (12 files)
+- `app/globals.css` — body bg/color, cursor, hero-headline, selection
+- `app/page.tsx` — Removed OrganicBackground, restructured dark wrapper (Products+Stats only), Footer withBackground
+- `app/team/page.tsx` — bg → #f5f3ef
+- `app/contact/page.tsx` — bg → #f5f3ef
+- `components/hero-content.tsx` — Dark text/CTA styling
+- `components/navigation.tsx` — Logo text → dark
+- `components/trusted-by.tsx` — Light theme colors
+- `components/what-we-do.tsx` — Light theme colors + cards
+- `components/testimonials.tsx` — Light theme colors + cards
+- `components/team-content.tsx` — Light bg, removed atmospheric layers, all dark text
+- `components/contact-content.tsx` — Light bg, removed atmospheric layers, light form styling
+- `components/footer.tsx` — Updated copyright, added legal links, reduced all spacing
+### Verified
+- Homepage: light hero → light sections → dark Products/Stats → light Testimonials → dark Footer with WebGL
+- Team page: light bg, teal accent headline, dark text
+- Contact page: light bg, adapted form inputs
+- Footer: ~720px height, copyright/legal text present
 
 ---
 

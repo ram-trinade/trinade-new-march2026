@@ -2,10 +2,6 @@
 
 import dynamic from 'next/dynamic'
 
-const OrganicBackground = dynamic(() => import('@/components/organic-background'), {
-  ssr: false,
-})
-
 const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), {
   ssr: false,
 })
@@ -44,24 +40,19 @@ const Footer = dynamic(() => import('@/components/footer'), {
 
 export default function Home() {
   return (
-    <div className="relative">
-      <div className="fixed inset-0 z-0">
-        <OrganicBackground />
-      </div>
-      <SmoothScroll>
-        <Navigation />
-        <main>
-          <HeroSection />
-          <div className="relative bg-[#060e09]">
-            <TrustedBy />
-            <WhatWeDo />
-            <ProductShowcase />
-            <StatsSection />
-            <Testimonials />
-          </div>
-          <Footer />
-        </main>
-      </SmoothScroll>
-    </div>
+    <SmoothScroll>
+      <Navigation />
+      <main>
+        <HeroSection />
+        <TrustedBy />
+        <WhatWeDo />
+        <div className="relative bg-[#060e09]">
+          <ProductShowcase />
+          <StatsSection />
+        </div>
+        <Testimonials />
+        <Footer withBackground />
+      </main>
+    </SmoothScroll>
   )
 }

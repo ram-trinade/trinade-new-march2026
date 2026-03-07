@@ -74,7 +74,7 @@ function CapabilityCard({
         delay: 0.2 + index * 0.12,
         ease: [0.25, 0.1, 0.25, 1],
       }}
-      className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 transition-all duration-500 hover:border-white/[0.12] hover:bg-white/[0.04]"
+      className="group relative rounded-2xl border border-black/[0.06] bg-black/[0.02] p-8 transition-all duration-500 hover:border-black/[0.10] hover:bg-black/[0.04]"
     >
       {/* Subtle hover glow */}
       <div
@@ -83,23 +83,23 @@ function CapabilityCard({
       />
 
       <div className="relative">
-        <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black/[0.04] border border-black/[0.06]">
           {item.icon}
         </div>
 
         <h3
-          className="text-[20px] font-semibold text-white/95 mb-3 tracking-[-0.01em]"
+          className="text-[20px] font-semibold text-[#1a1f1a]/95 mb-3 tracking-[-0.01em]"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {item.title}
         </h3>
 
-        <p className="text-[15px] leading-[1.7] text-white/45 font-light">
+        <p className="text-[15px] leading-[1.7] text-[#1a1f1a]/45 font-light">
           {item.description}
         </p>
 
         {/* Learn more link */}
-        <div className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-medium text-white/30 transition-colors duration-300 group-hover:text-white/60">
+        <div className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-medium text-[#1a1f1a]/30 transition-colors duration-300 group-hover:text-[#1a1f1a]/60">
           <span>Learn more</span>
           <svg
             width="14"
@@ -121,7 +121,7 @@ export default function WhatWeDo() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-32 bg-[#060e09]">
+    <section ref={ref} className="relative py-32">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-20">
@@ -141,8 +141,8 @@ export default function WhatWeDo() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[42ch]"
           >
-            <span className="text-white/95">Technology that thinks ahead</span>
-            <span className="text-white/35">{' '}— so your teams can focus on what matters most.</span>
+            <span className="text-[#1a1f1a]/95">Technology that thinks ahead</span>
+            <span className="text-[#1a1f1a]/35">{' '}— so your teams can focus on what matters most.</span>
           </motion.h2>
         </div>
 

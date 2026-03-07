@@ -51,7 +51,7 @@ function TestimonialCard({
         delay: 0.15 + index * 0.12,
         ease: [0.25, 0.1, 0.25, 1],
       }}
-      className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 transition-all duration-500 hover:border-white/[0.10] hover:bg-white/[0.035]"
+      className="group relative rounded-2xl border border-black/[0.06] bg-black/[0.02] p-8 transition-all duration-500 hover:border-black/[0.10] hover:bg-black/[0.035]"
     >
       {/* Quote mark */}
       <svg
@@ -68,7 +68,7 @@ function TestimonialCard({
       </svg>
 
       {/* Quote text */}
-      <p className="text-[16px] leading-[1.75] text-white/65 font-light mb-8">
+      <p className="text-[16px] leading-[1.75] text-[#1a1f1a]/60 font-light mb-8">
         {item.quote}
       </p>
 
@@ -85,8 +85,8 @@ function TestimonialCard({
           {item.avatar}
         </div>
         <div>
-          <p className="text-[14px] font-medium text-white/80">{item.name}</p>
-          <p className="text-[13px] text-white/35">
+          <p className="text-[14px] font-medium text-[#1a1f1a]/80">{item.name}</p>
+          <p className="text-[13px] text-[#1a1f1a]/40">
             {item.title}, {item.company}
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function Testimonials() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-32 bg-[#060e09]">
+    <section ref={ref} className="relative py-32">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-16">
@@ -120,8 +120,8 @@ export default function Testimonials() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[36ch]"
           >
-            <span className="text-white/95">Trusted by builders</span>
-            <span className="text-white/35">{' '}who ship at scale.</span>
+            <span className="text-[#1a1f1a]/95">Trusted by builders</span>
+            <span className="text-[#1a1f1a]/35">{' '}who ship at scale.</span>
           </motion.h2>
         </div>
 

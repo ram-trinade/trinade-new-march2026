@@ -185,16 +185,16 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       <div className="relative z-[2] w-full h-px bg-white/[0.08]" />
 
       {/* Contact CTA area */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-24 pb-20">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-14 pb-10">
         <FadeUp>
-          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-8">
+          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-5">
             <span className="text-[#00d4aa]">&#10022;</span>
             Contact Us
           </span>
         </FadeUp>
 
         <FadeUp delay={0.1}>
-          <h2 className="text-[clamp(2.4rem,5vw,4.8rem)] font-light leading-[1.08] tracking-[-0.025em] max-w-[52ch]">
+          <h2 className="text-[clamp(1.6rem,3vw,2.8rem)] font-light leading-[1.08] tracking-[-0.025em] max-w-[52ch]">
             <span className="text-white/95">
               Interested in working together
             </span>
@@ -206,8 +206,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Middle row — contact + nav links */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-20">
-        <div className="w-full h-px bg-white/[0.06] mb-12" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-10">
+        <div className="w-full h-px bg-white/[0.06] mb-8" />
 
         <div className="flex flex-col lg:flex-row justify-between gap-12">
           {/* Left — email contact */}
@@ -258,7 +258,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Giant TRINADE text */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-16 pt-8">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -284,7 +284,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
           className="relative"
         >
           <h3
-            className="text-[15vw] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
+            className="text-[12vw] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
             style={{ fontFamily: 'var(--font-display)' }}
             aria-hidden="true"
           >
@@ -294,16 +294,18 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
-        <div className="w-full h-px bg-white/[0.06] mb-6" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-6 pt-3">
+        <div className="w-full h-px bg-white/[0.06] mb-4" />
 
         <FadeUp delay={0.3}>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-4">
               <p className="text-sm text-white/40">
-                &copy; 2026 Trinade AI Technologies. All rights reserved.
+                &copy; 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved.
               </p>
               <span className="hidden sm:block text-white/20">|</span>
+              <a href="#" className="text-sm text-white/40 hover:text-white/70 transition-colors duration-300">Privacy Policy</a>
+              <a href="#" className="text-sm text-white/40 hover:text-white/70 transition-colors duration-300">Disclaimer</a>
             </div>
 
             <div className="flex items-center gap-6">

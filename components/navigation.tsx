@@ -528,7 +528,7 @@ export default function Navigation() {
         <a href="/" className="flex items-center gap-2 shrink-0 justify-self-start hover:opacity-80 transition-opacity duration-200">
           <Logo size={36} className="shrink-0" />
           <span
-            className="text-[24px] font-semibold tracking-[-0.02em] text-white leading-none whitespace-nowrap"
+            className="text-[24px] font-semibold tracking-[-0.02em] text-[#1a1f1a] leading-none whitespace-nowrap"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Trinade

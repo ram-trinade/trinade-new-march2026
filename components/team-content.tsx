@@ -126,7 +126,7 @@ function MemberRow({
     >
       {/* Scoped gradient separator — within content padding */}
       <div className="px-6 md:px-[calc(12.5vw+0.8rem)]">
-        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+        <div className="h-px bg-gradient-to-r from-transparent via-[#1a1f1a]/[0.08] to-transparent" />
       </div>
 
       {/* Content grid */}
@@ -134,7 +134,7 @@ function MemberRow({
         {/* ── Left: Text content ── */}
         <div className="relative flex flex-col justify-center">
           {/* Watermark index */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[8rem] md:text-[10rem] font-extralight text-white/[0.02] leading-none select-none pointer-events-none tracking-tight hidden md:block">
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[8rem] md:text-[10rem] font-extralight text-[#1a1f1a]/[0.04] leading-none select-none pointer-events-none tracking-tight hidden md:block">
             {displayIdx}
           </div>
 
@@ -153,8 +153,8 @@ function MemberRow({
           <motion.h3
             animate={{
               color: isExpanded
-                ? 'rgba(255,255,255,0.98)'
-                : 'rgba(255,255,255,0.82)',
+                ? 'rgba(26,31,26,0.98)'
+                : 'rgba(26,31,26,0.82)',
             }}
             transition={{ duration: 0.3 }}
             className="text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] font-bold tracking-[-0.03em] leading-[1.05]"
@@ -165,7 +165,7 @@ function MemberRow({
           <motion.p
             animate={{ opacity: isExpanded ? 0.55 : 0.28 }}
             transition={{ duration: 0.35 }}
-            className="mt-2 md:mt-3 text-[14px] md:text-[15px] italic font-extralight text-white tracking-[0.01em]"
+            className="mt-2 md:mt-3 text-[14px] md:text-[15px] italic font-extralight text-[#1a1f1a] tracking-[0.01em]"
           >
             {member.specialty}
           </motion.p>
@@ -183,12 +183,12 @@ function MemberRow({
                 }}
                 className="overflow-hidden"
               >
-                <p className="mt-5 text-[14px] leading-[1.8] text-white/35 max-w-[560px] font-light">
+                <p className="mt-5 text-[14px] leading-[1.8] text-[#1a1f1a]/45 max-w-[560px] font-light">
                   {member.bio}
                 </p>
-                <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center gap-2.5">
+                <div className="mt-4 pt-3 border-t border-[#1a1f1a]/[0.06] flex items-center gap-2.5">
                   <span className="text-[#00d4aa]/35 text-xs">✦</span>
-                  <span className="text-white/[0.18] text-[12px] tracking-wide">
+                  <span className="text-[#1a1f1a]/25 text-[12px] tracking-wide">
                     {member.personality}
                   </span>
                 </div>
@@ -200,7 +200,7 @@ function MemberRow({
           <motion.div
             animate={{ rotate: isExpanded ? 45 : 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-5 w-7 h-7 flex items-center justify-center rounded-full border border-white/[0.08] group-hover:border-white/[0.15] transition-colors duration-300"
+            className="mt-5 w-7 h-7 flex items-center justify-center rounded-full border border-[#1a1f1a]/[0.10] group-hover:border-[#1a1f1a]/[0.20] transition-colors duration-300"
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path
@@ -208,7 +208,7 @@ function MemberRow({
                 stroke="currentColor"
                 strokeWidth="1"
                 strokeLinecap="round"
-                className="text-white/30 group-hover:text-white/50 transition-colors duration-300"
+                className="text-[#1a1f1a]/30 group-hover:text-[#1a1f1a]/50 transition-colors duration-300"
               />
             </svg>
           </motion.div>
@@ -217,7 +217,7 @@ function MemberRow({
         {/* ── Right: Massive portrait placeholder ── */}
         <div className="order-first md:order-last">
           <div
-            className="relative w-full h-[200px] md:h-full md:min-h-[240px] rounded-xl overflow-hidden border border-white/[0.04] group-hover:border-white/[0.08] transition-colors duration-500"
+            className="relative w-full h-[200px] md:h-full md:min-h-[240px] rounded-xl overflow-hidden border border-black/[0.06] group-hover:border-black/[0.10] transition-colors duration-500"
             style={{ background: PORTRAIT_GRADIENTS[index] }}
           >
             {/* Large initials */}
@@ -278,67 +278,7 @@ export default function TeamContent() {
   const introInView = useInView(introRef, { once: true })
 
   return (
-    <section className="relative z-10 bg-[#060e09]">
-      {/* ═══ ATMOSPHERIC DEPTH LAYERS ═══ */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Teal orb — upper right */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-5%',
-            right: '-8%',
-            width: '55%',
-            height: '50%',
-            background: 'radial-gradient(ellipse at center, rgba(0,212,170,0.06) 0%, rgba(22,74,50,0.03) 40%, transparent 70%)',
-            filter: 'blur(60px)',
-          }}
-        />
-        {/* Amber orb — mid left */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '25%',
-            left: '-10%',
-            width: '45%',
-            height: '40%',
-            background: 'radial-gradient(ellipse at center, rgba(180,130,55,0.05) 0%, rgba(180,130,55,0.02) 35%, transparent 65%)',
-            filter: 'blur(50px)',
-          }}
-        />
-        {/* Deep green glow — center */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '30%',
-            width: '50%',
-            height: '45%',
-            background: 'radial-gradient(ellipse at center, rgba(13,80,50,0.07) 0%, rgba(6,14,9,0.03) 40%, transparent 70%)',
-            filter: 'blur(55px)',
-          }}
-        />
-        {/* Teal accent — lower right */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '10%',
-            right: '5%',
-            width: '40%',
-            height: '35%',
-            background: 'radial-gradient(ellipse at center, rgba(0,212,170,0.04) 0%, transparent 60%)',
-            filter: 'blur(45px)',
-          }}
-        />
-        {/* Subtle vignette */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 35%, rgba(6,14,9,0.35) 100%)',
-          }}
-        />
-      </div>
-
+    <section className="relative z-10 bg-[#f5f3ef]">
       {/* ═══ CINEMATIC INTRO — clean typographic hero ═══ */}
       <div
         ref={introRef}
@@ -352,7 +292,7 @@ export default function TeamContent() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="mb-10 md:mb-14"
           >
-            <span className="inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.3em] text-white/35 font-medium">
+            <span className="inline-flex items-center gap-2.5 text-[11px] uppercase tracking-[0.3em] text-[#1a1f1a]/35 font-medium">
               <motion.span
                 animate={{
                   textShadow: [
@@ -382,8 +322,7 @@ export default function TeamContent() {
               }}
             >
               <h1
-                className="text-[clamp(2.8rem,7.5vw,6.5rem)] font-bold text-white/95 leading-[1.0] tracking-[-0.035em]"
-                style={{ textShadow: '0 0 80px rgba(255,255,255,0.06)' }}
+                className="text-[clamp(2.8rem,7.5vw,6.5rem)] font-bold text-[#1a1f1a] leading-[1.0] tracking-[-0.035em]"
               >
                 The architecture
               </h1>
@@ -402,14 +341,7 @@ export default function TeamContent() {
               }}
             >
               <h1
-                className="text-[clamp(2.8rem,7.5vw,6.5rem)] font-extralight italic leading-[1.0] tracking-[-0.02em]"
-                style={{
-                  background:
-                    'linear-gradient(95deg, rgba(255,255,255,0.35) 0%, rgba(0,212,170,0.55) 40%, rgba(200,230,78,0.45) 70%, rgba(255,255,255,0.25) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  filter: 'drop-shadow(0 0 40px rgba(0,212,170,0.1))',
-                }}
+                className="text-[clamp(2.8rem,7.5vw,6.5rem)] font-extralight italic leading-[1.0] tracking-[-0.02em] text-[#00d4aa]"
               >
                 behind the intelligence.
               </h1>
@@ -421,7 +353,7 @@ export default function TeamContent() {
             initial={{ opacity: 0, y: 25 }}
             animate={introInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 1.1 }}
-            className="mt-8 md:mt-10 text-[15px] md:text-[17px] leading-[1.75] font-light text-white/35 max-w-[540px] mx-auto"
+            className="mt-8 md:mt-10 text-[15px] md:text-[17px] leading-[1.75] font-light text-[#1a1f1a]/50 max-w-[540px] mx-auto"
           >
             Eight distinct wavelengths. One shared frequency — building
             intelligence that respects the humans who use it.
@@ -434,7 +366,7 @@ export default function TeamContent() {
             transition={{ duration: 0.8, delay: 1.4 }}
             className="mt-14 md:mt-20 flex items-center justify-center gap-4"
           >
-            <span className="text-[12px] font-light tracking-[0.25em] text-[#00d4aa]/30">
+            <span className="text-[12px] font-light tracking-[0.25em] text-[#1a1f1a]/30">
               01
             </span>
             <motion.div
@@ -445,13 +377,9 @@ export default function TeamContent() {
                 delay: 1.6,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="w-20 h-[1px] origin-left"
-              style={{
-                background:
-                  'linear-gradient(90deg, rgba(0,212,170,0.4) 0%, rgba(200,230,78,0.3) 50%, rgba(0,212,170,0.15) 100%)',
-              }}
+              className="w-20 h-[1px] origin-left bg-[#1a1f1a]/15"
             />
-            <span className="text-[12px] font-light tracking-[0.25em] text-white/18">
+            <span className="text-[12px] font-light tracking-[0.25em] text-[#1a1f1a]/25">
               08
             </span>
           </motion.div>
@@ -470,7 +398,7 @@ export default function TeamContent() {
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
-              className="w-[1px] h-8 mx-auto bg-gradient-to-b from-white/15 to-transparent"
+              className="w-[1px] h-8 mx-auto bg-gradient-to-b from-[#1a1f1a]/15 to-transparent"
             />
           </motion.div>
         </div>
@@ -492,7 +420,7 @@ export default function TeamContent() {
 
         {/* Final separator */}
         <div className="px-6 md:px-[calc(12.5vw+0.8rem)]">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-[#1a1f1a]/[0.08] to-transparent" />
         </div>
       </div>
 

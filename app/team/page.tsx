@@ -15,7 +15,7 @@ const TeamContent = dynamic(() => import('@/components/team-content'), {
 
 export default function TeamPage() {
   return (
-    <div className="relative bg-[#060e09]">
+    <div className="relative bg-[#f5f3ef]">
       <SmoothScroll>
         <Navigation />
         <main>
