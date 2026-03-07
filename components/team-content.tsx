@@ -436,51 +436,6 @@ export default function TeamContent() {
         </div>
       </div>
 
-      {/* ═══ CLOSING CTA ═══ */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-        className="py-20 md:py-32 px-6 md:px-[calc(12.5vw+0.8rem)] text-center"
-      >
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="w-16 h-px mx-auto mb-10 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
-        />
-        <p className="text-white/18 text-[11px] tracking-[0.25em] uppercase mb-5 font-medium">
-          This is just the beginning
-        </p>
-        <h3 className="text-[1.4rem] md:text-[1.8rem] lg:text-[2rem] font-semibold text-white/65 tracking-[-0.01em] leading-[1.3] max-w-md mx-auto">
-          We&apos;re always looking for minds
-          <br className="hidden md:block" />
-          that think differently.
-        </h3>
-        <a
-          href="/contact"
-          className="inline-flex items-center gap-2 mt-8 text-[#00d4aa]/50 text-[13px] tracking-wide hover:text-[#00d4aa]/85 transition-colors duration-300 group/cta"
-        >
-          <span>See Open Positions</span>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            className="transition-transform duration-300 group-hover/cta:translate-x-1"
-          >
-            <path
-              d="M1 7h12M8 2l5 5-5 5"
-              stroke="currentColor"
-              strokeWidth="1.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
-      </motion.div>
     </section>
   )
 }

@@ -71,7 +71,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
     <footer className="footer-atmosphere relative bg-[#060e09]/50 overflow-hidden">
       {/* ===== WEBGL BACKGROUND (when embedded) ===== */}
       {withBackground && (
-        <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 z-[1] overflow-hidden">
           <OrganicBackground />
         </div>
       )}
@@ -182,10 +182,10 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       {/* ===== END ATMOSPHERIC LAYERS ===== */}
 
       {/* Top separator line */}
-      <div className="relative w-full h-px bg-white/[0.08]" />
+      <div className="relative z-[2] w-full h-px bg-white/[0.08]" />
 
       {/* Contact CTA area */}
-      <div className="relative px-[calc(12.5vw+0.8rem)] pt-24 pb-20">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-24 pb-20">
         <FadeUp>
           <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-8">
             <span className="text-[#00d4aa]">&#10022;</span>
@@ -206,7 +206,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Middle row — contact + nav links */}
-      <div className="relative px-[calc(12.5vw+0.8rem)] pb-20">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-20">
         <div className="w-full h-px bg-white/[0.06] mb-12" />
 
         <div className="flex flex-col lg:flex-row justify-between gap-12">
@@ -258,7 +258,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Giant TRINADE text */}
-      <div className="relative px-[calc(12.5vw+0.8rem)] pb-16 pt-8">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-16 pt-8">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -294,7 +294,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Bottom bar */}
-      <div className="relative px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
         <div className="w-full h-px bg-white/[0.06] mb-6" />
 
         <FadeUp delay={0.3}>

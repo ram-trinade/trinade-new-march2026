@@ -525,7 +525,7 @@ export default function Navigation() {
         }}
       >
         {/* LEFT: Logo + Trinade */}
-        <div className="flex items-center gap-2 shrink-0 justify-self-start">
+        <a href="/" className="flex items-center gap-2 shrink-0 justify-self-start hover:opacity-80 transition-opacity duration-200">
           <Logo size={36} className="shrink-0" />
           <span
             className="text-[24px] font-semibold tracking-[-0.02em] text-white leading-none whitespace-nowrap"
@@ -533,7 +533,7 @@ export default function Navigation() {
           >
             Trinade
           </span>
-        </div>
+        </a>
 
         {/* CENTER: Frosted glass pill with nav links */}
         <div className="relative justify-self-center">

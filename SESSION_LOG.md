@@ -9,10 +9,56 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website + **Contact page** (`/contact`) + **Team page** (`/team`). Homepage: Bold hero ("Built for What's Next." — Manrope 700), CENTER-ALIGNED navbar (3-col grid: Logo LEFT | Pill CENTER [PRODUCTS, SOLUTIONS, RESOURCES↓, COMPANY↓] | glassmorphic "Get in touch" RIGHT), Trusted By, What We Do, Products bento, Stats counters, Testimonials, reveal animation border (scroll-triggered fade, `entranceComplete` guard), shared WebGL background, Datawizz-inspired footer. **Dropdowns**: Both use identical structure (15px/12px text, 1px bordered images, `min-h-[3rem]` text containers, `mt-auto` images for alignment). RESOURCES = Blog split panel; COMPANY = About + Team (network SVGs). **Contact page**: dark glassmorphic form (First/Last Name, Email, Phone + custom country code dropdown with flags, Subject dropdown, Message 300char), "Join Our Community" section (X, GitHub, Discord cards), atmospheric overlays. **Team page**: Cinematic 100vh intro (diagonal gradient sweeps, neural mesh particles, layered typography assembling line-by-line with glow) + 8 NextNet-inspired full-width horizontal rows (large name typography, teal role labels, italic specialty, hover-reveal personality) + massive portrait placeholders (440px, unique mesh gradients, large initials, dot grid overlay, hover glow + "View Profile" overlay) + closing CTA. Custom white dot cursor, Manrope typography, scrollbar hidden
+- Done: Full multi-section corporate website + **Contact page** (`/contact`) + **Team page** (`/team`). Homepage: Bold hero ("Built for What's Next." — Manrope 700), CENTER-ALIGNED navbar, Trusted By, What We Do, Products bento, Stats counters, Testimonials, reveal animation border, Datawizz-inspired footer. **Team page**: Solid dark bg (no WebGL), cinematic 100vh intro (clean typography, no sweep lines/particles), 8 click-to-expand member rows with scoped gradient separators, dynamic portrait resize, bio reveal with AnimatePresence, plus/cross toggle. **WebGL architecture**: Fixed canvas on homepage (hero + footer visible, middle sections opaque), footer `withBackground` prop embeds own WebGL on team/contact pages. **Git checkpoint system active** (commit `781315d`).
 - In progress: None
 - Blocked: None
 - Next step: Build About page, inner product/service pages
+
+---
+
+## 2026-03-07 — Team page CTA removal + footer WebGL fix + logo home link (Checkpoint: `pending`)
+### Goal
+- Remove closing CTA section ("This is just the beginning" + "See Open Positions") from team page
+- Fix footer WebGL background visibility on team/contact pages (z-index layering issue)
+- Make logo + "Trinade" text in navbar clickable to navigate to homepage
+### Work done
+1. **Removed closing CTA** — Deleted the entire `motion.div` block containing "THIS IS JUST THE BEGINNING", heading, and "See Open Positions" link from `team-content.tsx`.
+2. **Fixed footer WebGL z-indexing** — WebGL container bumped from `z-0` to `z-[1]` to render above atmospheric layers. All footer content sections given `z-[2]` to stay above WebGL. Footer canvas confirmed rendering (650×1088).
+3. **Logo home link** — Wrapped Logo + "Trinade" text in `<a href="/">` with subtle hover opacity transition. Verified link href resolves to homepage.
+### Files modified
+- `components/team-content.tsx` — Removed closing CTA section (~40 lines)
+- `components/footer.tsx` — WebGL div `z-[1]`, all content sections `z-[2]`
+- `components/navigation.tsx` — Logo+text `<div>` → `<a href="/">`
+### Verified
+- Team page: no closing CTA, 8 members → footer directly
+- Footer: canvas present (650×1088), content readable above WebGL
+- Logo link: `href="/"` confirmed via DOM inspection
+
+---
+
+## 2026-03-07 — 7-point team page redesign + WebGL scoping + footer architecture (Checkpoint: `781315d`)
+### Goal
+- Redesign team page with solid elegant bg, click-to-expand member bios, scoped separators, and remove generic elements (flowing lines, "View Profile")
+- Scope WebGL animation to homepage hero + footer only; embed footer's own WebGL on other pages
+### Work done
+1. **Solid dark background** — Removed WebGL animation from team and contact pages. Team page uses `bg-[#060e09]` throughout.
+2. **Dark theme throughout** — Cohesive dark aesthetic top to bottom, matching Awwwards-quality dark sites.
+3. **Short description under name** — Each member now has `specialty` text directly under name. Removed "View Profile" hover overlay entirely.
+4. **Scoped gradient separators** — Lines no longer span edge-to-edge. Now wrapped in `px-6 md:px-[calc(12.5vw+0.8rem)]` with `bg-gradient-to-r from-transparent via-white/[0.08] to-transparent` for fade-at-edges effect.
+5. **Click-to-expand bios** — `expandedIndex` state (one at a time). AnimatePresence for smooth height + opacity animation. Full bio text + personality trait revealed. Portrait dynamically stretches via CSS Grid `items-stretch` + `md:h-full`. Plus icon rotates 45° to cross on expand.
+6. **WebGL scoping** — Homepage: middle sections (TrustedBy → Testimonials) wrapped in opaque `bg-[#060e09]` div, fixed WebGL shows only in hero + footer. Footer: `withBackground` prop conditionally renders embedded `<OrganicBackground />`. Contact/team pages pass `withBackground` to Footer. Footer bg changed from `/90` to `/50` opacity.
+7. **Removed flowing lines** — Deleted NeuralParticles component and diagonal gradient sweep animations. Clean typographic intro only.
+### Files modified
+- `components/team-content.tsx` — Complete rewrite. Removed: NeuralParticles, diagonal sweeps, "View Profile". Added: `bio` field, click-to-expand with AnimatePresence, scoped separators, plus/cross toggle.
+- `app/team/page.tsx` — Removed OrganicBackground import, solid bg, `withBackground` on Footer.
+- `app/contact/page.tsx` — Same pattern: removed OrganicBackground, solid bg, `withBackground` on Footer.
+- `app/page.tsx` — Wrapped middle sections in opaque `bg-[#060e09]` div.
+- `components/footer.tsx` — Added `withBackground` prop, conditional OrganicBackground embed, removed Layer 1 opaque gradient, bg opacity 90%→50%.
+### Verified
+- Team page: All 8 members render, click-to-expand shows full bio ("A visionary leader with 15+ years..."), scoped separators, no flowing lines
+- Homepage: Fixed WebGL canvas present, opaque middle sections, footer semi-transparent
+- Contact page: No fixed WebGL, footer has embedded canvas via `withBackground`
+- 0 server errors
 
 ---
 
