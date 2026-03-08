@@ -9,10 +9,70 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Full contact details (address, email, phone), nav matching navbar, TRINADE 15vw, copyright "Pvt Ltd" + Privacy Policy + Disclaimer. **Team + Contact pages**: light bg. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Full contact details (address, email, phone), nav matching navbar, TRINADE 15vw, copyright "Pvt Ltd" + Privacy Policy + Disclaimer. **Team + Contact + About pages**: light bg. **About page**: 8-section cinematic page (Manifesto Hero, Origin Story, Philosophy editorial manifesto, Journey Timeline from 2020, Stats, Values, Team Teaser, CTA). Content reflects AI + broader software solutions. Founded 2020. **Git checkpoint system active**.
 - In progress: None
 - Blocked: None
-- Next step: Build About page, inner product/service pages
+- Next step: Inner product/service pages, mobile responsiveness polish, SEO metadata
+
+---
+
+## 2026-03-08 — About Page: Iteration 2 — Font, Philosophy, Scope & Year Fixes
+### Goal
+- Address user feedback: (1) fonts too small/light with too much void, (2) Philosophy section too generic, (3) company not just about AI, (4) founded in 2020 not 2023.
+### Work done
+1. **Font overhaul**: Bumped all body text 15px → 16–17px, changed `font-light` → `font-normal`, section headers `font-light` → `font-semibold`, badges 11px → 13px with `font-semibold`, clamp values increased throughout.
+2. **Philosophy section completely redesigned**: Replaced generic 3-card grid with editorial manifesto rows. Each principle is a full-width row in a 3-column grid `[100px | 1fr | 1fr]` — large teal number (01/02/03), bold split statement with teal accent line, and detail paragraph. Separator lines between rows. Much more distinctive and non-generic.
+3. **Broader company scope**: Changed hero from "We build intelligence / that amplifies humanity" → "We build technology / that moves business forward." Subtext updated to "From AI-powered platforms to enterprise software." Added "Est. 2020 · Guntur, India" tag. Origin story and timeline updated to span AI, data platforms, and custom software. Stats updated to "AI + enterprise software" sublabel.
+4. **Founding year corrected**: All 2023 references → 2020. Timeline starts from 2020 with new 2022 "Enterprise Suite" milestone. Stats show "6+ Years Building, since founding in 2020." Watermark shows 2020.
+5. **Playwright verification**: Scrolled through all 8 sections — hero, origin, philosophy, timeline, stats, values, team teaser, footer. All rendering correctly with animations triggered.
+### Design decisions
+- Editorial manifesto rows > card grid for philosophy (more distinctive, better space usage)
+- "Technology" instead of "intelligence" in hero broadens company positioning
+- 2022 "Enterprise Suite" milestone fills the timeline gap and reinforces non-AI offerings
+- Font weight increases improve readability without losing elegance
+### Files modified
+- `components/about-content.tsx` (full rewrite — ~1050 lines)
+### Verified via
+- Playwright MCP: full-page screenshot + section-by-section scrolling verification
+
+---
+
+## 2026-03-08 — About Page: Cinematic 8-Section Design
+### Goal
+- Design and build an award-quality About page with cinematic elegance, multiple bg-section transitions, scroll-driven animations, and immersive storytelling.
+### Work done
+1. **About page created** (`app/about/page.tsx`): Same architecture as team/contact — SmoothScroll > Navigation > AboutContent > Footer(withBackground).
+2. **AboutContent component** (`components/about-content.tsx`): 8 distinct sections, alternating light/dark backgrounds:
+   - **Manifesto Hero** (100vh, light bg): "We build intelligence / *that amplifies humanity.*" — line-by-line reveal animation, parallax fade on scroll, subtle grid pattern + ambient gradient orbs, pulsing ✦ badge, scroll hint.
+   - **Origin Story** (light bg): Split 2-column layout — bold headline with opacity contrast ("We saw a gap between *what AI promised* and *what it delivered.*"), narrative paragraphs left, founder blockquote right with decorative vertical line + "2023" watermark.
+   - **Philosophy** (dark bg #060e09): 3 principle cards (Human-Centered AI, Composable by Design, Radical Transparency) with custom SVG icons, hover glow, ambient teal glow background.
+   - **Journey Timeline** (light bg): 6 milestones (2023–2026) with alternating left/right layout, animated center connecting line with teal dots, staggered scroll entrance.
+   - **Stats** (dark bg): 4 animated counters (3+ Years, 50+ Team, 40+ Countries, 4 Products) using requestAnimationFrame with ease-out-cubic, vertical dividers.
+   - **Values** (light bg): 4 convictions in 3-column grid layout (index number + title + description), horizontal gradient separators, large faded index numbers (01–04).
+   - **Team Teaser** (light bg): 4 key leaders in 3:4 portrait cards with mesh gradient backgrounds, initials, hover glow, bottom gradient overlay with name/role, "Meet the full team →" link to /team.
+   - **Closing CTA** (dark bg): "Let's build what's next — *together.*" with dual CTAs (teal "Get in Touch" → /contact, ghost "Meet the Team" → /team), atmospheric glow.
+3. **Navigation updated**: Company dropdown "About" link changed from `#about` to `/about`.
+4. **Footer updated**: About link changed from `#about` to `/about`.
+5. **All animations** follow established patterns: Motion v12 `useInView` with `once: true`, staggered delays, cubic-bezier easing `[0.25, 0.1, 0.25, 1]` and `[0.22, 1, 0.36, 1]`.
+6. **All spacing** uses master formula `px-[calc(12.5vw+0.8rem)]`.
+### Design decisions
+- Alternating light (#f5f3ef) and dark (#060e09) sections create cinematic "scene changes"
+- Origin story uses blockquote + founder attribution for authenticity
+- Timeline uses center-aligned vertical line with alternating content for visual rhythm
+- Values use large faded index numbers as visual anchors (like team-content pattern)
+- Team teaser shows only 4 key leaders (compact preview) with link to full /team page
+- CTA section uses two button variants (primary teal, ghost white) for clear hierarchy
+### Files created
+- `app/about/page.tsx` (new)
+- `components/about-content.tsx` (new, ~950 lines)
+### Files modified
+- `components/navigation.tsx` (About href: `#about` → `/about`)
+- `components/footer.tsx` (About href: `#about` → `/about`)
+### Key patterns used
+- Motion v12: `useInView`, `useScroll`, `useTransform`, `AnimatePresence`
+- Typography: Manrope bold + extralight italic contrast (matching team-content hero pattern)
+- Color opacity hierarchy: `/95` headlines, `/45-50` body, `/30-35` tertiary on both light and dark backgrounds
+- Scroll-linked parallax: hero content fades and shifts up as user scrolls past
 
 ---
 

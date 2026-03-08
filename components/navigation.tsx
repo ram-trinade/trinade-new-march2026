@@ -81,7 +81,7 @@ const navItems: NavItem[] = [
     children: [
       {
         label: 'About',
-        href: '#about',
+        href: '/about',
         description: 'Who we are? Learn more about us.',
         icon: <IconAbout />,
       },
