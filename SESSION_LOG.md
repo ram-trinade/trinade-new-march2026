@@ -9,10 +9,26 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Full contact details (address, email, phone), nav matching navbar, TRINADE 15vw, copyright "Pvt Ltd" + Privacy Policy + Disclaimer. **Team + Contact + About pages**: light bg. **About page**: 8-section cinematic page (Manifesto Hero, Origin Story, Philosophy editorial manifesto, Journey Timeline from 2020, Stats, Values, Team Teaser, CTA). Content reflects AI + broader software solutions. Founded 2020. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: `h-screen` flex layout — fits exactly one viewport, no overflow. Contact details, nav, TRINADE text, copyright bar. **Team + Contact + About pages**: light bg. **About page**: 8-section cinematic page. Content reflects AI + broader software solutions. Founded 2020. **Git checkpoint system active**.
 - In progress: None
 - Blocked: None
 - Next step: Inner product/service pages, mobile responsiveness polish, SEO metadata
+
+---
+
+## 2026-03-09 — Footer: Compress to fit exactly one viewport
+### Goal
+- Footer was overflowing viewport by ~220px. Compress to fit exactly within 100vh with no overflow/underflow.
+### Work done
+1. **Flex layout**: Added `h-screen flex flex-col` to footer — content distributes vertically within one viewport.
+2. **Padding compressed**: CTA area `pt-24 pb-20` → `pt-10 pb-8`. Middle row `pb-20` → `pb-8`. Bottom bar `pb-8` → `pb-5`. Contact spacing tightened.
+3. **TRINADE text**: Changed from fixed padding (`pb-16 pt-8`) to `flex-1` — auto-fills remaining space between content and bottom bar. Size clamped: `15vw` → `clamp(6rem,13vw,15vw)`.
+4. **All sections**: Added `shrink-0` to prevent flex compression of content areas.
+5. **Verified**: Footer height = viewport height (945px = 945px, diff = 0) on both homepage and about page.
+### Files modified
+- `components/footer.tsx`
+### Verified via
+- Playwright MCP: measured footer height vs viewport on homepage and about page, took screenshots
 
 ---
 

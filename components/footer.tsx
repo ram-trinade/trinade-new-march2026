@@ -72,7 +72,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
   const trinadeInView = useInView(trinadeRef, { once: true, margin: '-40px' })
 
   return (
-    <footer className="footer-atmosphere relative bg-[#060e09]/50 overflow-hidden">
+    <footer className="footer-atmosphere relative bg-[#060e09]/50 overflow-hidden h-screen flex flex-col">
       {/* ===== WEBGL BACKGROUND (when embedded) ===== */}
       {withBackground && (
         <div className="absolute inset-0 z-[1] overflow-hidden">
@@ -186,19 +186,19 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       {/* ===== END ATMOSPHERIC LAYERS ===== */}
 
       {/* Top separator line */}
-      <div className="relative z-[2] w-full h-px bg-white/[0.08]" />
+      <div className="relative z-[2] w-full h-px bg-white/[0.08] shrink-0" />
 
       {/* Contact CTA area */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-24 pb-20">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-10 pb-8 shrink-0">
         <FadeUp>
-          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-8">
+          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-4">
             <span className="text-[#00d4aa]">&#10022;</span>
             Contact Us
           </span>
         </FadeUp>
 
         <FadeUp delay={0.1}>
-          <h2 className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.08] tracking-[-0.025em] max-w-[52ch]">
+          <h2 className="text-[clamp(1.6rem,3.2vw,3rem)] font-light leading-[1.1] tracking-[-0.025em] max-w-[52ch]">
             <span className="text-white/95">
               Interested in working together
             </span>
@@ -210,25 +210,25 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Middle row — contact + nav links */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-20">
-        <div className="w-full h-px bg-white/[0.06] mb-12" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 shrink-0">
+        <div className="w-full h-px bg-white/[0.06] mb-8" />
 
-        <div className="flex flex-col lg:flex-row justify-between gap-12">
+        <div className="flex flex-col lg:flex-row justify-between gap-8">
           {/* Left — contact details */}
           <FadeUp delay={0.15} className="shrink-0 max-w-[320px]">
-            <p className="text-sm text-white/50 tracking-[0.04em] uppercase mb-4">
+            <p className="text-sm text-white/50 tracking-[0.04em] uppercase mb-3">
               Get in Touch
             </p>
-            <div className="space-y-4">
+            <div className="space-y-2.5">
               <div>
-                <p className="text-[13px] text-white/40 mb-1">Address</p>
-                <p className="text-sm text-white/70 leading-relaxed">
+                <p className="text-[13px] text-white/40 mb-0.5">Address</p>
+                <p className="text-sm text-white/70 leading-snug">
                   #06, Green Valley Apartments, Gorantla,<br />
                   Guntur, Andhra Pradesh 522034, India
                 </p>
               </div>
               <div>
-                <p className="text-[13px] text-white/40 mb-1">Email</p>
+                <p className="text-[13px] text-white/40 mb-0.5">Email</p>
                 <a
                   href="mailto:info@trinade.com"
                   className="text-sm text-white/80 hover:text-[#00d4aa] transition-colors duration-300"
@@ -237,7 +237,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
                 </a>
               </div>
               <div>
-                <p className="text-[13px] text-white/40 mb-1">Phone</p>
+                <p className="text-[13px] text-white/40 mb-0.5">Phone</p>
                 <a
                   href="tel:+919490754923"
                   className="text-sm text-white/80 hover:text-[#00d4aa] transition-colors duration-300"
@@ -249,13 +249,13 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
           </FadeUp>
 
           {/* Right — nav columns */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 lg:gap-14">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-12">
             {navColumns.map((col, colIndex) => (
               <FadeUp key={col.title} delay={0.2 + colIndex * 0.05}>
-                <h4 className="text-sm font-medium text-white/90 mb-4 tracking-[0.02em]">
+                <h4 className="text-sm font-medium text-white/90 mb-3 tracking-[0.02em]">
                   {col.title}
                 </h4>
-                <ul className="space-y-2.5">
+                <ul className="space-y-2">
                   {col.links.map((link) => (
                     <li key={link.name}>
                       <a
@@ -273,8 +273,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         </div>
       </div>
 
-      {/* Giant TRINADE text */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-16 pt-8">
+      {/* Giant TRINADE text — flex-1 fills remaining space */}
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] flex-1 flex items-center justify-center min-h-0">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -297,10 +297,10 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
             delay: 0.1,
             ease: [0.25, 0.1, 0.25, 1],
           }}
-          className="relative"
+          className="relative w-full"
         >
           <h3
-            className="text-[15vw] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
+            className="text-[clamp(6rem,13vw,15vw)] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
             style={{ fontFamily: 'var(--font-display)' }}
             aria-hidden="true"
           >
@@ -310,11 +310,11 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 pt-4">
-        <div className="w-full h-px bg-white/[0.06] mb-6" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-5 pt-3 shrink-0">
+        <div className="w-full h-px bg-white/[0.06] mb-4" />
 
         <FadeUp delay={0.3}>
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <div className="flex items-center gap-4">
               <p className="text-sm text-white/40">
                 &copy; 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved.
