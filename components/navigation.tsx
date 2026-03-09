@@ -345,17 +345,17 @@ function ResourcesDropdownContent({ children }: { children: DropdownChild[] }) {
           {/* Background glow */}
           <ellipse cx="140" cy="100" rx="90" ry="60" fill="url(#blogGlow)" />
           {/* Stacked article cards — editorial feel */}
-          <rect x="65" y="35" width="60" height="75" rx="5" fill="#00d4aa" opacity="0.06" stroke="#00d4aa" strokeWidth="0.8" opacity="0.35" />
+          <rect x="65" y="35" width="60" height="75" rx="5" fill="#00d4aa" fillOpacity="0.06" stroke="#00d4aa" strokeWidth="0.8" strokeOpacity="0.35" />
           <line x1="75" y1="55" x2="115" y2="55" stroke="#00d4aa" strokeWidth="0.7" opacity="0.4" />
           <line x1="75" y1="62" x2="105" y2="62" stroke="#00d4aa" strokeWidth="0.5" opacity="0.25" />
           <line x1="75" y1="69" x2="110" y2="69" stroke="#00d4aa" strokeWidth="0.5" opacity="0.25" />
           <rect x="75" y="80" width="40" height="20" rx="3" fill="#00d4aa" opacity="0.08" />
-          <rect x="110" y="50" width="55" height="70" rx="5" fill="#c8e64e" opacity="0.05" stroke="#c8e64e" strokeWidth="0.8" opacity="0.4" />
+          <rect x="110" y="50" width="55" height="70" rx="5" fill="#c8e64e" fillOpacity="0.05" stroke="#c8e64e" strokeWidth="0.8" strokeOpacity="0.4" />
           <line x1="120" y1="68" x2="155" y2="68" stroke="#c8e64e" strokeWidth="0.7" opacity="0.45" />
           <line x1="120" y1="75" x2="148" y2="75" stroke="#c8e64e" strokeWidth="0.5" opacity="0.3" />
           <line x1="120" y1="82" x2="152" y2="82" stroke="#c8e64e" strokeWidth="0.5" opacity="0.25" />
           <rect x="120" y="92" width="35" height="18" rx="3" fill="#c8e64e" opacity="0.07" />
-          <rect x="155" y="42" width="62" height="78" rx="5" fill="#b48237" opacity="0.05" stroke="#b48237" strokeWidth="0.9" opacity="0.4" />
+          <rect x="155" y="42" width="62" height="78" rx="5" fill="#b48237" fillOpacity="0.05" stroke="#b48237" strokeWidth="0.9" strokeOpacity="0.4" />
           <line x1="165" y1="60" x2="207" y2="60" stroke="#b48237" strokeWidth="0.7" opacity="0.45" />
           <line x1="165" y1="67" x2="200" y2="67" stroke="#b48237" strokeWidth="0.5" opacity="0.3" />
           <line x1="165" y1="74" x2="205" y2="74" stroke="#b48237" strokeWidth="0.5" opacity="0.25" />
@@ -575,7 +575,6 @@ export default function Navigation() {
                 transition={{
                   duration: 0.4,
                   ease: [0.16, 1, 0.3, 1],
-                  exit: { duration: 0.25 },
                 }}
                 className="absolute top-full left-0 right-0 mt-3 z-[60] rounded-2xl bg-white/[0.60] border border-white/[0.35] shadow-[0_8px_32px_rgba(0,0,0,0.10),0_0_0_1px_rgba(255,255,255,0.2)_inset] overflow-hidden"
                 style={{ backdropFilter: 'blur(28px) saturate(1.4)', WebkitBackdropFilter: 'blur(28px) saturate(1.4)' }}

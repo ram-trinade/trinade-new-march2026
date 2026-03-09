@@ -6,3 +6,9 @@ node_modules/
 .env.local
 .env.*.local
 nul
+.vercel/
+.playwright-mcp/
+*.png
+*.jpeg
+!public/**/*.png
+!public/**/*.jpeg
