@@ -9,11 +9,28 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use very light off-white `#f8f5f0` (solid). Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections, dark Products + Stats with grain, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use sage-mint `#f0f5f2` — a green-complementing background that echoes the dark green palette. Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections, dark Products + Stats with grain, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
 - In progress: Hero background redesign — user choosing from 5 green gradient concept variations at `/hero-backgrounds`
 - Blocked: None
 - Next step: User picks favorite hero background → implement as production hero. Then: mobile responsiveness, SEO.
 - Last fix: Body background flash eliminated — changed body bg from cream `#f0e6d3` to dark `#060e09`
+
+---
+
+## 2026-03-09 — Light backgrounds: sage-mint #f0f5f2 to complement green palette
+### Goal
+- Replace neutral off-white with a color that complements the deep greens (#060e09, #0a1a12) and teal accent (#00d4aa)
+### Design rationale
+- Color theory: very light sage-mint `#f0f5f2` stays in the green family, creating a cohesive green-on-green color story
+- The light sections now subtly echo the same hue the dark sections use boldly
+- More intentional and sophisticated than generic cream/white
+### Files changed
+- `app/page.tsx` — 2 light section wrappers
+- `app/contact/page.tsx` — root div
+- `app/about/page.tsx` — root div
+- `components/about-content.tsx` — 5 light section backgrounds
+### Verified
+- Homepage light sections ✅, Contact page ✅ — cohesive sage-mint background
 
 ---
 

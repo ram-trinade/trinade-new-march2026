@@ -188,7 +188,7 @@ function ManifestoHero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[100vh] grid place-items-center overflow-hidden bg-[#f8f5f0]"
+      className="relative min-h-[100vh] grid place-items-center overflow-hidden bg-[#f0f5f2]"
     >
       {/* Decorative grid pattern */}
       <div
@@ -342,7 +342,7 @@ function OriginStory() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-24 md:py-36 bg-[#f8f5f0] overflow-hidden">
+    <section ref={ref} className="relative py-24 md:py-36 bg-[#f0f5f2] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
           {/* Left — the problem */}
@@ -589,7 +589,7 @@ function JourneyTimeline() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative py-28 md:py-36 bg-[#f8f5f0] overflow-hidden">
+    <section ref={ref} className="relative py-28 md:py-36 bg-[#f0f5f2] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-16">
@@ -787,7 +787,7 @@ function ValuesSection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-28 md:py-36 bg-[#f8f5f0] overflow-hidden">
+    <section ref={ref} className="relative py-28 md:py-36 bg-[#f0f5f2] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-16">
@@ -869,7 +869,7 @@ function TeamTeaser() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative pt-8 pb-28 bg-[#f8f5f0] overflow-hidden">
+    <section ref={ref} className="relative pt-8 pb-28 bg-[#f0f5f2] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
