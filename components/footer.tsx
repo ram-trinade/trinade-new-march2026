@@ -355,11 +355,11 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
           className="relative w-full"
         >
           <h3
-            className="text-[clamp(5rem,12vw,14vw)] font-extrabold leading-[0.82] text-white select-none text-center uppercase"
+            className="text-[clamp(7rem,15.7vw,19vw)] leading-[0.80] text-white select-none text-center uppercase"
             style={{
-              fontFamily: 'var(--font-display)',
-              letterSpacing: '0.18em',
-              fontStretch: 'expanded',
+              fontFamily: 'var(--font-trinade)',
+              fontWeight: 900,
+              letterSpacing: '0.02em',
             }}
             aria-hidden="true"
           >

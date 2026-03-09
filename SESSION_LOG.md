@@ -9,10 +9,28 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — SVG social icons (LinkedIn, Facebook, X) in circular bordered buttons, refined CTA copy, TRINADE text with `letterSpacing: 0.18em` spanning exactly the content separator width (1414px), dot-separated legal links. `h-screen` flex layout — fits exactly one viewport. **Team + Contact + About pages**: light bg. **About page**: 8-section cinematic page. Content reflects AI + broader software solutions. Founded 2020. **Footer concepts page**: 10 distinct Awwwards-quality footer variations at `/footer-concepts`. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width (1413.8px/1414.4px). SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
 - In progress: Footer redesign — user choosing from 10 concept variations
 - Blocked: None
 - Next step: User picks favorite footer variation → implement as production footer. Then: inner product/service pages, mobile responsiveness, SEO.
+
+---
+
+## 2026-03-09 — Footer: TRINADE text restyling with Outfit Black
+### Goal
+- Make TRINADE text span the full width of the separator line
+- Use a font that feels slightly horizontally extended, much bolder, with less letter spacing
+- Reflect changes across all pages (footer is shared component)
+### Work done
+1. **New font**: Added Outfit (weight 900/Black) via `next/font/google` in `app/layout.tsx`. CSS variable `--font-trinade`.
+2. **TRINADE text restyled**: Changed from Manrope extrabold (`letterSpacing: 0.18em`, `fontStretch: expanded`, `12vw`) to Outfit Black (`letterSpacing: 0.02em`, `fontWeight: 900`, `15.7vw`).
+3. **Pixel-perfect sizing**: First attempt at `14vw` filled only 89.1% (1261px vs 1414px). Calculated ratio 1414/1261 = 1.121, adjusted to `15.7vw`. Final: text 1413.8px vs separator 1414.4px (0.3px gap, 100% fill).
+4. **No overflow**: Footer still fits exactly in viewport (945px = 945px).
+### Files modified
+- `app/layout.tsx` — Added Outfit font import, `--font-trinade` CSS variable
+- `components/footer.tsx` — Updated TRINADE h3 styling (font-family, weight, size, letter-spacing)
+### Verified via
+- Playwright MCP: Measured text width vs separator width, confirmed pixel-perfect alignment. Screenshot confirms bolder, wider TRINADE filling separator width.
 
 ---
 
