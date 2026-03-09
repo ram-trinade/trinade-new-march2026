@@ -13,6 +13,27 @@
 - In progress: Hero background redesign — user choosing from 5 green gradient concept variations at `/hero-backgrounds`
 - Blocked: None
 - Next step: User picks favorite hero background → implement as production hero. Then: mobile responsiveness, SEO.
+- Last fix: Body background flash eliminated — changed body bg from cream `#f0e6d3` to dark `#060e09`
+
+---
+
+## 2026-03-09 — Fix: Light background flash on homepage load + reveal animation
+### Goal
+- Eliminate cream `#f0e6d3` background flash that appeared momentarily on homepage load and during reveal animation expansion
+### Root cause
+- Body `background-color` in `globals.css` was `#f0e6d3` (warm cream). This was visible:
+  1. Before any React components mount (initial page load) — full cream screen flash
+  2. Through the expanding hole of the reveal animation SVG mask — cream rectangle visible before WebGL canvas renders
+### Fix
+- Changed body `background-color` from `#f0e6d3` to `#060e09` (deep dark teal-black matching hero/WebGL bg) in `app/globals.css`
+- All light sections already have explicit `bg-[#f0e6d3]` on their wrapper divs, so they remain cream
+- About page root div (`bg-[#f0e6d3]`) and Contact page root div (`bg-[#f0e6d3]`) render via SSR immediately, unaffected
+### Files changed
+- `app/globals.css` — body background-color: `#f0e6d3` → `#060e09`
+### Verified
+- Homepage: dark body bg, WebGL hero, reveal animation all correct ✅
+- Contact page: cream bg intact from root div class ✅
+- About page: cream bg intact from root div class ✅
 
 ---
 
