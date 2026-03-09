@@ -15,7 +15,7 @@ const AboutContent = dynamic(() => import('@/components/about-content'), {
 
 export default function AboutPage() {
   return (
-    <div className="relative bg-[#f0e6d3]">
+    <div className="relative bg-[#f8f5f0]">
       <SmoothScroll>
         <Navigation />
         <main>

@@ -9,11 +9,26 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use warm cream `#f0e6d3` (solid). Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then cream sections, dark Products + Stats with grain, cream Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use very light off-white `#f8f5f0` (solid). Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections, dark Products + Stats with grain, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
 - In progress: Hero background redesign — user choosing from 5 green gradient concept variations at `/hero-backgrounds`
 - Blocked: None
 - Next step: User picks favorite hero background → implement as production hero. Then: mobile responsiveness, SEO.
 - Last fix: Body background flash eliminated — changed body bg from cream `#f0e6d3` to dark `#060e09`
+
+---
+
+## 2026-03-09 — Lighten cream background from #f0e6d3 to #f8f5f0
+### Goal
+- User found the cream `#f0e6d3` too heavy/creamy. Wanted a much lighter, barely-tinted off-white.
+### Fix
+- Replaced `#f0e6d3` → `#f8f5f0` (very light warm off-white) across all source files
+### Files changed
+- `app/page.tsx` — 2 light section wrappers
+- `app/contact/page.tsx` — root div
+- `app/about/page.tsx` — root div
+- `components/about-content.tsx` — 5 light section backgrounds
+### Verified
+- Homepage light sections ✅, Contact page ✅, About page ✅ — all showing lighter background
 
 ---
 
