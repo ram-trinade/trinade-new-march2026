@@ -273,8 +273,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         </div>
       </div>
 
-      {/* Giant TRINADE text — flex-1 fills remaining space */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] flex-1 flex items-center justify-center min-h-0">
+      {/* Giant TRINADE text — mt-auto pushes TRINADE+bottom bar to viewport bottom */}
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-4 pb-2 mt-auto shrink-0">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -310,35 +310,33 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-5 pt-3 shrink-0">
-        <div className="w-full h-px bg-white/[0.06] mb-4" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-4 pt-1 shrink-0">
+        <div className="w-full h-px bg-white/[0.10] mb-3" />
 
-        <FadeUp delay={0.3}>
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-            <div className="flex items-center gap-4">
-              <p className="text-sm text-white/40">
-                &copy; 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved.
-              </p>
-              <span className="hidden sm:block text-white/20">|</span>
-              <a href="#" className="text-sm text-white/40 hover:text-white/70 transition-colors duration-300">Privacy Policy</a>
-              <a href="#" className="text-sm text-white/40 hover:text-white/70 transition-colors duration-300">Disclaimer</a>
-            </div>
-
-            <div className="flex items-center gap-6">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  className="text-sm text-white/45 hover:text-white/80 transition-colors duration-300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {social.name}
-                </a>
-              ))}
-            </div>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+          <div className="flex items-center gap-4">
+            <p className="text-[13px] text-white/50">
+              &copy; 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved.
+            </p>
+            <span className="hidden sm:block text-white/25">|</span>
+            <a href="#" className="text-[13px] text-white/45 hover:text-white/70 transition-colors duration-300">Privacy Policy</a>
+            <a href="#" className="text-[13px] text-white/45 hover:text-white/70 transition-colors duration-300">Disclaimer</a>
           </div>
-        </FadeUp>
+
+          <div className="flex items-center gap-6">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                className="text-[13px] text-white/50 hover:text-white/80 transition-colors duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {social.name}
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   )

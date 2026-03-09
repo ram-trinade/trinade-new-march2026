@@ -16,6 +16,21 @@
 
 ---
 
+## 2026-03-09 — Footer: Fix TRINADE spacing + copyright bar visibility
+### Goal
+- Reduce excessive space above and below TRINADE text. Make copyright bar visible below the bottom line.
+### Work done
+1. **TRINADE section**: Removed `flex-1` (was creating large gaps). Changed to `mt-auto shrink-0` with tight padding (`pt-4 pb-2`). This pushes TRINADE+bottom bar to the viewport bottom as a cluster, with remaining space absorbed between contact info and TRINADE.
+2. **Bottom bar**: Removed FadeUp animation wrapper (was adding layout overhead). Reduced padding `pb-5 pt-3` → `pb-4 pt-1`. Increased separator line opacity `0.06` → `0.10`. Increased text opacity `white/40` → `white/50` for readability.
+3. **Copyright now visible**: Bottom of copyright text at 927px within 945px viewport (18px to spare). Previously clipped at 955px (10px past viewport).
+### Files modified
+- `components/footer.tsx`
+### Verified via
+- Playwright MCP: measured copyright position, confirmed visible=true. Full screenshot shows copyright + Privacy Policy + Disclaimer + social links at footer bottom.
+- Preview tool: screenshot confirms all elements visible within single viewport.
+
+---
+
 ## 2026-03-09 — Footer: Compress to fit exactly one viewport
 ### Goal
 - Footer was overflowing viewport by ~220px. Compress to fit exactly within 100vh with no overflow/underflow.
