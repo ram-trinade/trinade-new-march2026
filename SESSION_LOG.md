@@ -9,10 +9,36 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections (#f5f3ef), dark Products + Stats, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width (1413.8px/1414.4px). SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use warm cream `#f0e6d3` (solid). Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then cream sections, dark Products + Stats with grain, cream Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
 - In progress: Footer redesign — user choosing from 10 concept variations
 - Blocked: None
 - Next step: User picks favorite footer variation → implement as production footer. Then: inner product/service pages, mobile responsiveness, SEO.
+
+---
+
+## 2026-03-09 — Background overhaul: warm cream light + grainy gradient dark
+### Goal
+- Replace bright white (#f5f3ef) light backgrounds with a warm, creamy solid color that suits the teal/green color scheme
+- Replace flat dark backgrounds (#060e09) with a grainy gradient that adds depth without affecting readability
+- Apply changes consistently across all pages (homepage, about, contact)
+### Work done
+1. **Light backgrounds**: Changed `#f5f3ef` → `#f0e6d3` (warm cream/parchment) across all pages and components. Solid color, no transparency.
+2. **Dark grain CSS class**: Created `.section-dark` in `globals.css` with:
+   - Subtle diagonal gradient (`170deg`) blending `#060e09` → `#0a1a12` → `#081510` → `#060e09`
+   - `::before` pseudo-element with SVG noise texture (fractalNoise, baseFrequency 0.75, opacity 0.28, overlay blend)
+   - `> *` children get `z-index: 2` to sit above grain layer
+3. **Applied `.section-dark`** to all dark sections: homepage Products+Stats wrapper, about-content Philosophy/Stats/ClosingCTA sections + their wrapper divs, product-showcase, stats-section
+4. **Footer untouched**: Already has its own `.footer-atmosphere` grain system
+### Files modified
+- `app/globals.css` — Body bg color + new `.section-dark` class
+- `app/page.tsx` — Light bg color + section-dark on dark wrapper
+- `app/about/page.tsx` — Light bg color
+- `app/contact/page.tsx` — Light bg color
+- `components/about-content.tsx` — Light bg color (5 sections) + section-dark (6 dark sections/wrappers)
+- `components/product-showcase.tsx` — section-dark
+- `components/stats-section.tsx` — section-dark
+### Verified via
+- Preview tool: Screenshots of About page (hero, philosophy, timeline), homepage (light/dark transitions, product cards). All rendering correctly, grain visible but subtle, readability unaffected.
 
 ---
 

@@ -52,15 +52,15 @@ export default function Home() {
         <Navigation />
         <main>
           <HeroSection />
-          <div className="relative bg-[#f5f3ef]">
+          <div className="relative bg-[#f0e6d3]">
             <TrustedBy />
             <WhatWeDo />
           </div>
-          <div className="relative bg-[#060e09]">
+          <div className="relative bg-[#060e09] section-dark">
             <ProductShowcase />
             <StatsSection />
           </div>
-          <div className="relative bg-[#f5f3ef]">
+          <div className="relative bg-[#f0e6d3]">
             <Testimonials />
           </div>
           <Footer withBackground />

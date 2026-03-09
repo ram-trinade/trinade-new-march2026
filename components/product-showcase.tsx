@@ -189,7 +189,7 @@ export default function ProductShowcase() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-32 bg-[#060e09]">
+    <section ref={ref} className="relative py-32 bg-[#060e09] section-dark">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-16">

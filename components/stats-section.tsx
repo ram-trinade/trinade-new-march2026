@@ -64,7 +64,7 @@ export default function StatsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section ref={ref} className="relative py-32 bg-[#060e09]">
+    <section ref={ref} className="relative py-32 bg-[#060e09] section-dark">
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"

@@ -188,7 +188,7 @@ function ManifestoHero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[100vh] grid place-items-center overflow-hidden bg-[#f5f3ef]"
+      className="relative min-h-[100vh] grid place-items-center overflow-hidden bg-[#f0e6d3]"
     >
       {/* Decorative grid pattern */}
       <div
@@ -342,7 +342,7 @@ function OriginStory() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-24 md:py-36 bg-[#f5f3ef] overflow-hidden">
+    <section ref={ref} className="relative py-24 md:py-36 bg-[#f0e6d3] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
           {/* Left — the problem */}
@@ -490,7 +490,7 @@ function PhilosophySection() {
   ]
 
   return (
-    <section ref={ref} className="relative py-28 md:py-36 bg-[#060e09] overflow-hidden">
+    <section ref={ref} className="relative py-28 md:py-36 bg-[#060e09] section-dark overflow-hidden">
       {/* Layered ambient glows */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -589,7 +589,7 @@ function JourneyTimeline() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative py-28 md:py-36 bg-[#f5f3ef] overflow-hidden">
+    <section ref={ref} className="relative py-28 md:py-36 bg-[#f0e6d3] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-16">
@@ -705,7 +705,7 @@ function AboutStats() {
   ]
 
   return (
-    <section ref={ref} className="relative py-28 md:py-32 bg-[#060e09]">
+    <section ref={ref} className="relative py-28 md:py-32 bg-[#060e09] section-dark">
       {/* Ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -787,7 +787,7 @@ function ValuesSection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative py-28 md:py-36 bg-[#f5f3ef] overflow-hidden">
+    <section ref={ref} className="relative py-28 md:py-36 bg-[#f0e6d3] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-16">
@@ -869,7 +869,7 @@ function TeamTeaser() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="relative pt-8 pb-28 bg-[#f5f3ef] overflow-hidden">
+    <section ref={ref} className="relative pt-8 pb-28 bg-[#f0e6d3] overflow-hidden">
       <div className="px-[calc(12.5vw+0.8rem)]">
         {/* Section header */}
         <div className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -1007,7 +1007,7 @@ function ClosingCTA() {
   return (
     <section
       ref={ref}
-      className="relative py-28 md:py-36 bg-[#060e09] overflow-hidden"
+      className="relative py-28 md:py-36 bg-[#060e09] section-dark overflow-hidden"
     >
       {/* Atmospheric glow */}
       <div
@@ -1122,16 +1122,16 @@ export default function AboutContent() {
     <div className="relative z-10">
       <ManifestoHero />
       <OriginStory />
-      <div className="relative bg-[#060e09]">
+      <div className="relative bg-[#060e09] section-dark">
         <PhilosophySection />
       </div>
       <JourneyTimeline />
-      <div className="relative bg-[#060e09]">
+      <div className="relative bg-[#060e09] section-dark">
         <AboutStats />
       </div>
       <ValuesSection />
       <TeamTeaser />
-      <div className="relative bg-[#060e09]">
+      <div className="relative bg-[#060e09] section-dark">
         <ClosingCTA />
       </div>
     </div>
