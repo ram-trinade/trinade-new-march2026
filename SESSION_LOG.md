@@ -10,9 +10,37 @@
 
 ## Current Status (TL;DR)
 - Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use warm cream `#f0e6d3` (solid). Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then cream sections, dark Products + Stats with grain, cream Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
-- In progress: Footer redesign — user choosing from 10 concept variations
+- In progress: Hero background redesign — user choosing from 5 green gradient concept variations at `/hero-backgrounds`
 - Blocked: None
-- Next step: User picks favorite footer variation → implement as production footer. Then: inner product/service pages, mobile responsiveness, SEO.
+- Next step: User picks favorite hero background → implement as production hero. Then: mobile responsiveness, SEO.
+
+---
+
+## 2026-03-09 — Hero Background Concepts: 5 Green Gradient Variations
+### Goal
+- Analyze 3 reference images from "Green Gradient Design" folder for visual inspiration
+- Extract color palette from existing WebGL hero animation (shaders.ts) for cohesion
+- Create 5 distinct hero background concept variations on a new page
+- Each full-viewport, matching the green gradient direction from references
+### Work done
+1. **Reference analysis**: Studied 3 images — (1) bold swirling green-yellow-black fluid curves with silk specular, (2) minimal single soft green glow on black with heavy grain, (3) smooth green gradient with diagonal fabric fold. Identified key patterns: multi-tonal greens, depth via light/shadow, grain texture, organic flowing forms.
+2. **Hero animation colors extracted** from `lib/shaders.ts`: deep teal bg (#060e09→#164a32), amber ribbons (#b48237→#d2af6e highlights), green reflections (#1a5a3e), glow spots (#145032). Existing accent colors: #00d4aa (teal), #c8e64e (lime).
+3. **Created `/hero-backgrounds` page** with 5 variations (`app/hero-backgrounds/page.tsx`):
+   - **01 — Aurora Swirl**: Bold swirling green-lime-yellow forms on deep black. Multiple layered radial gradients with shadow cuts. Amber warm streak echoing ribbons. Heavy grain.
+   - **02 — Soft Emanation**: Minimal single soft green glow on pure black. Heavy grain (opacity 0.5). Deep vignette offset to glow center. Most cinematic/moody.
+   - **03 — Silk Fold**: Smooth linear gradient (sage→forest) with diagonal fold highlight/shadow. Light pool upper-left, dark pool lower-right. Fabric material quality.
+   - **04 — Nebula**: Multiple scattered gradient orbs in different green tones (forest, teal, lime) + amber warm node. Teal point sparks. Gaseous deep-space feel.
+   - **05 — Gradient Mesh**: Complex multi-point gradient closest to existing WebGL aesthetic. Diagonal amber streaks echoing ribbon animation. Teal + lime accent glows. Most seamless transition from WebGL.
+4. **All variations include**: hero text overlay ("Built for What's Next."), grain/noise SVG texture, vignette, amber warmth matching ribbon colors.
+### Design decisions
+- Each variation incorporates amber/gold tones from the existing hero ribbon animation for cohesion
+- Grain texture varies: heavier on Soft Emanation (cinematic), lighter on Silk Fold (material)
+- Gradient Mesh (V5) designed to be closest drop-in replacement for existing WebGL bg
+- All work with the cream→dark loading transition (dark backgrounds transition smoothly from cream via reveal animation)
+### Files created
+- `app/hero-backgrounds/page.tsx` — Concept page with 5 hero background variations
+### Verified via
+- Playwright MCP: Navigated to `/hero-backgrounds`, scrolled through all 5 variations, screenshots captured for each
 
 ---
 
