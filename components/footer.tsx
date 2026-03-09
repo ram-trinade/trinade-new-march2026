@@ -32,11 +32,31 @@ const navColumns = [
   },
 ]
 
-const socialLinks = [
-  { name: 'LinkedIn', href: '#' },
-  { name: 'Facebook', href: '#' },
-  { name: 'Twitter', href: '#' },
-]
+/* ─── Social SVG Icons ─── */
+
+function LinkedInIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  )
+}
+
+function XIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  )
+}
+
+function FacebookIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+    </svg>
+  )
+}
 
 function FadeUp({
   children,
@@ -82,7 +102,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
 
       {/* ===== ATMOSPHERIC BACKGROUND LAYERS ===== */}
 
-      {/* Layer 2: Large ambient orb — upper left (warm/amber tint, like hero light3) */}
+      {/* Layer 2: Large ambient orb — upper left */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -96,7 +116,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         }}
       />
 
-      {/* Layer 3: Teal glow orb — center-right (hero's main green glow) */}
+      {/* Layer 3: Teal glow orb — center-right */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -110,7 +130,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         }}
       />
 
-      {/* Layer 4: Deep green glow — bottom-left (like hero's light1 spot) */}
+      {/* Layer 4: Deep green glow — bottom-left */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -124,7 +144,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         }}
       />
 
-      {/* Layer 5: Accent glow behind TRINADE text area — teal bleed */}
+      {/* Layer 5: Accent glow behind TRINADE text area */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -139,7 +159,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         }}
       />
 
-      {/* Layer 6: Subtle lime accent spill — top-right edge (like hero curve highlights) */}
+      {/* Layer 6: Subtle lime accent spill */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -153,7 +173,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         }}
       />
 
-      {/* Layer 7: Horizontal "ribbon echo" — a faint band suggesting the organic curves bleeding down */}
+      {/* Layer 7: Horizontal ribbon echo */}
       <div
         className="absolute pointer-events-none"
         style={{
@@ -174,7 +194,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         }}
       />
 
-      {/* Layer 8: Very subtle vignette (like hero's post-processing vignette) */}
+      {/* Layer 8: Vignette */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -188,30 +208,65 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       {/* Top separator line */}
       <div className="relative z-[2] w-full h-px bg-white/[0.08] shrink-0" />
 
-      {/* Contact CTA area */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-10 pb-8 shrink-0">
-        <FadeUp>
-          <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-4">
-            <span className="text-[#00d4aa]">&#10022;</span>
-            Contact Us
-          </span>
-        </FadeUp>
+      {/* ===== CTA + Social row ===== */}
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-10 pb-6 shrink-0">
+        <div className="flex items-start justify-between gap-8">
+          <div className="flex-1">
+            <FadeUp>
+              <span className="inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase text-[#00d4aa] mb-4">
+                <span className="text-[#00d4aa]">&#10022;</span>
+                Let&apos;s Connect
+              </span>
+            </FadeUp>
 
-        <FadeUp delay={0.1}>
-          <h2 className="text-[clamp(1.6rem,3.2vw,3rem)] font-light leading-[1.1] tracking-[-0.025em] max-w-[52ch]">
-            <span className="text-white/95">
-              Interested in working together
-            </span>
-            <span className="text-white/40">
-              , trying out the platform or simply learning more?
-            </span>
-          </h2>
-        </FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="text-[clamp(1.6rem,3.2vw,3rem)] font-light leading-[1.1] tracking-[-0.025em] max-w-[40ch]">
+                <span className="text-white/95">
+                  The next satisfying step starts here
+                </span>
+                <span className="text-white/40">
+                  &nbsp;— let&apos;s make it count.
+                </span>
+              </h2>
+            </FadeUp>
+          </div>
+
+          {/* Social icons — floating right, vertically centered */}
+          <FadeUp delay={0.2} className="hidden lg:flex items-center gap-5 pt-10">
+            <a
+              href="#"
+              className="group relative w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center hover:border-[#00d4aa]/40 hover:bg-white/[0.04] transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <LinkedInIcon className="w-[18px] h-[18px] text-white/50 group-hover:text-[#00d4aa] transition-colors duration-300" />
+            </a>
+            <a
+              href="#"
+              className="group relative w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center hover:border-[#00d4aa]/40 hover:bg-white/[0.04] transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <FacebookIcon className="w-[18px] h-[18px] text-white/50 group-hover:text-[#00d4aa] transition-colors duration-300" />
+            </a>
+            <a
+              href="#"
+              className="group relative w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center hover:border-[#00d4aa]/40 hover:bg-white/[0.04] transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X (Twitter)"
+            >
+              <XIcon className="w-[16px] h-[16px] text-white/50 group-hover:text-[#00d4aa] transition-colors duration-300" />
+            </a>
+          </FadeUp>
+        </div>
       </div>
 
-      {/* Middle row — contact + nav links */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-8 shrink-0">
-        <div className="w-full h-px bg-white/[0.06] mb-8" />
+      {/* ===== Middle row — contact + nav links ===== */}
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-6 shrink-0">
+        <div className="w-full h-px bg-white/[0.06] mb-6" />
 
         <div className="flex flex-col lg:flex-row justify-between gap-8">
           {/* Left — contact details */}
@@ -273,8 +328,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         </div>
       </div>
 
-      {/* Giant TRINADE text — mt-auto pushes TRINADE+bottom bar to viewport bottom */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-4 pb-6 mt-auto shrink-0">
+      {/* ===== Giant TRINADE text — mt-auto pushes to viewport bottom ===== */}
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-4 pb-5 mt-auto shrink-0">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -300,8 +355,12 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
           className="relative w-full"
         >
           <h3
-            className="text-[clamp(6rem,13vw,15vw)] font-bold leading-[0.85] tracking-[0.08em] text-white select-none text-center"
-            style={{ fontFamily: 'var(--font-display)' }}
+            className="text-[clamp(5rem,12vw,14vw)] font-extrabold leading-[0.82] text-white select-none text-center uppercase"
+            style={{
+              fontFamily: 'var(--font-display)',
+              letterSpacing: '0.18em',
+              fontStretch: 'expanded',
+            }}
             aria-hidden="true"
           >
             TRINADE
@@ -309,32 +368,21 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
         </motion.div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-6 pt-0 shrink-0">
-        <div className="w-full h-px bg-white/[0.10] mb-4" />
+      {/* ===== Bottom bar ===== */}
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-5 shrink-0">
+        <div className="w-full h-px bg-white/[0.12] mb-3" />
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
-          <div className="flex items-center gap-4">
-            <p className="text-[13px] text-white/50">
-              &copy; 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved.
-            </p>
-            <span className="hidden sm:block text-white/25">|</span>
-            <a href="#" className="text-[13px] text-white/45 hover:text-white/70 transition-colors duration-300">Privacy Policy</a>
-            <a href="#" className="text-[13px] text-white/45 hover:text-white/70 transition-colors duration-300">Disclaimer</a>
-          </div>
+          <p className="text-[13px] text-white/45">
+            &copy; 2026 Trinade AI Technologies Pvt Ltd. All Rights Reserved.
+          </p>
 
-          <div className="flex items-center gap-6">
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.href}
-                className="text-[13px] text-white/50 hover:text-white/80 transition-colors duration-300"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {social.name}
-              </a>
-            ))}
+          <div className="flex items-center gap-5">
+            <a href="#" className="text-[13px] text-white/40 hover:text-white/70 transition-colors duration-300">Privacy Policy</a>
+            <span className="text-white/20">·</span>
+            <a href="#" className="text-[13px] text-white/40 hover:text-white/70 transition-colors duration-300">Terms of Service</a>
+            <span className="text-white/20">·</span>
+            <a href="#" className="text-[13px] text-white/40 hover:text-white/70 transition-colors duration-300">Disclaimer</a>
           </div>
         </div>
       </div>
