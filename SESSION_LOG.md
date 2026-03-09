@@ -17,6 +17,26 @@
 
 ---
 
+## 2026-03-09 — Contact Page V2: Dark theme redesign to eliminate white space
+### Goal
+- Original contact page had excessive white/sage space: empty left column in 2-col layout, flat monotone background, no visual hierarchy
+### Design decisions
+1. **Dark hero band** with headline, subtitle, and horizontal contact info row (Email, Phone, Location) — fills the previously empty left column void
+2. **Centered glassmorphic form card** (`bg-white/[0.04] border-white/[0.08] rounded-2xl`) — 720px max-width, no 2-col split, eliminates wasted space
+3. **Fully dark page** (`bg-[#060e09]`) — all sections use dark theme, form inputs are `bg-white/[0.06]` with `text-white/90`
+4. **Community section** stays dark with teal accent hovers
+5. **Subtle decorative glow** (radial gradient `#00d4aa`) in hero for depth
+### Files created
+- `app/contact-v2/page.tsx` — Experimental contact page route
+- `components/contact-content-v2.tsx` — Full dark-theme contact content
+### Verified
+- Full page screenshot: dark hero + glassmorphic form card + dark community + footer ✅
+- No white space dominance ✅
+### Status
+- Experimental — user to compare `/contact` vs `/contact-v2` and decide
+
+---
+
 ## 2026-03-09 — Light backgrounds: sage-mint #f0f5f2 to complement green palette
 ### Goal
 - Replace neutral off-white with a color that complements the deep greens (#060e09, #0a1a12) and teal accent (#00d4aa)
