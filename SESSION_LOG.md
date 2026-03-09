@@ -16,6 +16,20 @@
 
 ---
 
+## 2026-03-09 — Footer: Improve TRINADE breathing room + bottom bar spacing
+### Goal
+- Add breathing room between TRINADE text and the bottom separator line. Ensure copyright bar has comfortable spacing from viewport edge.
+### Work done
+1. **TRINADE section**: Increased bottom padding `pb-2` → `pb-6` for breathing room between text and separator line.
+2. **Bottom bar**: Changed `pb-4 pt-1` → `pb-6 pt-0`, separator margin `mb-3` → `mb-4`. Copyright text now has 26px from viewport bottom edge.
+3. **Layout balance**: Remaining viewport space absorbed between contact info and TRINADE (natural gap at ~142px), keeping TRINADE+copyright clustered at bottom with proper breathing room.
+### Files modified
+- `components/footer.tsx`
+### Verified via
+- Playwright MCP + Preview tool screenshots confirm balanced spacing.
+
+---
+
 ## 2026-03-09 — Footer: Fix TRINADE spacing + copyright bar visibility
 ### Goal
 - Reduce excessive space above and below TRINADE text. Make copyright bar visible below the bottom line.

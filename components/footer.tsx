@@ -274,7 +274,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Giant TRINADE text — mt-auto pushes TRINADE+bottom bar to viewport bottom */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-4 pb-2 mt-auto shrink-0">
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-4 pb-6 mt-auto shrink-0">
         {/* Subtle gradient glow behind text */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -310,8 +310,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
       </div>
 
       {/* Bottom bar */}
-      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-4 pt-1 shrink-0">
-        <div className="w-full h-px bg-white/[0.10] mb-3" />
+      <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pb-6 pt-0 shrink-0">
+        <div className="w-full h-px bg-white/[0.10] mb-4" />
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-4">
