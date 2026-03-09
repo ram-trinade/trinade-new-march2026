@@ -17,23 +17,33 @@
 
 ---
 
-## 2026-03-09 — Contact Page V2: Dark theme redesign to eliminate white space
+## 2026-03-09 — Contact Page V2: Awwwards-quality green gradient redesign
 ### Goal
-- Original contact page had excessive white/sage space: empty left column in 2-col layout, flat monotone background, no visual hierarchy
-### Design decisions
-1. **Dark hero band** with headline, subtitle, and horizontal contact info row (Email, Phone, Location) — fills the previously empty left column void
-2. **Centered glassmorphic form card** (`bg-white/[0.04] border-white/[0.08] rounded-2xl`) — 720px max-width, no 2-col split, eliminates wasted space
-3. **Fully dark page** (`bg-[#060e09]`) — all sections use dark theme, form inputs are `bg-white/[0.06]` with `text-white/90`
-4. **Community section** stays dark with teal accent hovers
-5. **Subtle decorative glow** (radial gradient `#00d4aa`) in hero for depth
-### Files created
-- `app/contact-v2/page.tsx` — Experimental contact page route
-- `components/contact-content-v2.tsx` — Full dark-theme contact content
+- Eliminate white space dominance from original contact page
+- Integrate "Green Gradient Design" reference images as primary visual inspiration
+- Achieve Awwwards-nomination-quality luxury aesthetic
+### Reference image analysis
+- **Image 1** (9386...): Soft single green glow on pure black + heavy film grain. Cinematic, minimal.
+- **Image 2** (c1d7...): Smooth silk diagonal fold. Forest green → lime. Apple-luxury aesthetic.
+- **Image 3** (56f9...): Bold swirling green-yellow fluid curves on black. Dynamic energy.
+### Design implementation
+1. **Atmospheric background** (4 CSS layers directly from reference DNA):
+   - Layer 1: Soft green emanation glow (radial-gradient, off-center upper-right) — from Image 1
+   - Layer 2: Diagonal silk fold energy (linear-gradient 135deg, subtle bright crease) — from Image 2
+   - Layer 3: Heavy film grain (fractalNoise SVG, opacity 0.35, overlay blend) — from Image 1
+   - Layer 4: Deep vignette (radial-gradient fade to near-black edges)
+2. **Hero section**: Editorial 2-col — extralight headline left ("Get in / touch"), minimal contact links right with animated dash accents
+3. **Animated separator line** (scaleX from left, gradient fade)
+4. **Centered form** (640px max-width) — no card border, inputs float on atmospheric bg
+5. **Community section**: Minimal cards with hover border/icon transitions
+6. **Typography**: font-extralight headline, uppercase tracking labels, restrained hierarchy
+### Files changed
+- `components/contact-content-v2.tsx` — Complete rewrite with green gradient atmosphere
 ### Verified
-- Full page screenshot: dark hero + glassmorphic form card + dark community + footer ✅
-- No white space dominance ✅
+- Full page screenshot: atmospheric green glow + grain + editorial layout + centered form ✅
+- Seamless footer transition ✅
 ### Status
-- Experimental — user to compare `/contact` vs `/contact-v2` and decide
+- At `/contact-v2` — user to review and decide
 
 ---
 
