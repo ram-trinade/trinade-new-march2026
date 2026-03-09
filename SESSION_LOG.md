@@ -10,10 +10,40 @@
 
 ## Current Status (TL;DR)
 - Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use sage-mint `#f0f5f2` — a green-complementing background that echoes the dark green palette. Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections, dark Products + Stats with grain, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
-- In progress: Hero background redesign — user choosing from 5 green gradient concept variations at `/hero-backgrounds`
+- In progress: Contact V2 refinements — seamless footer transition + premium textures
 - Blocked: None
-- Next step: User picks favorite hero background → implement as production hero. Then: mobile responsiveness, SEO.
-- Last fix: Body background flash eliminated — changed body bg from cream `#f0e6d3` to dark `#060e09`
+- Next step: User review of contact V2 background refinements. Then: hero background selection, mobile responsiveness, SEO.
+- Last fix: Contact V2 background harmonized with footer — matched grain, added gloss, seamless transition
+
+---
+
+## 2026-03-09 — Contact V2: Seamless footer transition + premium texture refinement
+### Goal
+- Fix background being too dark (`#030806`) and flat — lacks grain texture and gloss
+- Harmonize contact V2 background with footer's atmospheric layers
+- Create seamless visual flow from contact content into footer
+### Awwwards analysis applied
+- Studied footer's 8-layer atmospheric system: amber orb, teal glow, deep green, lime accent, horizontal ribbon, vignette, grain overlay
+- Matched contact V2's grain to footer's exact parameters: `baseFrequency=0.85`, `180px` tile size, `opacity=0.35`, `overlay` blend mode
+### Changes made
+1. **Base color**: `#030806` → `#060e09` — matches footer's base tone exactly
+2. **Grain texture harmonized**: Changed from `baseFrequency=0.65 / 256px tiles` to `0.85 / 180px tiles` — identical to footer's `.footer-atmosphere::before`
+3. **Subtle gloss layer added**: Diagonal silk specular highlight (`rgba(255,255,255,0.022)` at 145deg) — adds depth and sheen without complexity
+4. **Amber accent echo**: Upper-left warm orb (`rgba(180,130,55,0.025)`) mirrors footer's Layer 2 amber orb
+5. **Bottom transition zone**: 300px gradient fade that blends contact content into footer atmosphere
+6. **Bottom teal atmosphere**: Echoes footer's teal orb (`rgba(0,212,170,0.035)`) at lower-right
+7. **Bottom ribbon echo**: Mirrors footer's Layer 7 horizontal ribbon glow, inverted at bottom
+8. **Reduced vignette**: Lightened from `0.6` to `0.35` opacity — prevents over-darkening
+9. **Removed separator line** between form and community — cleaner flow
+10. **Footer top separator softened**: Changed from solid `bg-white/[0.08]` to gradient-faded line
+### Files changed
+- `components/contact-content-v2.tsx` — 8-layer atmospheric background (was 4 layers)
+- `components/footer.tsx` — Top separator line softened to gradient
+### Verified
+- Full page screenshot: refined dark green atmosphere with visible grain + gloss ✅
+- Content-to-footer transition: seamless tonal flow, matching grain + atmospheric hints ✅
+### Status
+- At `/contact-v2` — user to review refinements
 
 ---
 

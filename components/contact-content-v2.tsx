@@ -46,8 +46,8 @@ const fadeUp = {
   animate: { opacity: 1, y: 0 },
 }
 
-/* ─── Noise/Grain SVG as data URL ─── */
-const grainSvg = `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`
+/* ─── Noise/Grain SVG as data URL — matched to footer grain (baseFrequency 0.85, 180px tiles) ─── */
+const grainSvg = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`
 
 /* ─── Custom Country Code Dropdown ─── */
 function CountryCodeDropdown({
@@ -139,50 +139,104 @@ export default function ContactContentV2() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden" style={{ background: '#030806' }}>
+    <div className="relative min-h-screen overflow-hidden" style={{ background: '#060e09' }}>
 
-      {/* ═══ ATMOSPHERIC BACKGROUND — Green Gradient Design DNA ═══ */}
-      {/* Layer 1: Primary soft emanation glow (ref Image 1 — upper-right) */}
+      {/* ═══ ATMOSPHERIC BACKGROUND — Harmonized with footer ═══ */}
+
+      {/* Layer 1: Soft green emanation — subtle upper-center glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(ellipse 70% 60% at 65% 20%, rgba(80, 180, 100, 0.18) 0%, rgba(40, 120, 60, 0.08) 40%, transparent 70%),
-            radial-gradient(ellipse 50% 70% at 30% 70%, rgba(60, 140, 80, 0.10) 0%, transparent 60%),
-            radial-gradient(ellipse 90% 50% at 80% 60%, rgba(30, 90, 50, 0.08) 0%, transparent 50%)
+            radial-gradient(ellipse 65% 55% at 55% 15%, rgba(0, 212, 170, 0.07) 0%, rgba(22, 74, 50, 0.04) 40%, transparent 70%),
+            radial-gradient(ellipse 45% 60% at 25% 55%, rgba(13, 80, 50, 0.06) 0%, transparent 55%),
+            radial-gradient(ellipse 55% 40% at 75% 50%, rgba(0, 212, 170, 0.04) 0%, transparent 55%)
           `,
         }}
       />
 
-      {/* Layer 2: Diagonal silk fold energy (ref Image 2 — bright crease line) */}
+      {/* Layer 2: Diagonal silk gloss — subtle specular highlight for depth */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            linear-gradient(135deg, transparent 30%, rgba(100, 200, 120, 0.04) 45%, rgba(160, 220, 140, 0.06) 50%, rgba(100, 200, 120, 0.03) 55%, transparent 70%)
+            linear-gradient(145deg, transparent 25%, rgba(255, 255, 255, 0.012) 42%, rgba(255, 255, 255, 0.022) 48%, rgba(255, 255, 255, 0.012) 54%, transparent 70%)
           `,
         }}
       />
 
-      {/* Layer 3: Heavy film grain (ref Image 1 — cinematic texture) */}
+      {/* Layer 3: Warm amber accent echo — matches footer upper-left orb */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '-5%',
+          left: '-3%',
+          width: '50%',
+          height: '40%',
+          background: 'radial-gradient(ellipse at center, rgba(180, 130, 55, 0.025) 0%, rgba(180, 130, 55, 0.008) 40%, transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+
+      {/* Layer 4: Film grain — matched to footer grain (0.85 baseFreq, 180px, overlay) */}
       <div
         className="absolute inset-0 pointer-events-none z-[1]"
         style={{
           backgroundImage: grainSvg,
           backgroundRepeat: 'repeat',
-          backgroundSize: '256px 256px',
+          backgroundSize: '180px 180px',
           opacity: 0.35,
           mixBlendMode: 'overlay',
         }}
       />
 
-      {/* Layer 4: Deep vignette */}
+      {/* Layer 5: Gentle vignette — lighter than before for balanced tonality */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(3, 8, 6, 0.6) 100%)
+            radial-gradient(ellipse 80% 75% at 50% 45%, transparent 40%, rgba(6, 14, 9, 0.35) 100%)
           `,
+        }}
+      />
+
+      {/* Layer 6: Bottom transition zone — seamless blend into footer */}
+      <div
+        className="absolute pointer-events-none left-0 right-0 bottom-0"
+        style={{
+          height: '300px',
+          background: `
+            linear-gradient(180deg,
+              transparent 0%,
+              rgba(6, 14, 9, 0.3) 40%,
+              rgba(6, 14, 9, 0.5) 70%,
+              rgba(6, 14, 9, 0.5) 100%
+            )
+          `,
+        }}
+      />
+
+      {/* Layer 7: Bottom teal atmosphere — echoes footer teal orb */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: '0',
+          right: '-5%',
+          width: '50%',
+          height: '35%',
+          background: 'radial-gradient(ellipse at center, rgba(0, 212, 170, 0.035) 0%, rgba(22, 74, 50, 0.02) 35%, transparent 65%)',
+          filter: 'blur(50px)',
+        }}
+      />
+
+      {/* Layer 8: Bottom ribbon echo — mirrors footer top ribbon glow */}
+      <div
+        className="absolute pointer-events-none left-0 right-0 bottom-0"
+        style={{
+          height: '120px',
+          background: `linear-gradient(0deg, rgba(22, 74, 50, 0.04) 0%, rgba(13, 31, 24, 0.02) 50%, transparent 100%)`,
+          maskImage: 'linear-gradient(90deg, transparent 8%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 75%, transparent 92%)',
+          WebkitMaskImage: 'linear-gradient(90deg, transparent 8%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.5) 75%, transparent 92%)',
         }}
       />
 
@@ -360,13 +414,8 @@ export default function ContactContentV2() {
           </div>
         </section>
 
-        {/* ===== SEPARATOR ===== */}
-        <div className="px-[calc(12.5vw+0.8rem)]">
-          <div className="max-w-[1400px] mx-auto h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-        </div>
-
         {/* ===== COMMUNITY — Elegant minimal ===== */}
-        <section className="py-24 px-[calc(12.5vw+0.8rem)]">
+        <section className="pt-16 pb-28 px-[calc(12.5vw+0.8rem)]">
           <div className="max-w-[1400px] mx-auto">
             <div className="flex flex-col items-center text-center mb-16">
               <motion.span

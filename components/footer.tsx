@@ -205,8 +205,8 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
 
       {/* ===== END ATMOSPHERIC LAYERS ===== */}
 
-      {/* Top separator line */}
-      <div className="relative z-[2] w-full h-px bg-white/[0.08] shrink-0" />
+      {/* Top separator line — softened for seamless content-to-footer flow */}
+      <div className="relative z-[2] w-full h-px shrink-0" style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.06) 70%, transparent 90%)' }} />
 
       {/* ===== CTA + Social row ===== */}
       <div className="relative z-[2] px-[calc(12.5vw+0.8rem)] pt-10 pb-6 shrink-0">
