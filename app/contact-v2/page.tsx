@@ -9,7 +9,7 @@ const ContactContentV2 = dynamic(() => import('@/components/contact-content-v2')
 
 export default function ContactPageV2() {
   return (
-    <div className="relative bg-[#060e09]">
+    <div className="relative bg-[#060e09]" data-cursor="light">
       <SmoothScroll>
         <Navigation />
         <main>

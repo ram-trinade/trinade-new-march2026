@@ -92,7 +92,7 @@ export default function Footer({ withBackground = false }: { withBackground?: bo
   const trinadeInView = useInView(trinadeRef, { once: true, margin: '-40px' })
 
   return (
-    <footer className="footer-atmosphere relative bg-[#060e09]/50 overflow-hidden h-screen flex flex-col">
+    <footer className="footer-atmosphere relative bg-[#060e09]/50 overflow-hidden h-screen flex flex-col" data-cursor="light">
       {/* ===== WEBGL BACKGROUND (when embedded) ===== */}
       {withBackground && (
         <div className="absolute inset-0 z-[1] overflow-hidden">

@@ -9,11 +9,70 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use sage-mint `#f0f5f2` — a green-complementing background that echoes the dark green palette. Dark sections use `#060e09` with `.section-dark` grainy gradient overlay. Homepage: dark hero with WebGL OrganicBackground + white text, then light sections, dark Products + Stats with grain, light Testimonials, dark Footer with WebGL. **Footer**: Awwwards-quality redesign — TRINADE text uses **Outfit Black (900)** with `letterSpacing: 0.02em`, `15.7vw` size, spanning exactly the separator width. SVG social icons, refined CTA, `h-screen` flex layout. **Footer concepts page**: 10 variations at `/footer-concepts`. **Git checkpoint system active**.
-- In progress: Contact V2 refinements — seamless footer transition + premium textures
+- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use sage-mint `#f0f5f2`. Dark sections use `#060e09` with `.section-dark`. **Footer**: Awwwards-quality with TRINADE text, SVG social icons, `h-screen` flex layout. **Contact V2**: Complete premium redesign with ShadCN UI + MagicUI components (BlurFade, BorderBeam, ShimmerButton). **Adaptive cursor**: White dot on dark backgrounds, black dot on light backgrounds — auto-switches via CSS. **ShadCN UI + MagicUI component library** installed (`components/ui/`).
+- In progress: None
 - Blocked: None
-- Next step: User review of contact V2 background refinements. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Contact V2 background harmonized with footer — matched grain, added gloss, seamless transition
+- Next step: User review of contact V2 redesign + adaptive cursor. Then: hero background selection, mobile responsiveness, SEO.
+- Last fix: Contact V2 restyled with ShadCN/MagicUI, adaptive cursor implemented
+
+---
+
+## 2026-03-13 — Adaptive cursor + Contact V2 premium redesign with ShadCN/MagicUI
+
+### Goal
+1. Implement adaptive cursor — white dot on dark backgrounds, black dot on light backgrounds
+2. Completely restyle contact-v2 page using ShadCN UI and MagicUI components to match site design system
+
+### Changes made
+
+#### Adaptive Cursor
+1. **Dual cursor CSS** in `globals.css`: Default dark cursor (`#1a1f1a` fill) for light backgrounds, light cursor (`#e8e8e8` fill) for dark backgrounds
+2. **Auto-detection via CSS selectors**: `.section-dark`, `.footer-atmosphere`, and `[data-cursor="light"]` all trigger white cursor automatically
+3. **Homepage hero**: Added `data-cursor="light"` wrapper since hero sits on dark WebGL canvas
+4. **Contact V2 page**: Added `data-cursor="light"` to root wrapper
+5. **Footer component**: Gets light cursor automatically via `.footer-atmosphere` class
+
+#### ShadCN UI + MagicUI Component Library
+6. **Installed dependencies**: `clsx`, `class-variance-authority`, `@radix-ui/react-label`, `@radix-ui/react-select`
+7. **Updated `lib/utils.ts`**: Upgraded `cn()` to use `clsx` + `twMerge` (ShadCN pattern)
+8. **Created `components/ui/`**: `input.tsx`, `textarea.tsx`, `label.tsx`, `button.tsx` (ShadCN), `blur-fade.tsx`, `shimmer-button.tsx`, `border-beam.tsx` (MagicUI)
+9. **Added shimmer keyframes** to `globals.css`: `shimmer-slide` and `spin-around` animations
+
+#### Contact V2 Redesign
+10. **Hero**: "Let's build / something great." — bold + light weight contrast, BlurFade entrance animations
+11. **Contact info**: Right column with email, phone, address — minimal line-dash + text pattern
+12. **Form card**: `BorderBeam` (teal → deep green) wrapping glassmorphic card with rounded-2xl
+13. **Form inputs**: ShadCN `Input`, `Textarea`, `Label` — all themed: `bg-white/[0.04]`, `border-white/[0.08]`, teal focus, hover border lift
+14. **Country code dropdown**: Custom React component with AnimatePresence, flag emojis, full country names
+15. **Subject dropdown**: Custom React component replacing native `<select>` (no native selects in dark theme per brand rules)
+16. **Submit button**: MagicUI `ShimmerButton` with teal shimmer, dark text, `border-radius: 12px`
+17. **Community section**: 3 social cards (X, GitHub, Discord) with BlurFade stagger, subtle hover states
+18. **Atmospheric background**: 6-layer system (teal emanation, silk gloss, amber accent, grain, vignette, footer transition)
+
+### Files changed
+- `app/globals.css` — Adaptive cursor CSS, shimmer keyframes
+- `app/page.tsx` — `data-cursor="light"` on hero wrapper
+- `app/contact-v2/page.tsx` — `data-cursor="light"` on root
+- `components/footer.tsx` — `data-cursor="light"` attribute
+- `components/contact-content-v2.tsx` — Complete rewrite with ShadCN/MagicUI
+- `lib/utils.ts` — Updated `cn()` to ShadCN pattern
+- `components/ui/input.tsx` — New ShadCN Input
+- `components/ui/textarea.tsx` — New ShadCN Textarea
+- `components/ui/label.tsx` — New ShadCN Label
+- `components/ui/button.tsx` — New ShadCN Button
+- `components/ui/blur-fade.tsx` — New MagicUI BlurFade
+- `components/ui/shimmer-button.tsx` — New MagicUI ShimmerButton
+- `components/ui/border-beam.tsx` — New MagicUI BorderBeam
+
+### Verified
+- Playwright MCP: Full page renders at 1536px viewport ✅
+- Hero headline with bold/light contrast ✅
+- Form card with BorderBeam animation ✅
+- ShimmerButton submit with teal shimmer ✅
+- Community cards with BlurFade reveals ✅
+- Custom dropdowns (country code + subject) ✅
+- No build errors, no console errors (only favicon 404) ✅
+- Homepage still renders correctly with WebGL ✅
 
 ---
 

@@ -51,7 +51,7 @@ export default function Home() {
       <SmoothScroll>
         <Navigation />
         <main>
-          <HeroSection />
+          <div data-cursor="light"><HeroSection /></div>
           <div className="relative bg-[#f0f5f2]">
             <TrustedBy />
             <WhatWeDo />
