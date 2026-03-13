@@ -52,7 +52,7 @@ export default function Home() {
         <Navigation />
         <main>
           <div data-cursor="light"><HeroSection /></div>
-          <div className="relative bg-[#f0f5f2]">
+          <div className="relative bg-[#e8e4de]">
             <TrustedBy />
             <WhatWeDo />
           </div>
@@ -60,7 +60,7 @@ export default function Home() {
             <ProductShowcase />
             <StatsSection />
           </div>
-          <div className="relative bg-[#f0f5f2]">
+          <div className="relative bg-[#e8e4de]">
             <Testimonials />
           </div>
           <Footer withBackground />

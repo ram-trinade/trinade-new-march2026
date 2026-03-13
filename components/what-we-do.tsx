@@ -88,18 +88,18 @@ function CapabilityCard({
         </div>
 
         <h3
-          className="text-[20px] font-semibold text-[#1a1f1a]/95 mb-3 tracking-[-0.01em]"
+          className="text-[22px] font-semibold text-[#1a1f1a]/95 mb-3 tracking-[-0.01em]"
           style={{ fontFamily: 'var(--font-display)' }}
         >
           {item.title}
         </h3>
 
-        <p className="text-[15px] leading-[1.7] text-[#1a1f1a]/45 font-light">
+        <p className="text-[16px] leading-[1.7] text-[#1a1f1a]/55 font-light">
           {item.description}
         </p>
 
         {/* Learn more link */}
-        <div className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-medium text-[#1a1f1a]/30 transition-colors duration-300 group-hover:text-[#1a1f1a]/60">
+        <div className="mt-6 inline-flex items-center gap-1.5 text-[14px] font-medium text-[#1a1f1a]/30 transition-colors duration-300 group-hover:text-[#1a1f1a]/60">
           <span>Learn more</span>
           <svg
             width="14"
@@ -139,7 +139,7 @@ export default function WhatWeDo() {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[42ch]"
+            className="text-[clamp(2.4rem,4.5vw,4.2rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[42ch]"
           >
             <span className="text-[#1a1f1a]/95">Technology that thinks ahead</span>
             <span className="text-[#1a1f1a]/35">{' '}— so your teams can focus on what matters most.</span>

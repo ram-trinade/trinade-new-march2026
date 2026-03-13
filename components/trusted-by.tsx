@@ -17,7 +17,7 @@ function LogoPlaceholder({ name }: { name: string }) {
     <div className="flex items-center gap-1.5 select-none">
       <div className="w-5 h-5 rounded-md bg-[#1a1f1a]/[0.06] border border-[#1a1f1a]/[0.06]" />
       <span
-        className="text-[15px] font-medium tracking-[-0.01em] text-[#1a1f1a]/35"
+        className="text-[17px] font-medium tracking-[-0.01em] text-[#1a1f1a]/35"
         style={{ fontFamily: 'var(--font-display)' }}
       >
         {name}
@@ -39,7 +39,7 @@ export default function TrustedBy() {
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <p className="text-center text-[13px] font-medium tracking-[0.12em] uppercase text-[#1a1f1a]/30 mb-14">
+          <p className="text-center text-[14px] font-medium tracking-[0.12em] uppercase text-[#1a1f1a]/30 mb-14">
             Trusted by forward-thinking teams
           </p>
 

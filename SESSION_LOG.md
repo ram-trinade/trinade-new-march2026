@@ -9,11 +9,58 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **LIGHT THEME** + **WebGL hero**. Light sections use sage-mint `#f0f5f2`. Dark sections use `#060e09` with `.section-dark`. **Footer**: Awwwards-quality with TRINADE text, SVG social icons, `h-screen` flex layout. **Contact V2**: Complete premium redesign with ShadCN UI + MagicUI components (BlurFade, BorderBeam, ShimmerButton). **Adaptive cursor**: White dot on dark backgrounds, black dot on light backgrounds — auto-switches via CSS. **ShadCN UI + MagicUI component library** installed (`components/ui/`).
+- Done: Full multi-section corporate website with **warm light theme** (`#e8e4de`) + **WebGL hero**. Dark sections use `#060e09` with `.section-dark`. **Footer**: Awwwards-quality with TRINADE text, SVG social icons, `h-screen` flex layout. **Contact V3**: Premium editorial dark-theme contact page at `/contact-v3` — oversized typography, split layout (info left + form right), community section, seamless footer blend. **Adaptive cursor**: auto-switches via CSS. **ShadCN UI + MagicUI component library** installed (`components/ui/`). **Typography**: Scaled up site-wide to Awwwards-level oversized sizing.
 - In progress: None
 - Blocked: None
-- Next step: User review of contact V2 redesign + adaptive cursor. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Contact V2 restyled with ShadCN/MagicUI, adaptive cursor implemented
+- Next step: User review of contact V3 + typography/background changes. Then: hero background selection, mobile responsiveness, SEO.
+- Last fix: Light background warmed (#f0f5f2 → #e8e4de), typography scaled up, contact-v3 created
+
+---
+
+## 2026-03-13 — Typography scaling, background warmth fix, Contact V3 creation
+
+### Goal
+1. Fix overly bright/washed-out light background (#f0f5f2 → warmer #e8e4de)
+2. Scale up font sizes site-wide to Awwwards-level oversized typography
+3. Fix text readability on contact page (text too light/faded)
+4. Create brand-new contact page at `/contact-v3` — independent premium design, no BorderBeam
+
+### Changes made
+
+#### Background & Typography (Agent 1)
+1. **Light background**: Changed from `#f0f5f2` (sage-mint, too bright) to `#e8e4de` (warm cream) across `app/page.tsx`, `app/contact/page.tsx`, `app/about/page.tsx`
+2. **Typography scale-up**: Increased heading sizes across all sections:
+   - `what-we-do.tsx`: Section heading scaled up, card titles and body text enlarged
+   - `trusted-by.tsx`: Partner label and logo text scaled up
+   - `testimonials.tsx`: Quote text, names, titles all enlarged
+   - `product-showcase.tsx`: Section heading scaled up
+   - `stats-section.tsx`: Stat numbers, labels, descriptions all enlarged
+   - `about-content.tsx`: Section headings and body text scaled up
+
+#### Contact V3 (Agent 2)
+3. **`app/contact-v3/page.tsx`**: New route with dark theme (`bg-[#060e09]`), `data-cursor="light"`, dynamic imports for Navigation, Footer, ContactContentV3
+4. **`components/contact-content-v3.tsx`**: Premium editorial contact page:
+   - Oversized "Get in touch" hero headline with BlurFade animations
+   - Split layout: "Why reach out?" info cards (left) + form (right)
+   - Custom CountryCodeDropdown + SubjectDropdown (no native selects)
+   - ShadCN-styled inputs with dark theme (`bg-white/[0.04]`, `border-white/[0.08]`)
+   - Teal submit button (solid, no shimmer/BorderBeam)
+   - Community section: Twitter/X, GitHub, Discord cards with icons
+   - Direct contact info: email, headquarters
+   - Seamless footer blend (full dark page matches footer)
+
+### Files changed
+- `app/page.tsx` — bg color #f0f5f2 → #e8e4de
+- `app/about/page.tsx` — bg color update
+- `app/contact/page.tsx` — bg color update
+- `components/what-we-do.tsx` — font size scaling
+- `components/trusted-by.tsx` — font size scaling
+- `components/testimonials.tsx` — font size scaling
+- `components/product-showcase.tsx` — font size scaling
+- `components/stats-section.tsx` — font size scaling
+- `components/about-content.tsx` — font size scaling
+- `app/contact-v3/page.tsx` — NEW: contact v3 route
+- `components/contact-content-v3.tsx` — NEW: premium contact page component
 
 ---
 

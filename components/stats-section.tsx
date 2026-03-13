@@ -90,7 +90,7 @@ export default function StatsSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.12] tracking-[-0.025em]"
+            className="text-[clamp(2.4rem,4.5vw,4.2rem)] font-light leading-[1.12] tracking-[-0.025em]"
           >
             <span className="text-white/95">Scale that speaks</span>
             <span className="text-white/35">{' '}for itself.</span>
@@ -117,13 +117,13 @@ export default function StatsSection() {
               )}
 
               <div
-                className="text-[clamp(2.2rem,4vw,3.6rem)] font-bold tracking-[-0.03em] text-white/95 mb-2"
+                className="text-[clamp(2.6rem,4.5vw,4rem)] font-bold tracking-[-0.03em] text-white/95 mb-2"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 <AnimatedNumber value={stat.value} suffix={stat.suffix} isInView={isInView} />
               </div>
 
-              <p className="text-[15px] font-medium text-white/60 mb-1">
+              <p className="text-[16px] font-medium text-white/60 mb-1">
                 {stat.label}
               </p>
 

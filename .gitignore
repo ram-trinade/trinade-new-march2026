@@ -12,3 +12,5 @@ nul
 *.jpeg
 !public/**/*.png
 !public/**/*.jpeg
+
+.vercel

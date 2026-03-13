@@ -207,7 +207,7 @@ export default function ProductShowcase() {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-            className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[36ch]"
+            className="text-[clamp(2.4rem,4.5vw,4.2rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[36ch]"
           >
             <span className="text-white/95">Everything you need</span>
             <span className="text-white/35">{' '}— nothing you don&apos;t.</span>

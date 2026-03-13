@@ -68,7 +68,7 @@ function TestimonialCard({
       </svg>
 
       {/* Quote text */}
-      <p className="text-[16px] leading-[1.75] text-[#1a1f1a]/60 font-light mb-8">
+      <p className="text-[17px] leading-[1.75] text-[#1a1f1a]/65 font-light mb-8">
         {item.quote}
       </p>
 
@@ -85,8 +85,8 @@ function TestimonialCard({
           {item.avatar}
         </div>
         <div>
-          <p className="text-[14px] font-medium text-[#1a1f1a]/80">{item.name}</p>
-          <p className="text-[13px] text-[#1a1f1a]/40">
+          <p className="text-[15px] font-medium text-[#1a1f1a]/80">{item.name}</p>
+          <p className="text-[14px] text-[#1a1f1a]/40">
             {item.title}, {item.company}
           </p>
         </div>
@@ -118,7 +118,7 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-[clamp(2rem,4vw,3.8rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[36ch]"
+            className="text-[clamp(2.4rem,4.5vw,4.2rem)] font-light leading-[1.12] tracking-[-0.025em] max-w-[36ch]"
           >
             <span className="text-[#1a1f1a]/95">Trusted by builders</span>
             <span className="text-[#1a1f1a]/35">{' '}who ship at scale.</span>
