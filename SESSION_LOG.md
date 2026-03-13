@@ -13,7 +13,31 @@
 - In progress: None
 - Blocked: None
 - Next step: User review of contact V3 + typography/background changes. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Light background warmed (#f0f5f2 → #e8e4de), typography scaled up, contact-v3 created
+- Last fix: Contact V3 socials updated (real URLs), premium atmospheric background redesign, email → info@trinade.com
+
+---
+
+## 2026-03-13 — Contact V3: social links, premium background, email update
+
+### Goal
+1. Update community cards with real social links (Twitter/X, Instagram, LinkedIn)
+2. Redesign contact section atmospheric background for premium depth
+3. Update email from hello@trinade.ai to info@trinade.com
+
+### Changes made
+1. **Social links updated**: Twitter/X → x.com/trinadeai, Instagram → instagram.com/trinadeai, LinkedIn → linkedin.com/in/trinadeai — all cards now `<a>` tags with real URLs
+2. **Community cards**: Replaced GitHub + Discord with Instagram + LinkedIn to match actual socials
+3. **Email**: Changed from hello@trinade.ai to info@trinade.com (both mailto link and display text)
+4. **Background redesign**: Multi-layer atmospheric system:
+   - Primary emerald mesh bloom (top-left, blurred 80px)
+   - Warm amber undertone glow (center-right, blurred 100px)
+   - Deep green atmosphere (bottom half, blurred 120px)
+   - Subtle radial vignette
+   - Fine grain texture overlay
+   - Horizontal gradient accent line (teal → amber)
+
+### Files changed
+- `components/contact-content-v3.tsx` — social links, background layers, email
 
 ---
 
