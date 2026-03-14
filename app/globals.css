@@ -16,6 +16,26 @@
 }
 
 @layer base {
+  /* Premium thin scrollbar for dropdown menus */
+  .scrollbar-premium::-webkit-scrollbar {
+    width: 3px;
+    display: block;
+  }
+  .scrollbar-premium::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-premium::-webkit-scrollbar-thumb {
+    background: rgba(0, 212, 170, 0.2);
+    border-radius: 3px;
+  }
+  .scrollbar-premium::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 212, 170, 0.35);
+  }
+  .scrollbar-premium {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 212, 170, 0.2) transparent;
+  }
+
   /* Hide native scrollbar — Lenis handles smooth scrolling */
   html::-webkit-scrollbar {
     display: none;

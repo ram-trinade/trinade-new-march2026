@@ -96,11 +96,11 @@ function CountryCodeDropdown({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-white/[0.05] border border-white/[0.10] rounded-xl px-3.5 h-[56px] text-[15px] text-white/90 focus:border-[#00d4aa]/40 focus:outline-none transition-all duration-300 w-full flex items-center justify-between gap-1.5"
+        className="bg-white/[0.05] border border-white/[0.10] rounded-xl px-3.5 h-[56px] text-[14px] text-white/90 focus:border-[#00d4aa]/40 focus:outline-none transition-all duration-300 w-full flex items-center justify-between gap-1.5"
       >
-        <span className="flex items-center gap-2 truncate">
-          <span className="text-[16px] leading-none">{selected.flag}</span>
-          <span className="text-white/70">{selected.code}</span>
+        <span className="flex items-center gap-2">
+          <span className="text-[15px] leading-[1] translate-y-[0.5px]">{selected.flag}</span>
+          <span className="text-white/70 leading-[1]">{selected.code}</span>
         </span>
         <svg
           width="12"
@@ -126,10 +126,10 @@ function CountryCodeDropdown({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="absolute left-0 min-w-[220px] top-full mt-1.5 z-50 rounded-xl border border-white/[0.10] bg-[#0a1a14]/95 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+            className="absolute left-0 w-full top-full mt-1.5 z-50 rounded-xl border border-white/[0.10] bg-[#0a1a14]/95 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
             style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
           >
-            <div className="py-1.5">
+            <div className="max-h-[220px] overflow-y-auto py-1.5 scrollbar-premium">
               {countryCodes.map((cc) => (
                 <button
                   key={cc.code}
@@ -138,15 +138,15 @@ function CountryCodeDropdown({
                     onChange(cc.code)
                     setIsOpen(false)
                   }}
-                  className={`w-full flex items-center gap-2.5 px-3.5 py-2 text-[13px] transition-colors duration-200 whitespace-nowrap ${
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-[13px] leading-[1] transition-colors duration-200 whitespace-nowrap ${
                     cc.code === value
                       ? 'bg-[#00d4aa]/10 text-[#00d4aa]'
                       : 'text-white/60 hover:bg-white/[0.05] hover:text-white/80'
                   }`}
                 >
-                  <span className="text-[16px] leading-none">{cc.flag}</span>
-                  <span className="font-medium">{cc.name}</span>
-                  <span className="text-white/30 ml-auto pl-3 text-[12px]">{cc.code}</span>
+                  <span className="text-[15px] leading-[1] translate-y-[0.5px] shrink-0">{cc.flag}</span>
+                  <span className="font-medium leading-[1]">{cc.name}</span>
+                  <span className="text-white/30 ml-auto pl-2 text-[11px] leading-[1]">{cc.code}</span>
                 </button>
               ))}
             </div>
@@ -487,7 +487,7 @@ export default function ContactContentV3() {
                 {/* Phone Number */}
                 <div>
                   <label className={labelClasses}>Phone Number</label>
-                  <div className="grid grid-cols-[140px_1fr] gap-3">
+                  <div className="grid grid-cols-[160px_1fr] gap-3">
                     <CountryCodeDropdown
                       value={countryCode}
                       onChange={setCountryCode}

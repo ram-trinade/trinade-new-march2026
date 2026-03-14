@@ -13,7 +13,20 @@
 - In progress: None
 - Blocked: None
 - Next step: User review of contact V3 background. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Country code dropdown simplified — removed scrollbars, all 10 items visible, min-width for proper sizing
+- Last fix: Country code dropdown polished — width-aligned, baseline-aligned, custom teal scrollbar
+
+---
+
+## 2026-03-13 — Contact V3: Polish country code dropdown (width, alignment, scrollbar)
+
+### Changes
+1. **Width alignment**: Dropdown matches trigger width exactly (both 160px via `w-full` on dropdown + `grid-cols-[160px_1fr]`)
+2. **Vertical alignment**: All elements (flag, name, code) share `leading-[1]`, flags get `translate-y-[0.5px]` to optically align emoji baseline with text
+3. **Custom scrollbar**: Added `.scrollbar-premium` class in globals.css — 3px wide, teal-tinted thumb (`rgba(0,212,170,0.2)`), transparent track, rounded. Uses both `-webkit-scrollbar` and `scrollbar-color` for cross-browser
+4. **Max-height restored**: `max-h-[220px] overflow-y-auto` with premium scrollbar for when list overflows
+
+### Design reference
+Inspired by Linear.app and Vercel dropdown patterns — ultra-thin scrollbar tracks (2-3px), accent-colored thumbs at low opacity, consistent vertical centering
 
 ---
 
