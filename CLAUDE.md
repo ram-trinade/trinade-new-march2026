@@ -29,7 +29,6 @@ app/
   contact/page.tsx     # Contact page — uses contact-content-v3 (premium dark editorial layout)
   about/page.tsx       # About page — 8-section cinematic page, alternating light/dark
   team/page.tsx        # Team page — cinematic intro + 8 member full-width rows
-  solutions/page.tsx   # Solutions page — 6-section cinematic page (hero, grid, process, industries, stats, CTA)
   logo-preview/        # Dev-only: comparing logo variations
   font-explore/        # Dev-only: 10 font options with sample text at all weights
   cursor-explore/      # Dev-only: 12 cursor style options with live hover preview
@@ -46,7 +45,6 @@ components/
   contact-content-v3.tsx  # Contact V3 (ACTIVE): Premium dark editorial layout, split info+form, CSS dot pattern bg, custom CountryCodeDropdown
   about-content.tsx       # 8-section cinematic about page (~1050 lines), alternating light/dark
   team-content.tsx        # Cinematic intro + 8 member rows with mesh gradient portraits
-  solutions-content.tsx   # 6-section solutions page (~600 lines): hero, solutions grid, process, industries, impact stats, CTA
   footer.tsx              # Datawizz-inspired: Contact CTA + nav grid + giant "TRINADE" text + atmospheric layers + grain overlay
   ui/                     # ShadCN UI + MagicUI components (input, textarea, label, button, blur-fade, dot-pattern)
   trusted-by.tsx          # 6 placeholder partner logos (Meridian, Arclight, Novus, Helios, Veridian, Cortex)
