@@ -144,7 +144,7 @@ function HeroSection() {
           className="mt-16"
         >
           <a
-            href="/exactly-copied-inspirations-solutions-page/contact"
+            href="/contact"
             className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
             style={{ background: P.charcoal, color: P.textOnDark }}
           >
@@ -617,7 +617,7 @@ function CTASection() {
               transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
               className="flex items-center justify-center gap-4 flex-wrap"
             >
-              <a href="/exactly-copied-inspirations-solutions-page/contact"
+              <a href="/contact"
                 className="group inline-flex items-center gap-3 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(201,168,110,0.3)]"
                 style={{ background: P.gold, color: P.charcoal }}>
                 Get Started
@@ -625,7 +625,7 @@ function CTASection() {
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </a>
-              <a href="/exactly-copied-inspirations-solutions-page/contact"
+              <a href="/contact"
                 className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:bg-white/[0.1]"
                 style={{ color: P.textOnDarkMuted, border: '1px solid rgba(255,255,255,0.15)' }}>
                 Talk to Sales
@@ -652,7 +652,7 @@ function SolutionsFooter() {
     { label: 'Solutions', href: '#' },
     { label: 'Blog', href: '#' },
     { label: 'Company', href: '#' },
-    { label: 'Contact', href: '/exactly-copied-inspirations-solutions-page/contact' },
+    { label: 'Contact', href: '/contact' },
   ]
 
   const socials = [
@@ -809,8 +809,8 @@ function SolutionsFooter() {
       <div className="px-[clamp(2rem,8vw,8rem)] py-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex gap-6">
           {[
-            { label: 'Privacy Policy', href: '/exactly-copied-inspirations-solutions-page/privacy-policy' },
-            { label: 'Terms of Service', href: '/exactly-copied-inspirations-solutions-page/terms-of-service' },
+            { label: 'Privacy Policy', href: '/privacy-policy' },
+            { label: 'Terms of Service', href: '/terms-of-service' },
           ].map(link => (
             <a
               key={link.label}
