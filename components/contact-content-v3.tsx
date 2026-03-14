@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { BlurFade } from '@/components/ui/blur-fade'
+import { DotPattern } from '@/components/ui/dot-pattern'
+import { cn } from '@/lib/utils'
 
 /* ─── Data ─── */
 
@@ -268,50 +270,61 @@ export default function ContactContentV3() {
     <div className="relative overflow-hidden">
       {/* ── Premium atmospheric background ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Primary luminous mesh — deep emerald, top-left bloom */}
+        {/* MagicUI Dot Pattern — subtle glowing dots with radial fade */}
+        <DotPattern
+          width={28}
+          height={28}
+          cx={1}
+          cy={1}
+          cr={1.1}
+          glow={true}
+          className={cn(
+            'text-[#00d4aa]/[0.12] opacity-60',
+            '[mask-image:radial-gradient(ellipse_70%_50%_at_50%_30%,white_10%,transparent_70%)]'
+          )}
+        />
+
+        {/* Teal luminous bloom — top-left */}
         <div
-          className="absolute -top-[25%] -left-[20%] w-[70%] h-[70%] rounded-full opacity-[0.035]"
+          className="absolute -top-[20%] -left-[15%] w-[60%] h-[60%] rounded-full opacity-[0.04]"
           style={{
-            background: 'radial-gradient(ellipse at 40% 40%, #00d4aa 0%, #0a3d2a 35%, transparent 70%)',
-            filter: 'blur(80px)',
+            background: 'radial-gradient(ellipse at 45% 45%, #00d4aa 0%, #0a3d2a 30%, transparent 65%)',
+            filter: 'blur(90px)',
           }}
         />
-        {/* Secondary glow — warm amber undertone, center-right */}
+
+        {/* Warm amber undertone — center-right, subtle depth */}
         <div
-          className="absolute top-[15%] -right-[12%] w-[50%] h-[55%] rounded-full opacity-[0.02]"
+          className="absolute top-[20%] -right-[10%] w-[45%] h-[50%] rounded-full opacity-[0.025]"
           style={{
-            background: 'radial-gradient(ellipse at 60% 50%, #b48237 0%, #2a1f0a 40%, transparent 70%)',
+            background: 'radial-gradient(ellipse at 55% 50%, #b48237 0%, #1a1408 40%, transparent 70%)',
             filter: 'blur(100px)',
           }}
         />
-        {/* Deep green atmosphere — bottom half */}
+
+        {/* Deep emerald atmosphere — bottom */}
         <div
-          className="absolute -bottom-[15%] left-[10%] w-[80%] h-[45%] rounded-full opacity-[0.025]"
+          className="absolute -bottom-[10%] left-[15%] w-[70%] h-[40%] rounded-full opacity-[0.03]"
           style={{
-            background: 'radial-gradient(ellipse at 50% 80%, #0d5e3f 0%, transparent 65%)',
-            filter: 'blur(120px)',
+            background: 'radial-gradient(ellipse at 50% 75%, #0d5e3f 0%, transparent 60%)',
+            filter: 'blur(110px)',
           }}
         />
-        {/* Subtle vignette */}
+
+        {/* Cinematic vignette */}
         <div
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0 opacity-50"
           style={{
-            background: 'radial-gradient(ellipse at 50% 40%, transparent 40%, #060e09 100%)',
+            background: 'radial-gradient(ellipse 80% 70% at 50% 35%, transparent 30%, #060e09 100%)',
           }}
         />
-        {/* Fine grain texture */}
+
+        {/* Fine grain texture overlay */}
         <div
-          className="absolute inset-0 opacity-[0.025]"
+          className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
             backgroundSize: '128px 128px',
-          }}
-        />
-        {/* Horizontal gradient line accent — very subtle */}
-        <div
-          className="absolute top-[38%] left-0 right-0 h-px opacity-[0.04]"
-          style={{
-            background: 'linear-gradient(90deg, transparent 5%, #00d4aa 30%, #b48237 70%, transparent 95%)',
           }}
         />
       </div>
@@ -415,9 +428,20 @@ export default function ContactContentV3() {
                     Headquarters
                   </p>
                   <p className="text-[14px] text-white/60 leading-[1.7]">
-                    Hyderabad, Telangana<br />
-                    India
+                    #06, Green Valley Apartments, Gorantla,<br />
+                    Guntur, Andhra Pradesh 522034, India
                   </p>
+                </div>
+                <div className="mt-6">
+                  <p className="text-[12px] text-white/40 tracking-[0.08em] uppercase mb-3 font-medium">
+                    Phone
+                  </p>
+                  <a
+                    href="tel:+919490754923"
+                    className="text-[14px] text-white/60 hover:text-[#00d4aa] transition-colors duration-300"
+                  >
+                    +91 9490754923
+                  </a>
                 </div>
               </div>
             </BlurFade>

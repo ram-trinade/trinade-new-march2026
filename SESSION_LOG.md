@@ -9,11 +9,31 @@
 - Key references/assets: User-provided screenshot of IntegratedBio website hero
 
 ## Current Status (TL;DR)
-- Done: Full multi-section corporate website with **warm light theme** (`#e8e4de`) + **WebGL hero**. Dark sections use `#060e09` with `.section-dark`. **Footer**: Awwwards-quality with TRINADE text, SVG social icons, `h-screen` flex layout. **Contact V3**: Premium editorial dark-theme contact page at `/contact-v3` — oversized typography, split layout (info left + form right), community section, seamless footer blend. **Adaptive cursor**: auto-switches via CSS. **ShadCN UI + MagicUI component library** installed (`components/ui/`). **Typography**: Scaled up site-wide to Awwwards-level oversized sizing.
+- Done: Full multi-section corporate website with **warm light theme** (`#e8e4de`) + **WebGL hero**. Dark sections use `#060e09` with `.section-dark`. **Footer**: Awwwards-quality with TRINADE text, SVG social icons, `h-screen` flex layout. **Contact V3**: Premium editorial dark-theme contact page at `/contact-v3` — oversized typography, split layout (info left + form right), community section, seamless footer blend. **MagicUI DotPattern** background with glow effect + cinematic vignette. **Adaptive cursor**: auto-switches via CSS. **ShadCN UI + MagicUI component library** installed (`components/ui/`). **Typography**: Scaled up site-wide to Awwwards-level oversized sizing. Real contact info (address, phone, email from footer).
 - In progress: None
 - Blocked: None
-- Next step: User review of contact V3 + typography/background changes. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Contact V3 socials updated (real URLs), premium atmospheric background redesign, email → info@trinade.com
+- Next step: User review of contact V3 background. Then: hero background selection, mobile responsiveness, SEO.
+- Last fix: MagicUI DotPattern glow background on contact-v3, real address/phone from footer added
+
+---
+
+## 2026-03-13 — Contact V3: MagicUI DotPattern background + real contact details
+
+### Goal
+1. Elevate contact-v3 background using MagicUI DotPattern component with glow effect
+2. Add real address and phone number from footer to contact editorial column
+3. Keep design minimal, premium, elegant — Awwwards-level sophistication
+
+### Changes made
+1. **MagicUI DotPattern**: Created `components/ui/dot-pattern.tsx` — SVG dot pattern with animated glow, radial gradient mask fading from center, teal-tinted (#00d4aa) at 12% opacity
+2. **Background redesign**: Replaced flat CSS gradient layers with DotPattern glow + refined atmospheric orbs (teal bloom top-left, amber undertone center-right, emerald bottom) + cinematic vignette + grain texture
+3. **Contact details**: Added real headquarters address (#06, Green Valley Apartments, Gorantla, Guntur, AP 522034) and phone (+91 9490754923) matching footer data
+4. **Verified via Playwright**: Hero section, form area, community cards, and footer transition all confirmed working
+
+### Technical details
+- DotPattern: `width=28 height=28 cr=1.1 glow=true` with elliptical radial mask `70% 50% at 50% 30%`
+- Atmospheric layers: 3 gradient orbs + vignette + grain (refined opacities from previous iteration)
+- No footer changes — only contact section content area modified
 
 ---
 
