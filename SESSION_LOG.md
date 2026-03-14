@@ -13,7 +13,21 @@
 - In progress: None
 - Blocked: None
 - Next step: User review of contact V3 background. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Replaced DotPattern glow (5520 animated SVG circles) with CSS background-image tile — same visual, zero JS overhead
+- Last fix: Country code dropdown simplified — removed scrollbars, all 10 items visible, min-width for proper sizing
+
+---
+
+## 2026-03-13 — Contact V3: Fix country code dropdown scrollbar issues
+
+### Problem
+Country code dropdown displayed double scrollbars (vertical + horizontal) due to `max-h-[220px] overflow-y-auto` on a list that didn't need scrolling, combined with `overflow-hidden` on the parent causing clipping.
+
+### Fix
+- Removed `max-h` and `overflow-y-auto` — all 10 countries fit without scrolling
+- Removed `overflow-hidden` from parent panel
+- Added `min-w-[220px]` so dropdown expands beyond the narrow trigger button
+- Added `whitespace-nowrap` to prevent text wrapping that caused horizontal overflow
+- Tightened padding (`py-2.5` → `py-2`) for a more compact, refined look
 
 ---
 
