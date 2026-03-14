@@ -13,7 +13,17 @@
 - In progress: None
 - Blocked: None
 - Next step: User review of contact V3 background. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: Country code dropdown polished — width-aligned, baseline-aligned, custom teal scrollbar
+- Last fix: Country code dropdown — no scrollbar, 220px width, scroll capture fixed
+
+---
+
+## 2026-03-13 — Contact V3: Country code dropdown final polish
+
+### Changes
+1. **No scrollbar**: Removed `max-h`/`overflow-y-auto` — all 10 countries fit without scrolling at 220px width
+2. **Width match**: Grid column widened to `220px`, dropdown uses `w-full` to match exactly
+3. **Scroll capture**: Added `onWheel stopPropagation` + `overscrollBehavior: contain` to prevent page scroll when hovering over open dropdown
+4. **Spacing**: `gap-3` between flag/name/code, `flex-1` on name, `tabular-nums` on codes
 
 ---
 
