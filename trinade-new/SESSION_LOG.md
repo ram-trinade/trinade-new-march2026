@@ -9,13 +9,41 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Full solutions ecosystem separated into standalone project at `trinade-new/` (port 3006). Original website remains at root (port 3005). Both build and run independently. New website has clean routes: `/`, `/blog`, `/company`, `/contact`, `/privacy-policy`, `/terms-of-service`.
+- Done: Full website live on Vercel at https://trinade-new.vercel.app. All 6 pages verified and working. Missing image fixed.
 - In progress: None
 - Blocked: None
-- Next step: User review, mobile responsiveness, content finalization.
-- Last completed: Website separation into standalone `trinade-new/` project
+- Next step: Mobile responsiveness, content finalization, favicon, SEO metadata per page.
+- Last completed: Vercel production deployment + full Playwright MCP verification
 
 **NOTE (2026-03-14):** From this point, SESSION_LOG.md is duplicated — one copy in the old website directory (`E:\FINAL Trinade CC\SESSION_LOG.md`) and one in the new website directory (`E:\FINAL Trinade CC\trinade-new\SESSION_LOG.md`). Each should be updated independently for their respective websites.
+
+---
+
+## 2026-03-14 — Full Site Verification + Vercel Deployment
+
+### Playwright MCP Verification (localhost:3006)
+- Verified all 6 pages: `/`, `/blog`, `/company`, `/contact`, `/privacy-policy`, `/terms-of-service`
+- Verified shared components: navbar (wordmark + menu pill + logo), footer (gold glass card + nav + social icons + copyright), cookie popup, smooth scroll + scroll indicator
+- Tested navbar menu overlay interaction: opens/closes, all links navigate correctly
+- Scrolled through all homepage sections (7 total) to trigger `useInView` animations — all rendering
+- **Zero console errors** across all pages
+
+### Bug Fix
+- **Missing image**: `spiral-grain-dark.jpg` was referenced in `solutions-content.tsx` (social proof "People" card) but never copied to `trinade-new/public/`. Copied from parent project. Now renders correctly.
+
+### Working Preferences Update
+- Added strict rule to `working-preferences.md`: "NEVER use Preview mode tools — always use Playwright MCP instead"
+
+### Vercel Production Deployment
+- Deployed to Vercel: **https://trinade-new.vercel.app**
+- Project: `george-gideon-sales-projects/trinade-new`
+- Build: All 6 pages statically generated, zero errors
+- Only issue: missing `favicon.ico` (404) — cosmetic, needs favicon added
+- Verified live site via Playwright MCP — identical to localhost
+
+### Files Modified
+- `working-preferences.md` — Added "NEVER use Preview mode" instruction
+- `public/spiral-grain-dark.jpg` — Copied missing image asset
 
 ---
 

@@ -21,7 +21,7 @@
 
 ## Debugging Workflow
 - **Playwright MCP** (REQUIRED): `browser_navigate`, `browser_snapshot`, `browser_take_screenshot`, `browser_hover`, `browser_click`
-- **Do NOT use Preview tools** — strict requirement from the user
+- **NEVER use Preview mode tools** (`preview_start`, `preview_screenshot`, `preview_eval`, etc.) for live debugging or verification — strict requirement from the user. Always use Playwright MCP instead.
 - Use `browser_evaluate` to measure pixel positions programmatically
 
 ## Code Style
