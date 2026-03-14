@@ -43,13 +43,16 @@
 - Current section content (What We Do, Products, Stats, Testimonials) is all placeholder
 
 ## Current Pages
-- **Homepage** (`/`): Hero + Trusted By + What We Do + Products + Stats + Testimonials + Footer
-- **Contact** (`/contact`): Contact form + Join Our Community + Footer
+- **Homepage** (`/`): Hero (WebGL bg) + Trusted By + What We Do + Products + Stats + Testimonials + Footer
+- **About** (`/about`): 8-section cinematic page — manifesto hero, origin story, philosophy, timeline, stats, values, team teaser, CTA
+- **Team** (`/team`): Cinematic intro + 8 member rows with mesh gradient portraits + click-to-expand bios
+- **Contact** (`/contact`): Contact V3 — premium dark editorial layout, split info+form, CSS dot pattern bg, community section
 - **Dev pages**: `/font-explore`, `/cursor-explore`, `/logo-preview` (not for production)
 
 ## What's Next
-- Build About page, Team page
 - Build inner product/service pages
 - Select final cursor style (12 options at `/cursor-explore`)
 - Select final logo variation (5 options at `/logo-preview`)
 - Responsive design pass (currently desktop-only)
+- SEO metadata per page
+- Final real content/copy for all sections

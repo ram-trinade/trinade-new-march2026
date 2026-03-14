@@ -26,7 +26,9 @@ app/
   globals.css          # Tailwind v4 config + .nav-glass custom properties + @source directives + custom cursor + scrollbar hidden
   layout.tsx           # Root layout — Manrope font import, metadata
   page.tsx             # Homepage — Fixed WebGL bg + SmoothScroll wrapping Navigation + 6 sections + Footer
-  contact/page.tsx     # Contact page — same structure: WebGL bg + Navigation + ContactContent + Footer
+  contact/page.tsx     # Contact page — uses contact-content-v3 (premium dark editorial layout)
+  about/page.tsx       # About page — 8-section cinematic page, alternating light/dark
+  team/page.tsx        # Team page — cinematic intro + 8 member full-width rows
   logo-preview/        # Dev-only: comparing logo variations
   font-explore/        # Dev-only: 10 font options with sample text at all weights
   cursor-explore/      # Dev-only: 12 cursor style options with live hover preview
@@ -38,8 +40,13 @@ components/
   organic-background.tsx  # R3F WebGL background with GLSL parametric curves (fixed full-viewport, shared across pages)
   reveal-animation.tsx    # SVG mask expansion animation + ScrollTrigger border fade (entranceComplete guard)
   smooth-scroll.tsx       # Lenis smooth scroll provider
-  contact-content.tsx     # Contact form (glassmorphic inputs, custom CountryCodeDropdown with flags) + Join Our Community section
+  contact-content.tsx     # Contact V1 (legacy, replaced by V3)
+  contact-content-v2.tsx  # Contact V2 (legacy, replaced by V3)
+  contact-content-v3.tsx  # Contact V3 (ACTIVE): Premium dark editorial layout, split info+form, CSS dot pattern bg, custom CountryCodeDropdown
+  about-content.tsx       # 8-section cinematic about page (~1050 lines), alternating light/dark
+  team-content.tsx        # Cinematic intro + 8 member rows with mesh gradient portraits
   footer.tsx              # Datawizz-inspired: Contact CTA + nav grid + giant "TRINADE" text + atmospheric layers + grain overlay
+  ui/                     # ShadCN UI + MagicUI components (input, textarea, label, button, blur-fade, dot-pattern)
   trusted-by.tsx          # 6 placeholder partner logos (Meridian, Arclight, Novus, Helios, Veridian, Cortex)
   what-we-do.tsx          # 3 capability cards (AI-Native Products, Enterprise Intelligence, Modular Architecture)
   product-showcase.tsx    # 4 product cards bento grid (Trinade Core, Insight Engine, Connect API, Shield)
@@ -63,11 +70,13 @@ public/
 - **Dark aesthetic**: Deep green/black backgrounds (#060e09), white text at varying opacities, selective teal (#00d4aa) accent.
 
 ## Color Palette
-- **Deep dark**: #060e09 (page bg), #0a1a14 (dropdown panels, form elements)
+- **Light bg**: #e8e4de / #f5f3ef (warm cream/off-white for light sections, body bg)
+- **Light text**: #1a1f1a (near-black, various opacities)
+- **Deep dark**: #060e09 (dark sections, footer), #0a1a14 (dropdown panels, form elements)
 - **Teal accent**: #00d4aa (badges, focus states, selected items, links)
 - **Lime accent**: #c8e64e (used sparingly, some hover glows)
 - **Amber accent**: #b48237 (decorative SVG elements)
-- **White opacities**: 95% (headlines), 55-70% (body), 30-45% (tertiary/placeholders)
+- **White opacities** (dark sections): 95% (headlines), 55-70% (body), 30-45% (tertiary/placeholders)
 
 ## Critical Gotchas (from Session History)
 
@@ -115,14 +124,20 @@ public/
 - SVG uses explicit `100vw`/`100vh` with `overflow: hidden` (prevents extending page)
 - Doesn't render in headless Chrome preview — works fine in real browser
 
-### Contact Page
+### Contact Page (V3 — Active)
+- Premium dark editorial layout in `contact-content-v3.tsx`
+- Split layout: info left (address, phone, email, social links) + form right
+- Background: CSS dot pattern tile (28x28px inline SVG data URI) + `mask-image` radial gradient fade + atmospheric gradient layers
 - Form inputs: `bg-white/[0.04] border-white/[0.08] rounded-xl` with focus `border-[#00d4aa]/40`
 - Country code: custom `CountryCodeDropdown` React component (not native `<select>`)
-  - Flag emojis + country name + dial code
-  - Dark glassmorphic dropdown panel with AnimatePresence
-  - Click-outside-to-close
+  - Flag emojis + country name + dial code, 220px wide grid column
+  - No scrollbar — all 10 countries fit at full width
+  - `onWheel stopPropagation` + `overscrollBehavior: contain` for scroll capture
+  - Dark glassmorphic dropdown panel with AnimatePresence, click-outside-to-close
 - Subject: native `<select>` with dark bg options
 - Message: 300 char max with live counter
+- "Join Our Community" section below form
+- **Performance gotcha**: Never use MagicUI DotPattern with `glow={true}` on full-page backgrounds — creates thousands of animated SVG circles, causes severe lag. Use CSS `background-image` with inline SVG tile instead.
 
 ### Windows / Dev Server
 - Dev server: port 3005 (port 3000 occupied by other project `E:\FINAL Trinade AG`)

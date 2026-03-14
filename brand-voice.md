@@ -21,8 +21,10 @@
 - No Inter or generic system fonts — Manrope is the brand typeface
 
 ## Color System
-- **Background**: Deep dark greens/blacks (#060e09 primary, #0a1a14 for panels/dropdowns)
-- **Text**: White at varying opacities (95% headlines, 55-70% body, 30-45% tertiary/placeholders)
+- **Light background**: Warm cream/off-white (#e8e4de body bg, #f5f3ef section wrappers)
+- **Light text**: Near-black #1a1f1a at varying opacities (95% headlines, 45-70% body, 30-40% tertiary)
+- **Dark background**: Deep dark greens/blacks (#060e09 primary, #0a1a14 for panels/dropdowns)
+- **Dark text**: White at varying opacities (95% headlines, 55-70% body, 30-45% tertiary/placeholders)
 - **Accent — Teal**: #00d4aa — badges, focus states, selected items, links, hover borders, CTA button bg
 - **Accent — Lime**: #c8e64e — used sparingly in decorative SVGs and some hover glows
 - **Accent — Amber**: #b48237 — decorative SVG elements (warm contrast)
