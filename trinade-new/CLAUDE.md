@@ -1,168 +1,138 @@
-# Trinade AI Technologies — Corporate Website
+# Trinade AI Technologies — New Website
 
 ## Project Overview
-Awwwards-quality corporate website for Trinade AI Technologies Private Limited. Design-first approach — visual fidelity and motion design are the highest priority. Content is placeholder until design is locked.
+Awwwards-quality corporate website for Trinade AI Technologies Private Limited. This is the **new, standalone website** — a complete redesign with an independent design system (charcoal/cream/gold). Design-first approach — visual fidelity and motion design are the highest priority. Content is placeholder until design is locked.
 
 ## Tech Stack
-- **Framework**: Next.js 15 App Router (`'use client'` for interactive components, `dynamic()` with `ssr: false` for WebGL)
+- **Framework**: Next.js 15 App Router (`'use client'` for interactive components, `dynamic()` with `ssr: false`)
 - **Styling**: Tailwind CSS v4 (CSS-first config, `@layer base` for custom CSS, `@source` directives in globals.css)
-- **3D**: React Three Fiber + drei (R3F) with custom GLSL shaders
-- **Animation**: GSAP (ScrollTrigger for scroll-driven), Motion v12 (entry animations, AnimatePresence) — import from `'motion/react'`, NOT `'framer-motion'`
+- **Animation**: Motion v12 (entry animations, AnimatePresence, useInView) — import from `'motion/react'`, NOT `'framer-motion'`
 - **Scroll**: Lenis for smooth scrolling
 - **Types**: TypeScript strict mode
-- **Typography**: Manrope (single unified font, weights 200–800, CSS vars `--font-sans` and `--font-display` both point to Manrope)
+- **Typography**: Manrope (single unified font, weights 200–800, CSS vars `--font-sans` and `--font-display`)
+- **NO**: React Three Fiber, GSAP, ShadCN, MagicUI — this project is deliberately lean
 
 ## Quick Start
 ```bash
-# Dev server on port 3005 (port 3000 occupied by other project)
-# Use Claude Preview: preview_start with name "dev"
-# Or manually: node node_modules/next/dist/bin/next dev --port 3005
-# NOTE: Do NOT use --turbopack (crashes on Windows with nul path in PostCSS)
+# Dev server on port 3006
+node node_modules/next/dist/bin/next dev --port 3006
+# Do NOT use --turbopack (crashes on Windows with nul path in PostCSS)
 ```
 
 ## Architecture
 ```
 app/
-  globals.css          # Tailwind v4 config + .nav-glass custom properties + @source directives + custom cursor + scrollbar hidden
+  globals.css          # Tailwind v4 config, cream bg (#f2ede6), Manrope font, Lenis styles, gold selection
   layout.tsx           # Root layout — Manrope font import, metadata
-  page.tsx             # Homepage — Fixed WebGL bg + SmoothScroll wrapping Navigation + 6 sections + Footer
-  contact/page.tsx     # Contact page — uses contact-content-v3 (premium dark editorial layout)
-  about/page.tsx       # About page — 8-section cinematic page, alternating light/dark
-  team/page.tsx        # Team page — cinematic intro + 8 member full-width rows
-  logo-preview/        # Dev-only: comparing logo variations
-  font-explore/        # Dev-only: 10 font options with sample text at all weights
-  cursor-explore/      # Dev-only: 12 cursor style options with live hover preview
+  page.tsx             # Homepage — SmoothScroll + SolutionsContent + PremiumCursor + CookiePopup
+  blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
+  company/page.tsx     # Company — "Est 2025" hero, mission, stats, values, approach, CTA
+  contact/page.tsx     # Contact — atmospheric CSS bg with gradient orbs, form with custom dropdown
+  privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
+  terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
-  navigation.tsx       # 3-col grid navbar (Logo LEFT | Frosted pill CENTER [PRODUCTS, SOLUTIONS, RESOURCES↓, COMPANY↓] | "Get in touch" CTA RIGHT). GSAP ScrollTrigger animates glass properties. Shared dropdown state, white glassmorphic split panels.
-  hero-content.tsx     # Centered hero: "Built for What's Next." (Manrope 700) + sub-headline + "Book a Demo" CTA
-  hero-section.tsx     # Hero wrapper (100vh) + RevealAnimation
-  logo.tsx             # Original Trinade logo (transparent PNG via next/image, 48px in navbar)
-  organic-background.tsx  # R3F WebGL background with GLSL parametric curves (fixed full-viewport, shared across pages)
-  reveal-animation.tsx    # SVG mask expansion animation + ScrollTrigger border fade (entranceComplete guard)
+  solutions-navbar.tsx    # Fixed navbar: "trinade" wordmark (left, inertia-style extended 'e') + Menu pill (center) + Logo (right)
+  solutions-content.tsx   # Homepage content: hero, sliding solutions, industries grid, features, differentiators, social proof, CTA
+  solutions-footer.tsx    # Brown gold liquid glass footer: contact CTA, nav links, social icons, copyright
+  solutions-cookie-popup.tsx # Gold glass cookie consent popup
   smooth-scroll.tsx       # Lenis smooth scroll provider
-  contact-content.tsx     # Contact V1 (legacy, replaced by V3)
-  contact-content-v2.tsx  # Contact V2 (legacy, replaced by V3)
-  contact-content-v3.tsx  # Contact V3 (ACTIVE): Premium dark editorial layout, split info+form, CSS dot pattern bg, custom CountryCodeDropdown
-  about-content.tsx       # 8-section cinematic about page (~1050 lines), alternating light/dark
-  team-content.tsx        # Cinematic intro + 8 member rows with mesh gradient portraits
-  footer.tsx              # Datawizz-inspired: Contact CTA + nav grid + giant "TRINADE" text + atmospheric layers + grain overlay
-  ui/                     # ShadCN UI + MagicUI components (input, textarea, label, button, blur-fade, dot-pattern)
-  trusted-by.tsx          # 6 placeholder partner logos (Meridian, Arclight, Novus, Helios, Veridian, Cortex)
-  what-we-do.tsx          # 3 capability cards (AI-Native Products, Enterprise Intelligence, Modular Architecture)
-  product-showcase.tsx    # 4 product cards bento grid (Trinade Core, Insight Engine, Connect API, Shield)
-  stats-section.tsx       # 4 animated counters (500+, 99.9%, 2.4B+, 12ms) with scroll-triggered animation
-  testimonials.tsx        # 3 quote cards with avatar initials
-  loading-screen.tsx      # Legacy (unused, replaced by reveal-animation)
-lib/
-  shaders.ts           # GLSL vertex/fragment shaders for organic-background
-  utils.ts             # Utility functions
 public/
-  logo-transparent.png # Original Trinade logo with transparent background (Sharp-processed)
-  logo-variations/     # 5 SVG logo variations (user hasn't picked final yet)
+  logo-transparent.png    # Trinade logo (transparent PNG)
+  gradient-orbs-warm.jpg  # Decorative hero/section backgrounds
+  spiral-*.jpg            # Decorative card/section images
+  gradient-mesh-warm.jpg  # Decorative backgrounds
 ```
 
-## Design Philosophy
-- **Awwwards-quality**: Every pixel matters. No generic AI aesthetics.
-- **Design first, content second**: Use dummy/placeholder text. Lock visual design before finalizing copy.
-- **Inspiration-driven**: We take inspiration from multiple award-winning sites. User has excellent design taste — trust their visual judgment.
-- **Motion is key**: Smooth, intentional animations. GSAP for scroll-driven, Motion v12 for UI transitions.
-- **Glassmorphism**: Navbar uses white frosted glass pill (`backdrop-blur`, `saturate`). Dropdowns match.
-- **Dark aesthetic**: Deep green/black backgrounds (#060e09), white text at varying opacities, selective teal (#00d4aa) accent.
+## Design System — Charcoal/Cream/Gold
 
-## Color Palette
-- **Light bg**: #e8e4de / #f5f3ef (warm cream/off-white for light sections, body bg)
-- **Light text**: #1a1f1a (near-black, various opacities)
-- **Deep dark**: #060e09 (dark sections, footer), #0a1a14 (dropdown panels, form elements)
-- **Teal accent**: #00d4aa (badges, focus states, selected items, links)
-- **Lime accent**: #c8e64e (used sparingly, some hover glows)
-- **Amber accent**: #b48237 (decorative SVG elements)
-- **White opacities** (dark sections): 95% (headlines), 55-70% (body), 30-45% (tertiary/placeholders)
+### Color Palette
+- **Cream bg**: #f2ede6 (body), #ebe5db (alternate sections)
+- **Dark text**: #2a2218 at varying opacities (100% headlines, 55% body, 40% tertiary)
+- **Charcoal dark**: #1a1a1e (dark sections, newsletter CTA), #0a0a0a (mission, values, footer bg)
+- **Gold accent**: #c9a86e (base), #d4bb8a (light), #a0814a (dark) — pills, rules, accents, links
+- **White opacities** (dark sections): 93% (headlines), 45% (body), 25% (tertiary)
+- **NO teal, NO green** — this site uses a warm charcoal/cream/gold palette exclusively
 
-## Critical Gotchas (from Session History)
+### Gold Glass System
+- **Dropdown panels**: `rgba(210,192,158,0.95)` with `backdrop-blur(28px) saturate(1.6)`
+- **Card glass**: `rgba(185,155,100,0.22)` with `backdrop-blur(24px) saturate(1.5)`
+- **Social icons**: `rgba(185,155,100,0.55)` background
+- **Light cards**: `rgba(255,255,255,0.65)` to `rgba(255,255,255,0.35)` gradient
+- **Dark cards**: `rgba(255,255,255,0.04)` with `border rgba(255,255,255,0.06)`
+
+### Typography
+- **Font**: Manrope exclusively (weights 200-800)
+- **Hero headlines**: `clamp(3.5rem, 7vw, 7.5rem)`, weight 300 (light, editorial)
+- **Section headlines**: `clamp(2.4rem, 4.8vw, 4.2rem)`, weight 300
+- **Eyebrow labels**: 12px, uppercase, tracking 0.2em, weight 600
+- **Body text**: 15-16px, line-height 1.8, 55% opacity
+
+### Custom Cursor
+- PremiumCursor component: RAF loop, `mix-blend-mode: difference`, BASE_SIZE=20, HOVER_SIZE=50, lerp 0.12
+- `cursor: none !important` applied via `.solutions-page` class
+- Grows on interactive elements (buttons, links, inputs)
+
+### Navbar (solutions-navbar.tsx)
+- "trinade" wordmark: fixed top-left, 22px/800 weight, inertia-style extended 'e' with double horizontal strokes
+- Menu pill: fixed top-center, gold glass, contains "Menu" + scroll percentage
+- Logo: fixed top-right, 28px, inverted filter at 55% opacity
+- Full-screen overlay menu with page links + social links
+
+### Footer (solutions-footer.tsx)
+- Brown gold liquid glass card on #0a0a0a background
+- Contact CTA, navigation links (Home, Company, Blog, Contact, Privacy, Terms)
+- SVG social icons (LinkedIn, Instagram, X)
+- Copyright bar with gold accents
+
+## Key Patterns
+
+### Animation
+- `useInView` from `motion/react` for scroll-triggered reveals
+- Ease curves: `[0.16, 1, 0.3, 1]` (cinematic), `[0.32, 0.72, 0, 1]` (UI)
+- Staggered word reveals for hero headlines
+- Gold rule animations (`scaleX: 0 → 1`) for section dividers
+- **DO NOT** use `useScroll({ target })` — causes "Target ref is defined but not hydrated" error
+
+### Component Structure
+- Each page includes: PremiumCursor, SolutionsNavbar, SmoothScroll wrapper, content, SolutionsCookiePopup/SolutionsFooter
+- `dynamic()` with `{ ssr: false }` for all interactive components
+- Gold glass pill (`GoldPill`) component for category/eyebrow labels
+
+### Section Pattern
+- Alternating cream (#f2ede6) and dark (#0a0a0a/#1a1a1e) sections
+- Each section has grain overlay (SVG noise texture)
+- Atmospheric gradient orbs for depth
+- `GoldRule` dividers between sections
+
+## Critical Gotchas
 
 ### Tailwind v4
-- All custom CSS MUST be wrapped in `@layer base {}` — un-layered CSS overrides Tailwind utilities
-- Add `@source` directives for component directories: `@source "../components"`, `@source "../app"`, `@source "../lib"`
-- Tailwind v4 uses CSS-first config (no tailwind.config.js)
-
-### WebGL / R3F
-- Use `dynamic(() => import(...), { ssr: false })` for any R3F component
-- **WebGL Context Lost**: Repeated HMR rebuilds cause `THREE.WebGLRenderer: Context Lost` (white page). Fix: stop server → delete `.next/` → restart
-- GLSL `smoothstep(edge0, edge1, x)`: edge0 MUST be < edge1, else undefined behavior
-- Single WebGL canvas instance shared across all pages (fixed full-viewport at z-0)
+- All custom CSS MUST be in `@layer base {}` — un-layered CSS overrides Tailwind utilities
+- `@source` directives in globals.css: `@source "../components"`, `@source "../app"`
+- CSS-first config (no tailwind.config.js)
 
 ### Motion v12
 - Import from `'motion/react'`, NOT `'framer-motion'` (rebranded)
-- Use `AnimatePresence` for exit animations (dropdowns, modals)
-- `useInView` for scroll-triggered reveals on content sections
-
-### GSAP
-- When cleaning up ScrollTrigger instances, kill only YOUR instance (`st.kill()`), never `ScrollTrigger.getAll().forEach(t => t.kill())` — that kills ALL triggers including other components
-- Nav glass properties (`--nav-bg`, `--nav-border`, `--nav-blur`, `--nav-shadow`) animated by ScrollTrigger. Note: `--nav-width` was REMOVED — pill width is now fluid.
-
-### Alignment System
-- **Master formula**: `px-[calc(12.5vw+0.8rem)]` — derived from nav `px-4` + pill `width: 75%` centered
-- All sections (hero, what-we-do, products, stats, testimonials, contact, footer) use this padding
-- Navbar uses `grid grid-cols-[1fr_auto_1fr]` with `min-w-0` on both `1fr` columns for true centering
-
-### Navbar Structure
-- 3-column CSS grid: Logo+Trinade LEFT | Frosted pill CENTER | "Get in touch" CTA RIGHT
-- Pill contains 4 items: PRODUCTS, SOLUTIONS, RESOURCES (dropdown), COMPANY (dropdown)
-- "Get in touch" CTA is OUTSIDE the pill (glassmorphic button, `justify-self-end`)
-- Logo: 48px transparent PNG + "Trinade" text (24px, always visible, no hover reveal)
-- Dropdowns: white frosted glass (`bg-white/[0.60]`, `backdrop-blur-[28px]`, `saturate(1.4)`)
-- Both dropdowns are split two-panel layouts with decorative SVG images
-- RESOURCES = Blog (text left, stacked article SVG right)
-- COMPANY = About + Team (each with decorative network SVGs, 1px borders on images)
-- Shared dropdown state: only one open at a time, 220ms close delay
-
-### Reveal Animation
-- SVG mask: white fill + expanding rounded-rect hole (border=12px, rx=24)
-- Timeline: 0.4s hold → 1.8s expand → 0.3s settle (overshoot)
-- `entranceComplete` flag: ScrollTrigger `onUpdate` guarded by `if (!entranceComplete) return`
-- Border stays visible on landing, fades on scroll (25% of viewport distance)
-- SVG uses explicit `100vw`/`100vh` with `overflow: hidden` (prevents extending page)
-- Doesn't render in headless Chrome preview — works fine in real browser
-
-### Contact Page (V3 — Active)
-- Premium dark editorial layout in `contact-content-v3.tsx`
-- Split layout: info left (address, phone, email, social links) + form right
-- Background: CSS dot pattern tile (28x28px inline SVG data URI) + `mask-image` radial gradient fade + atmospheric gradient layers
-- Form inputs: `bg-white/[0.04] border-white/[0.08] rounded-xl` with focus `border-[#00d4aa]/40`
-- Country code: custom `CountryCodeDropdown` React component (not native `<select>`)
-  - Flag emojis + country name + dial code, 220px wide grid column
-  - No scrollbar — all 10 countries fit at full width
-  - `onWheel stopPropagation` + `overscrollBehavior: contain` for scroll capture
-  - Dark glassmorphic dropdown panel with AnimatePresence, click-outside-to-close
-- Subject: native `<select>` with dark bg options
-- Message: 300 char max with live counter
-- "Join Our Community" section below form
-- **Performance gotcha**: Never use MagicUI DotPattern with `glow={true}` on full-page backgrounds — creates thousands of animated SVG circles, causes severe lag. Use CSS `background-image` with inline SVG tile instead.
+- `useInView` for scroll-triggered reveals
+- `AnimatePresence` for exit animations
+- **NEVER** use `useScroll({ target })` — hydration error on plain elements
 
 ### Windows / Dev Server
-- Dev server: port 3005 (port 3000 occupied by other project `E:\FINAL Trinade AG`)
-- `.claude/launch.json` uses `node` + `node_modules/next/dist/bin/next` (npm/npx ENOENT on Windows)
-- **Do NOT use Turbopack** — crashes on Windows with `nul` path in PostCSS pipeline. Using webpack mode.
-- Delete `.next/` cache when switching between dev/build or when HMR breaks
+- Dev server: port 3006
+- **Do NOT use Turbopack** — crashes on Windows with `nul` path in PostCSS
+- Delete `.next/` cache when HMR breaks
 
-### Logo
-- Original Trinade logo (`ORIGINAL LOGO.png`) — 3 overlapping head profiles with neural mesh
-- Converted to transparent PNG via Sharp script (`scripts/make-transparent-logo.mjs`): brightness-to-alpha, star watermark removal, auto-trim
-- Rendered via `next/image` at 48px with `style={{ width: size, height: 'auto' }}`
-- Logo is NOT inline SVG — it's a raster PNG (exception to the inline SVG rule)
-- "Trinade" text next to logo: 24px, always visible (no hover reveal animation)
+## Real Contact Info
+- **Address**: #06, Green Valley Apartments, Gorantla, Guntur, AP 522034, India
+- **Email**: info@trinade.com
+- **Phone**: +91 9490754923
+- **Social**: Twitter/X, Instagram, LinkedIn — all @trinadeai
 
 ## Working Style
-- For non-trivial changes: enter plan mode, get approval before implementing
-- For visual tweaks and polish: just do it, show the result via preview screenshot
-- Always verify alignment/positioning with `preview_eval` measurements, not just visual inspection
-- After corrections from user: note the pattern to avoid repeating
-- Use Playwright MCP (`browser_navigate`, `browser_snapshot`, `browser_take_screenshot`, `browser_hover`) for visual debugging with real browser interaction
-- Use `preview_screenshot` + `preview_eval` for quick checks
-- Keep SESSION_LOG.md updated after significant work
+- Use Playwright MCP (`browser_navigate`, `browser_snapshot`, `browser_take_screenshot`) for visual debugging — NOT Preview tools
 - Use `/frontend-design` skill for design tasks
-
-## Pending Housekeeping
-- Package name in package.json still says "integrated-bio" — rename when ready
-- Turbopack crashes on Windows with `nul` path in PostCSS — using webpack mode for now
-- Reveal animation SVG mask doesn't render in headless Chrome preview — works fine in real browser
+- For non-trivial changes: enter plan mode, get approval
+- For visual tweaks: just do it, show via Playwright screenshot
+- Keep SESSION_LOG.md updated after significant work
+- Save git checkpoints after completed tasks
+- Priority: Look incredible → Animate smoothly → Responsive → Accessible → Performant
