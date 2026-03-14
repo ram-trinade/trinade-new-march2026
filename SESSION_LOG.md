@@ -13,7 +13,20 @@
 - In progress: None
 - Blocked: None
 - Next step: User review of contact V3 background. Then: hero background selection, mobile responsiveness, SEO.
-- Last fix: MagicUI DotPattern glow background on contact-v3, real address/phone from footer added
+- Last fix: Replaced DotPattern glow (5520 animated SVG circles) with CSS background-image tile — same visual, zero JS overhead
+
+---
+
+## 2026-03-13 — Contact V3: Fix critical performance issue (5520 animated SVG circles)
+
+### Problem
+Contact-v3 page was extremely slow and laggy. The MagicUI `DotPattern` component with `glow={true}` rendered **5,520 individual `<motion.circle>` SVG elements**, each with its own JS animation loop.
+
+### Root cause
+`DotPattern` calculates `ceil(viewportWidth/spacing) * ceil(viewportHeight/spacing)` dots, each wrapped in `<motion.circle>` with independent opacity+scale animations. At 28px spacing on a full page = ~5,520 animated elements.
+
+### Fix
+Replaced with a single CSS `background-image` using an inline SVG data URI tile (28x28px). Same dot pattern visual, radial gradient mask preserved via CSS `mask-image`. Zero JS overhead.
 
 ---
 

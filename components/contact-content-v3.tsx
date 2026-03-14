@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { BlurFade } from '@/components/ui/blur-fade'
-import { DotPattern } from '@/components/ui/dot-pattern'
 import { cn } from '@/lib/utils'
 
 /* ─── Data ─── */
@@ -270,18 +269,16 @@ export default function ContactContentV3() {
     <div className="relative overflow-hidden">
       {/* ── Premium atmospheric background ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* MagicUI Dot Pattern — subtle glowing dots with radial fade */}
-        <DotPattern
-          width={28}
-          height={28}
-          cx={1}
-          cy={1}
-          cr={1.1}
-          glow={true}
+        {/* Lightweight CSS dot pattern — single SVG pattern tile, no JS animation */}
+        <div
           className={cn(
-            'text-[#00d4aa]/[0.12] opacity-60',
+            'absolute inset-0 opacity-[0.35]',
             '[mask-image:radial-gradient(ellipse_70%_50%_at_50%_30%,white_10%,transparent_70%)]'
           )}
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='28' height='28' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='%2300d4aa' opacity='0.14'/%3E%3C/svg%3E")`,
+            backgroundSize: '28px 28px',
+          }}
         />
 
         {/* Teal luminous bloom — top-left */}
