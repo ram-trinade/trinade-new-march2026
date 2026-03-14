@@ -64,7 +64,7 @@ const IconTeam = () => (
 
 const navItems: NavItem[] = [
   { label: 'PRODUCTS', href: '#products' },
-  { label: 'SOLUTIONS', href: '#solutions' },
+  { label: 'SOLUTIONS', href: '/solutions' },
   {
     label: 'RESOURCES',
     children: [
