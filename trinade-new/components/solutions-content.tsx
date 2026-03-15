@@ -33,48 +33,48 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
 // ─── Data ───
 const industries = [
-  { name: 'Healthcare', desc: 'Secure, compliant AI solutions that enhance patient care, streamline operations, and protect sensitive data.' },
-  { name: 'Legal', desc: 'Reliable and secure AI solutions tailored to meet the needs of modern law firms and legal departments.' },
-  { name: 'Financial Services', desc: 'Advanced AI solutions that safeguard transactions, enhance efficiency, and meet strict regulatory requirements.' },
-  { name: 'Manufacturing', desc: 'Predictive maintenance, quality control systems, and supply chain intelligence for modern factories.' },
-  { name: 'Logistics', desc: 'Route optimization, demand forecasting, and real-time tracking intelligence across the supply chain.' },
-  { name: 'Retail', desc: 'Customer behavior intelligence, inventory optimization, and personalized experience engines at scale.' },
+  { name: 'Healthcare', desc: 'AI-first diagnostic support, patient flow optimization, and clinical data intelligence — built HIPAA-ready from day one.' },
+  { name: 'Legal', desc: 'Contract analysis, case research automation, and compliance monitoring — precision AI for firms that can\'t afford errors.' },
+  { name: 'Financial Services', desc: 'Fraud detection, risk modeling, and regulatory reporting — AI systems that move at market speed while staying compliant.' },
+  { name: 'Manufacturing', desc: 'Predictive maintenance, defect detection, and production scheduling — turning factory floor data into real-time decisions.' },
+  { name: 'Logistics', desc: 'Route intelligence, demand forecasting, and shipment visibility — AI that keeps your supply chain three steps ahead.' },
+  { name: 'Retail', desc: 'Customer intelligence, dynamic pricing, and inventory prediction — AI that understands buying behavior before customers do.' },
 ]
 
 const scrollCards = [
-  { title: 'Predictive Intelligence.', body: 'Stay ahead of market shifts with AI models that identify patterns and predict outcomes before they happen.' },
-  { title: 'Adaptive Security.', body: 'Proactive threat detection that evolves with the landscape, keeping your infrastructure resilient and compliant.' },
-  { title: 'Seamless Integration.', body: 'Connect legacy and modern systems effortlessly with universal adapters designed for zero-downtime deployment.' },
-  { title: 'Scalable Architecture.', body: 'Infrastructure that grows with your ambitions — from thousands to billions of events, without missing a beat.' },
-  { title: 'Strategic Partnership.', body: 'Not just a vendor. A dedicated team of engineers and architects invested in your long-term success.' },
+  { title: 'AI-First by Design.', body: 'We don\'t bolt AI onto legacy workflows. Every solution starts with intelligence at its core — models, data pipelines, and decision engines built from the ground up.' },
+  { title: 'Multi-Sector Expertise.', body: 'Healthcare to finance, legal to logistics. Our team understands the domain-specific constraints, compliance requirements, and operational realities of each industry we serve.' },
+  { title: 'Production-Ready Systems.', body: 'Proof-of-concepts are easy. We build AI systems that survive real-world conditions — edge cases, scale pressures, and evolving data — and keep performing.' },
+  { title: 'Modular Architecture.', body: 'No monoliths. Our solutions are composable by design — swap models, scale components independently, and adapt without rebuilding from scratch.' },
+  { title: 'Outcome-Driven Partnership.', body: 'We measure success by your business metrics, not our billable hours. From pilot to production, we stay accountable to results that matter.' },
 ]
 
 
 const services = [
   {
-    title: 'AI-Powered Intelligence',
-    body: 'Harness the power of artificial intelligence to transform raw data into actionable insights. Our adaptive machine learning models continuously learn from your business patterns, identifying opportunities and risks that traditional analytics would miss. From real-time decision support to automated anomaly detection, we build intelligence that scales with your ambitions.',
-    areas: ['Predictive Analytics', 'Natural Language Processing', 'Computer Vision', 'Recommendation Systems', 'Anomaly Detection'],
+    title: 'Custom AI Development',
+    body: 'Purpose-built AI models and systems designed around your specific business problem — not generic solutions force-fitted to your workflow. We train, fine-tune, and deploy models that understand your industry\'s language, constraints, and edge cases. From NLP pipelines processing legal contracts to computer vision systems inspecting manufacturing lines, every build is unique.',
+    areas: ['Custom Model Training', 'NLP & Document Intelligence', 'Computer Vision', 'Predictive Analytics', 'Generative AI Applications'],
   },
   {
-    title: 'Enterprise Integration',
-    body: 'Connect your entire technology ecosystem through a single, elegant integration layer. Whether you\'re bridging legacy systems with modern cloud infrastructure or orchestrating complex data flows across departments, our universal API adapters ensure zero-downtime connectivity and infinite scalability.',
-    areas: ['Universal API Gateway', 'Legacy System Adapters', 'Event-Driven Architecture', 'Real-time Data Sync', 'Custom Middleware'],
+    title: 'Data Engineering & Pipelines',
+    body: 'AI is only as good as the data feeding it. We design and build the data infrastructure that makes intelligence possible — ingestion pipelines, transformation layers, feature stores, and real-time streaming architectures. Clean data in, reliable decisions out.',
+    areas: ['ETL Pipeline Design', 'Real-time Data Streaming', 'Data Lake Architecture', 'Feature Engineering', 'Data Quality & Governance'],
   },
   {
-    title: 'Security & Compliance',
-    body: 'Enterprise-grade security woven into every layer of your AI infrastructure. From zero-trust architectures to automated compliance monitoring, we ensure your data stays encrypted at rest, in transit, and during processing — meeting the strictest regulatory requirements across industries.',
-    areas: ['Zero-Trust Architecture', 'SOC 2 Type II', 'HIPAA Compliance', 'GDPR Automation', 'Threat Intelligence'],
+    title: 'AI Integration & Deployment',
+    body: 'Getting a model to work in a notebook is step one. We handle the hard part — deploying AI into production environments where it must perform reliably at scale, integrate with existing systems, and deliver results that business teams can actually act on.',
+    areas: ['API-First Integration', 'MLOps & Model Monitoring', 'Legacy System Bridging', 'Edge Deployment', 'CI/CD for ML'],
   },
   {
     title: 'Cloud & Infrastructure',
-    body: 'Scalable, resilient cloud infrastructure designed for AI workloads. We architect environments that handle billions of events per day with sub-millisecond latency, ensuring your intelligence layer never becomes a bottleneck — from edge computing to distributed processing clusters.',
-    areas: ['Multi-Cloud Orchestration', 'Edge Computing', 'Auto-Scaling Pipelines', 'Infrastructure as Code', 'Disaster Recovery'],
+    body: 'Scalable, cost-efficient cloud architecture designed specifically for AI workloads. We build environments that handle compute-intensive training, low-latency inference, and massive data volumes — without burning through your budget or creating operational complexity.',
+    areas: ['Cloud Architecture Design', 'GPU/TPU Optimization', 'Auto-Scaling Infrastructure', 'Cost Optimization', 'Multi-Cloud Strategy'],
   },
   {
-    title: 'Strategic Consulting',
-    body: 'Transform technology into a competitive advantage with strategic planning that aligns AI initiatives with your business goals. Our dedicated team of engineers, scientists, and architects partner with your leadership to chart a roadmap from pilot to full-scale deployment.',
-    areas: ['AI Readiness Assessment', 'Roadmap Development', 'Change Management', 'ROI Modeling', 'Executive Workshops'],
+    title: 'AI Strategy & Advisory',
+    body: 'Not every problem needs AI, and not every AI initiative delivers ROI. We help leadership teams identify high-impact opportunities, avoid common pitfalls, and build a realistic roadmap from pilot to production — with clear milestones and measurable outcomes.',
+    areas: ['AI Opportunity Assessment', 'Use Case Prioritization', 'Build vs Buy Analysis', 'Team & Capability Planning', 'ROI Modeling'],
   },
 ]
 
@@ -114,19 +114,19 @@ function HeroSection() {
           className="max-w-[1200px]"
         >
           <h1 className="leading-[1.12] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.6rem, 5.8vw, 5rem)', fontWeight: 400, color: P.textDark }}>
-            We build intelligent{' '}
+            AI-first solutions{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-card.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            systems that transform how enterprises{' '}
+            engineered for healthcare, legal, finance,{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-motion.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>
-            {' '}think, operate, and grow{' '}
+            {' '}manufacturing, and every{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-rotated.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            — confidently.
+            industry in between.
           </h1>
         </motion.div>
 
@@ -141,7 +141,7 @@ function HeroSection() {
             className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
             style={{ background: P.charcoal, color: P.textOnDark }}
           >
-            See what we build
+            Explore our solutions
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
               <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -176,7 +176,7 @@ function MissionSection() {
           className="leading-[1.2] tracking-[-0.02em] max-w-[1100px]"
           style={{ fontSize: 'clamp(1.8rem, 4.2vw, 3.6rem)', fontWeight: 300, color: P.textOnDark }}
         >
-          Trinade AI Technologies crafts modular, scalable AI solutions — from predictive intelligence and secure cloud infrastructure to enterprise integration — engineered with precision and delivered with conviction.
+          We don&apos;t add AI to existing products. We build from intelligence outward — custom models, data pipelines, and production systems purpose-built for the industries we serve. Healthcare, legal, finance, manufacturing, logistics, retail — each with its own constraints, each demanding precision.
         </motion.p>
       </div>
     </section>
@@ -209,7 +209,7 @@ function IndustriesSection() {
               className="leading-[1.1] tracking-[-0.025em]"
               style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)', fontWeight: 400, color: P.textDark }}
             >
-              Tailored solutions for Every Industry.
+              AI built for your industry, not adapted to it.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -218,7 +218,7 @@ function IndustriesSection() {
               className="text-[15px] leading-[1.7] mt-4 max-w-[500px]"
               style={{ color: P.textMuted }}
             >
-              Our expertise spans diverse sectors, ensuring support that evolves with you.
+              Every sector has unique data, regulations, and workflows. We build AI that respects those realities.
             </motion.p>
           </div>
           {/* Navigation arrows like IT Solutions */}
@@ -311,7 +311,7 @@ function ScrollCardsSection() {
             className="leading-[1.08] tracking-[-0.03em]"
             style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)', fontWeight: 400, color: P.textDark }}
           >
-            Intelligent, Adaptive,<br />and Built to Scale<br />with Confidence
+            What makes Trinade<br />different — and why<br />it matters
           </motion.h2>
         </div>
 
@@ -379,7 +379,7 @@ function AccordionSection() {
           className="leading-[1.1] tracking-[-0.025em] text-center mb-20"
           style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', fontWeight: 400, color: P.textDark }}
         >
-          Tailor-made solutions for<br />all your business needs
+          What we do — end to end,<br />from data to deployment
         </motion.h2>
 
         <div className="max-w-[1100px] mx-auto space-y-3">
@@ -431,7 +431,7 @@ function AccordionSection() {
                         {s.body}
                       </p>
                       <p className="text-[12px] uppercase tracking-[0.12em] mb-3" style={{ color: P.textDimmed }}>
-                        Key Service Areas
+                        Core Capabilities
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {s.areas.map(area => (
@@ -480,7 +480,7 @@ function CTASection() {
               className="leading-[1.08] tracking-[-0.03em] mb-8"
               style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
             >
-              Ready to transform<br />your enterprise?
+              Let&apos;s build something<br />intelligent together
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -489,7 +489,7 @@ function CTASection() {
               className="text-[15px] leading-[1.9] mb-12"
               style={{ color: P.textOnDarkMuted }}
             >
-              Let&apos;s discuss how our solutions can accelerate your AI journey — from first integration to full-scale deployment.
+              Whether you&apos;re starting your AI journey or scaling what&apos;s already working — we&apos;d love to hear what you&apos;re building and where we can help.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -500,7 +500,7 @@ function CTASection() {
               <a href="/contact"
                 className="group inline-flex items-center gap-3 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(201,168,110,0.3)]"
                 style={{ background: P.gold, color: P.charcoal }}>
-                Get Started
+                Start a conversation
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -508,7 +508,7 @@ function CTASection() {
               <a href="/contact"
                 className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:bg-white/[0.1]"
                 style={{ color: P.textOnDarkMuted, border: '1px solid rgba(255,255,255,0.15)' }}>
-                Talk to Sales
+                View our work
               </a>
             </motion.div>
           </div>
@@ -714,7 +714,8 @@ function SolutionsFooter() {
           style={{
             fontSize: 'clamp(280px, 38vw, 500px)',
             fontWeight: 900,
-            color: 'rgba(255,255,255,0.06)',
+            color: 'transparent',
+            WebkitTextStroke: '1.5px rgba(255,255,255,0.08)',
             letterSpacing: '-0.04em',
           }}
         >
