@@ -79,66 +79,66 @@ const GRAIN_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='ht
 
 /* ─── Article Data ─── */
 const FEATURED_ARTICLE = {
-  category: 'Enterprise AI',
-  title: 'The Architecture of Enterprise Intelligence',
-  excerpt: 'How we designed a modular, scalable intelligence layer that adapts to the unique topology of each organization — without requiring a complete infrastructure overhaul.',
-  author: 'Arjun Mehta',
-  role: 'Chief Technology Officer',
+  category: 'AI First',
+  title: 'Why AI-First Thinking Changes Everything',
+  excerpt: 'At Trinade, we don\'t bolt AI onto existing workflows. We rethink the entire solution from an intelligence-first perspective — across healthcare, legal, finance, and beyond. Here\'s how that philosophy shapes every product we build.',
+  author: 'Trinade Team',
+  role: 'AI Solutions',
   date: 'March 8, 2026',
   readTime: '12 min read',
 }
 
 const ARTICLES = [
   {
-    category: 'AI Strategy',
-    title: 'Beyond Automation: AI That Augments Human Decision-Making',
-    excerpt: 'The most effective enterprise AI systems do not replace human judgment. They create new layers of understanding that make better decisions inevitable.',
-    author: 'Priya Sharma',
+    category: 'Healthcare AI',
+    title: 'AI in Healthcare: From Diagnostics to Patient-Centric Care',
+    excerpt: 'How intelligent systems are transforming clinical workflows, enhancing diagnostic accuracy, and creating patient experiences that feel personal — without compromising on compliance or data security.',
+    author: 'Trinade Team',
     date: 'March 1, 2026',
     readTime: '8 min read',
     number: '02',
   },
   {
-    category: 'Engineering',
-    title: 'Edge Computing Meets Machine Learning: A New Paradigm',
-    excerpt: 'Deploying inference workloads at the edge dramatically reduces latency and opens new possibilities for real-time intelligent systems in manufacturing.',
-    author: 'Vikram Nair',
+    category: 'Legal Tech',
+    title: 'Intelligent Contract Analysis: How AI Is Reshaping Legal Operations',
+    excerpt: 'Law firms and legal departments are adopting AI not to replace counsel, but to surface insights buried in thousands of documents — turning weeks of review into hours of strategic action.',
+    author: 'Trinade Team',
     date: 'February 22, 2026',
     readTime: '10 min read',
     number: '03',
   },
   {
-    category: 'Responsible AI',
-    title: 'Building Trust in AI: Our Approach to Responsible Innovation',
-    excerpt: 'Trust is not a feature you ship. It is a design principle that must be woven into every layer of an AI system, from data governance to user experience.',
-    author: 'Ananya Das',
+    category: 'FinTech',
+    title: 'Predictive Intelligence in Financial Services',
+    excerpt: 'From fraud detection to portfolio optimization, AI-first financial solutions are redefining how institutions manage risk, serve customers, and stay ahead of regulatory complexity.',
+    author: 'Trinade Team',
     date: 'February 14, 2026',
     readTime: '7 min read',
     number: '04',
   },
   {
-    category: 'NLP',
-    title: 'The Future of Natural Language Processing in Business',
-    excerpt: 'Language models are evolving from conversational toys into operational infrastructure. We explore the architectures making this possible at enterprise scale.',
-    author: 'Rahul Iyer',
+    category: 'Manufacturing',
+    title: 'Smart Factories: Where AI Meets the Production Floor',
+    excerpt: 'Predictive maintenance, quality control, and supply chain intelligence — the factory of tomorrow is already here, and it runs on adaptive AI that learns from every production cycle.',
+    author: 'Trinade Team',
     date: 'February 6, 2026',
     readTime: '9 min read',
     number: '05',
   },
   {
-    category: 'Data Science',
-    title: 'From Data to Insight: Transforming Enterprise Analytics',
-    excerpt: 'The gap between raw data and actionable insight is not technological. It is architectural. Here is how we bridge it with composable analytics pipelines.',
-    author: 'Meera Kulkarni',
+    category: 'Cloud & Security',
+    title: 'Building Secure AI Infrastructure at Scale',
+    excerpt: 'Enterprise AI demands more than just powerful models. It requires zero-trust architectures, automated compliance, and infrastructure that scales without sacrificing security or governance.',
+    author: 'Trinade Team',
     date: 'January 28, 2026',
     readTime: '11 min read',
     number: '06',
   },
   {
-    category: 'Research',
-    title: 'Multimodal Reasoning: Teaching Systems to See, Read, and Think',
-    excerpt: 'Our latest research into multimodal architectures reveals that the future of AI comprehension lies not in bigger models, but in smarter integration patterns.',
-    author: 'Dr. Siddharth Rao',
+    category: 'AI Strategy',
+    title: 'From Pilot to Production: Scaling AI Across the Enterprise',
+    excerpt: 'Most AI initiatives stall at proof-of-concept. We explore the organizational, technical, and strategic patterns that separate successful enterprise AI deployments from abandoned experiments.',
+    author: 'Trinade Team',
     date: 'January 19, 2026',
     readTime: '14 min read',
     number: '07',
@@ -403,10 +403,11 @@ export default function BlogPage() {
                         className="text-[clamp(1.1rem,2.2vw,1.6rem)] leading-[1.6] font-light"
                         style={{ color: 'rgba(42,34,24,0.55)' }}
                       >
-                        Our journal explores AI strategy, product design
-                        decisions, and how enterprises can build better
-                        intelligent systems. Practitioner-led insights on
-                        engineering craft and responsible innovation.
+                        Perspectives from Trinade — an AI-first company
+                        building intelligent solutions across healthcare,
+                        legal, finance, manufacturing, and beyond.
+                        Engineering insights, industry deep-dives, and
+                        the thinking behind our approach.
                       </p>
                     </RevealOnScroll>
                     <RevealOnScroll delay={0.5}>
