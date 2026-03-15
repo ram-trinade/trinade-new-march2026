@@ -9,13 +9,53 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Content balanced (AI + broader solutions), fonts increased, layouts redesigned, branding updated.
+- Done: 8-point design polish — footer marquee fix, company Est 2021, accordion cleanup, clickable nav, darker checkboxes, contact hero redesign, bigger logo, sticky scroll-over cards.
 - In progress: None
 - Blocked: None
 - Next step: Mobile responsiveness, favicon, SEO metadata per page, Vercel deploy.
-- Last completed: 10-point content/design/branding update across all pages
+- Last completed: Prompt 3 — 8 design improvements across all pages
 
 **NOTE (2026-03-14):** From this point, SESSION_LOG.md is duplicated — one copy in the old website directory (`E:\FINAL Trinade CC\SESSION_LOG.md`) and one in the new website directory (`E:\FINAL Trinade CC\trinade-new\SESSION_LOG.md`). Each should be updated independently for their respective websites.
+
+---
+
+## 2026-03-15 — Prompt 3: 8 Design Improvements
+
+### Changes Applied
+
+1. **Footer TRINADE Marquee Fix** — Per-letter gradient applied via individual `<span>` elements with `background-clip: text`, fixing inconsistent fill during animation. Dot separator (·) also gets same treatment. Fixed in both `solutions-footer.tsx` and `solutions-content.tsx`.
+
+2. **Company Page: Est 2021 + Bolder** — Changed "Est 2025" → "Est 2021", fontWeight 200 → 700.
+
+3. **Accordion Section Cleanup** — Removed "Learn more" links from expanded cards. Close button (+/×) now uses liquid glass effect matching footer social icons (gold gradient, backdrop-blur, gold border/shadow).
+
+4. **Clickable TRINADE + Logo** — Both wordmark (top-left) and logo (top-right) now wrapped in `<a href="/home">` for navigation.
+
+5. **Cookie Checkboxes Darker** — Changed from `#c9a86e` to `#8a6b2f` (checked) and `rgba(120,85,25,0.55)` (unchecked border) for clear visibility.
+
+6. **Contact Hero Redesign** — "Get in touch" heading: 64px/300 → clamp(4rem,8vw,7rem)/600. Description: 18px → clamp(18px,1.5vw,22px), opacity 0.6→0.7. CONTACT watermark: opacity 0.03→0.05, size increased.
+
+7. **Bigger Logo** — 28px → 36px (width and height).
+
+8. **Homepage Sticky Scroll-Over Cards** — Replaced 2-card Process/People section with 4 cards (Discovery, Architecture, Engineering, Evolution) using CSS `position: sticky` with incrementing `top` values. Each card slides over the previous one as user scrolls.
+
+### Files Modified
+- `components/solutions-footer.tsx` — Marquee per-letter gradient fix
+- `components/solutions-content.tsx` — Marquee fix + accordion learn more removal + liquid glass close button
+- `app/company/page.tsx` — Est 2021, bolder font
+- `app/contact/page.tsx` — Hero text bigger/bolder, watermark slightly bolder
+- `components/solutions-navbar.tsx` — Clickable wordmark/logo + bigger logo
+- `components/solutions-cookie-popup.tsx` — Darker checkbox colors
+- `components/homepage-content.tsx` — 4 sticky scroll-over cards
+
+### Verification (Playwright MCP)
+- Homepage: 4 sticky cards (Discovery→Evolution) with scroll-over effect ✓
+- Footer marquee: Brown gold liquid glass fill on each letter ✓
+- Company: "Est 2021" with bold weight ✓
+- Contact: Bigger/bolder "Get in touch" heading ✓
+- Accordion: No "Learn more", liquid glass close button ✓
+- Logo: 36px, clickable to /home ✓
+- TRINADE wordmark: clickable to /home ✓
 
 ---
 
