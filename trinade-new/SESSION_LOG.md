@@ -19,6 +19,22 @@
 
 ---
 
+## 2026-03-15 — Cursor Refinements (No Blur + Slightly Bigger Small Dot)
+
+### Problems
+1. **Hover blur**: `backdrop-filter: blur(4px)` on hover ring was blurring text behind cursor — should be see-through
+2. **Small dot too small**: 6px felt too tiny — user wanted it slightly bigger
+
+### Fixes
+- Removed `backdrop-filter` blur from hover state → content behind ring stays crystal clear
+- Increased `SMALL_DOT` from 6px → 8px (subtle +2px)
+- Liquid glass effect is now purely outline border + glow box-shadow, no blur
+
+### Files Modified
+- `components/premium-cursor.tsx` — SMALL_DOT 6→8, removed backdrop-filter blur on hover
+
+---
+
 ## 2026-03-15 — Premium Dual-Dot Cursor Fix
 
 ### Problem
