@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useRef, useState } from 'react'
-import { motion, useInView, AnimatePresence } from 'motion/react'
+import { motion, useInView } from 'motion/react'
 
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
@@ -71,31 +71,6 @@ function GoldPill({ children, className = '' }: { children: React.ReactNode; cla
     >
       {children}
     </span>
-  )
-}
-
-/* ─── Staggered Word Reveal ─── */
-function StaggeredWords({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-  const words = text.split(' ')
-  return (
-    <div ref={ref} className={className}>
-      <div className="flex flex-wrap gap-x-[0.3em]">
-        {words.map((word, i) => (
-          <span key={i} className="overflow-hidden inline-block">
-            <motion.span
-              className="inline-block"
-              initial={{ y: '110%', opacity: 0 }}
-              animate={isInView ? { y: '0%', opacity: 1 } : {}}
-              transition={{ duration: 0.9, delay: delay + i * 0.06, ease: EASE_SMOOTH }}
-            >
-              {word}
-            </motion.span>
-          </span>
-        ))}
-      </div>
-    </div>
   )
 }
 
@@ -170,31 +145,29 @@ const ARTICLES = [
   },
 ]
 
-/* ─── Marquee Row ─── */
+/* ─── Marquee Row (Cream bg version) ─── */
 function MarqueeRow() {
-  const text = 'featured articles'
+  const text = 'insights & perspectives'
   const items = Array.from({ length: 6 }, (_, i) => i)
   return (
-    <div className="relative overflow-hidden py-6" style={{ borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+    <div className="relative overflow-hidden py-5" style={{ borderTop: '1px solid rgba(201,168,110,0.1)', borderBottom: '1px solid rgba(201,168,110,0.1)' }}>
       <motion.div
         className="flex whitespace-nowrap"
         animate={{ x: [0, '-50%'] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
       >
         {items.map((i) => (
-          <span key={i} className="flex items-center mx-4">
+          <span key={i} className="flex items-center mx-6">
             <span
-              className="text-[clamp(4rem,10vw,9rem)] font-light tracking-tight uppercase"
-              style={{ color: 'rgba(255,255,255,0.06)', fontWeight: 200 }}
+              className="text-[clamp(3.5rem,9vw,8rem)] tracking-tight uppercase"
+              style={{ color: 'rgba(42,34,24,0.06)', fontWeight: 700 }}
             >
               {text}
             </span>
             <span
-              className="mx-6 text-2xl"
-              style={{ color: 'rgba(201,168,110,0.3)' }}
-            >
-              ©
-            </span>
+              className="mx-8 w-2.5 h-2.5 rounded-full"
+              style={{ background: 'rgba(201,168,110,0.2)' }}
+            />
           </span>
         ))}
       </motion.div>
@@ -227,28 +200,42 @@ function VerticalArticleCard({
     >
       {/* Full-width horizontal divider */}
       <div
-        className="w-full mb-0"
+        className="w-full"
         style={{
           height: '1px',
-          background: 'linear-gradient(90deg, rgba(201,168,110,0.08), rgba(201,168,110,0.15), rgba(201,168,110,0.08))',
+          background: 'linear-gradient(90deg, rgba(201,168,110,0.06), rgba(201,168,110,0.12), rgba(201,168,110,0.06))',
         }}
       />
 
       <div
-        className="relative py-10 md:py-14 transition-all duration-700"
+        className="relative py-10 md:py-14 px-0 md:px-6 transition-all duration-700 overflow-hidden"
         style={{
-          background: hovered ? 'rgba(201,168,110,0.02)' : 'transparent',
+          background: hovered ? 'rgba(201,168,110,0.03)' : 'transparent',
+          borderRadius: hovered ? '16px' : '0px',
         }}
       >
+        {/* Hover: subtle left gold accent bar */}
+        <motion.div
+          className="absolute left-0 top-[15%] bottom-[15%] w-[2px]"
+          initial={{ scaleY: 0, opacity: 0 }}
+          animate={{ scaleY: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.5, ease: EASE_SMOOTH }}
+          style={{
+            background: 'linear-gradient(to bottom, transparent, #c9a86e, transparent)',
+            transformOrigin: 'top',
+          }}
+        />
+
         {/* Top row: Number + Category + Date */}
         <div className="flex items-center justify-between mb-6 md:mb-8">
           <div className="flex items-center gap-5">
-            <span
+            <motion.span
               className="text-xs font-semibold tracking-[0.15em]"
-              style={{ color: 'rgba(42,34,24,0.25)' }}
+              animate={{ color: hovered ? '#c9a86e' : 'rgba(42,34,24,0.25)' }}
+              transition={{ duration: 0.4 }}
             >
               {article.number}
-            </span>
+            </motion.span>
             <GoldPill>{article.category}</GoldPill>
           </div>
           <div className="flex items-center gap-5">
@@ -265,12 +252,13 @@ function VerticalArticleCard({
         <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-12">
           {/* Title — takes most space */}
           <div className="lg:flex-[2]">
-            <h3
-              className="text-[clamp(1.5rem,3.2vw,2.6rem)] font-semibold leading-[1.15] tracking-tight transition-colors duration-500"
-              style={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.85)' }}
+            <motion.h3
+              className="text-[clamp(1.5rem,3.2vw,2.6rem)] font-semibold leading-[1.15] tracking-tight"
+              animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
+              transition={{ duration: 0.5 }}
             >
               {article.title}
-            </h3>
+            </motion.h3>
           </div>
 
           {/* Excerpt — right side */}
@@ -302,7 +290,11 @@ function VerticalArticleCard({
           {/* Arrow indicator */}
           <motion.div
             className="hidden lg:flex items-center justify-center shrink-0"
-            animate={{ x: hovered ? 6 : 0, opacity: hovered ? 1 : 0.3 }}
+            animate={{
+              x: hovered ? 6 : 0,
+              opacity: hovered ? 1 : 0.2,
+              scale: hovered ? 1.1 : 1,
+            }}
             transition={{ duration: 0.4, ease: EASE_SMOOTH }}
           >
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -313,7 +305,7 @@ function VerticalArticleCard({
 
         {/* Hover gold underline */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 h-[1px]"
+          className="absolute bottom-0 left-0 right-0 h-[1.5px]"
           initial={{ scaleX: 0 }}
           animate={{ scaleX: hovered ? 1 : 0 }}
           transition={{ duration: 0.6, ease: EASE }}
@@ -333,8 +325,6 @@ function VerticalArticleCard({
    ══════════════════════════════════════════════════════════════ */
 
 export default function BlogPage() {
-  const [email, setEmail] = useState('')
-
   return (
     <>
       <style>{`
@@ -346,28 +336,28 @@ export default function BlogPage() {
         <SolutionsNavbar />
 
         <SmoothScroll>
-          {/* ═══════════════ HERO — Dark Editorial (Inspired by Creative Apes) ═══════════════ */}
+          {/* ═══════════════ HERO — Cream Editorial ═══════════════ */}
           <section
             className="relative min-h-screen flex flex-col justify-between overflow-hidden"
-            style={{ background: '#0a0a0a' }}
+            style={{ background: '#f2ede6' }}
           >
             {/* Atmospheric warm glow */}
             <div className="absolute inset-0 pointer-events-none">
               <div
                 className="absolute"
                 style={{
-                  width: '60vw', height: '60vw', maxWidth: '900px', maxHeight: '900px',
-                  top: '-15%', right: '-15%',
-                  background: 'radial-gradient(ellipse, rgba(201,168,110,0.04) 0%, transparent 65%)',
+                  width: '55vw', height: '55vw', maxWidth: '850px', maxHeight: '850px',
+                  top: '-10%', right: '-10%',
+                  background: 'radial-gradient(ellipse, rgba(201,168,110,0.07) 0%, transparent 65%)',
                   filter: 'blur(80px)',
                 }}
               />
               <div
                 className="absolute"
                 style={{
-                  width: '45vw', height: '45vw', maxWidth: '700px', maxHeight: '700px',
-                  bottom: '5%', left: '-10%',
-                  background: 'radial-gradient(ellipse, rgba(185,155,100,0.03) 0%, transparent 60%)',
+                  width: '40vw', height: '40vw', maxWidth: '600px', maxHeight: '600px',
+                  bottom: '10%', left: '-5%',
+                  background: 'radial-gradient(ellipse, rgba(185,155,100,0.05) 0%, transparent 60%)',
                   filter: 'blur(100px)',
                 }}
               />
@@ -375,78 +365,83 @@ export default function BlogPage() {
 
             {/* Grain */}
             <div
-              className="absolute inset-0 pointer-events-none opacity-[0.04]"
+              className="absolute inset-0 pointer-events-none opacity-[0.035]"
               style={{ backgroundImage: GRAIN_BG, backgroundSize: '256px 256px' }}
             />
 
-            {/* Main content — vertically centered */}
+            {/* Main content — "Blog" title + description */}
             <div className="relative z-10 flex-1 flex items-center px-6 md:px-12 lg:px-20 xl:px-32 pt-32">
               <div className="max-w-[1400px] mx-auto w-full">
-                {/* Description text — right-aligned, large editorial */}
-                <div className="flex justify-end">
-                  <RevealOnScroll delay={0.3} className="max-w-2xl">
-                    <p
-                      className="text-[clamp(1.3rem,2.8vw,2rem)] leading-[1.55] font-light"
-                      style={{ color: 'rgba(255,255,255,0.65)' }}
+                {/* Two-column layout: "Blog" left, description right */}
+                <div className="flex flex-col lg:flex-row lg:items-end gap-12 lg:gap-20">
+                  {/* Left: "Blog" — oversized editorial title */}
+                  <div className="lg:flex-[1]">
+                    <motion.div
+                      initial={{ opacity: 0, y: 40 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1.2, ease: EASE }}
                     >
-                      Our journal explores AI strategy, product design
-                      decisions, and how enterprises can build better
-                      intelligent systems. We publish practitioner-led
-                      insights on engineering craft and responsible
-                      innovation.
-                    </p>
-                  </RevealOnScroll>
+                      <span
+                        className="text-xs tracking-[0.2em] uppercase font-semibold block mb-6"
+                        style={{ color: '#c9a86e' }}
+                      >
+                        Journal
+                      </span>
+                      <h1
+                        className="text-[clamp(5rem,14vw,12rem)] font-bold leading-[0.85] tracking-tighter"
+                        style={{ color: '#2a2218' }}
+                      >
+                        Blog
+                      </h1>
+                    </motion.div>
+                  </div>
+
+                  {/* Right: Description */}
+                  <div className="lg:flex-[1] pb-4">
+                    <RevealOnScroll delay={0.3}>
+                      <p
+                        className="text-[clamp(1.1rem,2.2vw,1.6rem)] leading-[1.6] font-light"
+                        style={{ color: 'rgba(42,34,24,0.55)' }}
+                      >
+                        Our journal explores AI strategy, product design
+                        decisions, and how enterprises can build better
+                        intelligent systems. Practitioner-led insights on
+                        engineering craft and responsible innovation.
+                      </p>
+                    </RevealOnScroll>
+                    <RevealOnScroll delay={0.5}>
+                      <div className="mt-8 max-w-[200px]">
+                        <GoldRule />
+                      </div>
+                    </RevealOnScroll>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Bottom metadata bar */}
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32 pb-8">
-              <div className="max-w-[1400px] mx-auto">
-                <RevealOnScroll delay={0.6}>
-                  <div
-                    className="flex items-center justify-between py-5"
-                    style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-                  >
-                    <span className="text-xs tracking-[0.15em] uppercase font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                      © Fresh perspectives
-                    </span>
-                    <span className="text-xs tracking-wider uppercase font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                      (Journal — 08)
-                    </span>
-                    <span className="text-xs tracking-[0.15em] uppercase font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                      Thinking out loud
-                    </span>
-                  </div>
-                </RevealOnScroll>
-              </div>
-            </div>
-
-            {/* Scrolling marquee — "featured articles" */}
-            <MarqueeRow />
-          </section>
-
-
-          {/* ═══════════════ FEATURED ARTICLE — Full Width Split ═══════════════ */}
-          <section className="relative" style={{ background: '#0a0a0a' }}>
-            <div className="px-6 md:px-12 lg:px-20 xl:px-32 py-20 md:py-28">
-              <div className="max-w-[1400px] mx-auto">
-                <FeaturedCard article={FEATURED_ARTICLE} />
-              </div>
+            {/* Scrolling marquee */}
+            <div className="relative z-10 mt-16">
+              <MarqueeRow />
             </div>
           </section>
 
-          {/* ═══════════════ TRANSITION: Dark → Cream ═══════════════ */}
-          <div
-            className="h-32 md:h-48"
-            style={{
-              background: 'linear-gradient(to bottom, #0a0a0a, #f2ede6)',
-            }}
-          />
+
+          {/* ═══════════════ FEATURED ARTICLE ═══════════════ */}
+          <section className="relative px-6 md:px-12 lg:px-20 xl:px-32 py-20 md:py-28" style={{ background: '#f2ede6' }}>
+            {/* Grain */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.03]"
+              style={{ backgroundImage: GRAIN_BG, backgroundSize: '256px 256px' }}
+            />
+
+            <div className="relative z-10 max-w-[1400px] mx-auto">
+              <FeaturedCard article={FEATURED_ARTICLE} />
+            </div>
+          </section>
 
 
           {/* ═══════════════ ARTICLES — Vertical Editorial List ═══════════════ */}
-          <section className="relative py-12 md:py-20 px-6 md:px-12 lg:px-20 xl:px-32">
+          <section className="relative py-12 md:py-20 px-6 md:px-12 lg:px-20 xl:px-32" style={{ background: '#f2ede6' }}>
             {/* Grain */}
             <div
               className="absolute inset-0 pointer-events-none opacity-[0.03]"
@@ -482,7 +477,7 @@ export default function BlogPage() {
                 className="w-full"
                 style={{
                   height: '1px',
-                  background: 'linear-gradient(90deg, rgba(201,168,110,0.08), rgba(201,168,110,0.15), rgba(201,168,110,0.08))',
+                  background: 'linear-gradient(90deg, rgba(201,168,110,0.06), rgba(201,168,110,0.12), rgba(201,168,110,0.06))',
                 }}
               />
 
@@ -515,7 +510,7 @@ export default function BlogPage() {
           </section>
 
 
-          {/* ═══════════════ NEWSLETTER CTA ═══════════════ */}
+          {/* ═══════════════ OUR THINKING — Premium CTA (replaces Newsletter) ═══════════════ */}
           <section
             className="relative py-32 overflow-hidden"
             style={{ background: '#0a0a0a' }}
@@ -525,10 +520,10 @@ export default function BlogPage() {
               <div
                 className="absolute"
                 style={{
-                  width: '60vw', height: '60vw', maxWidth: '900px', maxHeight: '900px',
-                  top: '-20%', left: '-15%',
-                  background: 'radial-gradient(ellipse, rgba(201,168,110,0.06) 0%, transparent 70%)',
-                  filter: 'blur(80px)',
+                  width: '50vw', height: '50vw', maxWidth: '800px', maxHeight: '800px',
+                  top: '-20%', left: '20%',
+                  background: 'radial-gradient(ellipse, rgba(201,168,110,0.05) 0%, transparent 70%)',
+                  filter: 'blur(100px)',
                 }}
               />
             </div>
@@ -539,105 +534,74 @@ export default function BlogPage() {
               style={{ backgroundImage: GRAIN_BG, backgroundSize: '256px 256px' }}
             />
 
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32 max-w-[1400px] mx-auto">
-              <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-                {/* Left: Editorial Copy */}
-                <div className="flex-1 text-center lg:text-left">
-                  <RevealOnScroll>
-                    <GoldPill className="mb-6">Newsletter</GoldPill>
-                  </RevealOnScroll>
-                  <RevealOnScroll delay={0.1}>
-                    <h2
-                      className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6"
-                      style={{ color: 'rgba(255,255,255,0.93)' }}
-                    >
-                      Stay at the
-                      <br />
-                      <span style={{ color: '#c9a86e' }}>frontier.</span>
-                    </h2>
-                  </RevealOnScroll>
-                  <RevealOnScroll delay={0.2}>
-                    <p
-                      className="text-base md:text-lg leading-relaxed max-w-md"
-                      style={{ color: 'rgba(255,255,255,0.45)' }}
-                    >
-                      A monthly distillation of our latest thinking on enterprise AI,
-                      engineering craft, and responsible innovation. No noise, just signal.
-                    </p>
-                  </RevealOnScroll>
+            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32 max-w-[1400px] mx-auto text-center">
+              <RevealOnScroll>
+                <span
+                  className="text-xs tracking-[0.25em] uppercase font-semibold block mb-8"
+                  style={{ color: '#c9a86e' }}
+                >
+                  Our Thinking
+                </span>
+              </RevealOnScroll>
+
+              <RevealOnScroll delay={0.1}>
+                <h2
+                  className="text-[clamp(2.2rem,5vw,4.5rem)] font-bold tracking-tight leading-[1.05] mb-8 max-w-4xl mx-auto"
+                  style={{ color: 'rgba(255,255,255,0.93)' }}
+                >
+                  We believe the best AI systems
+                  are built with <span style={{ color: '#c9a86e' }}>craft</span>,
+                  not just code.
+                </h2>
+              </RevealOnScroll>
+
+              <RevealOnScroll delay={0.2}>
+                <p
+                  className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12"
+                  style={{ color: 'rgba(255,255,255,0.4)' }}
+                >
+                  Every article is written by the people who build our products.
+                  No ghostwriters. No hype. Just honest engineering insights
+                  from the teams shaping enterprise intelligence.
+                </p>
+              </RevealOnScroll>
+
+              <RevealOnScroll delay={0.3}>
+                <div className="max-w-xs mx-auto mb-16">
+                  <GoldRule />
                 </div>
+              </RevealOnScroll>
 
-                {/* Right: Glass Card with Form */}
-                <RevealOnScroll delay={0.3} className="w-full lg:w-auto">
-                  <div
-                    className="relative p-8 md:p-10 w-full lg:w-[480px]"
-                    style={{
-                      background: 'linear-gradient(165deg, rgba(185,155,100,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-                      backdropFilter: 'blur(32px) saturate(1.2)',
-                      WebkitBackdropFilter: 'blur(32px) saturate(1.2)',
-                      border: '1px solid rgba(201,168,110,0.12)',
-                      borderRadius: '24px',
-                      boxShadow: '0 24px 80px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)',
-                    }}
-                  >
-                    <p
-                      className="text-sm font-medium mb-6 tracking-wide"
-                      style={{ color: 'rgba(255,255,255,0.6)' }}
-                    >
-                      Join 2,400+ leaders in AI and engineering
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your@email.com"
-                        className="flex-1 px-5 py-3.5 text-sm outline-none placeholder:text-white/25"
-                        style={{
-                          background: 'rgba(255,255,255,0.05)',
-                          border: '1px solid rgba(255,255,255,0.08)',
-                          borderRadius: '14px',
-                          color: 'rgba(255,255,255,0.9)',
-                          transition: 'border-color 0.3s ease',
-                        }}
-                        onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(201,168,110,0.35)' }}
-                        onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
-                      />
-                      <button
-                        className="px-7 py-3.5 text-sm font-semibold tracking-[0.08em] uppercase shrink-0"
-                        style={{
-                          background: 'linear-gradient(165deg, rgba(201,168,110,0.9) 0%, rgba(185,155,100,0.8) 100%)',
-                          borderRadius: '14px',
-                          color: '#0a0a0a',
-                          border: 'none',
-                          transition: 'all 0.3s ease',
-                          boxShadow: '0 4px 20px rgba(201,168,110,0.2)',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.boxShadow = '0 8px 30px rgba(201,168,110,0.35)'
-                          e.currentTarget.style.transform = 'translateY(-1px)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.boxShadow = '0 4px 20px rgba(201,168,110,0.2)'
-                          e.currentTarget.style.transform = 'translateY(0)'
-                        }}
+              {/* Stats row */}
+              <RevealOnScroll delay={0.4}>
+                <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto">
+                  {[
+                    { value: '24+', label: 'Published Articles' },
+                    { value: '8', label: 'Contributing Authors' },
+                    { value: '12k+', label: 'Monthly Readers' },
+                  ].map((stat) => (
+                    <div key={stat.label} className="text-center">
+                      <div
+                        className="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight mb-2"
+                        style={{ color: '#c9a86e' }}
                       >
-                        Subscribe
-                      </button>
+                        {stat.value}
+                      </div>
+                      <div
+                        className="text-xs tracking-[0.12em] uppercase font-medium"
+                        style={{ color: 'rgba(255,255,255,0.3)' }}
+                      >
+                        {stat.label}
+                      </div>
                     </div>
-
-                    <p className="text-xs mt-4" style={{ color: 'rgba(255,255,255,0.25)' }}>
-                      Delivered monthly. Unsubscribe anytime. We respect your inbox.
-                    </p>
-                  </div>
-                </RevealOnScroll>
-              </div>
+                  ))}
+                </div>
+              </RevealOnScroll>
             </div>
           </section>
 
           {/* ═══════════════ TOPICS ═══════════════ */}
-          <section className="relative py-24 px-6 md:px-12 lg:px-20 xl:px-32">
+          <section className="relative py-24 px-6 md:px-12 lg:px-20 xl:px-32" style={{ background: '#f2ede6' }}>
             <div className="max-w-[1400px] mx-auto">
               <RevealOnScroll>
                 <div className="flex items-center gap-4 mb-12">
@@ -703,7 +667,7 @@ export default function BlogPage() {
 }
 
 
-/* ─── Featured Article Card — Dark, Full-Width ─── */
+/* ─── Featured Article Card — Cream bg version ─── */
 function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
@@ -724,23 +688,23 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
         <span className="text-xs tracking-[0.2em] uppercase font-semibold" style={{ color: '#c9a86e' }}>
           01 — Featured
         </span>
-        <div className="flex-1 h-px" style={{ background: 'rgba(201,168,110,0.12)' }} />
+        <div className="flex-1 h-px" style={{ background: 'rgba(201,168,110,0.15)' }} />
       </div>
 
       <div
         className="relative overflow-hidden"
         style={{
           borderRadius: '24px',
-          border: '1px solid rgba(201,168,110,0.08)',
+          border: '1px solid rgba(201,168,110,0.1)',
           transition: 'border-color 0.6s ease, box-shadow 0.6s ease',
-          borderColor: hovered ? 'rgba(201,168,110,0.2)' : 'rgba(201,168,110,0.08)',
+          borderColor: hovered ? 'rgba(201,168,110,0.3)' : 'rgba(201,168,110,0.1)',
           boxShadow: hovered
-            ? '0 40px 100px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,168,110,0.06)'
-            : '0 8px 40px rgba(0,0,0,0.15)',
+            ? '0 32px 80px rgba(42,34,24,0.08), 0 0 0 1px rgba(201,168,110,0.08)'
+            : '0 8px 40px rgba(42,34,24,0.03)',
         }}
       >
         <div className="flex flex-col lg:flex-row">
-          {/* Image side — dark editorial gradient */}
+          {/* Image side — warm editorial gradient */}
           <div className="relative lg:w-[55%] overflow-hidden" style={{ minHeight: '380px' }}>
             <motion.div
               className="absolute inset-0"
@@ -776,38 +740,38 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             />
           </div>
 
-          {/* Content side — dark glass */}
+          {/* Content side — light glass */}
           <div
             className="lg:w-[45%] p-8 md:p-10 lg:p-12 flex flex-col justify-center"
             style={{
-              background: 'rgba(255,255,255,0.03)',
+              background: 'rgba(255,255,255,0.55)',
               backdropFilter: 'blur(20px)',
             }}
           >
             <span
               className="text-xs tracking-[0.15em] uppercase font-medium mb-6"
-              style={{ color: 'rgba(255,255,255,0.3)' }}
+              style={{ color: 'rgba(42,34,24,0.4)' }}
             >
               {article.readTime}
             </span>
 
             <h2
               className="text-2xl md:text-3xl lg:text-[2.2rem] font-bold tracking-tight leading-[1.15] mb-5"
-              style={{ color: 'rgba(255,255,255,0.93)' }}
+              style={{ color: '#2a2218' }}
             >
               {article.title}
             </h2>
 
             <p
               className="text-sm md:text-base leading-relaxed mb-8"
-              style={{ color: 'rgba(255,255,255,0.4)' }}
+              style={{ color: 'rgba(42,34,24,0.5)' }}
             >
               {article.excerpt}
             </p>
 
             <div
               className="flex items-center gap-4 pt-6"
-              style={{ borderTop: '1px solid rgba(201,168,110,0.1)' }}
+              style={{ borderTop: '1px solid rgba(201,168,110,0.12)' }}
             >
               <div
                 className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
@@ -820,10 +784,10 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                 {article.author.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
-                <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                <p className="text-sm font-semibold" style={{ color: '#2a2218' }}>
                   {article.author}
                 </p>
-                <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                <p className="text-xs" style={{ color: 'rgba(42,34,24,0.4)' }}>
                   {article.role} &middot; {article.date}
                 </p>
               </div>

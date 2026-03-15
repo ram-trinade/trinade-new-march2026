@@ -19,6 +19,30 @@
 
 ---
 
+## 2026-03-15 — Blog V3: Cream Hero + Vertical Cards + Our Thinking Section
+
+### Changes Applied
+1. **Hero bg**: Changed from dark (#0a0a0a) → cream (#f2ede6) to match all other pages
+2. **"Blog" title**: Giant oversized text (clamp 5rem–12rem) on left with "Journal" eyebrow, description on right
+3. **Marquee**: Bolder (weight 700), removed ©, changed text to "insights & perspectives", dot separator instead of ©
+4. **Removed**: "Fresh perspectives", "(Journal — 08)", "Thinking out loud" metadata bar
+5. **Removed**: Dark→cream gradient fade transition
+6. **Featured card**: Now uses cream/light glass content side instead of dark
+7. **Card hover**: Added left gold accent bar (scaleY animation), number turns gold, title darkens, arrow scales up, background tints warm gold, subtle border-radius on hover
+8. **Newsletter replaced**: "Our Thinking" premium section — centered editorial copy ("built with craft, not just code"), gold rule, 3-column stats row (24+/8/12k+)
+
+### Verification (Playwright MCP)
+- Hero: Cream bg ✓, "Blog" oversized title ✓, marquee bold ✓, no © ✓
+- Featured card: Light glass content side ✓, no dark→cream fade ✓
+- Article cards: Vertical editorial layout working ✓
+- Our Thinking section: Stats row rendering ✓, gold accents ✓
+- Topics + Footer: Intact ✓
+
+### Files Modified
+- `app/blog/page.tsx` — Complete rewrite (cream hero, enhanced hover, Our Thinking section)
+
+---
+
 ## 2026-03-15 — Brown Gold Cursor + Blog Page Redesign
 
 ### Cursor Updates
