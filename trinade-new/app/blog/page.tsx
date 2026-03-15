@@ -147,7 +147,7 @@ const ARTICLES = [
 
 /* ─── Marquee Row (Cream bg version) ─── */
 function MarqueeRow() {
-  const text = 'insights & perspectives'
+  const text = 'Trinade Blog Post'
   const items = Array.from({ length: 6 }, (_, i) => i)
   return (
     <div className="relative overflow-hidden py-5" style={{ borderTop: '1px solid rgba(201,168,110,0.1)', borderBottom: '1px solid rgba(201,168,110,0.1)' }}>
@@ -157,7 +157,7 @@ function MarqueeRow() {
         transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
       >
         {items.map((i) => (
-          <span key={i} className="flex items-center mx-6">
+          <span key={i} className="flex items-center">
             <span
               className="text-[clamp(3.5rem,9vw,8rem)] tracking-tight uppercase"
               style={{ color: 'rgba(42,34,24,0.06)', fontWeight: 700 }}
@@ -165,8 +165,8 @@ function MarqueeRow() {
               {text}
             </span>
             <span
-              className="mx-8 w-2.5 h-2.5 rounded-full"
-              style={{ background: 'rgba(201,168,110,0.2)' }}
+              className="w-3.5 h-3.5 rounded-full shrink-0 mx-[clamp(1.5rem,3vw,3rem)]"
+              style={{ background: 'rgba(201,168,110,0.25)' }}
             />
           </span>
         ))}
@@ -510,153 +510,6 @@ export default function BlogPage() {
           </section>
 
 
-          {/* ═══════════════ OUR THINKING — Premium CTA (replaces Newsletter) ═══════════════ */}
-          <section
-            className="relative py-32 overflow-hidden"
-            style={{ background: '#0a0a0a' }}
-          >
-            {/* Atmospheric orbs */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div
-                className="absolute"
-                style={{
-                  width: '50vw', height: '50vw', maxWidth: '800px', maxHeight: '800px',
-                  top: '-20%', left: '20%',
-                  background: 'radial-gradient(ellipse, rgba(201,168,110,0.05) 0%, transparent 70%)',
-                  filter: 'blur(100px)',
-                }}
-              />
-            </div>
-
-            {/* Grain */}
-            <div
-              className="absolute inset-0 pointer-events-none opacity-[0.03]"
-              style={{ backgroundImage: GRAIN_BG, backgroundSize: '256px 256px' }}
-            />
-
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32 max-w-[1400px] mx-auto text-center">
-              <RevealOnScroll>
-                <span
-                  className="text-xs tracking-[0.25em] uppercase font-semibold block mb-8"
-                  style={{ color: '#c9a86e' }}
-                >
-                  Our Thinking
-                </span>
-              </RevealOnScroll>
-
-              <RevealOnScroll delay={0.1}>
-                <h2
-                  className="text-[clamp(2.2rem,5vw,4.5rem)] font-bold tracking-tight leading-[1.05] mb-8 max-w-4xl mx-auto"
-                  style={{ color: 'rgba(255,255,255,0.93)' }}
-                >
-                  We believe the best AI systems
-                  are built with <span style={{ color: '#c9a86e' }}>craft</span>,
-                  not just code.
-                </h2>
-              </RevealOnScroll>
-
-              <RevealOnScroll delay={0.2}>
-                <p
-                  className="text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12"
-                  style={{ color: 'rgba(255,255,255,0.4)' }}
-                >
-                  Every article is written by the people who build our products.
-                  No ghostwriters. No hype. Just honest engineering insights
-                  from the teams shaping enterprise intelligence.
-                </p>
-              </RevealOnScroll>
-
-              <RevealOnScroll delay={0.3}>
-                <div className="max-w-xs mx-auto mb-16">
-                  <GoldRule />
-                </div>
-              </RevealOnScroll>
-
-              {/* Stats row */}
-              <RevealOnScroll delay={0.4}>
-                <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto">
-                  {[
-                    { value: '24+', label: 'Published Articles' },
-                    { value: '8', label: 'Contributing Authors' },
-                    { value: '12k+', label: 'Monthly Readers' },
-                  ].map((stat) => (
-                    <div key={stat.label} className="text-center">
-                      <div
-                        className="text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-tight mb-2"
-                        style={{ color: '#c9a86e' }}
-                      >
-                        {stat.value}
-                      </div>
-                      <div
-                        className="text-xs tracking-[0.12em] uppercase font-medium"
-                        style={{ color: 'rgba(255,255,255,0.3)' }}
-                      >
-                        {stat.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </RevealOnScroll>
-            </div>
-          </section>
-
-          {/* ═══════════════ TOPICS ═══════════════ */}
-          <section className="relative py-24 px-6 md:px-12 lg:px-20 xl:px-32" style={{ background: '#f2ede6' }}>
-            <div className="max-w-[1400px] mx-auto">
-              <RevealOnScroll>
-                <div className="flex items-center gap-4 mb-12">
-                  <span className="text-xs tracking-[0.2em] uppercase font-semibold" style={{ color: '#c9a86e' }}>
-                    Explore Topics
-                  </span>
-                  <div className="flex-1 h-px" style={{ background: 'rgba(201,168,110,0.15)' }} />
-                </div>
-              </RevealOnScroll>
-
-              <div className="flex flex-wrap gap-4">
-                {[
-                  'Artificial Intelligence', 'Machine Learning', 'Enterprise Architecture',
-                  'Innovation', 'Technology', 'Engineering', 'Research',
-                  'Natural Language Processing', 'Computer Vision', 'Data Governance',
-                  'Edge Computing', 'Responsible AI',
-                ].map((tag, i) => (
-                  <RevealOnScroll key={tag} delay={i * 0.04}>
-                    <a
-                      href="#"
-                      className="group inline-flex items-center gap-2 px-6 py-3 text-sm font-medium tracking-wide"
-                      style={{
-                        borderRadius: '100px',
-                        background: 'linear-gradient(165deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)',
-                        backdropFilter: 'blur(12px)',
-                        WebkitBackdropFilter: 'blur(12px)',
-                        border: '1px solid rgba(201,168,110,0.1)',
-                        color: 'rgba(42,34,24,0.6)',
-                        transition: 'all 0.4s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(201,168,110,0.35)'
-                        e.currentTarget.style.color = '#c9a86e'
-                        e.currentTarget.style.background = 'linear-gradient(165deg, rgba(185,155,100,0.12) 0%, rgba(201,168,110,0.05) 100%)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(201,168,110,0.1)'
-                        e.currentTarget.style.color = 'rgba(42,34,24,0.6)'
-                        e.currentTarget.style.background = 'linear-gradient(165deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%)'
-                      }}
-                    >
-                      {tag}
-                      <svg
-                        width="12" height="12" viewBox="0 0 12 12" fill="none"
-                        className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      >
-                        <path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </a>
-                  </RevealOnScroll>
-                ))}
-              </div>
-            </div>
-          </section>
-
           <SolutionsFooter />
         </SmoothScroll>
 
@@ -667,7 +520,7 @@ export default function BlogPage() {
 }
 
 
-/* ─── Featured Article Card — Cream bg version ─── */
+/* ─── Featured Article Card — Awwwards-quality Editorial Hero ─── */
 function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
@@ -676,134 +529,195 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1, ease: EASE }}
+      transition={{ duration: 1.2, ease: EASE }}
       className="group relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      style={{ cursor: 'none' }}
     >
-      {/* Label */}
-      <div className="flex items-center gap-4 mb-10">
-        <span className="text-xs tracking-[0.2em] uppercase font-semibold" style={{ color: '#c9a86e' }}>
-          01 — Featured
+      {/* Eyebrow label row */}
+      <div className="flex items-center gap-5 mb-12">
+        <span className="text-[11px] tracking-[0.25em] uppercase font-semibold" style={{ color: '#c9a86e' }}>
+          Featured Story
         </span>
-        <div className="flex-1 h-px" style={{ background: 'rgba(201,168,110,0.15)' }} />
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{ duration: 1.4, delay: 0.3, ease: EASE }}
+          className="flex-1 h-px"
+          style={{
+            background: 'linear-gradient(90deg, rgba(201,168,110,0.25), rgba(201,168,110,0.06))',
+            transformOrigin: 'left',
+          }}
+        />
+        <span className="text-[11px] tracking-[0.15em] uppercase font-medium" style={{ color: 'rgba(42,34,24,0.3)' }}>
+          01
+        </span>
       </div>
 
+      {/* Full-width editorial card */}
       <div
         className="relative overflow-hidden"
         style={{
-          borderRadius: '24px',
-          border: '1px solid rgba(201,168,110,0.1)',
-          transition: 'border-color 0.6s ease, box-shadow 0.6s ease',
-          borderColor: hovered ? 'rgba(201,168,110,0.3)' : 'rgba(201,168,110,0.1)',
+          borderRadius: '20px',
+          transition: 'box-shadow 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
           boxShadow: hovered
-            ? '0 32px 80px rgba(42,34,24,0.08), 0 0 0 1px rgba(201,168,110,0.08)'
-            : '0 8px 40px rgba(42,34,24,0.03)',
+            ? '0 48px 100px rgba(42,34,24,0.12), 0 24px 48px rgba(42,34,24,0.06)'
+            : '0 8px 40px rgba(42,34,24,0.04)',
         }}
       >
-        <div className="flex flex-col lg:flex-row">
-          {/* Image side — warm editorial gradient */}
-          <div className="relative lg:w-[55%] overflow-hidden" style={{ minHeight: '380px' }}>
-            <motion.div
-              className="absolute inset-0"
-              animate={{ scale: hovered ? 1.04 : 1 }}
-              transition={{ duration: 0.8, ease: EASE_SMOOTH }}
+        {/* Image Canvas — Full width, tall, editorial */}
+        <div className="relative w-full overflow-hidden" style={{ height: 'clamp(420px, 55vh, 640px)' }}>
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale: hovered ? 1.035 : 1 }}
+            transition={{ duration: 1.2, ease: EASE_SMOOTH }}
+            style={{
+              background: `
+                linear-gradient(155deg, #1a1510 0%, #2a1f14 20%, #1f1a12 40%, #2d2218 60%, #1a1510 80%, #0f0d09 100%)
+              `,
+            }}
+          />
+          {/* Warm mesh gradient orbs */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div
+              className="absolute"
               style={{
-                background: 'linear-gradient(135deg, #2a1f14 0%, #1a1510 25%, #2d2218 50%, #1f1a12 75%, #0f0d09 100%)',
+                width: '60%', height: '80%',
+                top: '10%', left: '25%',
+                background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.1) 0%, transparent 65%)',
+                filter: 'blur(60px)',
               }}
             />
-            {/* Mesh accent */}
             <div
-              className="absolute inset-0"
+              className="absolute"
               style={{
-                background: 'radial-gradient(ellipse at 60% 40%, rgba(201,168,110,0.12) 0%, transparent 60%)',
-              }}
-            />
-            {/* Grain */}
-            <div
-              className="absolute inset-0 opacity-25"
-              style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px' }}
-            />
-            {/* Category pill */}
-            <div className="absolute top-6 left-6 z-10">
-              <GoldPill>{article.category}</GoldPill>
-            </div>
-            {/* Decorative line */}
-            <div
-              className="absolute bottom-8 left-8 right-8"
-              style={{
-                height: '1px',
-                background: 'linear-gradient(90deg, rgba(201,168,110,0.25), transparent)',
+                width: '40%', height: '50%',
+                bottom: '0%', right: '10%',
+                background: 'radial-gradient(ellipse at center, rgba(160,129,74,0.08) 0%, transparent 60%)',
+                filter: 'blur(50px)',
               }}
             />
           </div>
-
-          {/* Content side — light glass */}
+          {/* Grain */}
           <div
-            className="lg:w-[45%] p-8 md:p-10 lg:p-12 flex flex-col justify-center"
-            style={{
-              background: 'rgba(255,255,255,0.55)',
-              backdropFilter: 'blur(20px)',
-            }}
-          >
-            <span
-              className="text-xs tracking-[0.15em] uppercase font-medium mb-6"
-              style={{ color: 'rgba(42,34,24,0.4)' }}
-            >
-              {article.readTime}
-            </span>
+            className="absolute inset-0 opacity-20"
+            style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
+          />
 
-            <h2
-              className="text-2xl md:text-3xl lg:text-[2.2rem] font-bold tracking-tight leading-[1.15] mb-5"
-              style={{ color: '#2a2218' }}
+          {/* Bottom gradient for text legibility */}
+          <div
+            className="absolute inset-x-0 bottom-0 pointer-events-none"
+            style={{
+              height: '75%',
+              background: 'linear-gradient(to top, rgba(15,13,9,0.85) 0%, rgba(15,13,9,0.4) 40%, transparent 100%)',
+            }}
+          />
+
+          {/* Content overlay — bottom-aligned editorial typography */}
+          <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 lg:p-16">
+            {/* Category + Read time */}
+            <motion.div
+              className="flex items-center gap-4 mb-6"
+              initial={{ opacity: 0, y: 12 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
+            >
+              <GoldPill>{article.category}</GoldPill>
+              <span className="text-[11px] tracking-[0.12em] uppercase font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                {article.readTime}
+              </span>
+            </motion.div>
+
+            {/* Headline — massive, editorial, weight 300 */}
+            <motion.h2
+              className="text-[clamp(2rem,4.5vw,3.8rem)] font-light tracking-tight leading-[1.1] mb-5 max-w-4xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 0.5, ease: EASE }}
+              style={{ color: 'rgba(255,255,255,0.95)' }}
             >
               {article.title}
-            </h2>
+            </motion.h2>
 
-            <p
-              className="text-sm md:text-base leading-relaxed mb-8"
-              style={{ color: 'rgba(42,34,24,0.5)' }}
+            {/* Excerpt — restrained */}
+            <motion.p
+              className="text-[15px] md:text-base leading-[1.8] max-w-2xl mb-8"
+              initial={{ opacity: 0, y: 14 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.65, ease: EASE }}
+              style={{ color: 'rgba(255,255,255,0.45)' }}
             >
               {article.excerpt}
-            </p>
+            </motion.p>
 
-            <div
-              className="flex items-center gap-4 pt-6"
-              style={{ borderTop: '1px solid rgba(201,168,110,0.12)' }}
+            {/* Author row + Arrow */}
+            <motion.div
+              className="flex items-center justify-between"
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.8, ease: EASE }}
             >
-              <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
-                  color: '#c9a86e',
-                  border: '1px solid rgba(201,168,110,0.2)',
-                }}
-              >
-                {article.author.split(' ').map(n => n[0]).join('')}
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-bold tracking-wide"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.25), rgba(201,168,110,0.1))',
+                    color: '#c9a86e',
+                    border: '1px solid rgba(201,168,110,0.2)',
+                  }}
+                >
+                  {article.author.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>
+                    {article.author}
+                  </p>
+                  <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                    {article.role} · {article.date}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-semibold" style={{ color: '#2a2218' }}>
-                  {article.author}
-                </p>
-                <p className="text-xs" style={{ color: 'rgba(42,34,24,0.4)' }}>
-                  {article.role} &middot; {article.date}
-                </p>
-              </div>
+
+              {/* Read arrow */}
               <motion.div
-                className="ml-auto"
-                animate={{ x: hovered ? 4 : 0, opacity: hovered ? 1 : 0.4 }}
-                transition={{ duration: 0.3 }}
+                className="hidden md:flex items-center gap-3"
+                animate={{
+                  x: hovered ? 6 : 0,
+                  opacity: hovered ? 1 : 0.3,
+                }}
+                transition={{ duration: 0.5, ease: EASE_SMOOTH }}
               >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M4 16L16 4M16 4H8M16 4v8" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <span
+                  className="text-[11px] tracking-[0.15em] uppercase font-semibold"
+                  style={{ color: '#c9a86e' }}
+                >
+                  Read Article
+                </span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </motion.div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
+
+      {/* Hover: subtle gold underline accent */}
+      <motion.div
+        className="mt-4 mx-auto"
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={{ scaleX: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: EASE }}
+        style={{
+          height: '1.5px',
+          maxWidth: '120px',
+          background: 'linear-gradient(90deg, transparent, #c9a86e, transparent)',
+          transformOrigin: 'center',
+        }}
+      />
     </motion.div>
   )
 }

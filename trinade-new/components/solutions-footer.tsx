@@ -154,15 +154,16 @@ export default function SolutionsFooter() {
         <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>
       </div>
 
-      {/* Scrolling TRINADE marquee — 3x bigger */}
+      {/* Scrolling TRINADE marquee — liquid glass letters */}
       <div className="overflow-hidden" style={{ userSelect: 'none', pointerEvents: 'none' }}>
         <div
           className="footer-marquee flex whitespace-nowrap leading-none"
           style={{
             fontSize: 'clamp(280px, 38vw, 500px)',
             fontWeight: 900,
-            color: 'rgba(255,255,255,0.06)',
             letterSpacing: '-0.04em',
+            color: 'transparent',
+            WebkitTextStroke: '1.5px rgba(255,255,255,0.08)',
           }}
         >
           <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
