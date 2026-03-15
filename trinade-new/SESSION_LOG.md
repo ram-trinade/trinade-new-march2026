@@ -9,11 +9,12 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: 8-point design polish — footer marquee fix, company Est 2021, accordion cleanup, clickable nav, darker checkboxes, contact hero redesign, bigger logo, sticky scroll-over cards.
+- Done: 8-point design polish + deployed to Vercel production.
 - In progress: None
 - Blocked: None
-- Next step: Mobile responsiveness, favicon, SEO metadata per page, Vercel deploy.
-- Last completed: Prompt 3 — 8 design improvements across all pages
+- Next step: Mobile responsiveness, favicon, SEO metadata per page.
+- Last completed: Prompt 4 — Vercel production deploy
+- Live URL: https://trinade-new.vercel.app
 
 **NOTE (2026-03-14):** From this point, SESSION_LOG.md is duplicated — one copy in the old website directory (`E:\FINAL Trinade CC\SESSION_LOG.md`) and one in the new website directory (`E:\FINAL Trinade CC\trinade-new\SESSION_LOG.md`). Each should be updated independently for their respective websites.
 
