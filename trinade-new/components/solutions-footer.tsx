@@ -163,7 +163,10 @@ export default function SolutionsFooter() {
             fontWeight: 900,
             letterSpacing: '-0.04em',
             color: 'transparent',
-            WebkitTextStroke: '1.5px rgba(255,255,255,0.08)',
+            background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
           }}
         >
           <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>

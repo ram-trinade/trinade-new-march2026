@@ -33,48 +33,48 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
 // ─── Data ───
 const industries = [
-  { name: 'Healthcare', desc: 'AI-first diagnostic support, patient flow optimization, and clinical data intelligence — built HIPAA-ready from day one.' },
-  { name: 'Legal', desc: 'Contract analysis, case research automation, and compliance monitoring — precision AI for firms that can\'t afford errors.' },
-  { name: 'Financial Services', desc: 'Fraud detection, risk modeling, and regulatory reporting — AI systems that move at market speed while staying compliant.' },
-  { name: 'Manufacturing', desc: 'Predictive maintenance, defect detection, and production scheduling — turning factory floor data into real-time decisions.' },
-  { name: 'Logistics', desc: 'Route intelligence, demand forecasting, and shipment visibility — AI that keeps your supply chain three steps ahead.' },
-  { name: 'Retail', desc: 'Customer intelligence, dynamic pricing, and inventory prediction — AI that understands buying behavior before customers do.' },
+  { name: 'Healthcare', desc: 'Smart diagnostic tools, patient management systems, and clinical data platforms — built HIPAA-ready from day one.' },
+  { name: 'Legal', desc: 'Document automation, case management platforms, and compliance tracking — precision software for firms that demand accuracy.' },
+  { name: 'Financial Services', desc: 'Fraud detection, risk assessment tools, and automated reporting — systems that move at market speed while staying compliant.' },
+  { name: 'Manufacturing', desc: 'Predictive maintenance, quality control systems, and production scheduling — turning shop floor data into real-time decisions.' },
+  { name: 'Logistics', desc: 'Route optimization, demand forecasting, and shipment tracking — technology that keeps your supply chain ahead of the curve.' },
+  { name: 'Retail', desc: 'Customer insights, smart pricing, and inventory management — solutions that understand your market before trends emerge.' },
 ]
 
 const scrollCards = [
-  { title: 'AI-First by Design.', body: 'We don\'t bolt AI onto legacy workflows. Every solution starts with intelligence at its core — models, data pipelines, and decision engines built from the ground up.' },
-  { title: 'Multi-Sector Expertise.', body: 'Healthcare to finance, legal to logistics. Our team understands the domain-specific constraints, compliance requirements, and operational realities of each industry we serve.' },
-  { title: 'Production-Ready Systems.', body: 'Proof-of-concepts are easy. We build AI systems that survive real-world conditions — edge cases, scale pressures, and evolving data — and keep performing.' },
-  { title: 'Modular Architecture.', body: 'No monoliths. Our solutions are composable by design — swap models, scale components independently, and adapt without rebuilding from scratch.' },
-  { title: 'Outcome-Driven Partnership.', body: 'We measure success by your business metrics, not our billable hours. From pilot to production, we stay accountable to results that matter.' },
+  { title: 'Intelligence by Design.', body: 'We don\'t bolt technology onto legacy workflows. Every solution starts with smart architecture at its core — whether it\'s AI models, custom platforms, or data-driven tools built from the ground up.' },
+  { title: 'Multi-Sector Expertise.', body: 'Healthcare to finance, legal to logistics. Our team understands the domain-specific needs, compliance requirements, and day-to-day realities of each industry we serve.' },
+  { title: 'Production-Ready Systems.', body: 'Prototypes are easy. We build systems that handle real-world conditions — edge cases, growing demand, and changing requirements — and keep delivering results.' },
+  { title: 'Modular Architecture.', body: 'No monoliths. Our solutions are built to be flexible — swap components, scale what you need, and adapt without starting over.' },
+  { title: 'Outcome-Driven Partnership.', body: 'We measure success by your business results, not our billing. From pilot to production, we stay focused on outcomes that actually move the needle.' },
 ]
 
 
 const services = [
   {
-    title: 'Custom AI Development',
-    body: 'Purpose-built AI models and systems designed around your specific business problem — not generic solutions force-fitted to your workflow. We train, fine-tune, and deploy models that understand your industry\'s language, constraints, and edge cases. From NLP pipelines processing legal contracts to computer vision systems inspecting manufacturing lines, every build is unique.',
-    areas: ['Custom Model Training', 'NLP & Document Intelligence', 'Computer Vision', 'Predictive Analytics', 'Generative AI Applications'],
+    title: 'Custom Software & AI Development',
+    body: 'Purpose-built software and intelligent systems designed around your specific business challenges. From AI-powered document processing to custom platforms that streamline your operations — every build is tailored to how your team actually works.',
+    areas: ['Custom Platforms', 'Intelligent Automation', 'Document Processing', 'Predictive Analytics', 'AI-Powered Applications'],
   },
   {
-    title: 'Data Engineering & Pipelines',
-    body: 'AI is only as good as the data feeding it. We design and build the data infrastructure that makes intelligence possible — ingestion pipelines, transformation layers, feature stores, and real-time streaming architectures. Clean data in, reliable decisions out.',
-    areas: ['ETL Pipeline Design', 'Real-time Data Streaming', 'Data Lake Architecture', 'Feature Engineering', 'Data Quality & Governance'],
+    title: 'Data Engineering & Integration',
+    body: 'Great software needs great data foundations. We design the infrastructure that connects your systems and makes your information useful — clean data pipelines, unified dashboards, and real-time insights that drive better decisions.',
+    areas: ['Data Pipeline Design', 'System Integration', 'Business Intelligence', 'Real-time Dashboards', 'Data Quality Management'],
   },
   {
-    title: 'AI Integration & Deployment',
-    body: 'Getting a model to work in a notebook is step one. We handle the hard part — deploying AI into production environments where it must perform reliably at scale, integrate with existing systems, and deliver results that business teams can actually act on.',
-    areas: ['API-First Integration', 'MLOps & Model Monitoring', 'Legacy System Bridging', 'Edge Deployment', 'CI/CD for ML'],
+    title: 'Platform Deployment & Scaling',
+    body: 'Building a solution is step one. We handle the harder part — deploying it where your team can actually use it, making sure it performs reliably, and scaling it as your business grows.',
+    areas: ['Cloud Deployment', 'Performance Optimization', 'System Monitoring', 'Seamless Integration', 'Continuous Updates'],
   },
   {
     title: 'Cloud & Infrastructure',
-    body: 'Scalable, cost-efficient cloud architecture designed specifically for AI workloads. We build environments that handle compute-intensive training, low-latency inference, and massive data volumes — without burning through your budget or creating operational complexity.',
-    areas: ['Cloud Architecture Design', 'GPU/TPU Optimization', 'Auto-Scaling Infrastructure', 'Cost Optimization', 'Multi-Cloud Strategy'],
+    body: 'Scalable, cost-efficient cloud setups designed for modern workloads. We build environments that handle heavy processing, fast response times, and large data volumes — without unnecessary complexity or runaway costs.',
+    areas: ['Cloud Architecture', 'Infrastructure Optimization', 'Auto-Scaling', 'Cost Management', 'Multi-Cloud Strategy'],
   },
   {
-    title: 'AI Strategy & Advisory',
-    body: 'Not every problem needs AI, and not every AI initiative delivers ROI. We help leadership teams identify high-impact opportunities, avoid common pitfalls, and build a realistic roadmap from pilot to production — with clear milestones and measurable outcomes.',
-    areas: ['AI Opportunity Assessment', 'Use Case Prioritization', 'Build vs Buy Analysis', 'Team & Capability Planning', 'ROI Modeling'],
+    title: 'Strategy & Advisory',
+    body: 'Not every challenge needs a new platform, and not every technology investment pays off. We help leadership teams identify the right opportunities, avoid common missteps, and build a practical roadmap with clear milestones.',
+    areas: ['Technology Assessment', 'Opportunity Prioritization', 'Build vs Buy Analysis', 'Team Planning', 'ROI Modeling'],
   },
 ]
 
@@ -114,7 +114,7 @@ function HeroSection() {
           className="max-w-[1200px]"
         >
           <h1 className="leading-[1.12] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.6rem, 5.8vw, 5rem)', fontWeight: 400, color: P.textDark }}>
-            AI-first solutions{' '}
+            Technology solutions{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-card.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
@@ -141,7 +141,7 @@ function HeroSection() {
             className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
             style={{ background: P.charcoal, color: P.textOnDark }}
           >
-            Explore our solutions
+            Get started
             <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
               <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -174,9 +174,9 @@ function MissionSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.0, ease: EASE_OUT }}
           className="leading-[1.2] tracking-[-0.02em] max-w-[1100px]"
-          style={{ fontSize: 'clamp(1.8rem, 4.2vw, 3.6rem)', fontWeight: 300, color: P.textOnDark }}
+          style={{ fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', fontWeight: 300, color: P.textOnDark }}
         >
-          We don&apos;t add AI to existing products. We build from intelligence outward — custom models, data pipelines, and production systems purpose-built for the industries we serve. Healthcare, legal, finance, manufacturing, logistics, retail — each with its own constraints, each demanding precision.
+          We build from intelligence outward — custom software, AI systems, and data platforms purpose-built for the industries we serve. Healthcare, legal, finance, manufacturing, logistics, retail — each with its own challenges, each demanding precision.
         </motion.p>
       </div>
     </section>
@@ -218,7 +218,7 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
       />
 
       <h3
-        className={`${isLarge ? 'text-[20px]' : 'text-[17px]'} font-medium tracking-[-0.01em] relative z-10 transition-colors duration-500 group-hover:text-white`}
+        className={`${isLarge ? 'text-[22px]' : 'text-[19px]'} font-medium tracking-[-0.01em] relative z-10 transition-colors duration-500 group-hover:text-white`}
         style={{ color: P.textDark }}
       >
         {ind.name}
@@ -226,7 +226,7 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
 
       <div className="relative z-10 mt-auto">
         <p
-          className={`${isLarge ? 'text-[14px]' : 'text-[13px]'} leading-[1.75] transition-colors duration-500 group-hover:text-white/70`}
+          className={`${isLarge ? 'text-[16px]' : 'text-[15px]'} leading-[1.75] transition-colors duration-500 group-hover:text-white/70`}
           style={{ color: P.textMuted }}
         >
           {ind.desc}
@@ -265,16 +265,16 @@ function IndustriesSection() {
               className="leading-[1.1] tracking-[-0.025em]"
               style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)', fontWeight: 400, color: P.textDark }}
             >
-              AI built for your industry, not adapted to it.
+              Solutions built for your industry, not adapted to it.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
-              className="text-[15px] leading-[1.7] mt-4 max-w-[500px]"
+              className="text-[16px] leading-[1.7] mt-4 max-w-[500px]"
               style={{ color: P.textMuted }}
             >
-              Every sector has unique data, regulations, and workflows. We build AI that respects those realities.
+              Every sector has unique challenges, regulations, and workflows. We build technology that respects those realities.
             </motion.p>
           </div>
           {/* Navigation arrows like IT Solutions */}
@@ -314,24 +314,6 @@ function IndustriesSection() {
           <IndustryCard ind={industries[5]} isLarge={false} gridStyle={{ gridColumn: '4 / 6', gridRow: '2' }} />
         </motion.div>
 
-        {/* Explore all industries button */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-          className="mt-12"
-        >
-          <a
-            href="#"
-            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
-            style={{ background: P.charcoal, color: P.textOnDark }}
-          >
-            Explore all industries
-            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-              <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </a>
-        </motion.div>
       </div>
     </section>
   )
@@ -395,10 +377,10 @@ function ScrollCardsSection() {
                 }}
               />
 
-              <h3 className="text-[22px] font-medium tracking-[-0.015em] mb-4 relative z-10" style={{ color: P.textDark }}>
+              <h3 className="text-[24px] font-medium tracking-[-0.015em] mb-4 relative z-10" style={{ color: P.textDark }}>
                 {card.title}
               </h3>
-              <p className="text-[15px] leading-[1.75] mb-5 relative z-10" style={{ color: P.textMuted }}>
+              <p className="text-[16px] leading-[1.75] mb-5 relative z-10" style={{ color: P.textMuted }}>
                 {card.body}
               </p>
 
@@ -445,7 +427,7 @@ function AccordionSection() {
           className="leading-[1.1] tracking-[-0.025em] text-center mb-20"
           style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', fontWeight: 400, color: P.textDark }}
         >
-          What we do — end to end,<br />from data to deployment
+          What we do — end to end,<br />from strategy to scale
         </motion.h2>
 
         <div className="max-w-[1100px] mx-auto space-y-3">
@@ -466,7 +448,7 @@ function AccordionSection() {
                 onClick={() => setExpanded(expanded === i ? -1 : i)}
                 className="w-full flex items-center justify-between px-8 py-7 cursor-pointer text-left"
               >
-                <h3 className="text-[20px] font-medium tracking-[-0.01em] transition-colors duration-300"
+                <h3 className="text-[22px] font-medium tracking-[-0.01em] transition-colors duration-300"
                   style={{ color: expanded === i ? P.textDark : P.textMuted }}>
                   {s.title}
                 </h3>
@@ -493,7 +475,7 @@ function AccordionSection() {
                     className="overflow-hidden"
                   >
                     <div className="px-8 pb-8">
-                      <p className="text-[15px] leading-[1.8] mb-6 max-w-[700px]" style={{ color: P.textMuted }}>
+                      <p className="text-[16px] leading-[1.8] mb-6 max-w-[700px]" style={{ color: P.textMuted }}>
                         {s.body}
                       </p>
                       <p className="text-[12px] uppercase tracking-[0.12em] mb-3" style={{ color: P.textDimmed }}>
@@ -501,7 +483,7 @@ function AccordionSection() {
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {s.areas.map(area => (
-                          <span key={area} className="px-4 py-1.5 rounded-full text-[12px] font-medium"
+                          <span key={area} className="px-4 py-1.5 rounded-full text-[13px] font-medium"
                             style={{ background: P.cream, color: P.textMuted, border: `1px solid ${P.creamDark}` }}>
                             {area}
                           </span>
@@ -560,7 +542,7 @@ function CTASection() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="text-[15px] leading-[1.9] mb-12"
+              className="text-[16px] leading-[1.9] mb-12"
               style={{ color: P.textOnDarkMuted }}
             >
               Whether you&apos;re starting your AI journey or scaling what&apos;s already working — we&apos;d love to hear what you&apos;re building and where we can help.
@@ -582,7 +564,7 @@ function CTASection() {
               <a href="/contact"
                 className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:bg-white/[0.1]"
                 style={{ color: P.textOnDarkMuted, border: '1px solid rgba(255,255,255,0.15)' }}>
-                View our work
+                See case studies
               </a>
             </motion.div>
           </div>
@@ -789,7 +771,10 @@ function SolutionsFooter() {
             fontSize: 'clamp(280px, 38vw, 500px)',
             fontWeight: 900,
             color: 'transparent',
-            WebkitTextStroke: '1.5px rgba(255,255,255,0.08)',
+            background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
             letterSpacing: '-0.04em',
           }}
         >

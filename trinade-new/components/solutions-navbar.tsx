@@ -87,40 +87,15 @@ export default function SolutionsNavbar() {
       >
         <span
           style={{
-            fontSize: '22px',
+            fontSize: '28px',
             fontWeight: 800,
-            letterSpacing: '-0.04em',
+            letterSpacing: '-0.03em',
             color: '#2a2218',
             mixBlendMode: 'difference' as const,
-            display: 'inline-flex',
-            alignItems: 'baseline',
             lineHeight: 1,
           }}
         >
-          trinad
-          <span style={{ display: 'inline-block', position: 'relative' }}>
-            e
-            {/* Top stroke of 'e' extended */}
-            <span style={{
-              position: 'absolute',
-              top: '28%',
-              left: '-4px',
-              right: '-14px',
-              height: '2.4px',
-              background: 'currentColor',
-              borderRadius: '1px',
-            }} />
-            {/* Middle stroke of 'e' extended */}
-            <span style={{
-              position: 'absolute',
-              top: '52%',
-              left: '-4px',
-              right: '-14px',
-              height: '2.4px',
-              background: 'currentColor',
-              borderRadius: '1px',
-            }} />
-          </span>
+          TRINADE
         </span>
       </div>
 
@@ -138,8 +113,8 @@ export default function SolutionsNavbar() {
           style={{
             width: '28px',
             height: '28px',
-            filter: 'brightness(0) invert(1)',
-            opacity: 0.55,
+            filter: 'brightness(0)',
+            opacity: 0.85,
           }}
         />
       </div>

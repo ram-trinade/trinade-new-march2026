@@ -32,36 +32,36 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 // ─── Data ───
 const challenges = [
   {
-    title: 'AI Adoption Without Clear ROI',
-    tags: ['AI Strategy Assessment', 'Use Case Prioritization', 'ROI Modeling'],
+    title: 'Technology Adoption Without Clear Returns',
+    tags: ['Strategy Assessment', 'Use Case Prioritization', 'ROI Analysis'],
   },
   {
-    title: 'Data Silos Blocking Intelligence',
-    tags: ['Data Pipeline Design', 'Feature Engineering', 'Data Lake Architecture'],
+    title: 'Disconnected Systems Blocking Growth',
+    tags: ['System Integration', 'Data Unification', 'Platform Architecture'],
   },
   {
     title: 'Compliance in Regulated Industries',
-    tags: ['HIPAA-Ready AI', 'Financial Compliance', 'Audit Trail Systems'],
+    tags: ['Healthcare Standards', 'Financial Compliance', 'Audit-Ready Systems'],
   },
   {
-    title: 'Scaling from Pilot to Production',
-    tags: ['MLOps & Monitoring', 'Auto-Scaling Infrastructure', 'CI/CD for ML'],
+    title: 'Scaling from Pilot to Full Deployment',
+    tags: ['Operations Monitoring', 'Auto-Scaling Infrastructure', 'Continuous Delivery'],
   },
   {
     title: 'Legacy Systems Resisting Modernization',
-    tags: ['API-First Integration', 'Legacy System Bridging', 'Cloud Migration'],
+    tags: ['API-First Integration', 'System Migration', 'Cloud Transition'],
   },
 ]
 
 const processCards = [
   {
     label: 'Process',
-    body: 'We follow a structured approach — discovery, design, build, deploy, and iterate — ensuring every AI system is validated against real-world conditions before it goes live.',
+    body: 'We follow a structured approach — discovery, design, build, deploy, and iterate — ensuring every solution is tested against real-world conditions before it goes live.',
     image: '/spiral-card.jpg',
   },
   {
     label: 'People',
-    body: 'A team of AI engineers, data scientists, and domain experts trained on the latest technologies — committed to understanding your industry and supporting your evolving needs.',
+    body: 'A team of engineers, designers, and domain experts working with the latest technologies — committed to understanding your industry and delivering what your business actually needs.',
     image: '/spiral-motion.jpg',
   },
 ]
@@ -102,7 +102,7 @@ function HomeHeroSection() {
           className="leading-[1.05] tracking-[-0.04em]"
           style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', fontWeight: 400, color: P.textDark }}
         >
-          Experience AI<br />Excellence.
+          Technology that<br />works for you.
         </motion.h1>
       </div>
 
@@ -124,7 +124,7 @@ function HomeHeroSection() {
               className="leading-[1.25] tracking-[-0.02em] max-w-[900px]"
               style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 400, color: P.textDark }}
             >
-              From custom AI models and data pipelines to production-ready systems, we deliver intelligent solutions designed to strengthen operations, enhance decision-making, and drive your business forward.
+              From custom software and intelligent automation to scalable platforms, we deliver solutions designed to strengthen operations, sharpen decision-making, and drive measurable growth.
             </p>
 
             <div className="flex items-center gap-6 mt-10">
@@ -133,7 +133,7 @@ function HomeHeroSection() {
                 className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
                 style={{ background: P.charcoal, color: P.textOnDark }}
               >
-                Explore our solutions
+                Get started
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -181,7 +181,7 @@ function WhyChooseUsSection() {
           <h2 className="leading-[1.15] tracking-[-0.025em]" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight: 400 }}>
             <span style={{ color: P.textDark }}>Why choose us? </span>
             <span style={{ color: P.textMuted }}>
-              From custom AI development to production deployment, we deliver tailored solutions that help your business think smarter and move faster.
+              From custom software development to intelligent automation, we deliver tailored solutions that help your business work smarter and move faster.
             </span>
           </h2>
         </motion.div>
@@ -236,25 +236,24 @@ function ChallengesSection() {
     <section ref={ref} className="relative py-32 overflow-hidden" style={{ background: P.cream }}>
       <Grain id="challengesGrain" opacity={0.02} />
 
-      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] grid grid-cols-1 lg:grid-cols-[0.45fr_0.55fr] gap-16" style={{ minHeight: '80vh' }}>
-        {/* Left — Sticky text */}
-        <div className="lg:sticky lg:top-32 lg:self-start">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: EASE_OUT }}
-          >
-            <h2 className="leading-[1.15] tracking-[-0.025em] mb-6" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight: 400 }}>
-              <span style={{ color: P.textDark }}>Overcoming AI adoption barriers </span>
-              <span style={{ color: P.textMuted }}>
-                to drive continuous progress, ensuring your business stays agile and ready for what&apos;s next — because the story of intelligent transformation is one of growth and evolving potential.
-              </span>
-            </h2>
-          </motion.div>
-        </div>
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
+        {/* Full-width heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: EASE_OUT }}
+          className="max-w-[900px] mb-20"
+        >
+          <h2 className="leading-[1.15] tracking-[-0.025em]" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 400 }}>
+            <span style={{ color: P.textDark }}>Overcoming real business challenges </span>
+            <span style={{ color: P.textMuted }}>
+              to drive continuous progress — keeping your organization agile, competitive, and ready for what comes next.
+            </span>
+          </h2>
+        </motion.div>
 
-        {/* Right — Challenge items with pill tags */}
-        <div className="space-y-0">
+        {/* 2-column grid of challenges */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0">
           {challenges.map((ch, i) => (
             <motion.div
               key={ch.title}
@@ -262,22 +261,30 @@ function ChallengesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: i * 0.05, ease: EASE }}
-              className="py-8"
+              className="py-8 flex gap-6"
               style={{ borderBottom: `1px solid ${P.creamDark}` }}
             >
-              <h3 className="text-[20px] font-medium tracking-[-0.01em] mb-4" style={{ color: P.textDark }}>
-                {ch.title}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {ch.tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="px-4 py-1.5 rounded-full text-[12px] font-medium cursor-pointer transition-all duration-200 hover:bg-black/[0.04]"
-                    style={{ color: P.textMuted, border: `1px solid ${P.creamDark}` }}
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <span
+                className="text-[48px] font-extralight leading-none tracking-[-0.04em] shrink-0"
+                style={{ color: P.gold, opacity: 0.5, minWidth: '56px' }}
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 className="text-[20px] font-medium tracking-[-0.01em] mb-4" style={{ color: P.textDark }}>
+                  {ch.title}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {ch.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="px-4 py-1.5 rounded-full text-[13px] font-medium"
+                      style={{ color: P.textMuted, border: `1px solid ${P.creamDark}` }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}
@@ -287,57 +294,6 @@ function ChallengesSection() {
   )
 }
 
-
-// ═══════════════════════════════════════════════════════════
-// RECOGNITION — "Recognized Excellence & Standards"
-// Trust badges / certification logos
-// ═══════════════════════════════════════════════════════════
-function RecognitionSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
-  const badges = [
-    { name: 'ISO 27001', desc: 'Information Security' },
-    { name: 'SOC 2', desc: 'Service Organization Control' },
-    { name: 'HIPAA', desc: 'Healthcare Compliance' },
-    { name: 'GDPR', desc: 'Data Protection' },
-    { name: 'AWS Partner', desc: 'Cloud Partnership' },
-  ]
-
-  return (
-    <section ref={ref} className="relative py-28 overflow-hidden" style={{ background: P.white }}>
-      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] text-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="leading-[1.1] tracking-[-0.025em] mb-16"
-          style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight: 400, color: P.textDark }}
-        >
-          Recognized Excellence &<br />Compliance Standards
-        </motion.h2>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
-          className="flex flex-wrap items-center justify-center gap-8"
-        >
-          {badges.map((badge) => (
-            <div
-              key={badge.name}
-              className="flex flex-col items-center gap-2 px-8 py-6 rounded-2xl transition-all duration-300 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
-              style={{ background: P.creamMid, border: `1px solid ${P.creamDark}`, minWidth: '140px' }}
-            >
-              <span className="text-[18px] font-semibold tracking-[-0.01em]" style={{ color: P.textDark }}>{badge.name}</span>
-              <span className="text-[12px]" style={{ color: P.textMuted }}>{badge.desc}</span>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  )
-}
 
 
 // ═══════════════════════════════════════════════════════════
@@ -407,7 +363,6 @@ export default function HomepageContent() {
       <HomeHeroSection />
       <WhyChooseUsSection />
       <ChallengesSection />
-      <RecognitionSection />
       <HomeCTASection />
     </main>
   )
