@@ -81,9 +81,10 @@ export default function SolutionsNavbar() {
   return (
     <>
       {/* ─── Trinade text on the left (inertia-style) ─── */}
-      <div
+      <a
+        href="/home"
         className="fixed top-5 left-8 z-[9999] flex items-center"
-        style={{ pointerEvents: 'auto' }}
+        style={{ pointerEvents: 'auto', textDecoration: 'none' }}
       >
         <span
           style={{
@@ -97,10 +98,11 @@ export default function SolutionsNavbar() {
         >
           TRINADE
         </span>
-      </div>
+      </a>
 
       {/* ─── Logo on the top right ─── */}
-      <div
+      <a
+        href="/home"
         className="fixed top-5 right-8 z-[9999] flex items-center"
         style={{ pointerEvents: 'auto' }}
       >
@@ -111,13 +113,13 @@ export default function SolutionsNavbar() {
           height={120}
           className="object-contain"
           style={{
-            width: '28px',
-            height: '28px',
+            width: '36px',
+            height: '36px',
             filter: 'brightness(0)',
             opacity: 0.85,
           }}
         />
-      </div>
+      </a>
 
       {/* ─── Floating Navbar (centered pill) ─── */}
       <div

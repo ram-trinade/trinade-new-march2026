@@ -501,9 +501,9 @@ function CategoryCard({
           height: '20px',
           borderRadius: '6px',
           border: checked
-            ? '2px solid #c9a86e'
-            : '2px solid rgba(160,120,50,0.35)',
-          background: checked ? '#c9a86e' : 'rgba(201,168,110,0.08)',
+            ? '2px solid #8a6b2f'
+            : '2px solid rgba(120,85,25,0.55)',
+          background: checked ? '#8a6b2f' : 'rgba(140,100,40,0.15)',
           cursor: category.required ? 'not-allowed' : 'pointer',
           display: 'flex',
           alignItems: 'center',

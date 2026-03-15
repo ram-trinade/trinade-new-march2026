@@ -455,11 +455,19 @@ function AccordionSection() {
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 shrink-0"
                   style={{
-                    background: expanded === i ? P.lime : 'rgba(0,0,0,0.04)',
+                    background: expanded === i
+                      ? 'linear-gradient(165deg, rgba(185,155,100,0.55) 0%, rgba(165,125,60,0.42) 40%, rgba(200,175,125,0.50) 100%)'
+                      : 'linear-gradient(165deg, rgba(185,155,100,0.25) 0%, rgba(165,125,60,0.18) 40%, rgba(200,175,125,0.22) 100%)',
+                    backdropFilter: 'blur(12px) saturate(1.4)',
+                    WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+                    border: expanded === i ? '1px solid rgba(180,150,95,0.4)' : '1px solid rgba(180,150,95,0.2)',
+                    boxShadow: expanded === i
+                      ? 'inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(130,95,30,0.12), 0 2px 10px rgba(130,95,30,0.2)'
+                      : 'inset 0 1px 0 rgba(255,255,255,0.1), 0 1px 4px rgba(130,95,30,0.1)',
                     transform: expanded === i ? 'rotate(45deg)' : 'rotate(0)',
                   }}
                 >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={expanded === i ? P.charcoal : P.textDimmed} strokeWidth="1.5">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={expanded === i ? '#2a2218' : 'rgba(42,34,24,0.5)'} strokeWidth="1.5">
                     <path d="M7 1v12M1 7h12" strokeLinecap="round" />
                   </svg>
                 </div>
@@ -490,13 +498,6 @@ function AccordionSection() {
                         ))}
                       </div>
 
-                      {/* Learn more link — IT Solutions style */}
-                      <a href="/contact" className="group/link inline-flex items-center gap-1.5 mt-6 text-[14px] font-medium transition-colors duration-200 hover:opacity-70" style={{ color: P.textDark }}>
-                        Learn more
-                        <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-                          <path d="M6 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </a>
                     </div>
                   </motion.div>
                 )}
@@ -770,17 +771,41 @@ function SolutionsFooter() {
           style={{
             fontSize: 'clamp(280px, 38vw, 500px)',
             fontWeight: 900,
-            color: 'transparent',
-            background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
             letterSpacing: '-0.04em',
           }}
         >
-          {/* Duplicated for seamless loop */}
-          <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
-          <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
+          {[0, 1].map(copy => (
+            <span key={copy} className="flex items-center shrink-0">
+              {[0, 1, 2, 3].map(rep => (
+                <span key={`${copy}-rep${rep}`} className="flex items-center">
+                  {['T','R','I','N','A','D','E'].map((letter, i) => (
+                    <span
+                      key={`${copy}-${rep}-${i}`}
+                      style={{
+                        display: 'inline-block',
+                        color: 'transparent',
+                        background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
+                      }}
+                    >{letter}</span>
+                  ))}
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      color: 'transparent',
+                      background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
+                      padding: '0 0.15em',
+                    }}
+                  >&nbsp;·&nbsp;</span>
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
       </div>
 

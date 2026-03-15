@@ -285,9 +285,9 @@ export default function SolutionsContactPage() {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              fontSize: 'clamp(200px, 30vw, 400px)',
+              fontSize: 'clamp(220px, 35vw, 450px)',
               fontWeight: 900,
-              color: 'rgba(201,168,110,0.03)',
+              color: 'rgba(201,168,110,0.05)',
               letterSpacing: '-0.04em',
               userSelect: 'none',
               pointerEvents: 'none',
@@ -308,8 +308,8 @@ export default function SolutionsContactPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  fontSize: '64px',
-                  fontWeight: 300,
+                  fontSize: 'clamp(4rem, 8vw, 7rem)',
+                  fontWeight: 600,
                   color: '#2a2218',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.1,
@@ -336,9 +336,9 @@ export default function SolutionsContactPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  fontSize: '18px',
-                  color: 'rgba(42,34,24,0.6)',
-                  maxWidth: '520px',
+                  fontSize: 'clamp(18px, 1.5vw, 22px)',
+                  color: 'rgba(42,34,24,0.7)',
+                  maxWidth: '600px',
                   margin: '0 auto',
                   lineHeight: 1.6,
                 }}

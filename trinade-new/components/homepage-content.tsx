@@ -55,14 +55,24 @@ const challenges = [
 
 const processCards = [
   {
-    label: 'Process',
-    body: 'We follow a structured approach — discovery, design, build, deploy, and iterate — ensuring every solution is tested against real-world conditions before it goes live.',
+    label: 'Discovery',
+    body: 'We begin by understanding your business — mapping workflows, identifying pain points, and uncovering opportunities where technology can create the most impact.',
     image: '/spiral-card.jpg',
   },
   {
-    label: 'People',
-    body: 'A team of engineers, designers, and domain experts working with the latest technologies — committed to understanding your industry and delivering what your business actually needs.',
+    label: 'Architecture',
+    body: 'Every solution starts with a blueprint. We design scalable, secure systems tailored to your industry — from data pipelines to user-facing platforms.',
     image: '/spiral-motion.jpg',
+  },
+  {
+    label: 'Engineering',
+    body: 'Our team builds with precision — clean code, rigorous testing, and continuous integration ensuring every release is production-ready from day one.',
+    image: '/gradient-mesh-warm.jpg',
+  },
+  {
+    label: 'Evolution',
+    body: 'Technology doesn\'t stand still, and neither do we. We monitor, optimize, and evolve your systems to keep pace with changing demands and new possibilities.',
+    image: '/gradient-orbs-warm.jpg',
   },
 ]
 
@@ -165,18 +175,18 @@ function WhyChooseUsSection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative py-32 overflow-hidden" style={{ background: P.white }}>
+    <section ref={ref} className="relative overflow-hidden" style={{ background: P.white }}>
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <Image src="/gradient-orbs-warm.jpg" alt="" fill className="object-cover" />
       </div>
 
-      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] pt-32 pb-8">
         {/* Why choose us heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="max-w-[800px] mb-20"
+          className="max-w-[800px] mb-16"
         >
           <h2 className="leading-[1.15] tracking-[-0.025em]" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight: 400 }}>
             <span style={{ color: P.textDark }}>Why choose us? </span>
@@ -185,38 +195,66 @@ function WhyChooseUsSection() {
             </span>
           </h2>
         </motion.div>
+      </div>
 
-        {/* Process / People cards — IT Solutions style */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {processCards.map((card, i) => (
-            <motion.div
-              key={card.label}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: EASE }}
-              className="group rounded-[20px] overflow-hidden flex flex-col lg:flex-row"
-              style={{ border: `1px solid ${P.creamDark}` }}
-            >
-              {/* Text area */}
-              <div
-                className="flex-1 p-10 flex flex-col justify-between"
-                style={{ background: P.creamMid, minHeight: '360px' }}
+      {/* Sticky scroll-over cards */}
+      <div className="relative" style={{ marginBottom: '0' }}>
+        {processCards.map((card, i) => (
+          <div
+            key={card.label}
+            className="sticky"
+            style={{
+              top: `${100 + i * 20}px`,
+              zIndex: i + 1,
+              marginBottom: i < processCards.length - 1 ? '80vh' : '0',
+            }}
+          >
+            <div className="px-[clamp(2rem,8vw,8rem)]">
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 0.7, ease: EASE }}
+                className="rounded-[24px] overflow-hidden"
+                style={{
+                  border: `1px solid ${P.creamDark}`,
+                  boxShadow: '0 8px 40px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04)',
+                  background: P.creamMid,
+                }}
               >
-                <h3 className="text-[20px] font-medium tracking-[-0.01em]" style={{ color: P.textDark }}>
-                  {card.label}
-                </h3>
-                <p className="text-[14px] leading-[1.8] mt-auto" style={{ color: P.textMuted }}>
-                  {card.body}
-                </p>
-              </div>
+                <div className="flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
+                  {/* Text area */}
+                  <div
+                    className="flex-1 p-12 lg:p-16 flex flex-col justify-between"
+                    style={{ background: P.creamMid }}
+                  >
+                    <div>
+                      <span
+                        className="text-[13px] font-semibold uppercase tracking-[0.15em] mb-4 block"
+                        style={{ color: P.gold }}
+                      >
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="text-[32px] font-medium tracking-[-0.02em] mb-6" style={{ color: P.textDark }}>
+                        {card.label}
+                      </h3>
+                    </div>
+                    <p className="text-[15px] leading-[1.9]" style={{ color: P.textMuted }}>
+                      {card.body}
+                    </p>
+                  </div>
 
-              {/* Image area */}
-              <div className="relative w-full lg:w-[45%] min-h-[240px] lg:min-h-0">
-                <Image src={card.image} alt={card.label} fill className="object-cover" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  {/* Image area */}
+                  <div className="relative w-full lg:w-[45%] min-h-[280px] lg:min-h-0">
+                    <Image src={card.image} alt={card.label} fill className="object-cover" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        ))}
+        {/* Spacer for last card to scroll into view */}
+        <div style={{ height: '40vh' }} />
       </div>
     </section>
   )

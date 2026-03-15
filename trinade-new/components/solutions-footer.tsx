@@ -162,15 +162,40 @@ export default function SolutionsFooter() {
             fontSize: 'clamp(280px, 38vw, 500px)',
             fontWeight: 900,
             letterSpacing: '-0.04em',
-            color: 'transparent',
-            background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
           }}
         >
-          <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
-          <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
+          {[0, 1].map(copy => (
+            <span key={copy} className="flex items-center shrink-0">
+              {[0, 1, 2, 3].map(rep => (
+                <span key={`${copy}-rep${rep}`} className="flex items-center">
+                  {['T','R','I','N','A','D','E'].map((letter, i) => (
+                    <span
+                      key={`${copy}-${rep}-${i}`}
+                      style={{
+                        display: 'inline-block',
+                        color: 'transparent',
+                        background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
+                      }}
+                    >{letter}</span>
+                  ))}
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      color: 'transparent',
+                      background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
+                      WebkitBackgroundClip: 'text',
+                      backgroundClip: 'text',
+                      WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
+                      padding: '0 0.15em',
+                    }}
+                  >&nbsp;·&nbsp;</span>
+                </span>
+              ))}
+            </span>
+          ))}
         </div>
       </div>
     </footer>

@@ -268,7 +268,7 @@ export default function SolutionsCompanyPage() {
                 transition={{ duration: 1.2, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   fontSize: 'clamp(80px, 18vw, 280px)',
-                  fontWeight: 200,
+                  fontWeight: 700,
                   letterSpacing: '-0.04em',
                   lineHeight: 0.9,
                   textAlign: 'center',
@@ -282,7 +282,7 @@ export default function SolutionsCompanyPage() {
                   userSelect: 'none',
                 }}
               >
-                Est 2025
+                Est 2021
               </motion.h1>
 
               {/* Thin gold line */}
