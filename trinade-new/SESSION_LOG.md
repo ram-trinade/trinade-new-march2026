@@ -19,6 +19,37 @@
 
 ---
 
+## 2026-03-15 — Premium Dual-Dot Cursor Fix
+
+### Problem
+Custom cursor was a single dot (20px white circle with mix-blend-mode difference). User wanted:
+1. **Two dots** — a small inner dot (6px) that follows cursor tightly + a larger trailing dot (20px) that lags behind
+2. **On hover** — large dot expands to 50px liquid glass outlined ring (transparent bg, white border, backdrop-blur)
+
+### Solution
+- Created shared `components/premium-cursor.tsx` with dual-dot architecture:
+  - Small dot: 6px, solid white, lerp 0.35 (fast follow), disappears on hover
+  - Large dot: 20px, radial gradient, lerp 0.1 (elegant trail), expands to 50px liquid glass ring on hover
+  - Hover state: transparent background + `1.5px solid rgba(255,255,255,0.85)` border + `backdrop-blur(4px) saturate(1.2)`
+- Replaced inline `PremiumCursor` functions in all 6 page files with dynamic import of shared component
+- Cleaned up unused imports (`useRef`, `useEffect`, `BASE_SIZE`, `HOVER_SIZE` constants)
+
+### Verification (Playwright MCP)
+- Confirmed 2 cursor DOM elements on homepage (z-index 99999 + 99998)
+- Simulated hover on Menu button — verified expansion, border, backdrop-filter all activate
+- Confirmed cursor works on `/contact` page too — 2 elements, correct sizes
+
+### Files Modified
+- `components/premium-cursor.tsx` — NEW shared cursor component
+- `app/page.tsx` — replaced inline PremiumCursor with dynamic import
+- `app/blog/page.tsx` — replaced inline PremiumCursor with dynamic import
+- `app/company/page.tsx` — replaced inline PremiumCursor with dynamic import
+- `app/contact/page.tsx` — replaced inline PremiumCursor with dynamic import
+- `app/privacy-policy/page.tsx` — replaced inline PremiumCursor with dynamic import
+- `app/terms-of-service/page.tsx` — replaced inline PremiumCursor with dynamic import
+
+---
+
 ## 2026-03-14 — Full Site Verification + Vercel Deployment
 
 ### Playwright MCP Verification (localhost:3006)
