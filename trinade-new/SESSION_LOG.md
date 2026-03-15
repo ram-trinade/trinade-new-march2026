@@ -19,6 +19,47 @@
 
 ---
 
+## 2026-03-15 — Brown Gold Cursor + Blog Page Redesign
+
+### Cursor Updates
+- Hover ring border changed from white to **brown gold** (`rgba(201,168,110,0.7)`)
+- Box shadow changed to gold-tinted glow (`rgba(201,168,110,0.12)`)
+- Hover ring size reduced from 50px → **46px** (subtle reduction)
+- Still fully transparent — content visible through ring, no backdrop blur
+
+### Blog Page Complete Redesign
+Inspired by Creative Apes (Awwwards), rebuilt the entire blog page:
+
+**Hero Section (Dark Editorial)**
+- Full-viewport dark (#0a0a0a) background with atmospheric warm orbs
+- Right-aligned editorial description text (large, light weight, cream)
+- Bottom metadata bar: "© Fresh perspectives" / "(Journal — 08)" / "Thinking out loud"
+- Scrolling marquee: "featured articles ©" in giant ghost text (font-weight 200, 6% opacity)
+
+**Featured Article (Dark Split Card)**
+- Full-width split card on dark background: gradient image left + dark glass content right
+- "01 — Featured" label with gold rule
+- Category pill, author info, hover arrow animation
+
+**Article Listing (Vertical Editorial Cards)**
+- Long vertical card design — each article is a full-width horizontal row
+- Numbered entries (02–07) with gold category pills
+- Left: large headline title, Right: excerpt + author
+- Subtle gold dividers between cards
+- Hover: background tint + gold underline + arrow animation
+- "All Articles" header with count
+
+**Other Sections**
+- Dark→cream gradient transition between featured and article list
+- Newsletter CTA (kept from previous, dark section)
+- Topics section with pill tags (kept from previous)
+
+### Files Modified
+- `components/premium-cursor.tsx` — Gold hover ring, reduced size 50→46
+- `app/blog/page.tsx` — Complete redesign (dark hero, vertical cards, marquee)
+
+---
+
 ## 2026-03-15 — Cursor Refinements (No Blur + Slightly Bigger Small Dot)
 
 ### Problems

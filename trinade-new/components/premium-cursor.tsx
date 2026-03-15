@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 // ─── Premium Dual-Dot Cursor with liquid glass hover ───
 const SMALL_DOT = 8
 const LARGE_DOT = 20
-const HOVER_RING = 50
+const HOVER_RING = 46
 
 export default function PremiumCursor() {
   const smallRef = useRef<HTMLDivElement>(null)
@@ -83,11 +83,11 @@ export default function PremiumCursor() {
         largeRef.current.style.height = `${currentLargeSize}px`
 
         if (isHovering) {
-          // Liquid glass outlined ring
+          // Brown gold liquid glass outlined ring — fully see-through
           largeRef.current.style.background = 'transparent'
-          largeRef.current.style.border = '1.5px solid rgba(255,255,255,0.85)'
+          largeRef.current.style.border = '1.5px solid rgba(201,168,110,0.7)'
           largeRef.current.style.boxShadow =
-            '0 0 20px rgba(255,255,255,0.15), 0 0 40px rgba(255,255,255,0.05), inset 0 0 12px rgba(255,255,255,0.08)'
+            '0 0 16px rgba(201,168,110,0.12), 0 0 32px rgba(201,168,110,0.04), inset 0 0 8px rgba(201,168,110,0.06)'
           largeRef.current.style.backdropFilter = 'none'
         } else {
           // Default: solid trailing dot
