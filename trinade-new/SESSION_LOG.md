@@ -9,13 +9,77 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Full website live on Vercel. Blog + Solutions page content updated to reflect Trinade's AI-first multi-sector identity.
+- Done: Solutions page sections refined to match IT Solutions inspiration. Homepage created with unused inspiration sections.
 - In progress: None
 - Blocked: None
 - Next step: Mobile responsiveness, favicon, SEO metadata per page, Vercel deploy.
-- Last completed: Solutions page content update — all sections rewritten for AI-first multi-sector identity
+- Last completed: IT Solutions-inspired redesign of Industries grid + Homepage creation
 
 **NOTE (2026-03-14):** From this point, SESSION_LOG.md is duplicated — one copy in the old website directory (`E:\FINAL Trinade CC\SESSION_LOG.md`) and one in the new website directory (`E:\FINAL Trinade CC\trinade-new\SESSION_LOG.md`). Each should be updated independently for their respective websites.
+
+---
+
+## 2026-03-15 — IT Solutions-Inspired Redesign: Industries Grid + Homepage
+
+### Context
+- Extracted 115 frames from `IT Solutions.webm` video at 2fps using ffmpeg
+- Analyzed each frame to map IT Solutions sections to our Solutions page
+- Identified 3 sections needing improvement + 3 unused sections for Homepage
+
+### Section Mapping (IT Solutions → Trinade)
+| IT Solutions Section | Our Section | Status |
+|---|---|---|
+| Hero with inline pill images | HeroSection | Already inspired ✓ |
+| Industries grid (3 large + 2x2 small) | IndustriesSection | **Fixed** — was horizontal scroll |
+| Scroll cards (sticky text + service cards) | ScrollCardsSection | Polished + Learn more links |
+| Accordion (expandable services + pills) | AccordionSection | Added Learn more link |
+| "Why choose us?" + Process/People cards | N/A | **New → Homepage** |
+| "Overcoming roadblocks" challenges | N/A | **New → Homepage** |
+| "Recognized Excellence" certifications | N/A | **New → Homepage** |
+
+### Solutions Page Changes (`solutions-content.tsx`)
+1. **Industries section** — Converted from horizontal flex scroll to CSS Grid:
+   - `grid-template-columns: repeat(5, 1fr); grid-template-rows: 1fr 1fr`
+   - Healthcare/Legal/Financial span 2 rows (large cards)
+   - Manufacturing/Logistics top-right, Retail spans bottom-right
+   - Hover overlay: dark gradient + lime blob + white text + "Learn more →"
+   - Added "Explore all industries →" button below grid
+2. **Scroll cards** — Lime gradient blob now subtly visible at rest (opacity 20%), stronger on hover (60%), "Learn more" link appears on hover
+3. **Accordion** — Added "Learn more >" link at bottom of expanded card, matching IT Solutions' pattern
+
+### Homepage Created (`/home`)
+New route at `/home` using sections NOT used in Solutions page:
+1. **HomeHeroSection** — "Experience AI Excellence." large heading + gradient card with body text and dual CTAs ("Explore our solutions" + "Talk to us"), inspired by IT Solutions' opening section
+2. **WhyChooseUsSection** — "Why choose us?" heading with bold/muted text split + Process/People dual cards (cream text area + spiral image), inspired by IT Solutions' Process/People layout
+3. **ChallengesSection** — "Overcoming AI adoption barriers" sticky text left + challenge items with pill tags right (5 AI challenges: ROI, Data Silos, Compliance, Scaling, Legacy Systems)
+4. **RecognitionSection** — "Recognized Excellence & Compliance Standards" with badge cards (ISO 27001, SOC 2, HIPAA, GDPR, AWS Partner)
+5. **HomeCTASection** — "Ready to build something intelligent?" with gold spiral background
+6. Uses shared SolutionsFooter with liquid glass TRINADE marquee
+
+### Design Touches (Differentiating from IT Solutions)
+- Gold/cream palette instead of green/lime (our established charcoal/cream/gold system)
+- Spiral imagery instead of stock photos (using our existing spiral-card.jpg, spiral-motion.jpg)
+- AI-first content (not generic IT) — challenges, certifications, and copy all Trinade-specific
+- Hover overlays use dark gradient + lime accent (vs IT Solutions' photo reveal)
+
+### Verification (Playwright MCP)
+- Solutions Industries grid: 3 large + 2 small + 1 spanning card ✓
+- Solutions Accordion: "Learn more >" link visible in expanded state ✓
+- Solutions ScrollCards: Lime blobs visible, "Learn more" on hover ✓
+- Homepage hero: "Experience AI Excellence." + gradient card ✓
+- Homepage Process/People cards: Dual layout with spiral images ✓
+- Homepage Challenges: Sticky text + pill tags ✓
+- Homepage Recognition: 5 compliance badge cards ✓
+- Homepage CTA: Gold spiral background ✓
+- Homepage Footer: Shared liquid glass TRINADE marquee ✓
+
+### Files Created
+- `components/homepage-content.tsx` — 5-section homepage component (~380 lines)
+- `app/home/page.tsx` — Homepage route with shared navbar/footer/cursor
+- `Solutions Page Frames/IT Solutions/` — 115 extracted reference frames
+
+### Files Modified
+- `components/solutions-content.tsx` — Industries grid layout, ScrollCards polish, Accordion learn more link
 
 ---
 

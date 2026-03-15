@@ -185,9 +185,65 @@ function MissionSection() {
 
 
 // ═══════════════════════════════════════════════════════════
-// INDUSTRIES — Tall cards with hover gradient accent
-// IT Solutions style: grid, title at top, desc at bottom, lots of space
+// INDUSTRIES — CSS Grid: 3 large + 2x2 smaller cards
+// IT Solutions style: title at top, desc at bottom, hover overlay
 // ═══════════════════════════════════════════════════════════
+function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; isLarge: boolean; gridStyle?: React.CSSProperties }) {
+  return (
+    <div
+      className="group rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden"
+      style={{
+        background: P.creamMid,
+        border: `1px solid ${P.creamDark}`,
+        minHeight: isLarge ? undefined : undefined,
+        ...gridStyle,
+      }}
+    >
+      {/* Hover overlay — dark gradient with gold accent */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-[1]"
+        style={{
+          background: `linear-gradient(160deg, rgba(26,26,30,0.88) 0%, rgba(26,26,30,0.72) 60%, rgba(160,128,64,0.35) 100%)`,
+        }}
+      />
+
+      {/* Lime gradient blob — bottom-right, visible on hover */}
+      <div
+        className="absolute bottom-0 right-0 w-48 h-48 rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-700 pointer-events-none z-[2]"
+        style={{
+          background: `radial-gradient(circle, ${P.lime}90, transparent 70%)`,
+          transform: 'translate(30%, 30%)',
+          filter: 'blur(24px)',
+        }}
+      />
+
+      <h3
+        className={`${isLarge ? 'text-[20px]' : 'text-[17px]'} font-medium tracking-[-0.01em] relative z-10 transition-colors duration-500 group-hover:text-white`}
+        style={{ color: P.textDark }}
+      >
+        {ind.name}
+      </h3>
+
+      <div className="relative z-10 mt-auto">
+        <p
+          className={`${isLarge ? 'text-[14px]' : 'text-[13px]'} leading-[1.75] transition-colors duration-500 group-hover:text-white/70`}
+          style={{ color: P.textMuted }}
+        >
+          {ind.desc}
+        </p>
+
+        {/* Learn more — appears on hover */}
+        <div className="flex items-center gap-1.5 mt-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
+          <span className="text-[13px] font-medium text-white/90">Learn more</span>
+          <svg className="w-3.5 h-3.5 text-white/90" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
+            <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function IndustriesSection() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
@@ -235,44 +291,46 @@ function IndustriesSection() {
         {/* Separator line */}
         <div className="h-[1px] mb-10" style={{ background: P.creamDark }} />
 
-        {/* Tall industry cards — IT Solutions style */}
+        {/* CSS Grid — 3 large + small cards on right (IT Solutions layout) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          className="flex gap-4 overflow-x-auto pb-4 scrollbar-none"
-          style={{ scrollbarWidth: 'none' }}
+          className="grid gap-4"
+          style={{
+            gridTemplateColumns: 'repeat(5, 1fr)',
+            gridTemplateRows: '1fr 1fr',
+            minHeight: '480px',
+          }}
         >
-          {industries.map((ind, i) => (
-            <div
-              key={ind.name}
-              className="group flex-shrink-0 rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden"
-              style={{
-                width: 'clamp(280px, 25vw, 360px)',
-                minHeight: '420px',
-                background: P.creamMid,
-                border: `1px solid ${P.creamDark}`,
-              }}
-            >
-              {/* Gold gradient accent blob on hover — like IT Solutions' lime blob */}
-              <div
-                className="absolute bottom-0 right-0 w-48 h-48 rounded-full opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle, ${P.lime}90, transparent 70%)`,
-                  transform: 'translate(30%, 30%)',
-                  filter: 'blur(20px)',
-                }}
-              />
+          {/* 3 large cards spanning 2 rows */}
+          <IndustryCard ind={industries[0]} isLarge gridStyle={{ gridColumn: '1', gridRow: '1 / 3' }} />
+          <IndustryCard ind={industries[1]} isLarge gridStyle={{ gridColumn: '2', gridRow: '1 / 3' }} />
+          <IndustryCard ind={industries[2]} isLarge gridStyle={{ gridColumn: '3', gridRow: '1 / 3' }} />
 
-              <h3 className="text-[20px] font-medium tracking-[-0.01em] relative z-10" style={{ color: P.textDark }}>
-                {ind.name}
-              </h3>
+          {/* 3 smaller cards on the right */}
+          <IndustryCard ind={industries[3]} isLarge={false} gridStyle={{ gridColumn: '4', gridRow: '1' }} />
+          <IndustryCard ind={industries[4]} isLarge={false} gridStyle={{ gridColumn: '5', gridRow: '1' }} />
+          <IndustryCard ind={industries[5]} isLarge={false} gridStyle={{ gridColumn: '4 / 6', gridRow: '2' }} />
+        </motion.div>
 
-              <p className="text-[14px] leading-[1.75] relative z-10" style={{ color: P.textMuted }}>
-                {ind.desc}
-              </p>
-            </div>
-          ))}
+        {/* Explore all industries button */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+          className="mt-12"
+        >
+          <a
+            href="#"
+            className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
+            style={{ background: P.charcoal, color: P.textOnDark }}
+          >
+            Explore all industries
+            <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
+              <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
         </motion.div>
       </div>
     </section>
@@ -327,22 +385,30 @@ function ScrollCardsSection() {
               className="group rounded-2xl p-10 relative overflow-hidden transition-shadow duration-500 hover:shadow-[0_16px_48px_rgba(0,0,0,0.06)]"
               style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(16px)' }}
             >
-              {/* Lime/gold gradient accent blob — like IT Solutions cards */}
+              {/* Lime/gold gradient accent blob — IT Solutions style, subtle at rest, stronger on hover */}
               <div
-                className="absolute bottom-0 right-0 w-40 h-40 rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none"
+                className="absolute bottom-0 right-0 w-44 h-44 rounded-full opacity-20 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
                 style={{
-                  background: `radial-gradient(circle, ${P.lime}80, transparent 70%)`,
+                  background: `radial-gradient(circle, ${P.lime}90, transparent 70%)`,
                   transform: 'translate(30%, 30%)',
-                  filter: 'blur(16px)',
+                  filter: 'blur(20px)',
                 }}
               />
 
               <h3 className="text-[22px] font-medium tracking-[-0.015em] mb-4 relative z-10" style={{ color: P.textDark }}>
                 {card.title}
               </h3>
-              <p className="text-[15px] leading-[1.75] relative z-10" style={{ color: P.textMuted }}>
+              <p className="text-[15px] leading-[1.75] mb-5 relative z-10" style={{ color: P.textMuted }}>
                 {card.body}
               </p>
+
+              {/* Learn more — IT Solutions cards */}
+              <div className="relative z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+                <span className="text-[13px] font-medium" style={{ color: P.textDark }}>Learn more</span>
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 16 16" stroke={P.textDark} strokeWidth="1.5">
+                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -441,6 +507,14 @@ function AccordionSection() {
                           </span>
                         ))}
                       </div>
+
+                      {/* Learn more link — IT Solutions style */}
+                      <a href="/contact" className="group/link inline-flex items-center gap-1.5 mt-6 text-[14px] font-medium transition-colors duration-200 hover:opacity-70" style={{ color: P.textDark }}>
+                        Learn more
+                        <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
+                          <path d="M6 3l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </a>
                     </div>
                   </motion.div>
                 )}
