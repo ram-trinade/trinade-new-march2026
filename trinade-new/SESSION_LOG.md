@@ -9,13 +9,42 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Full website live on Vercel at https://trinade-new.vercel.app. Blog V4 redesigned with premium featured card, footer liquid glass TRINADE text.
+- Done: Full website live on Vercel. Cursor hover fix, homepage sections cleaned up, content updated.
 - In progress: None
 - Blocked: None
 - Next step: Mobile responsiveness, content finalization, favicon, SEO metadata per page.
-- Last completed: Blog V4 redesign + footer liquid glass + Playwright verification
+- Last completed: Cursor hover timing fix + homepage section removal + content update
 
 **NOTE (2026-03-14):** From this point, SESSION_LOG.md is duplicated — one copy in the old website directory (`E:\FINAL Trinade CC\SESSION_LOG.md`) and one in the new website directory (`E:\FINAL Trinade CC\trinade-new\SESSION_LOG.md`). Each should be updated independently for their respective websites.
+
+---
+
+## 2026-03-15 — Cursor Hover Fix + Homepage Section Cleanup + Content Update
+
+### Cursor Fix
+- **Problem**: When hovering over a button, the small dot (fast lerp 0.35) arrived first and triggered the hover expansion immediately, before the large dot (slow lerp 0.1) reached the button. This looked jarring — the ring expanded in empty space.
+- **Fix**: Changed hover detection from `mouseover` event-based to position-based. The `mouseover` event now stores the `pendingHoverEl` but does NOT activate hover. Instead, the RAF tick loop checks if the large dot's (x,y) position is within the element's bounding rect (with 8px margin). Only when the large dot physically arrives does the hover ring activate.
+- **Result**: Hover expansion now triggers naturally when the trailing large dot reaches the interactive element.
+
+### Homepage Section Removal
+1. **Removed "Overcoming enterprise roadblocks"** (ChallengesSection) — sticky text + challenge cards with tags
+2. **Removed "Platform" and "People"** (DifferentiatorsSection) — large split cards with spiral imagery
+3. **Removed unused `challenges` data array**
+4. Both sections reserved for future Home Page reimplementation
+
+### Content Updates
+- **Hero headline**: "At Trinade, we've engineered solutions to address every challenge..." → "We build intelligent systems that transform how enterprises think, operate, and grow — confidently."
+- **Mission text**: Updated to "Trinade AI Technologies crafts modular, scalable AI solutions — from predictive intelligence and secure cloud infrastructure to enterprise integration — engineered with precision and delivered with conviction."
+
+### Verification (Playwright MCP)
+- Hero: Updated copy ✓, inline pill images ✓
+- Scroll past industries/cards → accordion section flows directly (no challenges/differentiators) ✓
+- Accordion "Tailor-made solutions" section intact ✓
+- Footer intact ✓
+
+### Files Modified
+- `components/premium-cursor.tsx` — Position-based hover detection using large dot coordinates
+- `components/solutions-content.tsx` — Removed ChallengesSection + DifferentiatorsSection + challenges data, updated hero/mission copy
 
 ---
 

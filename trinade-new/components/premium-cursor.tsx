@@ -30,6 +30,9 @@ export default function PremiumCursor() {
       targetY = e.clientY
     }
 
+    // Track which interactive element the mouse is over (if any)
+    let pendingHoverEl: HTMLElement | null = null
+
     const onOverInteractive = (e: Event) => {
       const el = e.target as HTMLElement
       if (!el) return
@@ -44,12 +47,14 @@ export default function PremiumCursor() {
         el.closest('button') ||
         el.closest('a')
       if (interactive) {
-        targetLargeSize = HOVER_RING
-        isHovering = true
+        // Store the element — don't activate hover yet.
+        // The tick loop will activate when the large dot arrives.
+        pendingHoverEl = (el.closest('button') || el.closest('a') || el) as HTMLElement
       }
     }
 
     const onOutInteractive = () => {
+      pendingHoverEl = null
       targetLargeSize = LARGE_DOT
       isHovering = false
     }
@@ -62,6 +67,23 @@ export default function PremiumCursor() {
       // Large dot: slower lerp (0.1) — trails elegantly
       largeX += (targetX - largeX) * 0.1
       largeY += (targetY - largeY) * 0.1
+
+      // Check if the LARGE dot has reached the interactive element
+      // Only then activate hover state
+      if (pendingHoverEl && !isHovering) {
+        const rect = pendingHoverEl.getBoundingClientRect()
+        // Check if large dot center is within (or very close to) the element bounds
+        const margin = 8
+        if (
+          largeX >= rect.left - margin &&
+          largeX <= rect.right + margin &&
+          largeY >= rect.top - margin &&
+          largeY <= rect.bottom + margin
+        ) {
+          isHovering = true
+          targetLargeSize = HOVER_RING
+        }
+      }
 
       // Size transitions
       currentLargeSize += (targetLargeSize - currentLargeSize) * 0.12

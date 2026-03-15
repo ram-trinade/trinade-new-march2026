@@ -49,13 +49,6 @@ const scrollCards = [
   { title: 'Strategic Partnership.', body: 'Not just a vendor. A dedicated team of engineers and architects invested in your long-term success.' },
 ]
 
-const challenges = [
-  { title: 'Data Silos Blocking Growth', tags: ['Data Orchestration', 'Cross-System Intelligence', 'Real-time Sync'] },
-  { title: 'AI Models That Don\'t Scale', tags: ['Adaptive ML', 'Edge Computing', 'Auto-Scaling Pipelines'] },
-  { title: 'Security & Compliance Complexity', tags: ['Zero-Trust Architecture', 'Automated Compliance', 'Threat Intelligence'] },
-  { title: 'Legacy Systems Holding You Back', tags: ['Universal API Gateway', 'Legacy Adapters', 'Migration Tooling'] },
-  { title: 'Lack of Strategic AI Vision', tags: ['AI Readiness Assessment', 'Roadmap Development', 'Executive Workshops'] },
-]
 
 const services = [
   {
@@ -121,19 +114,19 @@ function HeroSection() {
           className="max-w-[1200px]"
         >
           <h1 className="leading-[1.12] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.6rem, 5.8vw, 5rem)', fontWeight: 400, color: P.textDark }}>
-            At Trinade, we&apos;ve engineered solutions{' '}
+            We build intelligent{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-card.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            to address every challenge, providing intelligent, scalable{' '}
+            systems that transform how enterprises{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-motion.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>
-            , and adaptive AI solutions tailored to your enterprise{' '}
+            {' '}think, operate, and grow{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-rotated.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            needs.
+            — confidently.
           </h1>
         </motion.div>
 
@@ -183,7 +176,7 @@ function MissionSection() {
           className="leading-[1.2] tracking-[-0.02em] max-w-[1100px]"
           style={{ fontSize: 'clamp(1.8rem, 4.2vw, 3.6rem)', fontWeight: 300, color: P.textOnDark }}
         >
-          From predictive analytics and cloud intelligence to comprehensive enterprise support, we provide tailored solutions designed to strengthen security, enhance efficiency, and drive your business forward.
+          Trinade AI Technologies crafts modular, scalable AI solutions — from predictive intelligence and secure cloud infrastructure to enterprise integration — engineered with precision and delivered with conviction.
         </motion.p>
       </div>
     </section>
@@ -359,120 +352,7 @@ function ScrollCardsSection() {
 }
 
 
-// ═══════════════════════════════════════════════════════════
-// CHALLENGES — IT Solutions "Overcoming IT roadblocks"
-// Sticky text left + challenge cards with separator lines
-// ═══════════════════════════════════════════════════════════
-function ChallengesSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
-  return (
-    <section ref={ref} className="relative py-32" style={{ background: P.white }}>
-      <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24">
-          {/* Left — Sticky descriptive text */}
-          <div className="lg:sticky lg:top-32 lg:self-start">
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.3] tracking-[-0.015em]"
-              style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', fontWeight: 400, color: P.textDark }}
-            >
-              <strong className="font-medium">Overcoming enterprise roadblocks</strong>{' '}
-              <span style={{ color: P.textMuted }}>
-                to drive continuous progress, ensuring your business stays agile and ready for what&apos;s next — because the story of intelligent enterprise is one of growth and evolving potential.
-              </span>
-            </motion.p>
-          </div>
-
-          {/* Right — Challenge cards with separator lines */}
-          <div>
-            {challenges.map((ch, i) => (
-              <motion.div
-                key={ch.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.06, ease: EASE }}
-                className="py-8"
-                style={{ borderBottom: `1px solid ${P.creamDark}` }}
-              >
-                <h3 className="tracking-[-0.015em] mb-5" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', fontWeight: 500, color: P.textDark }}>
-                  {ch.title}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {ch.tags.map(tag => (
-                    <span key={tag} className="px-4 py-2 rounded-full text-[13px]"
-                      style={{ background: P.cream, color: P.textMuted, border: `1px solid ${P.creamDark}` }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-
-// ═══════════════════════════════════════════════════════════
-// DIFFERENTIATORS — Large cards with spiral imagery
-// IT Solutions "Platform / People" style
-// ═══════════════════════════════════════════════════════════
-function DifferentiatorsSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
-  const items = [
-    {
-      title: 'Platform',
-      desc: 'Industry-leading AI technologies backed by our continuous investment in the Trinade Intelligence Platform.',
-      image: '/spiral-motion.jpg',
-    },
-    {
-      title: 'People',
-      desc: 'A dedicated team of engineers, data scientists, and architects committed to your enterprise transformation.',
-      image: '/spiral-grain-dark.jpg',
-    },
-  ]
-
-  return (
-    <section ref={ref} className="relative py-24" style={{ background: P.cream }}>
-      <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="space-y-4">
-          {items.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: EASE }}
-              className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-0 rounded-2xl overflow-hidden"
-              style={{ minHeight: '400px' }}
-            >
-              {/* Text side */}
-              <div className="p-10 lg:p-14 flex flex-col justify-between" style={{ background: P.creamMid }}>
-                <h3 className="text-[28px] font-medium tracking-[-0.02em]" style={{ color: P.textDark }}>
-                  {item.title}
-                </h3>
-                <p className="text-[15px] leading-[1.8] max-w-[500px]" style={{ color: P.textMuted }}>
-                  {item.desc}
-                </p>
-              </div>
-              {/* Image side — spiral imagery */}
-              <div className="relative min-h-[280px] lg:min-h-0">
-                <Image src={item.image} alt="" fill className="object-cover" />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+// (ChallengesSection and DifferentiatorsSection removed — to be reimplemented for Home Page)
 
 
 // ═══════════════════════════════════════════════════════════
@@ -859,8 +739,6 @@ export default function SolutionsContent() {
       <MissionSection />
       <IndustriesSection />
       <ScrollCardsSection />
-      <ChallengesSection />
-      <DifferentiatorsSection />
       <AccordionSection />
       <CTASection />
       <SolutionsFooter />
