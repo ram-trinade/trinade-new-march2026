@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 21 — Values animated counter + milestones gap fix
-- Last completed: Prompt 21 cinematic accordion + compact milestone cards
+- Done: Prompt 22 — Team cards redesign + Impact removed + Quote section
+- Last completed: Prompt 22 inspo-based team cards + striking quote layout
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 22: Team Cards Redesign + Quote Section + Impact Removal
+
+### What Was Done
+1. **Team cards redesigned** — New inspo-based layout with collapsed/expanded states. Collapsed: gold role label, large name (42px), italic tagline, ghost number (01-08) overlapping behind, mesh gradient portrait card on right with large initials, + toggle button. Expanded: bio paragraph + fun fact with gold "+" prefix appear below tagline, portrait tilts slightly with deeper shadow.
+2. **Our Impact section removed** — Deleted the animated stat counters section (500+, 99.9%, 2.4B+, 12ms) and related STATS data + AnimatedStat component.
+3. **Quote section added** — Striking Awwwards-quality editorial quote layout placed after team cards. Giant decorative open/close quotation marks (Georgia serif), large blockquote text (52px max) with gold left border, gold dash attribution with name and title. Scroll-triggered animations throughout.
+
+### Components Changed/Added
+- `TeamAccordion` — Complete rewrite with two-column grid layout (text left, portrait+toggle right), ghost numbers, AnimatePresence expand/collapse
+- `QuoteSection` — New component with giant decorative quotation marks, editorial blockquote, gold dash attribution
+- Removed: `AnimatedStat` component, `STATS` data array
+
+### Files Changed
+- `app/company/page.tsx` — TeamAccordion rewrite, QuoteSection (new), Impact section removed, STATS/AnimatedStat removed
 
 ---
 

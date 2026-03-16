@@ -150,12 +150,6 @@ const TEAM = [
   },
 ]
 
-const STATS = [
-  { value: '500', suffix: '+', label: 'Enterprise Deployments' },
-  { value: '99.9', suffix: '%', label: 'Uptime Guaranteed' },
-  { value: '2.4', suffix: 'B+', label: 'Data Points Processed' },
-  { value: '12', suffix: 'ms', label: 'Avg Response Time' },
-]
 
 /* ═══════════════════════════════════════════
    UTILITY COMPONENTS
@@ -225,32 +219,6 @@ function SectionEyebrow({ children, dark = false }: { children: React.ReactNode;
   )
 }
 
-/* Animated counter for stats */
-function AnimatedStat({ value, suffix = '' }: { value: string; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
-  const [display, setDisplay] = useState('0')
-
-  useEffect(() => {
-    if (!isInView) return
-    const numeric = parseFloat(value.replace(/[^0-9.]/g, ''))
-    const hasDecimal = value.includes('.')
-    const duration = 2200
-    const start = performance.now()
-
-    const animate = (now: number) => {
-      const elapsed = now - start
-      const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 4)
-      const current = numeric * eased
-      setDisplay(hasDecimal ? current.toFixed(1) : Math.floor(current).toString())
-      if (progress < 1) requestAnimationFrame(animate)
-    }
-    requestAnimationFrame(animate)
-  }, [isInView, value])
-
-  return <span ref={ref}>{display}{suffix}</span>
-}
 
 /* Reveal wrapper with configurable direction */
 function Reveal({
@@ -713,7 +681,7 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
 }
 
 /* ═══════════════════════════════════════════
-   TEAM ACCORDION — Click-to-Expand Rows
+   TEAM CARDS — Inspo-Based Collapsed/Expanded
    ═══════════════════════════════════════════ */
 function TeamAccordion() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
@@ -721,10 +689,11 @@ function TeamAccordion() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <div ref={ref}>
+    <div ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
       {TEAM.map((member, i) => {
         const isExpanded = expandedIndex === i
         const num = String(i + 1).padStart(2, '0')
+        const initials = member.name.split(' ').map(n => n[0]).join('')
 
         return (
           <motion.div
@@ -734,188 +703,335 @@ function TeamAccordion() {
             transition={{ duration: 0.8, delay: i * 0.08, ease: EASE_CINEMATIC }}
           >
             {/* Separator line */}
-            <div style={{
-              height: '1px',
-              background: 'rgba(0,0,0,0.08)',
-            }} />
+            <div style={{ height: '1px', background: 'rgba(42,34,24,0.08)' }} />
 
-            {/* Row button */}
-            <button
-              onClick={() => setExpandedIndex(isExpanded ? null : i)}
+            {/* Card container */}
+            <div
               style={{
-                width: '100%',
                 display: 'grid',
-                gridTemplateColumns: '60px 1fr auto auto',
-                alignItems: 'center',
-                gap: '24px',
-                padding: '32px 0',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                textAlign: 'left',
-                color: 'inherit',
-                font: 'inherit',
+                gridTemplateColumns: '1fr auto',
+                gap: '40px',
+                padding: '36px 0',
+                alignItems: 'start',
                 position: 'relative',
+                cursor: 'pointer',
               }}
+              onClick={() => setExpandedIndex(isExpanded ? null : i)}
             >
-              {/* Number */}
-              <span style={{
-                fontSize: '14px',
-                fontWeight: 400,
-                color: 'rgba(42,34,24,0.2)',
-                letterSpacing: '0.05em',
-              }}>
-                {num}
-              </span>
-
-              {/* Name + Role + Tagline */}
-              <div>
+              {/* LEFT: Text content */}
+              <div style={{ position: 'relative', zIndex: 2 }}>
+                {/* Role label */}
                 <span style={{
-                  display: 'block',
-                  fontSize: '12px',
-                  fontWeight: 600,
+                  display: 'inline-block',
+                  fontSize: '11px',
+                  fontWeight: 700,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.15em',
+                  letterSpacing: '0.2em',
                   color: '#c9a86e',
-                  marginBottom: '6px',
+                  marginBottom: '10px',
                 }}>
                   {member.role}
                 </span>
-                <span style={{
-                  display: 'block',
-                  fontSize: 'clamp(24px, 3vw, 36px)',
-                  fontWeight: 500,
-                  color: '#2a2218',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.2,
-                }}>
-                  {member.name}
-                </span>
-                <span style={{
-                  display: 'block',
-                  fontSize: '16px',
+
+                {/* Name row with ghost number */}
+                <div style={{ position: 'relative' }}>
+                  {/* Ghost number */}
+                  <span style={{
+                    position: 'absolute',
+                    right: '0',
+                    top: '50%',
+                    transform: 'translateY(-50%) translateX(20%)',
+                    fontSize: 'clamp(80px, 10vw, 140px)',
+                    fontWeight: 200,
+                    color: 'rgba(42,34,24,0.04)',
+                    lineHeight: 1,
+                    userSelect: 'none',
+                    pointerEvents: 'none',
+                    letterSpacing: '-0.04em',
+                    zIndex: 0,
+                  }}>
+                    {num}
+                  </span>
+
+                  <h3 style={{
+                    fontSize: 'clamp(28px, 3.5vw, 42px)',
+                    fontWeight: 500,
+                    color: '#2a2218',
+                    letterSpacing: '-0.025em',
+                    lineHeight: 1.15,
+                    position: 'relative',
+                    zIndex: 1,
+                  }}>
+                    {member.name}
+                  </h3>
+                </div>
+
+                {/* Tagline */}
+                <p style={{
+                  fontSize: '17px',
                   fontStyle: 'italic',
                   color: 'rgba(42,34,24,0.35)',
-                  marginTop: '4px',
+                  marginTop: '8px',
                   lineHeight: 1.5,
+                  position: 'relative',
+                  zIndex: 1,
                 }}>
                   {member.tagline}
-                </span>
+                </p>
+
+                {/* Expanded content */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div style={{ paddingTop: '24px' }}>
+                        <p style={{
+                          fontSize: '17px',
+                          lineHeight: 1.85,
+                          color: 'rgba(42,34,24,0.55)',
+                          maxWidth: '560px',
+                          marginBottom: '16px',
+                        }}>
+                          {member.bio}
+                        </p>
+                        <p style={{
+                          fontSize: '15px',
+                          lineHeight: 1.75,
+                          color: 'rgba(42,34,24,0.35)',
+                          display: 'flex',
+                          alignItems: 'baseline',
+                          gap: '8px',
+                        }}>
+                          <span style={{ color: '#c9a86e', fontWeight: 600, fontSize: '14px' }}>+</span>
+                          <span style={{ fontStyle: 'italic' }}>Fun fact: {member.funFact}</span>
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
-              {/* Spacer */}
-              <div />
-
-              {/* Toggle button */}
-              <motion.span
-                animate={{ rotate: isExpanded ? 45 : 0 }}
-                transition={{ duration: 0.3, ease: EASE_UI }}
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '50%',
-                  border: '1px solid rgba(42,34,24,0.1)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '24px',
-                  fontWeight: 300,
-                  color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.3)',
-                  transition: 'color 0.4s ease, border-color 0.4s ease',
-                }}
-              >
-                +
-              </motion.span>
-            </button>
-
-            {/* Expanded content */}
-            <AnimatePresence>
-              {isExpanded && (
+              {/* RIGHT: Portrait card + Toggle */}
+              <div style={{ display: 'flex', alignItems: 'start', gap: '20px' }}>
+                {/* Mesh gradient portrait */}
                 <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: EASE_CINEMATIC }}
-                  style={{ overflow: 'hidden' }}
+                  animate={{
+                    rotate: isExpanded ? -2 : 1,
+                    scale: isExpanded ? 1.03 : 1,
+                  }}
+                  transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
+                  style={{
+                    width: 'clamp(140px, 18vw, 240px)',
+                    height: 'clamp(170px, 22vw, 300px)',
+                    borderRadius: '16px',
+                    background: member.mesh,
+                    position: 'relative',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    boxShadow: isExpanded
+                      ? '0 20px 50px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1)'
+                      : '0 8px 24px rgba(0,0,0,0.08)',
+                    transition: 'box-shadow 0.6s ease',
+                  }}
                 >
+                  {/* Inner shadow */}
                   <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '60px 1fr 300px',
-                    gap: '24px',
-                    paddingBottom: '40px',
-                    alignItems: 'start',
+                    position: 'absolute',
+                    inset: 0,
+                    boxShadow: 'inset 0 -50px 70px rgba(0,0,0,0.25)',
+                    pointerEvents: 'none',
+                    zIndex: 2,
+                  }} />
+                  {/* Subtle grain on card */}
+                  <Grain id={`grain-member-${i}`} opacity={0.04} />
+                  {/* Large initials */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1,
                   }}>
-                    {/* Spacer */}
-                    <div />
-
-                    {/* Bio + Fun fact */}
-                    <div>
-                      <p style={{
-                        fontSize: '16px',
-                        lineHeight: 1.85,
-                        color: 'rgba(42,34,24,0.55)',
-                        marginBottom: '20px',
-                        maxWidth: '520px',
-                      }}>
-                        {member.bio}
-                      </p>
-                      <p style={{
-                        fontSize: '16px',
-                        lineHeight: 1.85,
-                        color: 'rgba(42,34,24,0.35)',
-                        fontStyle: 'italic',
-                      }}>
-                        &bull; Fun fact: {member.funFact}
-                      </p>
-                    </div>
-
-                    {/* Mesh gradient portrait */}
-                    <div
-                      style={{
-                        width: '300px',
-                        height: '300px',
-                        borderRadius: '16px',
-                        background: member.mesh,
-                        position: 'relative',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {/* Inner shadow */}
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        boxShadow: 'inset 0 -40px 60px rgba(0,0,0,0.2)',
-                        pointerEvents: 'none',
-                      }} />
-                      {/* Initials */}
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                        <span style={{
-                          fontSize: '56px',
-                          fontWeight: 200,
-                          color: 'rgba(255,255,255,0.12)',
-                          letterSpacing: '0.1em',
-                          userSelect: 'none',
-                        }}>
-                          {member.name.split(' ').map(n => n[0]).join('')}
-                        </span>
-                      </div>
-                    </div>
+                    <span style={{
+                      fontSize: 'clamp(48px, 6vw, 80px)',
+                      fontWeight: 200,
+                      color: 'rgba(255,255,255,0.12)',
+                      letterSpacing: '0.08em',
+                      userSelect: 'none',
+                    }}>
+                      {initials}
+                    </span>
                   </div>
                 </motion.div>
-              )}
-            </AnimatePresence>
+
+                {/* Toggle button */}
+                <motion.div
+                  animate={{ rotate: isExpanded ? 45 : 0 }}
+                  transition={{ duration: 0.35, ease: EASE_UI }}
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    border: `1px solid ${isExpanded ? 'rgba(201,168,110,0.4)' : 'rgba(42,34,24,0.1)'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '22px',
+                    fontWeight: 300,
+                    color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.25)',
+                    flexShrink: 0,
+                    marginTop: '8px',
+                    transition: 'color 0.4s ease, border-color 0.4s ease, background 0.4s ease',
+                    background: isExpanded ? 'rgba(201,168,110,0.06)' : 'transparent',
+                  }}
+                >
+                  +
+                </motion.div>
+              </div>
+            </div>
           </motion.div>
         )
       })}
 
       {/* Final separator */}
-      <div style={{ height: '1px', background: 'rgba(0,0,0,0.08)' }} />
+      <div style={{ height: '1px', background: 'rgba(42,34,24,0.08)' }} />
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════
+   QUOTE SECTION — Striking Editorial Design
+   ═══════════════════════════════════════════ */
+function QuoteSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <div ref={ref} style={{ position: 'relative', padding: 'clamp(80px, 14vh, 180px) 0' }}>
+      {/* Giant decorative quotation mark */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1.2, ease: EASE_CINEMATIC }}
+        style={{
+          position: 'absolute',
+          top: 'clamp(20px, 4vh, 60px)',
+          left: 'clamp(-20px, -2vw, -40px)',
+          fontSize: 'clamp(200px, 25vw, 400px)',
+          fontWeight: 200,
+          lineHeight: 0.8,
+          background: 'linear-gradient(180deg, rgba(201,168,110,0.12) 0%, rgba(201,168,110,0.03) 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          userSelect: 'none',
+          pointerEvents: 'none',
+          zIndex: 0,
+          fontFamily: 'Georgia, serif',
+        }}
+      >
+        &ldquo;
+      </motion.div>
+
+      {/* Quote text */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <motion.blockquote
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 1, delay: 0.2, ease: EASE_CINEMATIC }}
+          style={{
+            fontSize: 'clamp(26px, 3.8vw, 52px)',
+            fontWeight: 300,
+            lineHeight: 1.3,
+            letterSpacing: '-0.025em',
+            color: '#2a2218',
+            maxWidth: '900px',
+            margin: '0',
+            paddingLeft: 'clamp(40px, 6vw, 100px)',
+            borderLeft: '2px solid rgba(201,168,110,0.3)',
+          }}
+        >
+          The best technology disappears. It doesn&apos;t demand attention — it earns trust, quietly, by making everything around it work better.
+        </motion.blockquote>
+
+        {/* Attribution */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5, ease: EASE_CINEMATIC }}
+          style={{
+            marginTop: 'clamp(32px, 4vh, 56px)',
+            paddingLeft: 'clamp(40px, 6vw, 100px)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+          }}
+        >
+          {/* Gold dash */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.7, ease: EASE_CINEMATIC }}
+            style={{
+              width: '48px',
+              height: '1px',
+              background: '#c9a86e',
+              transformOrigin: 'left',
+            }}
+          />
+          <div>
+            <p style={{
+              fontSize: '16px',
+              fontWeight: 600,
+              color: '#2a2218',
+              letterSpacing: '0.02em',
+            }}>
+              Sale Pitchaiah
+            </p>
+            <p style={{
+              fontSize: '13px',
+              fontWeight: 500,
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: 'rgba(42,34,24,0.35)',
+              marginTop: '4px',
+            }}>
+              Founder &amp; CEO, Trinade
+            </p>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Closing quote mark — bottom right */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1.2, delay: 0.3, ease: EASE_CINEMATIC }}
+        style={{
+          position: 'absolute',
+          bottom: 'clamp(10px, 2vh, 40px)',
+          right: 'clamp(0px, 2vw, 40px)',
+          fontSize: 'clamp(120px, 15vw, 240px)',
+          fontWeight: 200,
+          lineHeight: 0.5,
+          background: 'linear-gradient(180deg, rgba(201,168,110,0.08) 0%, rgba(201,168,110,0.02) 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          userSelect: 'none',
+          pointerEvents: 'none',
+          zIndex: 0,
+          fontFamily: 'Georgia, serif',
+        }}
+      >
+        &rdquo;
+      </motion.div>
     </div>
   )
 }
@@ -1319,88 +1435,13 @@ export default function CompanyPage() {
               </Reveal>
 
               <TeamAccordion />
+
+              <QuoteSection />
             </div>
           </section>
 
           {/* ══════════════════════════════════════════════
-              SECTION 7: IMPACT — Stats on Dark
-              ══════════════════════════════════════════════ */}
-          <section
-            data-dark-section
-            style={{
-              padding: 'clamp(80px, 14vh, 160px) clamp(24px, 8vw, 120px)',
-              backgroundColor: '#0a0a0a',
-              color: 'rgba(255,255,255,0.93)',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <Grain id="grain-stats" opacity={0.035} />
-
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '60vw', height: '60vw', maxWidth: '700px', maxHeight: '700px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,110,0.04) 0%, transparent 65%)', pointerEvents: 'none' }} />
-
-            <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <div style={{ textAlign: 'center', marginBottom: '72px' }}>
-                <SectionEyebrow dark>Our Impact</SectionEyebrow>
-                <Reveal>
-                  <h2 style={{
-                    fontSize: 'clamp(26px, 3.5vw, 44px)',
-                    fontWeight: 300,
-                    letterSpacing: '-0.03em',
-                    maxWidth: '500px',
-                    margin: '0 auto',
-                  }}>
-                    Performance that speaks for itself.
-                  </h2>
-                </Reveal>
-              </div>
-
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))',
-                gap: '2px',
-              }}>
-                {STATS.map((s, i) => (
-                  <Reveal key={s.label} delay={i * 0.1}>
-                    <div
-                      style={{
-                        padding: '48px 32px',
-                        textAlign: 'center',
-                        borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                        position: 'relative',
-                      }}
-                    >
-                      <p style={{
-                        fontSize: 'clamp(44px, 6vw, 72px)',
-                        fontWeight: 200,
-                        letterSpacing: '-0.04em',
-                        background: 'linear-gradient(135deg, #c9a86e, #d4bb8a)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                        marginBottom: '16px',
-                        lineHeight: 1,
-                      }}>
-                        <AnimatedStat value={s.value} suffix={s.suffix} />
-                      </p>
-                      <p style={{
-                        fontSize: '12px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.12em',
-                        color: 'rgba(255,255,255,0.35)',
-                        fontWeight: 600,
-                      }}>
-                        {s.label}
-                      </p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* ══════════════════════════════════════════════
-              SECTION 8: CTA — Cinematic Close
+              SECTION 7: CTA — Cinematic Close
               ══════════════════════════════════════════════ */}
           <section
             data-dark-section
