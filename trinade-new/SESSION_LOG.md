@@ -9,9 +9,42 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 47 — Initial dark screen to prevent cream flash before preloader
-- Last completed: Prompt 47 — SSR dark overlay in layout.tsx, auto-removed on hydration
+- Done: Prompt 48 — Fix hydration error + cream flash + dark screen after preloader
+- Last completed: Prompt 48 — Removed broken initial-screen from layout.tsx, moved dark overlay to page.tsx as proper React element
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 48: Fix Hydration Error, Cream Flash & Dark Screen After Preloader
+
+### What Was Done
+
+#### Fixed Two Critical Homepage Issues
+
+**Issue 1: Cream flash before preloader**
+- Body bg (#f2ede6) was visible before preloader JS loaded because the `initial-screen` dark overlay in layout.tsx was removed too early by the inline script
+
+**Issue 2: Dark empty screen after preloader (no homepage content)**
+- The `initial-screen` div + inline `<script>` in layout.tsx caused a **hydration mismatch** — the script removed the div from DOM before React hydrated, so React saw server HTML ≠ client DOM
+- React threw away the entire SSR tree and re-rendered from scratch, recreating the `initial-screen` div at z-9999 **without** re-running the removal script
+- This zombie overlay covered all homepage content permanently
+
+#### Root Cause & Fix
+- **Removed** the `initial-screen` div and inline `<script>` from `layout.tsx` entirely (eliminates hydration error)
+- **Added** `suppressHydrationWarning` to `<html>` tag for safety
+- **Moved** the dark overlay into `page.tsx` as a normal React element (`{!preloaderDone && <div .../>}`)
+  - SSR-rendered (no dynamic import) = appears immediately in HTML
+  - z-index 9998 (below preloader at 10001, above content)
+  - Removed when `preloaderDone` flips to `true` — no hydration mismatch
+- **Removed** `visibility: hidden` from the content div (was interfering with useInView); now uses opacity-only transition
+
+### Files Changed
+- `app/layout.tsx` — Removed initial-screen div + inline script, added suppressHydrationWarning
+- `app/page.tsx` — Added SSR dark overlay as React element, removed visibility:hidden from content div
+
+### Technical Notes
+- Inline `<script>` in layout + `dangerouslySetInnerHTML` that modifies DOM before hydration is a known Next.js hydration footgun
+- The correct pattern for pre-hydration overlays is React elements with state-gated rendering, not DOM manipulation scripts
 
 ---
 

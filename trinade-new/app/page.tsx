@@ -18,12 +18,27 @@ export default function HomePage() {
       <style>{`
         .solutions-page, .solutions-page * { cursor: none !important; }
       `}</style>
+
+      {/* SSR dark overlay — renders immediately in HTML, covers cream body bg.
+          Sits below preloader (z-10001) but above content. Removed when preloader finishes.
+          This is a normal React element = no hydration mismatch. */}
+      {!preloaderDone && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9998,
+            background: 'linear-gradient(135deg, #0d0b08 0%, #1c160d 20%, #0f0d0a 40%, #201811 60%, #150f08 80%, #0d0b08 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
       <PreloaderAnimation onComplete={() => setPreloaderDone(true)} />
       <div
         className="solutions-page relative bg-[#e8e4de]"
         style={{
           opacity: preloaderDone ? 1 : 0,
-          visibility: preloaderDone ? 'visible' : 'hidden',
           transition: 'opacity 0.5s ease',
         }}
       >
