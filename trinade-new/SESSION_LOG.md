@@ -9,9 +9,45 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 39 — Cookie scroll fix, preloader gold restyle, Why Choose Us AROX redesign
-- Last completed: Prompt 39 — 4 fixes/redesigns
+- Done: Prompt 40 — Preloader brand reveal redesign, Vercel deploy, .md review + session prompt
+- Last completed: Prompt 40 — preloader polish + deploy + handoff
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 40: Preloader Polish + Vercel Deploy + Session Handoff
+
+### What Was Done
+
+#### 1. Preloader Brand Reveal Redesign
+- **Problem**: Logo-then-text two-step entrance felt disconnected; percentage counter too dark
+- **Fix — Percentage**: Opacity bumped from `0.12` → `0.22` for better visibility
+- **Fix — Brand reveal**: Removed logo+text two-step. Replaced with single "TRINADE" text reveal:
+  - Breathing letter-spacing animation (`0.6em` → `0.18em`) with blur-to-sharp (`blur(4px)` → `blur(0px)`)
+  - Weight 200, uppercase, `rgba(242,237,230,0.9)` color
+  - Gold shimmer sweep overlay across text
+  - Expanding gold rule underneath (`scaleX: 0 → 1`)
+  - Logo still shows during loading phase, cross-fades into text reveal
+
+#### 2. Vercel Production Deploy
+- Fixed two TypeScript build errors:
+  - `preloader-animation.tsx`: Removed redundant `phase !== 'done'` check (type narrowing after early return)
+  - `solutions-navbar.tsx`: Removed `link.noActiveDot` reference (property didn't exist on type)
+- Deployed successfully to https://trinade-new.vercel.app
+
+#### 3. .md Files Review + New Session Prompt
+- Reviewed all 6 .md files (SESSION_LOG, HANDOFF_PROMPT, about-me, brand-voice, working-preferences, websites-liked)
+- Updated HANDOFF_PROMPT with current homepage description (AROX accordion, breathing text preloader)
+- Crafted concise new session prompt for Claude Desktop — minimal detail to encourage creative freedom
+
+### Files Changed
+- `components/preloader-animation.tsx` — Brand reveal redesign, percentage opacity fix, TS build fix
+- `components/solutions-navbar.tsx` — Removed invalid `noActiveDot` property reference
+- `HANDOFF_PROMPT.md` — Updated homepage description
+- `SESSION_LOG.md` — Added Prompt 40 entry
+
+### Git
+- Commit: Prompt 40
 
 ---
 

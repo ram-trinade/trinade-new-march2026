@@ -304,9 +304,7 @@ export default function SolutionsNavbar() {
                   </p>
                   <div className="space-y-0.5">
                     {menuLinks.map((link, i) => {
-                      const isActive = link.noActiveDot
-                        ? false
-                        : link.href === '/'
+                      const isActive = link.href === '/'
                           ? pathname === '/' || pathname === '/home'
                           : pathname === link.href
                       return (
