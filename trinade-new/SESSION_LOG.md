@@ -9,9 +9,59 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 41 — Navbar pill curvature tweak (22→26px border-radius)
-- Last completed: Prompt 41 — subtle design polish
+- Done: Prompt 42 — IT Solutions scroll cards + AROX floating card grid
+- Last completed: Prompt 42 — video frame analysis + animation implementation
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 42: IT Solutions Scroll Cards + AROX Floating Card Grid
+
+### What Was Done
+
+#### 1. Video Frame Analysis
+- Extracted frames from "IT Solutions Section.webm" (80 frames at 4fps) and "AROX card sliding animation.webm" (41 frames at 4fps)
+- Stored in `Solution Page Frames/IT Solutions Section/` and `Solution Page Frames/AROX card sliding animation/`
+- Analyzed animation patterns:
+  - **IT Solutions**: Sticky split layout — headline pinned LEFT, white service cards scroll RIGHT with yellow-green gradient accent at bottom of each card
+  - **AROX/Hatamex**: Dark hero with floating image card grid (3x2) that slides into position with staggered animations
+
+#### 2. Solutions Page — ScrollCardsSection Enhancements
+- **Added ScrollCardsSection to page render** — it was defined but not included in the component tree
+- **Gold gradient accent wash**: Added warm gold gradient at bottom 45% of each card (IT Solutions-inspired yellow-green adapted to gold palette)
+- **Hover intensification**: Stronger gold wash (50% height) appears on hover
+- **Always-visible "Learn more →"**: Changed from hover-only to always visible in gold, with arrow animation on hover
+- **Subtle gold bottom line**: Always-visible faded gold gradient line at card bottom
+- **Card lift**: Added `-translate-y-1` hover effect for depth
+
+#### 3. Homepage — AROX-Inspired Floating Card Grid
+- **New `FloatingCardsSection`** added between Hero and Why Choose Us
+- Dark background (#0a0a0a) with atmospheric gold gradient orbs
+- Split layout: headline left (sticky), 3x2 card grid right
+- 6 capability cards: AI-Native Products, Enterprise Intelligence, Cloud Infrastructure, Cybersecurity, Strategic Consulting, Managed Services
+- Cards use spiral/gradient background images with dark overlays
+- **Staggered slide-in animations**: Each card slides from different offsets with varying delays (0-0.2s)
+- **Organic floating feel**: Slight rotation offsets (-1° to 1°) and position variations
+- **Hover effects**: Cards lift, scale, and de-rotate; subtitle text reveals
+- **Gold accent bottom lines** on each card
+- "WHAT WE BUILD" gold eyebrow + "The space between ambition and execution" headline
+
+#### 4. Image Assets
+- Copied missing spiral images from parent project: spiral-bg-dark.jpg, spiral-wide.jpg, spiral-light.jpg, spiral-zoom.jpg, spiral-flip.jpg
+
+### Files Changed
+- `components/solutions-content.tsx` — Gold gradient accents on scroll cards, added ScrollCardsSection to render
+- `components/homepage-content.tsx` — New FloatingCardsSection with AROX-inspired card grid
+- `public/spiral-*.jpg` — Added 5 missing spiral images from parent project
+- `Solution Page Frames/` — Extracted video frames (analysis reference)
+
+### Design Decisions
+- Gold gradient accent on scroll cards is subtle (4-18% opacity) to avoid overwhelming — matches the IT Solutions lime-green but adapted to our warm palette
+- Floating card grid uses organic offsets rather than rigid grid alignment, creating the Hatamex-style depth feel
+- Cards use existing spiral/gradient images rather than placeholder blocks for visual richness
+
+### Git
+- Commit: Prompt 42
 
 ---
 

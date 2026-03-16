@@ -172,6 +172,213 @@ function HomeHeroSection() {
 
 
 // ═══════════════════════════════════════════════════════════
+// FLOATING CARDS — AROX/Hatamex inspired hero card grid
+// Dark section with staggered slide-in capability cards
+// Creating depth through offsets, shadows, and parallax
+// ═══════════════════════════════════════════════════════════
+
+const capabilityCards = [
+  {
+    title: 'AI-Native Products',
+    subtitle: 'Custom intelligence built for your workflows',
+    image: '/gradient-mesh-warm.jpg',
+    accent: 'rgba(201,168,110,0.35)',
+  },
+  {
+    title: 'Enterprise Intelligence',
+    subtitle: 'Turn data into competitive advantage',
+    image: '/gradient-orbs-warm.jpg',
+    accent: 'rgba(212,187,138,0.30)',
+  },
+  {
+    title: 'Cloud Infrastructure',
+    subtitle: 'Scalable, resilient, cost-efficient',
+    image: '/spiral-bg-dark.jpg',
+    accent: 'rgba(160,128,64,0.25)',
+  },
+  {
+    title: 'Cybersecurity',
+    subtitle: 'Zero-trust architecture & compliance',
+    image: '/spiral-wide.jpg',
+    accent: 'rgba(201,168,110,0.30)',
+  },
+  {
+    title: 'Strategic Consulting',
+    subtitle: 'Align technology with business vision',
+    image: '/spiral-light.jpg',
+    accent: 'rgba(212,187,138,0.25)',
+  },
+  {
+    title: 'Managed Services',
+    subtitle: '24/7 monitoring and support',
+    image: '/spiral-zoom.jpg',
+    accent: 'rgba(201,168,110,0.20)',
+  },
+]
+
+// Staggered offsets for organic floating feel (like AROX/Hatamex)
+const cardOffsets = [
+  { x: 0, y: 0, rotate: -1, delay: 0 },
+  { x: 8, y: 20, rotate: 0.5, delay: 0.08 },
+  { x: -4, y: -8, rotate: -0.5, delay: 0.16 },
+  { x: 12, y: 12, rotate: 1, delay: 0.06 },
+  { x: -8, y: 24, rotate: -0.3, delay: 0.12 },
+  { x: 4, y: -4, rotate: 0.8, delay: 0.2 },
+]
+
+function FloatingCardsSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  return (
+    <section ref={ref} className="relative py-28 lg:py-36 overflow-hidden" style={{ background: '#0a0a0a' }}>
+      <Grain id="floatingGrain" opacity={0.04} />
+
+      {/* Atmospheric gradient orbs */}
+      <div className="absolute top-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 70%)' }} />
+      <div className="absolute bottom-[-30%] left-[-10%] w-[50vw] h-[50vw] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(201,168,110,0.04) 0%, transparent 70%)' }} />
+
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
+        {/* Split layout: headline left, cards right */}
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
+
+          {/* Left: headline + description */}
+          <div className="lg:w-[38%] lg:sticky lg:top-32 shrink-0">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-8"
+              style={{ color: P.gold }}
+            >
+              What we build
+            </motion.p>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.9, ease: EASE_OUT }}
+              className="leading-[1.08] tracking-[-0.03em] mb-8"
+              style={{
+                fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)',
+                fontWeight: 300,
+                color: P.textOnDark,
+              }}
+            >
+              The space between<br />
+              ambition and<br />
+              execution
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+              className="text-[15px] leading-[1.85] max-w-[380px]"
+              style={{ color: P.textOnDarkMuted }}
+            >
+              We bridge the gap between where your technology is and where it needs to be — with solutions designed to compound in value over time.
+            </motion.p>
+
+            {/* Gold rule */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={isInView ? { scaleX: 1 } : {}}
+              transition={{ duration: 1.2, delay: 0.4, ease: EASE_OUT }}
+              className="mt-10 h-[1px] max-w-[200px]"
+              style={{
+                background: `linear-gradient(90deg, ${P.gold}66, transparent)`,
+                transformOrigin: 'left',
+              }}
+            />
+          </div>
+
+          {/* Right: floating card grid (3 cols x 2 rows) */}
+          <div className="lg:w-[62%]">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+              {capabilityCards.map((card, i) => {
+                const offset = cardOffsets[i]
+                return (
+                  <motion.div
+                    key={card.title}
+                    initial={{
+                      opacity: 0,
+                      y: 60 + (i % 2) * 20,
+                      x: (i % 3 - 1) * 15,
+                      scale: 0.92,
+                    }}
+                    animate={isInView ? {
+                      opacity: 1,
+                      y: offset.y,
+                      x: offset.x,
+                      scale: 1,
+                      rotate: offset.rotate,
+                    } : {}}
+                    transition={{
+                      duration: 0.9,
+                      delay: offset.delay,
+                      ease: EASE_OUT,
+                    }}
+                    whileHover={{
+                      y: offset.y - 8,
+                      scale: 1.03,
+                      rotate: 0,
+                      transition: { duration: 0.35, ease: EASE },
+                    }}
+                    className="group relative rounded-2xl overflow-hidden cursor-pointer"
+                    style={{
+                      aspectRatio: '4/5',
+                      border: '1px solid rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    {/* Background image */}
+                    <div className="absolute inset-0">
+                      <Image src={card.image} alt="" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <div className="absolute inset-0" style={{
+                        background: `linear-gradient(180deg, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.6) 50%, rgba(10,10,12,0.85) 100%)`,
+                      }} />
+                    </div>
+
+                    {/* Gold glass accent edge */}
+                    <div className="absolute bottom-0 left-0 right-0 h-[3px] transition-opacity duration-500 opacity-40 group-hover:opacity-100"
+                      style={{ background: `linear-gradient(90deg, transparent, ${P.gold}88, transparent)` }} />
+
+                    {/* Content */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6 z-10">
+                      <h3
+                        className="text-[16px] lg:text-[18px] font-medium tracking-[-0.01em] mb-1.5 transition-colors duration-300"
+                        style={{ color: 'rgba(240,237,232,0.93)' }}
+                      >
+                        {card.title}
+                      </h3>
+                      <p
+                        className="text-[12px] lg:text-[13px] leading-[1.5] transition-all duration-500 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
+                        style={{ color: 'rgba(240,237,232,0.5)' }}
+                      >
+                        {card.subtitle}
+                      </p>
+                    </div>
+
+                    {/* Hover glow */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{ background: `radial-gradient(ellipse at 50% 100%, ${card.accent}, transparent 70%)` }}
+                    />
+                  </motion.div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+// ═══════════════════════════════════════════════════════════
 // WHY CHOOSE US — AROX "Our Values" inspired
 // Dark editorial section with numbered accordion items,
 // horizontal gold dividers, scroll-triggered expand/collapse
@@ -489,6 +696,7 @@ export default function HomepageContent() {
   return (
     <main>
       <HomeHeroSection />
+      <FloatingCardsSection />
       <WhyChooseUsSection />
       <ChallengesSection />
       <HomeCTASection />

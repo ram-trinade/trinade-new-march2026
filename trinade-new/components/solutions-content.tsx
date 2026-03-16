@@ -437,13 +437,39 @@ function ScrollCardsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.6, delay: i * 0.03, ease: EASE_OUT }}
-                className="group rounded-2xl p-9 relative overflow-hidden transition-shadow duration-500 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)]"
+                className="group rounded-2xl p-9 relative overflow-hidden transition-all duration-500 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:-translate-y-1"
                 style={{
                   background: 'rgba(255,255,255,0.97)',
                   border: '1px solid rgba(229,224,216,0.6)',
                 }}
               >
-                {/* Gold bottom border on hover */}
+                {/* IT Solutions-inspired gold gradient accent wash at bottom */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 pointer-events-none transition-opacity duration-700"
+                  style={{
+                    height: '45%',
+                    background: `linear-gradient(to bottom, transparent 0%, rgba(201,168,110,0.04) 30%, rgba(201,168,110,0.10) 70%, rgba(212,187,138,0.18) 100%)`,
+                    borderRadius: '0 0 16px 16px',
+                  }}
+                />
+                {/* Stronger gold wash on hover */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    height: '50%',
+                    background: `linear-gradient(to bottom, transparent 0%, rgba(201,168,110,0.08) 30%, rgba(201,168,110,0.18) 70%, rgba(212,187,138,0.28) 100%)`,
+                    borderRadius: '0 0 16px 16px',
+                  }}
+                />
+
+                {/* Gold bottom border line — always visible subtle, stronger on hover */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500"
+                  style={{
+                    background: `linear-gradient(90deg, transparent 0%, ${P.gold}44 20%, ${P.goldLight}66 50%, ${P.gold}44 80%, transparent 100%)`,
+                    opacity: 0.5,
+                  }}
+                />
                 <div
                   className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
                   style={{ background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight})` }}
@@ -456,10 +482,10 @@ function ScrollCardsSection() {
                   {card.body}
                 </p>
 
-                {/* Learn more */}
-                <div className="relative z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                  <span className="text-[13px] font-medium" style={{ color: P.gold }}>Learn more</span>
-                  <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5">
+                {/* Learn more — always visible like IT Solutions, emphasized on hover */}
+                <div className="relative z-10 flex items-center gap-1.5 transition-all duration-300">
+                  <span className="text-[13px] font-medium transition-colors duration-300" style={{ color: `${P.gold}99` }}>Learn more</span>
+                  <svg className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5" style={{ opacity: 0.6 }}>
                     <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
@@ -901,6 +927,7 @@ export default function SolutionsContent() {
     <main>
       <HeroSection />
       <MissionSection />
+      <ScrollCardsSection />
       <IndustriesSection />
       <ChallengesSection />
       <AccordionSection />
