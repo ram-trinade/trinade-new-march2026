@@ -9,12 +9,30 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 9 — ScrollCards fix, Challenges testimonial carousel, Preloader animation
-- In progress: Dev server verification of Prompt 8+9 changes (server was timing out during verification)
-- Blocked: Dev server startup issue (Next.js hangs before "Starting..." — likely resource exhaustion from previous sessions)
-- Next step: Verify all Prompt 8+9 changes work, then mobile responsiveness, Products page
-- Last completed: Prompt 9 code changes (untested — server wouldn't start)
+- Done: Prompt 10c — Contact page left card redesign (removed duplicate contact details)
+- Last completed: Prompt 10c contact page editorial text replacement
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 10c: Contact Page Left Card Redesign
+
+### What Was Done
+1. **Removed duplicate contact details** from the left info card in the contact form section (`app/contact/page.tsx`)
+   - Removed: email (info@trinade.com), phone (+91 9490754923), address, social icon links
+   - These were duplicated — same info already exists in the footer
+2. **Replaced with editorial value proposition text**:
+   - "GET IN TOUCH" eyebrow label
+   - "Let's build the future, together." headline with "together." in gold (#c9a86e)
+   - Paragraph: "Every great partnership starts with a conversation..."
+   - Gold gradient separator line
+   - Three numbered promises: 01 (24hr response), 02 (Free consultation), 03 (No commitment)
+3. **Cleaned up unused code**: Removed InstagramIcon, LinkedInIcon, XIcon component definitions that were no longer referenced
+
+### Design Decisions
+- Editorial approach over utilitarian — the left card now sells the conversation rather than listing contact info
+- Numbered promises use subtle gold accent for numbers, white at 65% opacity for text
+- Gold gradient separator adds visual rhythm between paragraph and promises
 
 ---
 
