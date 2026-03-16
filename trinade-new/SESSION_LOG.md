@@ -9,9 +9,39 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 42 — IT Solutions scroll cards + AROX floating card grid
-- Last completed: Prompt 42 — video frame analysis + animation implementation
+- Done: Prompt 43 — Frontend-w.com inspired preloader animation
+- Last completed: Prompt 43 — cinematic preloader with animated gradient, lens flare, tagline, counter
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 43: Frontend-w.com Inspired Preloader Animation
+
+### What Was Done
+
+#### 1. Reference Analysis
+- Analyzed frontend-w.com preloader from provided screenshots (25% and 100% states)
+- Key features identified: animated gradient background shifting colors, moving lens flare/light leak, centered tagline "You Design — I Develop", large ghosted percentage counter bottom-right
+
+#### 2. Preloader Redesign (`components/preloader-animation.tsx`)
+- **Complete rewrite** from Hatamex-inspired to frontend-w.com-inspired preloader
+- **Animated gradient background**: Rich dark warm tones (#0d0b08, #1c160d, #201811) with 3 animated color layers (gold glow, deep amber, warm wash) that shift position over 3-4s
+- **Lens flare / light leak**: Two layers — primary large flare (350-800px, blur 35px) and secondary bright core (120-240px, blur 18px) that animate from off-screen to upper-left
+- **Centered tagline**: "You Envision — We Build" with em dash separator line, blur-in entrance animation, weight 200, 0.04em tracking
+- **Percentage counter**: Bottom-right, clamp(5rem, 12vw, 11rem), 12% opacity, custom ease (slow→fast→slow), tabular-nums
+- **Corner accent brackets**: 4 corners (28px L-shapes), gold border at 40% opacity, staggered fade-in
+- **Grain texture**: SVG noise overlay at 5% opacity, mixBlendMode overlay
+- **Phase machine**: loading (0-3.4s) → complete (3.4-4.2s) → exit (4.2-5.2s) → done
+- **Exit animation**: All elements fade out with y:-40 drift, lens flare scales up to 1.5x
+
+### Files Changed
+- `components/preloader-animation.tsx` — Complete rewrite (290 lines)
+
+### Technical Notes
+- Preloader runs ~5.2s total, plays on every homepage visit
+- Uses Motion v12 `AnimatePresence` for exit, inline styles for performance (no Tailwind class overhead during animation)
+- Counter uses custom 3-segment easing: 0-12% slow start, 12-65% fast middle, 65-100% slow finish
+- All gradient layers use `willChange: 'transform'` for GPU compositing
 
 ---
 
