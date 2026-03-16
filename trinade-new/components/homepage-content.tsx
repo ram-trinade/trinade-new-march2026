@@ -38,7 +38,7 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 // ─── Data ───
 const challenges = [
   {
-    title: 'Technology Adoption Without Clear Returns',
+    title: 'Technology Investments Without Clear Returns',
     tags: ['Strategy Assessment', 'Use Case Prioritization', 'ROI Analysis'],
   },
   {
@@ -153,7 +153,7 @@ function HomeHeroSection() {
               className="leading-[1.25] tracking-[-0.02em] max-w-[900px]"
               style={{ fontSize: 'clamp(1.4rem, 3vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
             >
-              From custom software and intelligent automation to scalable platforms, we deliver solutions designed to strengthen operations, sharpen decision-making, and drive measurable growth.
+              From cybersecurity and cloud management to custom software and strategic consulting, we deliver solutions designed to strengthen operations, streamline workflows, and drive measurable growth.
             </p>
 
             <div className="flex items-center gap-6 mt-8">
@@ -194,14 +194,14 @@ function HomeHeroSection() {
 
 const capabilityCards = [
   {
-    title: 'AI-Native Products',
-    subtitle: 'Custom intelligence built for your workflows',
+    title: 'Custom Software',
+    subtitle: 'Tailored applications built for your workflows',
     image: '/gradient-mesh-warm.jpg',
     accent: 'rgba(201,168,110,0.35)',
   },
   {
-    title: 'Enterprise Intelligence',
-    subtitle: 'Turn data into competitive advantage',
+    title: 'Enterprise Integration',
+    subtitle: 'Connect systems, unify data, accelerate growth',
     image: '/gradient-orbs-warm.jpg',
     accent: 'rgba(212,187,138,0.30)',
   },
@@ -855,7 +855,7 @@ function HomeCTASection() {
               className="leading-[1.08] tracking-[-0.03em] mb-8"
               style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
             >
-              Ready to build<br />something intelligent?
+              Ready to elevate<br />your technology?
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -864,7 +864,7 @@ function HomeCTASection() {
               className="text-[15px] leading-[1.9] mb-12"
               style={{ color: P.textOnDarkMuted }}
             >
-              Whether you&apos;re exploring AI for the first time or scaling production systems — let&apos;s talk about what&apos;s possible.
+              Whether you&apos;re modernizing infrastructure or building new capabilities — let&apos;s talk about what&apos;s possible.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}

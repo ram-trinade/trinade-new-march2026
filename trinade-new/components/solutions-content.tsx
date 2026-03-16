@@ -37,9 +37,9 @@ const industries = [
   { name: 'Healthcare', desc: 'Secure, compliant technology solutions that enhance patient care, streamline operations, and protect sensitive health data.' },
   { name: 'Legal', desc: 'Reliable and secure solutions tailored to meet the unique demands of modern law firms and legal departments.' },
   { name: 'Financial Services', desc: 'Advanced security and compliance solutions that safeguard transactions, enhance efficiency, and meet strict regulatory requirements.' },
-  { name: 'Manufacturing', desc: 'Smart automation, predictive maintenance, and supply chain optimization for modern production environments.' },
+  { name: 'Manufacturing', desc: 'Process optimization, quality monitoring, and supply chain management solutions for modern production environments.' },
   { name: 'Logistics', desc: 'Route optimization, demand forecasting, and real-time visibility across your entire supply chain.' },
-  { name: 'Retail', desc: 'Customer analytics, inventory intelligence, and personalized experience platforms that drive growth at scale.' },
+  { name: 'Retail', desc: 'Customer engagement platforms, inventory management, and data-driven insights that drive growth at scale.' },
 ]
 
 
@@ -218,7 +218,7 @@ function MissionSection() {
           className="leading-[1.2] tracking-[-0.02em] max-w-[1100px]"
           style={{ fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', fontWeight: 300, color: P.textOnDark }}
         >
-          From cybersecurity and cloud management to strategic consulting and managed IT, we provide tailored technology solutions designed to strengthen security, enhance efficiency, and drive your business forward.
+          From cybersecurity and cloud infrastructure to managed IT and strategic consulting, we deliver tailored technology solutions that strengthen security, streamline operations, and position your business for long-term growth.
         </motion.p>
       </div>
     </section>
@@ -399,7 +399,7 @@ function ChallengesSection() {
   const current = challengeTestimonials[activeIndex]
 
   return (
-    <section ref={ref} className="relative py-32 lg:py-40 overflow-hidden" style={{ background: P.cream }}>
+    <section ref={ref} className="relative py-32 lg:py-40 overflow-hidden" style={{ background: '#0a0a0a' }}>
       <Grain id="challengesGrain" opacity={0.025} />
 
       <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
@@ -427,7 +427,7 @@ function ChallengesSection() {
             {/* Thin vertical line — runs full height on left edge */}
             <div
               className="absolute top-0 bottom-0 left-0 w-[1px] hidden lg:block"
-              style={{ background: `linear-gradient(180deg, ${P.gold}33, ${P.creamDark}44, ${P.gold}33)` }}
+              style={{ background: `linear-gradient(180deg, ${P.gold}33, rgba(255,255,255,0.06), ${P.gold}33)` }}
             />
 
             <div className="lg:pl-10">
@@ -443,7 +443,7 @@ function ChallengesSection() {
                   style={{
                     fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
                     fontWeight: 700,
-                    color: P.charcoal,
+                    color: P.textOnDark,
                   }}
                 >
                   {current.domain}
@@ -465,9 +465,9 @@ function ChallengesSection() {
                       key={tag}
                       className="px-3 py-1 rounded-full text-[11px] font-medium uppercase tracking-[0.06em]"
                       style={{
-                        background: 'rgba(201,168,110,0.1)',
-                        color: P.goldDark,
-                        border: '1px solid rgba(201,168,110,0.2)',
+                        background: 'rgba(201,168,110,0.12)',
+                        color: P.goldLight,
+                        border: '1px solid rgba(201,168,110,0.25)',
                       }}
                     >
                       {tag}
@@ -480,21 +480,21 @@ function ChallengesSection() {
               <div className="flex items-center gap-3 mt-10">
                 <button
                   onClick={goUp}
-                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.06)] cursor-pointer"
-                  style={{ borderColor: `${P.charcoal}22` }}
+                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
+                  style={{ borderColor: 'rgba(255,255,255,0.15)' }}
                   aria-label="Previous challenge"
                 >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={P.charcoal} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M7 12V2M3 6l4-4 4 4" />
                   </svg>
                 </button>
                 <button
                   onClick={goDown}
-                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.06)] cursor-pointer"
-                  style={{ borderColor: `${P.charcoal}22` }}
+                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
+                  style={{ borderColor: 'rgba(255,255,255,0.15)' }}
                   aria-label="Next challenge"
                 >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={P.charcoal} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M7 2v10M3 8l4 4 4-4" />
                   </svg>
                 </button>
@@ -513,13 +513,13 @@ function ChallengesSection() {
                 >
                   <p
                     className="text-[13px] font-semibold tracking-[0.08em] uppercase"
-                    style={{ color: P.charcoal }}
+                    style={{ color: P.textOnDark }}
                   >
                     {String(activeIndex + 1).padStart(2, '0')}/{String(total).padStart(2, '0')}
                   </p>
                   <p
                     className="text-[13px] tracking-[0.06em] uppercase mt-1.5"
-                    style={{ color: P.textMuted }}
+                    style={{ color: P.textOnDarkMuted }}
                   >
                     {current.attribution}
                   </p>
@@ -531,7 +531,7 @@ function ChallengesSection() {
           {/* VERTICAL DIVIDER — between columns */}
           <div
             className="hidden lg:block w-[1px] mx-0 self-stretch"
-            style={{ background: `${P.charcoal}15` }}
+            style={{ background: 'rgba(255,255,255,0.08)' }}
           />
 
           {/* RIGHT COLUMN — ~65% */}
@@ -547,7 +547,7 @@ function ChallengesSection() {
                 style={{
                   fontSize: 'clamp(1.5rem, 2.8vw, 2.2rem)',
                   fontWeight: 300,
-                  color: `${P.charcoal}e6`,
+                  color: 'rgba(240,237,232,0.88)',
                 }}
               >
                 {current.quote}

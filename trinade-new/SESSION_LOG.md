@@ -9,9 +9,40 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 51 — Removed "Our Approach" section from Solutions page
-- Last completed: Prompt 51 — Cleaned up ScrollCardsSection, GSAP imports from solutions-content.tsx
+- Done: Prompt 52 — Content rebalanced to 40% AI / 60% other solutions + Challenges dark bg
+- Last completed: Prompt 52 — Homepage & Solutions content updates, Solutions Challenges section dark background
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 52: Content Rebalance (40% AI / 60% Other) + Challenges Dark BG
+
+### What Was Done
+**Homepage content rebalance:**
+- "AI-Native Products" → "Custom Software", "Enterprise Intelligence" → "Enterprise Integration"
+- Hero sub-text: leads with cybersecurity/cloud instead of AI
+- CTA: "Ready to elevate your technology?" (was "Ready to build something intelligent?")
+- CTA sub-text: infrastructure/capabilities framing (removed AI-specific language)
+- Challenge #1: "Technology Investments" (was "Technology Adoption")
+
+**Solutions page content rebalance:**
+- Mission text: updated phrasing for broader IT positioning
+- Manufacturing: "Process optimization, quality monitoring" (was "Smart automation, predictive maintenance")
+- Retail: "Customer engagement platforms, inventory management" (was "Customer analytics, inventory intelligence")
+
+**Solutions Challenges section dark background:**
+- Background changed from cream (#f2ede6) to dark (#0a0a0a)
+- All text colors adapted: domain name, tags, buttons, counter, attribution, blockquote → light-on-dark
+- Vertical divider, left line, nav buttons all use light/gold variants
+- Creates striking dark-light-dark rhythm on Solutions page
+
+### Files Modified
+- `components/homepage-content.tsx` — Content text changes (6 edits)
+- `components/solutions-content.tsx` — Content text changes + Challenges section dark background (13 edits)
+
+### Verified via Playwright
+- Homepage hero, floating cards, CTA — all content updated correctly
+- Solutions Challenges section — dark background renders with proper contrast and readability
 
 ---
 
