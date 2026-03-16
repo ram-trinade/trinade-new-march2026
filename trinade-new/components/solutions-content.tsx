@@ -369,12 +369,9 @@ function IndustriesSection() {
 // on the right side. overflow:clip prevents card leakage.
 // ═══════════════════════════════════════════════════════════
 function ScrollCardsSection() {
-  const cardHeight = 260
-  const totalScrollHeight = scrollCards.length * cardHeight + 400
-
   return (
     <section className="relative" style={{ overflow: 'clip', background: P.cream }}>
-      <div style={{ minHeight: `${totalScrollHeight}px`, position: 'relative' }}>
+      <div style={{ position: 'relative' }}>
 
         {/* Sticky dark background — stays pinned while cards scroll past */}
         <div
@@ -418,7 +415,7 @@ function ScrollCardsSection() {
             paddingLeft: '52%',
             paddingRight: 'clamp(2.5rem,7vw,7rem)',
             paddingTop: '18vh',
-            paddingBottom: '12vh',
+            paddingBottom: '4vh',
             position: 'relative',
             zIndex: 10,
           }}

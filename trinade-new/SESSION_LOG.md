@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 10c — Contact page left card redesign (removed duplicate contact details)
-- Last completed: Prompt 10c contact page editorial text replacement
+- Done: Prompt 11 — Navbar Products item + Solutions page gap fix
+- Last completed: Prompt 11 navbar and scroll cards section fixes
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 11: Navbar Products + Solutions Page Gap Fix
+
+### What Was Done
+1. **Added "Products" to navbar menu** (`solutions-navbar.tsx`)
+   - Inserted between Home and Solutions in the menuLinks array
+   - Points to `/solutions` route
+2. **Fixed huge empty gap between "Our Approach" and "Challenges We Solve"** (`solutions-content.tsx`)
+   - **Root cause**: `minHeight: ${totalScrollHeight}px` on the wrapper div forced 1960px height, but actual card content was much shorter, leaving ~960px of empty cream space
+   - **Fix**: Removed the arbitrary `minHeight` calculation entirely — let content determine natural height
+   - Reduced `paddingBottom` from `12vh` to `4vh` on the cards column
+   - Removed unused `cardHeight` and `totalScrollHeight` variables
+
+### Technical Lessons
+- The scroll-driven sticky cards pattern needs the wrapper height to match actual content, not an arbitrary calculation
+- `minHeight` with sticky positioning creates invisible dead space when content is shorter than the minimum
 
 ---
 

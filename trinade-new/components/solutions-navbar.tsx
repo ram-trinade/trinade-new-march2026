@@ -17,6 +17,7 @@ const SCROLL_SEGMENTS = 5
 
 const menuLinks = [
   { label: 'Home', href: '/' },
+  { label: 'Products', href: '/solutions' },
   { label: 'Solutions', href: '/solutions' },
   { label: 'Blog', href: '/blog' },
   { label: 'Company', href: '/company' },
