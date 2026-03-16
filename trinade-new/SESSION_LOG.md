@@ -9,9 +9,36 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 35 — Team card spacing: taller collapsed cards, tighter expanded bio, symmetric photo centering
-- Last completed: Prompt 35 — Team card spacing polish
+- Done: Prompt 36 — Cookie scrollbar styling + minimal preloader redesign
+- Last completed: Prompt 36 — Cookie scrollbar + preloader
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 36: Cookie Scrollbar + Preloader Redesign
+
+### What Was Done
+Two improvements:
+
+1. **Cookie popup scrollbar styled** — Added custom `::-webkit-scrollbar` CSS to the expanded cookie settings modal. Thin 4px gold-tinted scrollbar (track: `rgba(160,120,50,0.08)`, thumb: `rgba(201,168,110,0.35)`) matching the gold glass design system. Also set `scrollbar-width: thin` + `scrollbar-color` for Firefox. Applied via `.cookie-modal-expanded` className.
+
+2. **Preloader completely redesigned** — Replaced the cinematic "Golden Thread" TRINADE letter-crystallize animation with a minimal, non-brand-centered preloader:
+   - Large centered percentage counter (weight 200, clamp 4.5rem–9rem)
+   - Thin gold rule below the number
+   - Full-width 2px progress bar at the bottom
+   - Clean dark (#0a0a0a) background
+   - Smooth clip-path curtain reveal transition
+   - ~3 second total duration (2.4s loading + 0.5s hold + reveal)
+   - z-index 10001 to stay above navbar (z-9999)
+   - Cookie popup now delayed until preloader completes (onComplete callback)
+
+### Files Changed
+- `components/solutions-cookie-popup.tsx` — Added custom scrollbar CSS + `.cookie-modal-expanded` className
+- `components/preloader-animation.tsx` — Complete rewrite: minimal typographic preloader
+- `app/page.tsx` — Preloader `onComplete` callback, cookie popup delayed until preloader done
+
+### Git
+- Commit: Prompt 36
 
 ---
 

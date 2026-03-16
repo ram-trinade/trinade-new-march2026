@@ -11,14 +11,14 @@ const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), {
 const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
 
 export default function HomePage() {
-  const [showPreloader, setShowPreloader] = useState(true)
+  const [preloaderDone, setPreloaderDone] = useState(false)
 
   return (
     <>
       <style>{`
         .solutions-page, .solutions-page * { cursor: none !important; }
       `}</style>
-      {showPreloader && <PreloaderAnimation />}
+      <PreloaderAnimation onComplete={() => setPreloaderDone(true)} />
       <div className="solutions-page relative bg-[#e8e4de]">
         <PremiumCursor />
         <SolutionsNavbar />
@@ -26,7 +26,7 @@ export default function HomePage() {
           <HomepageContent />
           <SolutionsFooter />
         </SmoothScroll>
-        <SolutionsCookiePopup />
+        {preloaderDone && <SolutionsCookiePopup />}
       </div>
     </>
   )

@@ -103,6 +103,30 @@ export default function SolutionsCookiePopup() {
     <AnimatePresence>
       {visible && (
         <>
+          {/* Custom scrollbar for expanded modal */}
+          <style>{`
+            .cookie-modal-expanded::-webkit-scrollbar {
+              width: 4px;
+            }
+            .cookie-modal-expanded::-webkit-scrollbar-track {
+              background: rgba(160,120,50,0.08);
+              border-radius: 4px;
+              margin: 24px 0;
+            }
+            .cookie-modal-expanded::-webkit-scrollbar-thumb {
+              background: rgba(201,168,110,0.35);
+              border-radius: 4px;
+              transition: background 0.2s;
+            }
+            .cookie-modal-expanded::-webkit-scrollbar-thumb:hover {
+              background: rgba(201,168,110,0.55);
+            }
+            .cookie-modal-expanded {
+              scrollbar-width: thin;
+              scrollbar-color: rgba(201,168,110,0.35) rgba(160,120,50,0.08);
+            }
+          `}</style>
+
           {/* Dark overlay — only shown in expanded state */}
           <AnimatePresence>
             {expanded && (
@@ -275,6 +299,7 @@ export default function SolutionsCookiePopup() {
               /* Expanded modal */
               <motion.div
                 key="expanded"
+                className="cookie-modal-expanded"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
