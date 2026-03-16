@@ -9,9 +9,34 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 44 — Solutions page fixes + preloader milestone counter
-- Last completed: Prompt 44 — removed Differentiators section, fixed Our Approach sticky layout, preloader milestone counter 0→25→50→75→100%
+- Done: Prompt 45 — Preloader cinematic vertical slide counter
+- Last completed: Prompt 45 — AnimatePresence vertical slide transitions for milestone numbers, gold shimmer sweep, weight 600
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 45: Preloader Cinematic Vertical Slide Counter
+
+### What Was Done
+
+#### Preloader Number Transitions — Awwwards-Quality Upgrade
+- **Replaced smooth RAF counting** with milestone snap transitions using `AnimatePresence`
+- **Vertical slide animation**: Each milestone number (0→25→50→75→100) slides UP with blur as the new number rises from below with focus
+  - Enter: `y: 100% → 0%` with `filter: blur(8px) → blur(0px)`
+  - Exit: `y: 0% → -100%` with `filter: blur(0px) → blur(6px)`
+  - Duration: 380ms with custom ease `[0.22, 1, 0.36, 1]`
+- **Gold shimmer sweep**: A gold highlight line sweeps across the number on each transition (`x: -100% → 200%`, opacity pulse)
+- **Bolder numbers**: Font weight increased to 600 (was 400)
+- **Lighter color**: `rgba(255,252,247,0.2)` with % sign at 0.55 opacity
+- **Simplified state**: Replaced `displayValue` RAF loop with `milestoneIndex` + scheduled `setTimeout` per milestone
+
+### Files Changed
+- `components/preloader-animation.tsx` — AnimatePresence vertical slide counter, gold shimmer, weight 600
+
+### Technical Notes
+- `AnimatePresence mode="popLayout"` ensures smooth layout during exit/enter overlap
+- Milestone timers use simple `setTimeout` scheduling instead of RAF loop — cleaner, more predictable
+- Gold shimmer uses `AnimatePresence mode="wait"` with unique key per milestone for re-trigger
 
 ---
 

@@ -30,47 +30,15 @@ interface PreloaderProps {
 
 export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState<Phase>('loading')
-  const [displayValue, setDisplayValue] = useState(0)
-  const startTime = useRef(Date.now())
-  const rafRef = useRef<number>(0)
+  const [milestoneIndex, setMilestoneIndex] = useState(0)
 
-  // Milestone-based counter: snaps through 0→25→50→75→100
-  // with smooth counting between each milestone
+  // Step through milestones at their scheduled times
   useEffect(() => {
-    if (phase === 'exit' || phase === 'done') return
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime.current
-
-      // Find which milestone segment we're in
-      let currentValue = 0
-      for (let i = 0; i < MILESTONES.length - 1; i++) {
-        const from = MILESTONES[i]
-        const to = MILESTONES[i + 1]
-        if (elapsed >= from.at && elapsed < to.at) {
-          // Ease within this segment
-          const segT = (elapsed - from.at) / (to.at - from.at)
-          // Smooth ease-out for each segment
-          const eased = 1 - Math.pow(1 - segT, 2.5)
-          currentValue = Math.round(from.value + (to.value - from.value) * eased)
-          break
-        } else if (elapsed >= to.at && i === MILESTONES.length - 2) {
-          currentValue = to.value
-        }
-      }
-
-      setDisplayValue(currentValue)
-
-      if (elapsed < MILESTONES[MILESTONES.length - 1].at) {
-        rafRef.current = requestAnimationFrame(animate)
-      } else {
-        setDisplayValue(100)
-      }
-    }
-
-    rafRef.current = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [phase])
+    const timers = MILESTONES.slice(1).map((m, i) =>
+      setTimeout(() => setMilestoneIndex(i + 1), m.at)
+    )
+    return () => timers.forEach(clearTimeout)
+  }, [])
 
   // Phase state machine — faster overall
   useEffect(() => {
@@ -346,7 +314,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             </div>
           </motion.div>
 
-          {/* ─── Bottom-right percentage counter ─── */}
+          {/* ─── Bottom-right percentage counter — cinematic vertical slide ─── */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={
@@ -364,7 +332,6 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
               bottom: 'clamp(16px, 3vh, 48px)',
               right: 'clamp(20px, 3vw, 64px)',
               pointerEvents: 'none',
-              overflow: 'hidden',
             }}
           >
             <div
@@ -372,22 +339,62 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                 fontFamily: 'var(--font-display)',
                 fontVariantNumeric: 'tabular-nums',
                 fontSize: 'clamp(5rem, 12vw, 11rem)',
-                fontWeight: 400,
+                fontWeight: 600,
                 letterSpacing: '-0.04em',
-                lineHeight: 0.82,
-                color: 'rgba(255,252,247,0.18)',
+                lineHeight: 0.85,
+                color: 'rgba(255,252,247,0.2)',
                 display: 'flex',
                 alignItems: 'baseline',
+                position: 'relative',
+                overflow: 'hidden',
               }}
             >
-              <span>{displayValue}</span>
+              {/* Gold shimmer line that sweeps on each transition */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`shimmer-${milestoneIndex}`}
+                  initial={{ x: '-100%', opacity: 0 }}
+                  animate={{ x: '200%', opacity: [0, 0.6, 0] }}
+                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '40%',
+                    height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.25), transparent)',
+                    pointerEvents: 'none',
+                    zIndex: 2,
+                  }}
+                />
+              </AnimatePresence>
+
+              {/* Animated number with vertical slide */}
+              <span style={{ display: 'inline-block', position: 'relative', overflow: 'hidden' }}>
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={MILESTONES[milestoneIndex].value}
+                    initial={{ y: '100%', filter: 'blur(8px)', opacity: 0 }}
+                    animate={{ y: '0%', filter: 'blur(0px)', opacity: 1 }}
+                    exit={{ y: '-100%', filter: 'blur(6px)', opacity: 0 }}
+                    transition={{
+                      duration: 0.38,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    style={{ display: 'inline-block' }}
+                  >
+                    {MILESTONES[milestoneIndex].value}
+                  </motion.span>
+                </AnimatePresence>
+              </span>
+
               <span
                 style={{
-                  fontSize: '0.35em',
-                  fontWeight: 400,
+                  fontSize: '0.32em',
+                  fontWeight: 500,
                   letterSpacing: '0.02em',
                   marginLeft: '0.06em',
-                  opacity: 0.7,
+                  opacity: 0.55,
                 }}
               >
                 %
