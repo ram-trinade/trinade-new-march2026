@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 60 — How We Work numbers + Contact page enhancements
-- Last completed: Prompt 60 — Larger numbers, phone country code dropdown, scrollable subject, taller message field
+- Done: Prompt 61 — Dropdown text readability + .md updates + Vercel deploy
+- Last completed: Prompt 61 — Darker dropdown text, updated CLAUDE.md, deployed to Vercel
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 61: Dropdown Text Readability + MD Updates + Deploy
+
+### What Was Done
+1. **Country code dropdown** — Text opacity 0.75→0.92, dial code opacity 0.6→0.75 with weight 500
+2. **Subject dropdown** — Text opacity 0.75→0.92, weight 400→450 for non-selected items
+3. **CLAUDE.md** — Updated architecture (homepage scroll cards, How We Work, contact dropdowns, GSAP usage)
+4. **Memory files** — Updated project status to Prompt 61
+5. **Vercel deploy** — Site live at https://trinade-new.vercel.app
+
+### Files Modified
+- `app/contact/page.tsx` — Dropdown text color/weight adjustments
+- `CLAUDE.md` — Architecture updates
+- `SESSION_LOG.md` — Prompt 60 + 61 entries
 
 ---
 
