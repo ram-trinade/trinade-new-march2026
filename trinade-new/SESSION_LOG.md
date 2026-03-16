@@ -9,9 +9,20 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 24 — Values static numbers + quote before Vision + team expand fix + brown gold buttons
-- Last completed: Prompt 24 polish pass on Company page
+- Done: Prompt 25 — Remove Learn more + grainy gold glow on sector cards (Solutions page)
+- Last completed: Prompt 25 sector card polish on Solutions page
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 25: Remove Learn More + Grainy Gold Glow on Sector Cards
+
+### What Was Done
+1. **"Learn more" removed** — Removed the hover-reveal "Learn more →" link from each IndustryCard in the sectors grid on the Solutions page (`/solutions`).
+2. **Grainy gold glow background** — Added radial gold gradient (`rgba(201,168,110,0.18)` from bottom-right corner fading to transparent) behind each card. Layered SVG fractal noise grain texture overlay at 35% opacity with `mix-blend-mode: multiply` for a warm, organic, Awwwards-quality feel. Enhanced hover warm tint opacity from 0.04 to 0.06.
+
+### Files Changed
+- `components/solutions-content.tsx` — `IndustryCard` component: removed Learn more div, added grain SVG + radial gold gradient layers
 
 ---
 
