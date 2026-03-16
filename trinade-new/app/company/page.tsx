@@ -72,16 +72,6 @@ const VALUES = [
       </svg>
     ),
   },
-  {
-    id: 'V/06',
-    title: 'Sustainable Growth',
-    desc: 'We grow deliberately — scaling our impact without sacrificing quality. Every decision is measured against long-term value.',
-    icon: (
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-      </svg>
-    ),
-  },
 ]
 
 const TIMELINE = [
@@ -341,7 +331,7 @@ function ValuesAccordion() {
   return (
     <div ref={ref} style={{ width: '100%' }}>
       {/* Top border */}
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+      <div style={{ height: '1px', background: 'rgba(42,34,24,0.08)' }} />
 
       {VALUES.map((value, i) => {
         const isExpanded = expandedIndex === i
@@ -374,7 +364,7 @@ function ValuesAccordion() {
               <span style={{
                 fontSize: '12px',
                 fontWeight: 500,
-                color: isExpanded ? '#c9a86e' : 'rgba(255,255,255,0.25)',
+                color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.25)',
                 letterSpacing: '0.05em',
                 transition: 'color 0.4s ease',
               }}>
@@ -385,7 +375,7 @@ function ValuesAccordion() {
               <span style={{
                 fontSize: 'clamp(20px, 2.5vw, 32px)',
                 fontWeight: 400,
-                color: isExpanded ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.6)',
+                color: isExpanded ? '#2a2218' : 'rgba(42,34,24,0.6)',
                 letterSpacing: '-0.02em',
                 transition: 'color 0.4s ease',
               }}>
@@ -400,13 +390,13 @@ function ValuesAccordion() {
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(42,34,24,0.1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '20px',
                   fontWeight: 300,
-                  color: isExpanded ? '#c9a86e' : 'rgba(255,255,255,0.3)',
+                  color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.3)',
                   transition: 'border-color 0.4s ease, color 0.4s ease',
                 }}
               >
@@ -437,7 +427,7 @@ function ValuesAccordion() {
                     <p style={{
                       fontSize: '16px',
                       lineHeight: 1.85,
-                      color: 'rgba(255,255,255,0.45)',
+                      color: 'rgba(42,34,24,0.55)',
                       maxWidth: '600px',
                       paddingRight: '40px',
                     }}>
@@ -457,7 +447,7 @@ function ValuesAccordion() {
             </AnimatePresence>
 
             {/* Bottom border */}
-            <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+            <div style={{ height: '1px', background: 'rgba(42,34,24,0.08)' }} />
           </motion.div>
         )
       })}
@@ -1178,37 +1168,24 @@ export default function CompanyPage() {
               SECTION 4: VALUES — AROX-Style Accordion Rows
               ══════════════════════════════════════════════ */}
           <section
-            data-dark-section
             style={{
               padding: 'clamp(60px, 12vh, 140px) clamp(24px, 8vw, 120px)',
-              backgroundColor: '#0a0a0a',
+              backgroundColor: '#f2ede6',
               position: 'relative',
               overflow: 'hidden',
             }}
           >
-            <Grain id="grain-values" opacity={0.035} />
-
-            {/* Spiral-lines-gold subtle overlay */}
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.08, pointerEvents: 'none', zIndex: 0 }}>
-              <Image
-                src="/spiral-lines-gold.jpg"
-                alt=""
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-
-            <div style={{ position: 'absolute', bottom: '-10%', left: '-5%', width: '40vw', height: '40vw', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,110,0.03) 0%, transparent 70%)', pointerEvents: 'none' }} />
+            <Grain id="grain-values" opacity={0.02} />
 
             <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-              <SectionEyebrow dark>Our Values</SectionEyebrow>
+              <SectionEyebrow>Our Values</SectionEyebrow>
 
               <Reveal>
                 <h2 style={{
                   fontSize: 'clamp(26px, 3.5vw, 44px)',
                   fontWeight: 300,
                   letterSpacing: '-0.03em',
-                  color: 'rgba(255,255,255,0.93)',
+                  color: '#2a2218',
                   marginBottom: '64px',
                   maxWidth: '550px',
                 }}>
