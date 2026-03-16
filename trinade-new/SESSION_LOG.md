@@ -9,9 +9,21 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 15b — Fixed dynamic TRINADE/logo color detection on dark sections
-- Last completed: Prompt 15b dark bg detection fix + Vercel deploy
+- Done: Prompt 16 — Company hero typography improvements
+- Last completed: Prompt 16 bolder TRINADE text + larger hero fonts
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 16: Company Hero Typography
+
+### What Was Done
+1. **TRINADE text bolder** — weight 200→400, size `clamp(72px,15vw,220px)`, refined gradient with more white opacity, reduced stroke to `1px rgba(201,168,110,0.35)` for cleaner look
+2. **All hero text sizes increased:**
+   - "OUR STORY" eyebrow: 12px→14px
+   - Subtitle: `clamp(16px,1.8vw,22px)`→`clamp(18px,2.2vw,26px)`, maxWidth 600→680px
+   - "EST. 2021": 12px→13px
+3. Verified with Playwright — hero has significantly more visual impact and readability
 
 ---
 
