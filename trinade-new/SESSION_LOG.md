@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 32 — Individual product pages + new "Golden Thread" preloader
-- Last completed: Prompt 32 — FlyHigh & Sleep Alert dedicated pages, cinematic preloader rewrite
+- Done: Prompt 33 — Products hero overhaul with editorial asymmetry + cinematic motion
+- Last completed: Prompt 33 — Products hero redesign
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 33: Products Hero Section Overhaul
+
+### What Was Done
+Complete redesign of Products page hero from generic centered layout to Awwwards-quality editorial asymmetry:
+- **Left-aligned editorial typography** with staggered word-by-word clip reveals (overflow hidden + translateY)
+- **Mouse-reactive gold orbital rings** — 3 concentric rings (rotating/counter-rotating dashes), 5 floating accent dots with staggered pulse, center glow
+- **Parallax depth layers** — PRODUCTS watermark, gradient mesh, orbital all respond to mouse position at different rates
+- **Gold eyebrow** — animated line + "WHAT WE BUILD" label
+- **Product count badge** — gold gradient "2" circle + "Products" text in pill
+- **"Explore our lineup" CTA** — with animated arrow pulse, links to Split Universe section
+- **Decorative diagonal accent lines** — subtle gold gradient lines at -20° rotation
+- **Bottom bar** — Guntur coordinates (16.3066° N, 80.4365° E), scroll indicator, © 2026
+
+### Files Changed
+- `components/products-content.tsx` — Replaced HeroSection with ~450 lines of new code (GoldOrbital, WordReveal, editorial layout)
 
 ---
 
