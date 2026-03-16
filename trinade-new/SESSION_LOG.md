@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 33 — Products hero overhaul with editorial asymmetry + cinematic motion
-- Last completed: Prompt 33 — Products hero redesign
+- Done: Prompt 34 — Cookie popup fix (always shows on every page visit)
+- Last completed: Prompt 34 — Cookie popup persistence fix
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 34: Cookie Popup Always Visible Fix
+
+### What Was Done
+Fixed cookie consent popup not appearing on repeat visits:
+- **Root cause**: `localStorage.getItem(STORAGE_KEY)` check prevented popup from showing after first acceptance
+- **Fix**: Removed localStorage check from `useEffect` — popup now always shows on every page visit with 600ms delay
+- **Verified**: Playwright MCP confirmed popup renders correctly on homepage
+
+### Files Changed
+- `components/solutions-cookie-popup.tsx` — removed localStorage guard in mount useEffect
+
+### Git
+- Commit: Prompt 34
 
 ---
 

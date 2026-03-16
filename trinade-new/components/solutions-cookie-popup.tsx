@@ -68,16 +68,9 @@ export default function SolutionsCookiePopup() {
   );
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
-        // Small delay so the page renders first
-        const timer = setTimeout(() => setVisible(true), 600);
-        return () => clearTimeout(timer);
-      }
-    } catch {
-      // localStorage unavailable (SSR, private mode, etc.)
-    }
+    // Always show cookie popup on every page visit
+    const timer = setTimeout(() => setVisible(true), 600);
+    return () => clearTimeout(timer);
   }, []);
 
   const persist = (value: Record<string, boolean> | 'all') => {
