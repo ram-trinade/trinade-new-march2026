@@ -9,9 +9,31 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 14 — Spiral image audit (dimensions report for user to re-export)
-- Last completed: Prompt 14 image quality audit
+- Done: Prompt 15 — Dynamic TRINADE/logo color + marquee speed reduction
+- Last completed: Prompt 15 navbar dynamic color adaptation
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 15: Dynamic Navbar Color + Marquee Speed
+
+### What Was Done
+1. **Dynamic TRINADE text color** (`solutions-navbar.tsx`)
+   - Samples background color at TRINADE position using `elementsFromPoint` + luminance check
+   - Dark bg → light gold (#d4bb8a), Light bg → dark brown (#2a2218)
+   - Smooth 0.5s CSS transition between states
+   - Removed `mixBlendMode: 'difference'` (replaced by explicit color switching)
+2. **Dynamic logo color** — same detection
+   - Dark bg → warm gold filter (`brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6)`)
+   - Light bg → black filter (`brightness(0)`)
+   - Smooth 0.5s filter transition
+3. **Marquee speed reduced** — 20s → 28s for more elegant pace
+
+### Technical Approach
+- Uses `document.elementsFromPoint(40, 40)` to sample elements at the TRINADE text position
+- Skips navbar elements via `data-navbar` attribute
+- Calculates luminance: `0.299*R + 0.587*G + 0.114*B < 80` = dark
+- Runs on every scroll event (already batched with scroll percentage tracking)
 
 ---
 

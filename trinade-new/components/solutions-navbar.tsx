@@ -37,16 +37,38 @@ const socialLinks = [
 export default function SolutionsNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrollPercent, setScrollPercent] = useState(0)
+  const [isOnDark, setIsOnDark] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
 
-  // Track scroll percentage
+  // Track scroll percentage + detect dark backgrounds
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const percent = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0
       setScrollPercent(Math.min(100, Math.max(0, percent)))
+
+      // Sample background color at the TRINADE text position (top-left area)
+      const sampleX = 40
+      const sampleY = 40
+      const els = document.elementsFromPoint(sampleX, sampleY)
+      let dark = false
+      for (const el of els) {
+        if (el.closest('[data-navbar]')) continue // skip navbar elements
+        const bg = getComputedStyle(el).backgroundColor
+        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+          const match = bg.match(/\d+/g)
+          if (match) {
+            const [r, g, b] = match.map(Number)
+            // Luminance check: dark if below threshold
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b)
+            dark = luminance < 80
+          }
+          break
+        }
+      }
+      setIsOnDark(dark)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
@@ -86,6 +108,7 @@ export default function SolutionsNavbar() {
       <a
         href="/"
         className="fixed top-5 left-8 z-[9999] flex items-center"
+        data-navbar
         style={{ pointerEvents: 'auto', textDecoration: 'none' }}
       >
         <span
@@ -93,9 +116,9 @@ export default function SolutionsNavbar() {
             fontSize: '28px',
             fontWeight: 800,
             letterSpacing: '-0.03em',
-            color: '#2a2218',
-            mixBlendMode: 'difference' as const,
+            color: isOnDark ? '#d4bb8a' : '#2a2218',
             lineHeight: 1,
+            transition: 'color 0.5s ease',
           }}
         >
           TRINADE
@@ -106,6 +129,7 @@ export default function SolutionsNavbar() {
       <a
         href="/"
         className="fixed top-5 right-8 z-[9999] flex items-center"
+        data-navbar
         style={{ pointerEvents: 'auto' }}
       >
         <Image
@@ -117,8 +141,9 @@ export default function SolutionsNavbar() {
           style={{
             width: '36px',
             height: '36px',
-            filter: 'brightness(0)',
+            filter: isOnDark ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6)' : 'brightness(0)',
             opacity: 0.85,
+            transition: 'filter 0.5s ease',
           }}
         />
       </a>

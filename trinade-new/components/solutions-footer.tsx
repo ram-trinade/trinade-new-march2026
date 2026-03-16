@@ -34,7 +34,7 @@ export default function SolutionsFooter() {
         .footer-marquee {
           display: flex;
           width: max-content;
-          animation: marquee-scroll 20s linear infinite;
+          animation: marquee-scroll 28s linear infinite;
           will-change: transform;
         }
       `}</style>
