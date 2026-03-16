@@ -156,7 +156,7 @@ export default function SolutionsNavbar() {
           {/* Dark Pill — always visible */}
           <div className="flex justify-center">
             <div
-              className="flex items-center justify-between py-2 pl-2 pr-2 select-none"
+              className="flex items-center justify-between py-2.5 pl-2 pr-2 select-none"
               style={{
                 background: '#1a1a1e',
                 borderRadius: 22,

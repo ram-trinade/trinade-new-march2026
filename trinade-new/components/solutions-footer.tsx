@@ -27,12 +27,14 @@ export default function SolutionsFooter() {
   return (
     <footer ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a' }}>
       <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
+        @keyframes marquee-scroll {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
         .footer-marquee {
-          animation: marquee 25s linear infinite;
+          display: flex;
+          width: max-content;
+          animation: marquee-scroll 12s linear infinite;
           will-change: transform;
         }
       `}</style>
@@ -206,10 +208,10 @@ export default function SolutionsFooter() {
         <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>
       </div>
 
-      {/* Scrolling TRINADE marquee */}
+      {/* Scrolling TRINADE marquee — seamless infinite loop */}
       <div className="overflow-hidden" style={{ userSelect: 'none', pointerEvents: 'none' }}>
         <div
-          className="footer-marquee flex whitespace-nowrap leading-none"
+          className="footer-marquee whitespace-nowrap leading-none"
           style={{
             fontSize: 'clamp(200px, 28vw, 400px)',
             fontWeight: 800,
@@ -219,7 +221,7 @@ export default function SolutionsFooter() {
           {[0, 1].map(copy => (
             <span
               key={copy}
-              className="shrink-0"
+              className="inline-block"
               style={{
                 color: 'transparent',
                 background: 'linear-gradient(165deg, rgba(185,155,100,0.4) 0%, rgba(165,125,60,0.3) 40%, rgba(200,175,125,0.35) 100%)',
@@ -228,7 +230,7 @@ export default function SolutionsFooter() {
                 WebkitTextStroke: '1.5px rgba(185,155,100,0.18)',
               }}
             >
-              TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+              {'TRINADE \u00B7 TRINADE \u00B7 TRINADE \u00B7 TRINADE \u00B7 '}
             </span>
           ))}
         </div>

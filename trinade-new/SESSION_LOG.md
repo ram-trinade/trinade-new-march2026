@@ -9,9 +9,22 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 12 — Remove Our Approach section + restore Prompt 7 Company page
-- Last completed: Prompt 12 solutions cleanup and company page restoration
+- Done: Prompt 13 — Footer marquee fix, Company watermark removal, navbar pill height
+- Last completed: Prompt 13 polish fixes
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 13: Footer Marquee + Company Watermark + Navbar Pill
+
+### What Was Done
+1. **Footer marquee speed + seamless loop** (`solutions-footer.tsx`)
+   - Increased speed: 25s → 12s animation duration
+   - Fixed abrupt restart: renamed keyframes, used `translate3d` for GPU acceleration, `width: max-content` for proper sizing
+2. **Removed "COMPANY" watermark** from Company page hero (`app/company/page.tsx`)
+   - Deleted the giant semi-transparent "COMPANY" text that sat behind "TRINADE"
+3. **Increased navbar pill height** (`solutions-navbar.tsx`)
+   - Changed inner pill padding from `py-2` to `py-2.5` for slightly taller feel
 
 ---
 

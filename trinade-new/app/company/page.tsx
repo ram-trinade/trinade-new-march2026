@@ -924,26 +924,6 @@ export default function CompanyPage() {
             <div style={{ position: 'absolute', top: '10%', left: '15%', width: '45vw', height: '45vw', maxWidth: '600px', maxHeight: '600px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 65%)', pointerEvents: 'none', animation: 'float-slow 20s ease-in-out infinite' }} />
             <div style={{ position: 'absolute', bottom: '5%', right: '10%', width: '35vw', height: '35vw', maxWidth: '450px', maxHeight: '450px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(160,129,74,0.04) 0%, transparent 65%)', pointerEvents: 'none', animation: 'float-slow 25s ease-in-out infinite reverse' }} />
 
-            {/* Watermark */}
-            <div
-              aria-hidden
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                fontSize: 'clamp(120px, 22vw, 400px)',
-                fontWeight: 900,
-                color: 'rgba(255,255,255,0.035)',
-                letterSpacing: '-0.04em',
-                whiteSpace: 'nowrap',
-                userSelect: 'none',
-                pointerEvents: 'none',
-              }}
-            >
-              COMPANY
-            </div>
-
             <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '1200px' }}>
               {/* Eyebrow */}
               <motion.p
