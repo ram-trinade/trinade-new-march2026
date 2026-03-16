@@ -423,10 +423,10 @@ function ValuesAccordion() {
                   <div style={{
                     display: 'flex',
                     alignItems: 'flex-start',
-                    gap: '40px',
+                    gap: '24px',
                     paddingBottom: '40px',
                     paddingTop: '8px',
-                    paddingLeft: 'clamp(60px, 12vw, 200px)',
+                    paddingLeft: '0',
                   }}>
                     {/* Icon — positioned top-left of expanded area */}
                     <div style={{
@@ -443,7 +443,7 @@ function ValuesAccordion() {
                       fontSize: '18px',
                       lineHeight: 1.85,
                       color: 'rgba(42,34,24,0.6)',
-                      maxWidth: '640px',
+                      maxWidth: '700px',
                       textAlign: 'left',
                     }}>
                       {value.desc}
@@ -686,7 +686,7 @@ function TeamAccordion() {
 
             {/* Card — clickable row */}
             <div
-              style={{ cursor: 'pointer', padding: 'clamp(16px, 2vw, 28px) 0' }}
+              style={{ cursor: 'pointer', padding: 'clamp(14px, 1.6vw, 22px) 0' }}
               onClick={() => setExpandedIndex(isExpanded ? null : i)}
             >
               {/* Top row: text left + image right */}
@@ -759,8 +759,8 @@ function TeamAccordion() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   <motion.div
                     animate={{
-                      width: isExpanded ? 'clamp(140px, 14vw, 200px)' : 'clamp(80px, 8vw, 120px)',
-                      height: isExpanded ? 'clamp(160px, 16vw, 240px)' : 'clamp(70px, 7vw, 100px)',
+                      width: isExpanded ? 'clamp(140px, 14vw, 200px)' : 'clamp(90px, 9vw, 130px)',
+                      height: isExpanded ? 'clamp(160px, 16vw, 240px)' : 'clamp(80px, 8vw, 115px)',
                       borderRadius: isExpanded ? '16px' : '12px',
                     }}
                     transition={{ duration: 0.65, ease: EASE_CINEMATIC }}
@@ -844,7 +844,7 @@ function TeamAccordion() {
                     transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
                     style={{ overflow: 'hidden' }}
                   >
-                    <div style={{ paddingTop: '16px', maxWidth: '600px' }}>
+                    <div style={{ paddingTop: '12px', maxWidth: '850px' }}>
                       <p style={{
                         fontSize: '17px',
                         lineHeight: 1.85,

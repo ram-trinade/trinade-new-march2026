@@ -9,9 +9,22 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 28 — Preloader shows every time user lands on homepage
-- Last completed: Prompt 28 preloader always-on
+- Done: Prompt 29 — Company page polish: values alignment, team card spacing/sizing, bio width
+- Last completed: Prompt 29 Company page refinements
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 29: Company Page Polish — Values + Team Cards
+
+### What Was Done
+1. **Values description left-aligned** — Removed the large left padding (`paddingLeft: clamp(60px,12vw,200px)` → `0`) from expanded value descriptions so text starts from the left edge with the icon, not centered.
+2. **Team card expanded spacing reduced** — Tightened card padding from `clamp(16px,2vw,28px)` → `clamp(14px,1.6vw,22px)` and expanded bio paddingTop from `16px` → `12px`.
+3. **Team bio description widened** — Increased maxWidth from `600px` → `850px` so bio text extends further right, saving vertical lines.
+4. **Collapsed team card height increased** — Slightly larger collapsed image: width `clamp(80px,8vw,120px)` → `clamp(90px,9vw,130px)`, height `clamp(70px,7vw,100px)` → `clamp(80px,8vw,115px)`.
+
+### Files Changed
+- `app/company/page.tsx` — Values expanded area padding, team card padding, bio maxWidth, collapsed image dimensions
 
 ---
 
