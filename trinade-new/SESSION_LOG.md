@@ -9,9 +9,19 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 13 — Footer marquee fix, Company watermark removal, navbar pill height
-- Last completed: Prompt 13 polish fixes
+- Done: Prompt 13b — Footer marquee letter outlines fix + speed adjustment
+- Last completed: Prompt 13b marquee polish
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 13b: Footer Marquee Letter Outlines + Speed
+
+### What Was Done
+1. **Removed letter outlines** (`solutions-footer.tsx`)
+   - `WebkitTextStroke: '1.5px rgba(185,155,100,0.18)'` → `'none'`
+   - Letters A and R had visible stroke outlines inside the letter shapes — now clean solid fills
+2. **Reduced marquee speed** — 12s → 20s for a more comfortable, elegant scroll pace
 
 ---
 

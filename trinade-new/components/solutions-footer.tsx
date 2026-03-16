@@ -34,7 +34,7 @@ export default function SolutionsFooter() {
         .footer-marquee {
           display: flex;
           width: max-content;
-          animation: marquee-scroll 12s linear infinite;
+          animation: marquee-scroll 20s linear infinite;
           will-change: transform;
         }
       `}</style>
@@ -227,7 +227,7 @@ export default function SolutionsFooter() {
                 background: 'linear-gradient(165deg, rgba(185,155,100,0.4) 0%, rgba(165,125,60,0.3) 40%, rgba(200,175,125,0.35) 100%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
-                WebkitTextStroke: '1.5px rgba(185,155,100,0.18)',
+                WebkitTextStroke: 'none',
               }}
             >
               {'TRINADE \u00B7 TRINADE \u00B7 TRINADE \u00B7 TRINADE \u00B7 '}
