@@ -9,9 +9,18 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 17 — Company page visibility fixes
-- Last completed: Prompt 17 improved text visibility across hero & mission sections
+- Done: Prompt 18 — Values section light bg + 5 values
+- Last completed: Prompt 18 Values section redesigned with light background
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 18: Values Section Light Background + 5 Values
+
+### What Was Done
+1. **Values section background** — changed from dark (#0a0a0a) to cream (#f2ede6), removed spiral overlay and ambient glow
+2. **Reduced to 5 values** — removed "Sustainable Growth" (V/06), keeping Led by Integrity, Driven by Innovation, Built on Partnership, Engineering Excellence, Human-Centered Design
+3. **Updated all text/border colors** for light background (white→dark text, white borders→dark borders)
 
 ---
 
