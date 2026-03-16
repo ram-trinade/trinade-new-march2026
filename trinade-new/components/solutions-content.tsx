@@ -3,13 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SolutionsFooter from './solutions-footer'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
 
 // ═══════════════════════════════════════════════════════════
 // INDEPENDENT DESIGN SYSTEM V5 — IT Solutions-inspired
@@ -48,14 +42,6 @@ const industries = [
   { name: 'Retail', desc: 'Customer analytics, inventory intelligence, and personalized experience platforms that drive growth at scale.' },
 ]
 
-const scrollCards = [
-  { title: 'Cybersecurity & Compliance.', body: 'Proactive threat management, zero-trust architecture, and compliance frameworks that keep your business protected and audit-ready across every regulatory landscape.' },
-  { title: 'Cloud Infrastructure.', body: 'Multi-cloud orchestration, seamless migration, and hybrid environments designed for performance, resilience, and cost efficiency at any scale.' },
-  { title: 'Managed IT Services.', body: '24/7 monitoring, helpdesk support, and network management that keeps your operations running smoothly — so your team can focus on what matters.' },
-  { title: 'AI & Data Intelligence.', body: 'Predictive analytics, natural language processing, and computer vision that turn raw data into actionable insights and smarter business decisions.' },
-  { title: 'Strategic Consulting.', body: 'IT roadmap planning, digital strategy, and change management that align technology investments with your business goals and long-term vision.' },
-  { title: 'Professional Services.', body: 'End-to-end project management, system integration, and custom development delivered by experienced teams who understand your industry.' },
-]
 
 const challengeTestimonials = [
   {
@@ -372,192 +358,6 @@ function IndustriesSection() {
           <IndustryCard ind={industries[5]} isLarge={false} gridStyle={{ gridColumn: '4 / 6', gridRow: '2' }} />
         </motion.div>
 
-      </div>
-    </section>
-  )
-}
-
-
-// ═══════════════════════════════════════════════════════════
-// SCROLL-DRIVEN CARDS — GSAP ScrollTrigger pinned section
-// IT Solutions reference: section pins, left headline fixed,
-// right cards scroll up via scrub. Gold concentric circles bg.
-// ═══════════════════════════════════════════════════════════
-function ScrollCardsSection() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const cardsWrapperRef = useRef<HTMLDivElement>(null)
-  const rightColRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!sectionRef.current || !cardsWrapperRef.current || !rightColRef.current) return
-
-    const cardsWrapper = cardsWrapperRef.current
-
-    // Calculate scroll distance: cards start at 100vh below, scroll up until last card is visible
-    const getScrollDistance = () => cardsWrapper.offsetHeight + window.innerHeight * 0.1
-
-    const ctx = gsap.context(() => {
-      gsap.to(rightColRef.current, {
-        y: () => -getScrollDistance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: () => `+=${getScrollDistance()}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      })
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative w-full overflow-hidden"
-      style={{
-        height: '100vh',
-        background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
-      }}
-    >
-      {/* Concentric circles — decorative bg element */}
-      <div
-        className="absolute pointer-events-none"
-        style={{ top: 0, left: '20%', width: '150vw', height: '150vw', maxWidth: 1800, maxHeight: 1800, zIndex: 0 }}
-      >
-        {[100, 70, 40].map((size, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              top: '20%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: `${size}%`,
-              height: `${size}%`,
-              border: `1px solid rgba(201,168,110,${0.12 - i * 0.03})`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Atmospheric gold orb */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: '-15%',
-          right: '-5%',
-          width: '50vw',
-          height: '50vw',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 65%)',
-        }}
-      />
-
-      <Grain id="scrollGrain" opacity={0.025} />
-
-      <div
-        className="relative flex"
-        style={{ zIndex: 10, maxWidth: 1600, height: '100%', margin: '0 auto', alignItems: 'flex-start' }}
-      >
-        {/* Left: Headline pinned at bottom-left */}
-        <div
-          className="absolute z-20"
-          style={{ bottom: '5vh', left: 'clamp(2rem,6vw,6rem)', width: '46%' }}
-        >
-          <p
-            className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
-            style={{ color: P.gold }}
-          >
-            Our approach
-          </p>
-          <h2
-            className="leading-[1.02] tracking-[-0.04em]"
-            style={{
-              fontSize: 'clamp(2.4rem, 5vw, 5rem)',
-              fontWeight: 500,
-              color: P.textDark,
-              letterSpacing: '-0.04em',
-            }}
-          >
-            Secure, Streamline,<br />
-            and Succeed with<br />
-            Confidence
-          </h2>
-        </div>
-
-        {/* Right: Cards that scroll up via GSAP */}
-        <div
-          ref={rightColRef}
-          style={{
-            width: '50%',
-            marginLeft: '50%',
-            paddingTop: '100vh',
-            paddingLeft: 'clamp(1.5rem,3vw,3rem)',
-            paddingRight: 'clamp(2.5rem,7vw,7rem)',
-            paddingBottom: '4rem',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <div ref={cardsWrapperRef} className="relative w-full flex flex-col" style={{ maxWidth: 600, gap: '2.5rem' }}>
-            {scrollCards.map((card) => (
-              <div
-                key={card.title}
-                className="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-[5px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)]"
-                style={{
-                  background: '#ffffff',
-                  padding: 'clamp(2rem,4vw,4rem)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.06)',
-                }}
-              >
-                {/* Gold radial gradient on hover (bottom-right origin) */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    background: 'radial-gradient(circle at bottom right, rgba(201,168,110,0.25) 0%, transparent 70%)',
-                    zIndex: 0,
-                  }}
-                />
-
-                {/* Gold bottom border line */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500"
-                  style={{
-                    background: `linear-gradient(90deg, transparent 0%, ${P.gold}44 20%, ${P.goldLight}66 50%, ${P.gold}44 80%, transparent 100%)`,
-                    opacity: 0.4,
-                  }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-                  style={{ background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight})` }}
-                />
-
-                <h3
-                  className="relative z-10 tracking-[-0.015em] mb-3"
-                  style={{ fontSize: 'clamp(1.2rem, 1.6vw, 1.6rem)', fontWeight: 500, color: P.textDark }}
-                >
-                  {card.title}
-                </h3>
-                <p
-                  className="relative z-10 leading-[1.6] mb-5"
-                  style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', color: P.textMuted }}
-                >
-                  {card.body}
-                </p>
-
-                <div className="relative z-10 flex items-center gap-1.5">
-                  <span className="text-[13px] font-medium transition-colors duration-300" style={{ color: `${P.gold}` }}>Learn more</span>
-                  <svg className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5" style={{ opacity: 0.7 }}>
-                    <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   )
@@ -992,7 +792,6 @@ export default function SolutionsContent() {
     <main>
       <HeroSection />
       <MissionSection />
-      <ScrollCardsSection />
       <IndustriesSection />
       <ChallengesSection />
       <AccordionSection />

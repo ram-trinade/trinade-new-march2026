@@ -34,7 +34,7 @@ app/
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
   solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname)
-  solutions-content.tsx   # Solutions: hero, mission, industries, Our Approach scroll cards (CSS Grid + absolute dark bg), testimonial challenges carousel, accordion, CTA
+  solutions-content.tsx   # Solutions: hero, mission, industries, testimonial challenges carousel, accordion, CTA
   solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
   solutions-cookie-popup.tsx # Gold glass cookie consent popup (data-lenis-prevent for 125%+ zoom scroll fix)
   smooth-scroll.tsx       # Lenis smooth scroll provider

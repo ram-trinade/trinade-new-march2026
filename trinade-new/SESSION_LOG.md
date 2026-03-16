@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 50 — Transferred GSAP "Our Approach" section to homepage
-- Last completed: Prompt 50 — Added HomeScrollCardsSection to homepage after FloatingCardsSection
+- Done: Prompt 51 — Removed "Our Approach" section from Solutions page
+- Last completed: Prompt 51 — Cleaned up ScrollCardsSection, GSAP imports from solutions-content.tsx
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 51: Remove "Our Approach" from Solutions Page
+
+### What Was Done
+- Removed `<ScrollCardsSection />` from solutions-content.tsx render
+- Removed `scrollCards` data array and `ScrollCardsSection` component function
+- Removed GSAP imports (`gsap`, `ScrollTrigger`) from solutions-content.tsx (no longer needed)
+- Fixed `useEffect` import that was accidentally removed (still needed by ChallengesSection)
+
+### Files Modified
+- `components/solutions-content.tsx` — Removed Our Approach section, cleaned up GSAP dependencies
+
+### Verified
+- Solutions page renders without errors
+- Page flow: Hero → Mission → Industries → Challenges Carousel → Accordion → CTA → Footer (no Our Approach gap)
 
 ---
 
