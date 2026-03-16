@@ -9,9 +9,20 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 18 — Values section light bg + 5 values
-- Last completed: Prompt 18 Values section redesigned with light background
+- Done: Prompt 19 — Values accordion premium redesign
+- Last completed: Prompt 19 Awwwards-quality accordion with big numbers on right
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 19: Values Accordion Premium Redesign
+
+### What Was Done
+1. **Big decorative numbers** on right (01-05) — `clamp(48px, 5vw, 72px)`, weight 200, gold accent on expand
+2. **Bolder title text** — weight 500, `clamp(24px, 3vw, 40px)`, stronger color (0.7 opacity)
+3. **Larger toggle button** — 44px with gold border on expand
+4. **Better icon positioning** — icon left of description in expanded area
+5. **Gold gradient** top border for visual polish
 
 ---
 
