@@ -25,14 +25,14 @@ export default function SolutionsFooter() {
   ]
 
   return (
-    <footer ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a', maxHeight: '100vh' }}>
+    <footer ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a' }}>
       <style>{`
         @keyframes marquee {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
         }
         .footer-marquee {
-          animation: marquee 10s linear infinite;
+          animation: marquee 25s linear infinite;
           will-change: transform;
         }
       `}</style>
@@ -52,6 +52,58 @@ export default function SolutionsFooter() {
             boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(130,95,30,0.08)',
           }}
         >
+          {/* CTA Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.05, ease: EASE_OUT }}
+            className="mb-14 pb-12"
+            style={{ borderBottom: '1px solid rgba(180,150,95,0.18)' }}
+          >
+            <h2
+              className="tracking-[-0.03em] leading-[1.1] mb-5"
+              style={{
+                fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.93)',
+              }}
+            >
+              Let&apos;s create something<br />extraordinary
+            </h2>
+            <p
+              className="mb-8 max-w-lg"
+              style={{
+                fontSize: '16px',
+                lineHeight: 1.7,
+                fontWeight: 400,
+                color: 'rgba(201,168,110,0.7)',
+              }}
+            >
+              Ready to transform your business? We&apos;d love to hear your vision.
+            </p>
+            <motion.a
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full px-7 py-3 transition-all duration-300"
+              style={{
+                fontSize: '14px',
+                fontWeight: 600,
+                letterSpacing: '0.02em',
+                color: 'rgba(255,255,255,0.93)',
+                background: 'linear-gradient(165deg, rgba(185,155,100,0.45) 0%, rgba(165,125,60,0.35) 40%, rgba(200,175,125,0.40) 100%)',
+                backdropFilter: 'blur(12px) saturate(1.4)',
+                WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+                border: '1px solid rgba(180,150,95,0.35)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(130,95,30,0.1), 0 2px 12px rgba(130,95,30,0.2)',
+              }}
+              whileHover={{
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(130,95,30,0.15), 0 4px 24px rgba(130,95,30,0.35)',
+              } as never}
+            >
+              Start a conversation
+              <span style={{ fontSize: '16px', marginLeft: '2px' }}>&rarr;</span>
+            </motion.a>
+          </motion.div>
+
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-0">
             {/* LEFT — Nav */}
             <div className="lg:w-[40%] flex flex-col gap-3">
@@ -154,46 +206,29 @@ export default function SolutionsFooter() {
         <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>
       </div>
 
-      {/* Scrolling TRINADE marquee — liquid glass letters */}
+      {/* Scrolling TRINADE marquee */}
       <div className="overflow-hidden" style={{ userSelect: 'none', pointerEvents: 'none' }}>
         <div
           className="footer-marquee flex whitespace-nowrap leading-none"
           style={{
-            fontSize: 'clamp(280px, 38vw, 500px)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
+            fontSize: 'clamp(200px, 28vw, 400px)',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
           }}
         >
           {[0, 1].map(copy => (
-            <span key={copy} className="flex items-center shrink-0">
-              {[0, 1, 2, 3].map(rep => (
-                <span key={`${copy}-rep${rep}`} className="flex items-center">
-                  {['T','R','I','N','A','D','E'].map((letter, i) => (
-                    <span
-                      key={`${copy}-${rep}-${i}`}
-                      style={{
-                        display: 'inline-block',
-                        color: 'transparent',
-                        background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
-                        WebkitBackgroundClip: 'text',
-                        backgroundClip: 'text',
-                        WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
-                      }}
-                    >{letter}</span>
-                  ))}
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      color: 'transparent',
-                      background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
-                      WebkitBackgroundClip: 'text',
-                      backgroundClip: 'text',
-                      WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
-                      padding: '0 0.15em',
-                    }}
-                  >&nbsp;·&nbsp;</span>
-                </span>
-              ))}
+            <span
+              key={copy}
+              className="shrink-0"
+              style={{
+                color: 'transparent',
+                background: 'linear-gradient(165deg, rgba(185,155,100,0.4) 0%, rgba(165,125,60,0.3) 40%, rgba(200,175,125,0.35) 100%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextStroke: '1.5px rgba(185,155,100,0.18)',
+              }}
+            >
+              TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;TRINADE&nbsp;&nbsp;&middot;&nbsp;&nbsp;
             </span>
           ))}
         </div>

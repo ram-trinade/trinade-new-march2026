@@ -4,11 +4,10 @@ import dynamic from 'next/dynamic'
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
 const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
-const HomepageContent = dynamic(() => import('@/components/homepage-content'), { ssr: false })
-const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
+const SolutionsContent = dynamic(() => import('@/components/solutions-content'), { ssr: false })
 const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
 
-export default function HomePage() {
+export default function SolutionsPage() {
   return (
     <>
       <style>{`
@@ -18,8 +17,7 @@ export default function HomePage() {
         <PremiumCursor />
         <SolutionsNavbar />
         <SmoothScroll>
-          <HomepageContent />
-          <SolutionsFooter />
+          <SolutionsContent />
         </SmoothScroll>
         <SolutionsCookiePopup />
       </div>

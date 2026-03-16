@@ -30,16 +30,17 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ## What Exists Today
 
-### 6 Pages — All Functional
+### 8 Pages — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | Solutions: 7-section showcase (hero, sliding cards, industries, accordion services, differentiators, social proof, CTA) | Solid — full design system |
+| `/` | Solutions: hero, mission, industries, sticky scroll cards, testimonial challenges carousel, accordion services, differentiators, CTA + preloader on first visit | Solid — full design system |
 | `/home` | Homepage: hero, 4 sticky scroll-over cards (Discovery→Evolution), challenges grid, CTA | Premium scroll effect |
 | `/blog` | Editorial magazine: staggered hero, featured article card, 6-card grid, newsletter CTA, topic tags | Strong editorial feel |
 | `/company` | "Est 2021" bold gold gradient hero, mission, stats counters, values cards, approach split, CTA | Clean, atmospheric |
-| `/contact` | Atmospheric CSS bg, bold "Get in touch" hero with CONTACT watermark, gold glass form | Premium |
+| `/contact` | Dark hero with spiral bg + "Have a project in mind?", split info card + gold glass form | Redesigned — premium |
 | `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
+| 404 | Giant "404" watermark, "Page not found", gold border "Return to Home" button | Atmospheric dark |
 
 ### Design System
 - **Palette**: Charcoal (#1a1a1e, #0a0a0a) / Cream (#f2ede6, #ebe5db) / Gold (#c9a86e, #d4bb8a, #a0814a)
@@ -59,12 +60,13 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **That's it.** No R3F, no GSAP, no ShadCN, no MagicUI.
 
 ### Shared Components
-- `solutions-navbar.tsx` — "TRINADE" wordmark (left, clickable→/home) + Menu pill with scroll % (center) + Logo 36px (right, clickable→/home)
-- `homepage-content.tsx` — Homepage: hero, 4 sticky scroll-over cards, challenges grid, CTA
-- `solutions-footer.tsx` — Brown gold liquid glass card on black bg
-- `solutions-content.tsx` — Homepage 7-section content
+- `solutions-navbar.tsx` — "TRINADE" wordmark (left) + Menu pill with scroll % (center) + Logo (right) + gold active page dot
+- `solutions-content.tsx` — Solutions page: hero, mission, industries grid, sticky scroll cards, testimonial carousel, accordion, differentiators, CTA
+- `solutions-footer.tsx` — Gold glass card with CTA section, nav links, smooth TRINADE marquee, social icons
+- `preloader-animation.tsx` — Cinematic "TRINADE" letter-by-letter build, gold rule, split reveal, particles (shows once per session)
 - `solutions-cookie-popup.tsx` — Gold glass cookie consent
 - `smooth-scroll.tsx` — Lenis provider
+- `premium-cursor.tsx` — Custom cursor with mix-blend-mode difference
 
 ---
 
@@ -97,9 +99,9 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **New pages** — products/services, case studies, careers, individual blog posts
 - **Hero redesigns** — the current hero works but could be more distinctive
 - **Interactive elements** — scroll-driven animations, parallax, micro-interactions
-- **Background experiments** — the atmospheric orbs work, but bolder approaches welcome
-- **Navigation evolution** — the menu pill is interesting but could go further
-- **Loading/transition effects** — page transitions, loading states, reveal animations
+- **Background experiments** — atmospheric orbs work, but bolder approaches welcome
+- **Navigation evolution** — menu pill is functional but could go further
+- **Page transitions** — preloader exists for homepage; cross-page transitions could be added
 
 ### Content & Features
 - All copy is placeholder — real content needs design-worthy formatting
@@ -138,17 +140,15 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ---
 
-## Previous Session Gaps (Don't Repeat These)
+## Known Issues & Session Notes
 
-1. **Old handoff was too restrictive** — it listed too many "NEVER" rules that could block creative solutions. The new approach: understand the design system, then make informed decisions about when to follow vs. when to innovate.
+1. **Dev server can be slow to start** — Next.js sometimes hangs before "Starting..." on Windows. Fix: kill all node processes, delete `.next/`, restart. Use a fresh port if the previous one has zombie connections.
 
-2. **Old handoff referenced wrong tech** — it mentioned R3F, GSAP, ShadCN, WebGL which don't exist in this project. This project is lean: Motion v12 + Tailwind + Lenis. That's it.
+2. **Prompt 8+9 changes are code-complete but UNVERIFIED** — The ScrollCards fix, Challenges redesign, preloader, contact redesign, 404 page, navbar dots, and footer fixes were all written but the dev server wouldn't cooperate for Playwright testing. First task should be verifying these visually.
 
-3. **Old handoff had wrong color palette** — it referenced teal (#00d4aa), deep green (#060e09), lime (#c8e64e). This site uses charcoal/cream/gold exclusively. No teal. No green.
+3. **This project is lean** — Motion v12 + Tailwind + Lenis. No R3F, GSAP, ShadCN, WebGL. The charcoal/cream/gold palette only. No teal. No green.
 
-4. **Old handoff didn't encourage exploration** — it focused on preserving what exists rather than pushing forward. This site needs to EVOLVE. New ideas, new interactions, new design moments are welcome and encouraged.
-
-5. **Old handoff mixed two websites** — it conflated the old site (WebGL, GSAP, dark green theme, R3F) with the new site. This handoff is ONLY for the new site. The old site is a completely separate project.
+4. **Creativity is encouraged** — This site needs to EVOLVE. New ideas, interactions, and design moments are welcome. Understand the design system, then push it forward.
 
 ---
 

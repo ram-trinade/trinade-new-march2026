@@ -1,13 +1,15 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
+import SolutionsFooter from './solutions-footer'
 
 // ═══════════════════════════════════════════════════════════
-// INDEPENDENT DESIGN SYSTEM V3.1 — IT Solutions-inspired
+// INDEPENDENT DESIGN SYSTEM V5 — IT Solutions-inspired
 // Charcoal / Cream / Gold with spiral line imagery
-// Polish pass: gradient mesh bgs, taller cards, accent blobs
+// Balanced content: 40% AI, 60% other solutions
+// ScrollCards: CSS sticky heading + scrolling cards (IT Solutions pattern)
 // ═══════════════════════════════════════════════════════════
 
 const P = {
@@ -25,7 +27,6 @@ const P = {
   gold: '#c9a86e',
   goldLight: '#d4bb8a',
   goldDark: '#a08040',
-  lime: '#c8d84e',
 }
 
 const EASE = [0.25, 0.1, 0.25, 1] as const
@@ -33,48 +34,97 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
 // ─── Data ───
 const industries = [
-  { name: 'Healthcare', desc: 'Smart diagnostic tools, patient management systems, and clinical data platforms — built HIPAA-ready from day one.' },
-  { name: 'Legal', desc: 'Document automation, case management platforms, and compliance tracking — precision software for firms that demand accuracy.' },
-  { name: 'Financial Services', desc: 'Fraud detection, risk assessment tools, and automated reporting — systems that move at market speed while staying compliant.' },
-  { name: 'Manufacturing', desc: 'Predictive maintenance, quality control systems, and production scheduling — turning shop floor data into real-time decisions.' },
-  { name: 'Logistics', desc: 'Route optimization, demand forecasting, and shipment tracking — technology that keeps your supply chain ahead of the curve.' },
-  { name: 'Retail', desc: 'Customer insights, smart pricing, and inventory management — solutions that understand your market before trends emerge.' },
+  { name: 'Healthcare', desc: 'Secure, compliant technology solutions that enhance patient care, streamline operations, and protect sensitive health data.' },
+  { name: 'Legal', desc: 'Reliable and secure solutions tailored to meet the unique demands of modern law firms and legal departments.' },
+  { name: 'Financial Services', desc: 'Advanced security and compliance solutions that safeguard transactions, enhance efficiency, and meet strict regulatory requirements.' },
+  { name: 'Manufacturing', desc: 'Smart automation, predictive maintenance, and supply chain optimization for modern production environments.' },
+  { name: 'Logistics', desc: 'Route optimization, demand forecasting, and real-time visibility across your entire supply chain.' },
+  { name: 'Retail', desc: 'Customer analytics, inventory intelligence, and personalized experience platforms that drive growth at scale.' },
 ]
 
 const scrollCards = [
-  { title: 'Intelligence by Design.', body: 'We don\'t bolt technology onto legacy workflows. Every solution starts with smart architecture at its core — whether it\'s AI models, custom platforms, or data-driven tools built from the ground up.' },
-  { title: 'Multi-Sector Expertise.', body: 'Healthcare to finance, legal to logistics. Our team understands the domain-specific needs, compliance requirements, and day-to-day realities of each industry we serve.' },
-  { title: 'Production-Ready Systems.', body: 'Prototypes are easy. We build systems that handle real-world conditions — edge cases, growing demand, and changing requirements — and keep delivering results.' },
-  { title: 'Modular Architecture.', body: 'No monoliths. Our solutions are built to be flexible — swap components, scale what you need, and adapt without starting over.' },
-  { title: 'Outcome-Driven Partnership.', body: 'We measure success by your business results, not our billing. From pilot to production, we stay focused on outcomes that actually move the needle.' },
+  { title: 'Cybersecurity & Compliance.', body: 'Proactive threat management, zero-trust architecture, and compliance frameworks that keep your business protected and audit-ready across every regulatory landscape.' },
+  { title: 'Cloud Infrastructure.', body: 'Multi-cloud orchestration, seamless migration, and hybrid environments designed for performance, resilience, and cost efficiency at any scale.' },
+  { title: 'Managed IT Services.', body: '24/7 monitoring, helpdesk support, and network management that keeps your operations running smoothly — so your team can focus on what matters.' },
+  { title: 'AI & Data Intelligence.', body: 'Predictive analytics, natural language processing, and computer vision that turn raw data into actionable insights and smarter business decisions.' },
+  { title: 'Strategic Consulting.', body: 'IT roadmap planning, digital strategy, and change management that align technology investments with your business goals and long-term vision.' },
+  { title: 'Professional Services.', body: 'End-to-end project management, system integration, and custom development delivered by experienced teams who understand your industry.' },
 ]
 
+const challengeTestimonials = [
+  {
+    domain: 'Enterprise',
+    quote: '\u201COur data was siloed across twelve different systems with no unified view. We needed a partner who could bring everything together without disrupting daily operations.\u201D',
+    attribution: 'CTO, Fortune 500 Manufacturing',
+    tags: ['Data Integration', 'System Unification'],
+  },
+  {
+    domain: 'FinTech',
+    quote: '\u201CRegulatory requirements were changing faster than our security infrastructure could adapt. Every audit felt like a scramble, and compliance gaps kept growing.\u201D',
+    attribution: 'VP Security, Digital Banking Platform',
+    tags: ['Cybersecurity', 'Compliance Automation'],
+  },
+  {
+    domain: 'Healthcare',
+    quote: '\u201CLegacy systems from three different acquisitions couldn\u2019t communicate. Patient data was fragmented, and our clinical teams were losing hours every day to manual workarounds.\u201D',
+    attribution: 'CIO, Regional Health Network',
+    tags: ['Legacy Modernization', 'Integration'],
+  },
+  {
+    domain: 'Logistics',
+    quote: '\u201CWe had no real-time visibility across our supply chain. Decisions were based on data that was already 48 hours old, and the cost of that delay was enormous.\u201D',
+    attribution: 'SVP Operations, Global Logistics Firm',
+    tags: ['Real-Time Analytics', 'Supply Chain'],
+  },
+  {
+    domain: 'Legal',
+    quote: '\u201COur technology strategy was reactive \u2014 always putting out fires. We needed a roadmap that aligned IT investments with where the firm was actually heading.\u201D',
+    attribution: 'Managing Partner, AmLaw 100 Firm',
+    tags: ['Strategic Consulting', 'IT Roadmap'],
+  },
+]
 
 const services = [
   {
-    title: 'Custom Software & AI Development',
-    body: 'Purpose-built software and intelligent systems designed around your specific business challenges. From AI-powered document processing to custom platforms that streamline your operations — every build is tailored to how your team actually works.',
-    areas: ['Custom Platforms', 'Intelligent Automation', 'Document Processing', 'Predictive Analytics', 'AI-Powered Applications'],
+    title: 'Cybersecurity & Compliance',
+    body: 'Proactive security and threat management that keeps your business protected. From compliance frameworks like HIPAA, SOC2, and GDPR to vCISO services, risk assessments, and backup & disaster recovery — we build security into every layer.',
+    areas: ['Threat Management', 'Compliance (HIPAA, SOC2, GDPR)', 'vCISO Services', 'Risk Assessments', 'Backup & Disaster Recovery'],
   },
   {
-    title: 'Data Engineering & Integration',
-    body: 'Great software needs great data foundations. We design the infrastructure that connects your systems and makes your information useful — clean data pipelines, unified dashboards, and real-time insights that drive better decisions.',
-    areas: ['Data Pipeline Design', 'System Integration', 'Business Intelligence', 'Real-time Dashboards', 'Data Quality Management'],
+    title: 'Cloud Services',
+    body: 'Multi-cloud orchestration, migration, and hybrid environments designed for performance and cost efficiency. Auto-scaling infrastructure and infrastructure-as-code practices that keep your systems resilient and your teams agile.',
+    areas: ['Multi-Cloud Orchestration', 'Cloud Migration', 'Hybrid Environments', 'Auto-Scaling', 'Infrastructure as Code'],
   },
   {
-    title: 'Platform Deployment & Scaling',
-    body: 'Building a solution is step one. We handle the harder part — deploying it where your team can actually use it, making sure it performs reliably, and scaling it as your business grows.',
-    areas: ['Cloud Deployment', 'Performance Optimization', 'System Monitoring', 'Seamless Integration', 'Continuous Updates'],
+    title: 'Managed IT',
+    body: '24/7 monitoring, helpdesk support, and network management that keeps your business running without interruption. From vendor management to co-managed IT arrangements — flexible support that fits how your team operates.',
+    areas: ['24/7 Monitoring', 'Helpdesk Support', 'Network Management', 'Vendor Management', 'Co-Managed IT'],
   },
   {
-    title: 'Cloud & Infrastructure',
-    body: 'Scalable, cost-efficient cloud setups designed for modern workloads. We build environments that handle heavy processing, fast response times, and large data volumes — without unnecessary complexity or runaway costs.',
-    areas: ['Cloud Architecture', 'Infrastructure Optimization', 'Auto-Scaling', 'Cost Management', 'Multi-Cloud Strategy'],
+    title: 'AI & Data Intelligence',
+    body: 'Predictive analytics, natural language processing, computer vision, and recommendation engines that turn your data into a competitive advantage. Anomaly detection and intelligent automation that scale with your business.',
+    areas: ['Predictive Analytics', 'NLP', 'Computer Vision', 'Recommendation Engines', 'Anomaly Detection'],
   },
   {
-    title: 'Strategy & Advisory',
-    body: 'Not every challenge needs a new platform, and not every technology investment pays off. We help leadership teams identify the right opportunities, avoid common missteps, and build a practical roadmap with clear milestones.',
-    areas: ['Technology Assessment', 'Opportunity Prioritization', 'Build vs Buy Analysis', 'Team Planning', 'ROI Modeling'],
+    title: 'Strategic Consulting',
+    body: 'IT roadmap planning, digital strategy, and change management that align technology investments with business outcomes. Executive workshops and ROI modeling that give leadership the clarity to move forward with confidence.',
+    areas: ['IT Roadmap', 'Digital Strategy', 'Change Management', 'ROI Modeling', 'Executive Workshops'],
+  },
+  {
+    title: 'Professional Services',
+    body: 'End-to-end project management, system integration, and custom development delivered by experienced teams. Training programs and ongoing optimization that ensure your technology investment keeps delivering value.',
+    areas: ['Project Management', 'System Integration', 'Custom Development', 'Training', 'Ongoing Optimization'],
+  },
+]
+
+const differentiators = [
+  {
+    label: 'Process',
+    desc: 'Industry-recognized methodologies backed by continuous improvement ensure consistently high-quality service and rapid response.',
+  },
+  {
+    label: 'People',
+    desc: 'A dedicated team of engineers, security specialists, and strategists invested in your long-term success and growth.',
   },
 ]
 
@@ -114,19 +164,19 @@ function HeroSection() {
           className="max-w-[1200px]"
         >
           <h1 className="leading-[1.12] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.6rem, 5.8vw, 5rem)', fontWeight: 400, color: P.textDark }}>
-            Technology solutions{' '}
+            At Trinade, we&apos;ve designed solutions{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-card.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            engineered for healthcare, legal, finance,{' '}
+            to address every challenge, providing reliable, scalable{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-motion.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>
-            {' '}manufacturing, and every{' '}
+            {' '}and secure technology solutions tailored to your business{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-rotated.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            industry in between.
+            needs.
           </h1>
         </motion.div>
 
@@ -176,7 +226,7 @@ function MissionSection() {
           className="leading-[1.2] tracking-[-0.02em] max-w-[1100px]"
           style={{ fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', fontWeight: 300, color: P.textOnDark }}
         >
-          We build from intelligence outward — custom software, AI systems, and data platforms purpose-built for the industries we serve. Healthcare, legal, finance, manufacturing, logistics, retail — each with its own challenges, each demanding precision.
+          From cybersecurity and cloud management to strategic consulting and managed IT, we provide tailored technology solutions designed to strengthen security, enhance efficiency, and drive your business forward.
         </motion.p>
       </div>
     </section>
@@ -186,39 +236,32 @@ function MissionSection() {
 
 // ═══════════════════════════════════════════════════════════
 // INDUSTRIES — CSS Grid: 3 large + 2x2 smaller cards
-// IT Solutions style: title at top, desc at bottom, hover overlay
+// Clean cream backgrounds, gold accent hover
 // ═══════════════════════════════════════════════════════════
 function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; isLarge: boolean; gridStyle?: React.CSSProperties }) {
   return (
     <div
-      className="group rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden"
+      className="group rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
       style={{
         background: P.creamMid,
         border: `1px solid ${P.creamDark}`,
-        minHeight: isLarge ? undefined : undefined,
         ...gridStyle,
       }}
     >
-      {/* Hover overlay — dark gradient with gold accent */}
+      {/* Gold bottom border on hover */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-[1]"
-        style={{
-          background: `linear-gradient(160deg, rgba(26,26,30,0.88) 0%, rgba(26,26,30,0.72) 60%, rgba(160,128,64,0.35) 100%)`,
-        }}
+        className="absolute bottom-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+        style={{ background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight})` }}
       />
 
-      {/* Lime gradient blob — bottom-right, visible on hover */}
+      {/* Subtle warm tint on hover */}
       <div
-        className="absolute bottom-0 right-0 w-48 h-48 rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-700 pointer-events-none z-[2]"
-        style={{
-          background: `radial-gradient(circle, ${P.lime}90, transparent 70%)`,
-          transform: 'translate(30%, 30%)',
-          filter: 'blur(24px)',
-        }}
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ background: 'rgba(201,168,110,0.04)' }}
       />
 
       <h3
-        className={`${isLarge ? 'text-[22px]' : 'text-[19px]'} font-medium tracking-[-0.01em] relative z-10 transition-colors duration-500 group-hover:text-white`}
+        className={`${isLarge ? 'text-[22px]' : 'text-[19px]'} font-medium tracking-[-0.01em] relative z-10 transition-colors duration-500`}
         style={{ color: P.textDark }}
       >
         {ind.name}
@@ -226,7 +269,7 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
 
       <div className="relative z-10 mt-auto">
         <p
-          className={`${isLarge ? 'text-[16px]' : 'text-[15px]'} leading-[1.75] transition-colors duration-500 group-hover:text-white/70`}
+          className={`${isLarge ? 'text-[16px]' : 'text-[15px]'} leading-[1.75] transition-colors duration-500`}
           style={{ color: P.textMuted }}
         >
           {ind.desc}
@@ -234,8 +277,8 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
 
         {/* Learn more — appears on hover */}
         <div className="flex items-center gap-1.5 mt-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
-          <span className="text-[13px] font-medium text-white/90">Learn more</span>
-          <svg className="w-3.5 h-3.5 text-white/90" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
+          <span className="text-[13px] font-medium" style={{ color: P.gold }}>Learn more</span>
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5">
             <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
@@ -321,78 +364,102 @@ function IndustriesSection() {
 
 
 // ═══════════════════════════════════════════════════════════
-// SCROLL-DRIVEN CARDS — Sticky text + scrolling cards
-// IT Solutions "Secure, Streamline, and Succeed"
-// LIGHT gradient mesh background (not dark spiral)
+// SCROLL-DRIVEN CARDS — CSS sticky + natural scroll
+// Dark bg with spiral image stays sticky while cards scroll
+// on the right side. overflow:clip prevents card leakage.
 // ═══════════════════════════════════════════════════════════
 function ScrollCardsSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const cardHeight = 260
+  const totalScrollHeight = scrollCards.length * cardHeight + 400
 
   return (
-    <section ref={ref} className="relative overflow-hidden">
-      {/* LIGHT gradient mesh bg — matching IT Solutions' pastel green, translated to warm gold */}
-      <div className="absolute inset-0">
-        <Image src="/gradient-mesh-warm.jpg" alt="" fill className="object-cover" />
-        {/* Subtle spiral arc lines overlay */}
-        <div className="absolute inset-0 opacity-[0.06]">
-          <Image src="/spiral-arcs.jpg" alt="" fill className="object-cover" style={{ mixBlendMode: 'multiply' }} />
-        </div>
-      </div>
-      <Grain id="scrollGrain" opacity={0.02} />
+    <section className="relative" style={{ overflow: 'clip', background: P.cream }}>
+      <div style={{ minHeight: `${totalScrollHeight}px`, position: 'relative' }}>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 px-[clamp(2rem,8vw,8rem)]" style={{ minHeight: '220vh' }}>
-        {/* Left — Sticky text at bottom */}
-        <div className="lg:sticky lg:top-0 lg:h-screen flex items-end pb-24 pt-32">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: EASE_OUT }}
-            className="leading-[1.08] tracking-[-0.03em]"
-            style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)', fontWeight: 400, color: P.textDark }}
+        {/* Sticky dark background — stays pinned while cards scroll past */}
+        <div
+          className="sticky top-0 w-full overflow-hidden"
+          style={{ height: '100vh', zIndex: 1 }}
+        >
+          <div
+            className="absolute overflow-hidden"
+            style={{
+              inset: '0 clamp(1.5rem,6vw,6rem)',
+              borderRadius: '24px',
+            }}
           >
-            What makes Trinade<br />different — and why<br />it matters
-          </motion.h2>
+            <div className="absolute inset-0">
+              <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(26,26,30,0.82) 0%, rgba(26,26,30,0.65) 50%, rgba(26,26,30,0.75) 100%)' }} />
+            </div>
+            <Grain id="scrollGrain" opacity={0.03} />
+
+            {/* Heading — bottom-left of the sticky container */}
+            <div className="absolute bottom-10 left-10 lg:left-14 z-20 max-w-[45%]">
+              <p className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: P.goldLight }}>
+                Our approach
+              </p>
+              <h2
+                className="leading-[1.08] tracking-[-0.03em]"
+                style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3.2rem)', fontWeight: 300, color: P.textOnDark }}
+              >
+                What makes Trinade<br />
+                different — and why<br />
+                it matters
+              </h2>
+            </div>
+          </div>
         </div>
 
-        {/* Right — Scrolling cards with accent blobs */}
-        <div className="flex flex-col gap-6 py-32">
-          {scrollCards.map((card, i) => (
-            <motion.div
-              key={card.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: i * 0.05, ease: EASE }}
-              className="group rounded-2xl p-10 relative overflow-hidden transition-shadow duration-500 hover:shadow-[0_16px_48px_rgba(0,0,0,0.06)]"
-              style={{ background: 'rgba(255,255,255,0.92)', backdropFilter: 'blur(16px)' }}
-            >
-              {/* Lime/gold gradient accent blob — IT Solutions style, subtle at rest, stronger on hover */}
-              <div
-                className="absolute bottom-0 right-0 w-44 h-44 rounded-full opacity-20 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
+        {/* Cards column — overlaps the sticky container via negative margin */}
+        <div
+          style={{
+            marginTop: '-100vh',
+            paddingLeft: '52%',
+            paddingRight: 'clamp(2.5rem,7vw,7rem)',
+            paddingTop: '18vh',
+            paddingBottom: '12vh',
+            position: 'relative',
+            zIndex: 10,
+          }}
+        >
+          <div className="flex flex-col gap-5">
+            {scrollCards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.6, delay: i * 0.03, ease: EASE_OUT }}
+                className="group rounded-2xl p-9 relative overflow-hidden transition-shadow duration-500 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)]"
                 style={{
-                  background: `radial-gradient(circle, ${P.lime}90, transparent 70%)`,
-                  transform: 'translate(30%, 30%)',
-                  filter: 'blur(20px)',
+                  background: 'rgba(255,255,255,0.97)',
+                  border: '1px solid rgba(229,224,216,0.6)',
                 }}
-              />
+              >
+                {/* Gold bottom border on hover */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight})` }}
+                />
 
-              <h3 className="text-[24px] font-medium tracking-[-0.015em] mb-4 relative z-10" style={{ color: P.textDark }}>
-                {card.title}
-              </h3>
-              <p className="text-[16px] leading-[1.75] mb-5 relative z-10" style={{ color: P.textMuted }}>
-                {card.body}
-              </p>
+                <h3 className="text-[22px] font-medium tracking-[-0.015em] mb-3 relative z-10" style={{ color: P.textDark }}>
+                  {card.title}
+                </h3>
+                <p className="text-[15px] leading-[1.75] mb-5 relative z-10" style={{ color: P.textMuted }}>
+                  {card.body}
+                </p>
 
-              {/* Learn more — IT Solutions cards */}
-              <div className="relative z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                <span className="text-[13px] font-medium" style={{ color: P.textDark }}>Learn more</span>
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 16 16" stroke={P.textDark} strokeWidth="1.5">
-                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </motion.div>
-          ))}
+                {/* Learn more */}
+                <div className="relative z-10 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="text-[13px] font-medium" style={{ color: P.gold }}>Learn more</span>
+                  <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5">
+                    <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -400,7 +467,201 @@ function ScrollCardsSection() {
 }
 
 
-// (ChallengesSection and DifferentiatorsSection removed — to be reimplemented for Home Page)
+// ═══════════════════════════════════════════════════════════
+// CHALLENGES — Testimonial/Social Proof Carousel
+// Editorial layout: domain name left + quote right, vertical divider
+// ═══════════════════════════════════════════════════════════
+function ChallengesSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const [activeIndex, setActiveIndex] = useState(0)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const total = challengeTestimonials.length
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setActiveIndex(prev => (prev + 1) % total)
+    }, 6000)
+  }, [total])
+
+  useEffect(() => {
+    resetTimer()
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [resetTimer])
+
+  const goUp = () => {
+    setActiveIndex(prev => (prev - 1 + total) % total)
+    resetTimer()
+  }
+  const goDown = () => {
+    setActiveIndex(prev => (prev + 1) % total)
+    resetTimer()
+  }
+
+  const current = challengeTestimonials[activeIndex]
+
+  return (
+    <section ref={ref} className="relative py-32 lg:py-40 overflow-hidden" style={{ background: P.cream }}>
+      <Grain id="challengesGrain" opacity={0.025} />
+
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-16"
+          style={{ color: P.gold }}
+        >
+          Challenges we solve
+        </motion.p>
+
+        {/* Main layout: left column + vertical line + right column */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT }}
+          className="flex flex-col lg:flex-row relative"
+          style={{ minHeight: '340px' }}
+        >
+          {/* LEFT COLUMN — ~35% */}
+          <div className="lg:w-[35%] flex flex-col justify-between pb-8 lg:pb-0 lg:pr-12 relative">
+            {/* Thin vertical line — runs full height on left edge */}
+            <div
+              className="absolute top-0 bottom-0 left-0 w-[1px] hidden lg:block"
+              style={{ background: `linear-gradient(180deg, ${P.gold}33, ${P.creamDark}44, ${P.gold}33)` }}
+            />
+
+            <div className="lg:pl-10">
+              {/* Domain name — large bold */}
+              <AnimatePresence mode="wait">
+                <motion.h3
+                  key={current.domain}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.4, ease: EASE_OUT }}
+                  className="tracking-[-0.02em] leading-[1.1]"
+                  style={{
+                    fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
+                    fontWeight: 700,
+                    color: P.charcoal,
+                  }}
+                >
+                  {current.domain}
+                </motion.h3>
+              </AnimatePresence>
+
+              {/* Tags */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`tags-${activeIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  className="flex flex-wrap gap-2 mt-5"
+                >
+                  {current.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 rounded-full text-[11px] font-medium uppercase tracking-[0.06em]"
+                      style={{
+                        background: 'rgba(201,168,110,0.1)',
+                        color: P.goldDark,
+                        border: '1px solid rgba(201,168,110,0.2)',
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Up/Down nav buttons */}
+              <div className="flex items-center gap-3 mt-10">
+                <button
+                  onClick={goUp}
+                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.06)] cursor-pointer"
+                  style={{ borderColor: `${P.charcoal}22` }}
+                  aria-label="Previous challenge"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={P.charcoal} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 12V2M3 6l4-4 4 4" />
+                  </svg>
+                </button>
+                <button
+                  onClick={goDown}
+                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.06)] cursor-pointer"
+                  style={{ borderColor: `${P.charcoal}22` }}
+                  aria-label="Next challenge"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke={P.charcoal} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 2v10M3 8l4 4 4-4" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Counter + attribution at bottom */}
+            <div className="lg:pl-10 mt-10 lg:mt-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`meta-${activeIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p
+                    className="text-[13px] font-semibold tracking-[0.08em] uppercase"
+                    style={{ color: P.charcoal }}
+                  >
+                    {String(activeIndex + 1).padStart(2, '0')}/{String(total).padStart(2, '0')}
+                  </p>
+                  <p
+                    className="text-[13px] tracking-[0.06em] uppercase mt-1.5"
+                    style={{ color: P.textMuted }}
+                  >
+                    {current.attribution}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* VERTICAL DIVIDER — between columns */}
+          <div
+            className="hidden lg:block w-[1px] mx-0 self-stretch"
+            style={{ background: `${P.charcoal}15` }}
+          />
+
+          {/* RIGHT COLUMN — ~65% */}
+          <div className="lg:w-[65%] lg:pl-16 flex items-center">
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={current.domain}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: EASE_OUT }}
+                className="leading-[1.4] tracking-[-0.01em]"
+                style={{
+                  fontSize: 'clamp(1.5rem, 2.8vw, 2.2rem)',
+                  fontWeight: 300,
+                  color: `${P.charcoal}e6`,
+                }}
+              >
+                {current.quote}
+              </motion.blockquote>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
 
 
 // ═══════════════════════════════════════════════════════════
@@ -512,7 +773,56 @@ function AccordionSection() {
 
 
 // ═══════════════════════════════════════════════════════════
-// CTA — Brown Gold Spiraling lines background
+// DIFFERENTIATORS — Process + People
+// ═══════════════════════════════════════════════════════════
+function DifferentiatorsSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
+
+  return (
+    <section ref={ref} className="relative py-32 overflow-hidden" style={{ background: P.cream }}>
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <Image src="/gradient-mesh-warm.jpg" alt="" fill className="object-cover" />
+      </div>
+
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: EASE }}
+          className="leading-[1.1] tracking-[-0.025em] mb-16"
+          style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)', fontWeight: 400, color: P.textDark }}
+        >
+          What sets us apart
+        </motion.h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1000px]">
+          {differentiators.map((d, i) => (
+            <motion.div
+              key={d.label}
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.1 + i * 0.1, ease: EASE }}
+              className="rounded-2xl p-10"
+              style={{ background: P.creamMid, border: `1px solid ${P.creamDark}` }}
+            >
+              <p className="text-[12px] uppercase tracking-[0.15em] font-semibold mb-4" style={{ color: P.gold }}>
+                {d.label}
+              </p>
+              <p className="text-[17px] leading-[1.75]" style={{ color: P.textMuted }}>
+                {d.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+// ═══════════════════════════════════════════════════════════
+// CTA — spiral-lines-gold.jpg background
 // ═══════════════════════════════════════════════════════════
 function CTASection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -522,9 +832,9 @@ function CTASection() {
     <section ref={ref} className="relative py-32" style={{ background: P.cream }}>
       <div className="px-[clamp(2rem,8vw,8rem)]">
         <div className="relative rounded-[28px] overflow-hidden py-28 px-12 lg:px-24">
-          {/* Brown Gold Spiraling lines background */}
+          {/* spiral-lines-gold background */}
           <div className="absolute inset-0">
-            <Image src="/spiral-gold.jpg" alt="" fill className="object-cover" />
+            <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.55), rgba(10,10,12,0.25))' }} />
           </div>
           <Grain id="ctaGrain" opacity={0.04} />
@@ -537,7 +847,7 @@ function CTASection() {
               className="leading-[1.08] tracking-[-0.03em] mb-8"
               style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
             >
-              Let&apos;s build something<br />intelligent together
+              Ready to transform your<br />IT infrastructure?
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -546,7 +856,7 @@ function CTASection() {
               className="text-[16px] leading-[1.9] mb-12"
               style={{ color: P.textOnDarkMuted }}
             >
-              Whether you&apos;re starting your AI journey or scaling what&apos;s already working — we&apos;d love to hear what you&apos;re building and where we can help.
+              Let&apos;s discuss how our solutions can strengthen your security, streamline operations, and accelerate growth.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -576,243 +886,6 @@ function CTASection() {
 }
 
 
-// ═══════════════════════════════════════════════════════════
-// FOOTER — Society Studios-inspired dark footer
-// Brown gold glassmorphism + scrolling TRINADE marquee
-// ═══════════════════════════════════════════════════════════
-function SolutionsFooter() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
-
-  const navLinks = [
-    { label: 'Products', href: '#' },
-    { label: 'Solutions', href: '#' },
-    { label: 'Blog', href: '#' },
-    { label: 'Company', href: '#' },
-    { label: 'Contact', href: '/contact' },
-  ]
-
-  const socials = [
-    { label: 'Li', href: 'https://linkedin.com/company/trinadeai', icon: 'linkedin' as const },
-    { label: 'Ig', href: 'https://instagram.com/trinadeai', icon: 'instagram' as const },
-    { label: 'X', href: 'https://x.com/trinadeai', icon: 'x' as const },
-  ]
-
-  return (
-    <footer ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a', maxHeight: '100vh' }}>
-      <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-        .footer-marquee {
-          animation: marquee 10s linear infinite;
-          will-change: transform;
-        }
-      `}</style>
-
-      {/* ── Main content area ── */}
-      <div className="px-[clamp(2rem,8vw,8rem)] py-14">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="relative rounded-[28px] p-12"
-          style={{
-            background: 'linear-gradient(165deg, rgba(185,155,100,0.22) 0%, rgba(165,125,60,0.16) 40%, rgba(200,175,125,0.19) 100%)',
-            backdropFilter: 'blur(24px) saturate(1.5)',
-            WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
-            border: '1px solid rgba(180,150,95,0.25)',
-            boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(130,95,30,0.08)',
-          }}
-        >
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-0">
-
-            {/* LEFT — Navigation links (~40%) */}
-            <div className="lg:w-[40%] flex flex-col gap-3">
-              {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.07, ease: EASE }}
-                  className="group inline-block w-fit leading-none tracking-[-0.02em] transition-colors duration-300"
-                  style={{
-                    fontSize: 'clamp(1.4rem, 2vw, 1.75rem)',
-                    fontWeight: 600,
-                    color: 'rgba(255,255,255,0.9)',
-                  }}
-                  whileHover={{ color: 'rgba(201,168,110,0.9)' } as never}
-                >
-                  {link.label}
-                </motion.a>
-              ))}
-            </div>
-
-            {/* RIGHT — Office + Social (~60%) */}
-            <div className="lg:w-[60%] flex flex-col sm:flex-row gap-12 lg:gap-0 lg:justify-end">
-
-              {/* OFFICE column */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-                className="lg:w-[50%]"
-              >
-                <p className="mb-4 uppercase tracking-[0.08em]" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
-                  OFFICE
-                </p>
-                <p className="mb-3" style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
-                  #06, Green Valley Apartments,<br />
-                  Gorantla, Guntur,<br />
-                  Andhra Pradesh 522034, India
-                </p>
-                <a
-                  href="tel:+919490754923"
-                  className="block mb-2 transition-colors duration-200 hover:opacity-100"
-                  style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)' }}
-                >
-                  +91 9490754923
-                </a>
-                <a
-                  href="mailto:info@trinade.com"
-                  className="block transition-colors duration-200 hover:underline hover:opacity-100"
-                  style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)' }}
-                >
-                  info@trinade.com
-                </a>
-              </motion.div>
-
-              {/* SOCIAL column */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-                className="lg:w-[50%]"
-              >
-                <p className="mb-4 uppercase tracking-[0.08em]" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>
-                  SOCIAL
-                </p>
-                <div className="flex gap-3">
-                  {socials.map(s => (
-                    <motion.a
-                      key={s.label}
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-                      style={{
-                        color: 'rgba(255,255,255,0.9)',
-                        background: 'linear-gradient(165deg, rgba(185,155,100,0.55) 0%, rgba(165,125,60,0.42) 40%, rgba(200,175,125,0.50) 100%)',
-                        backdropFilter: 'blur(12px) saturate(1.4)',
-                        WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
-                        border: '1px solid rgba(180,150,95,0.4)',
-                        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(130,95,30,0.12), 0 2px 10px rgba(130,95,30,0.2)',
-                      }}
-                      whileHover={{
-                        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(130,95,30,0.18), 0 4px 20px rgba(130,95,30,0.35)',
-                      } as never}
-                    >
-                      {s.icon === 'linkedin' && (
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                      )}
-                      {s.icon === 'instagram' && (
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                      )}
-                      {s.icon === 'x' && (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                      )}
-                    </motion.a>
-                  ))}
-                </div>
-              </motion.div>
-
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* ── Separator — gold gradient line ── */}
-      <div
-        className="mx-[clamp(2rem,8vw,8rem)]"
-        style={{
-          height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.3), transparent)',
-        }}
-      />
-
-      {/* ── Bottom bar ── */}
-      <div className="px-[clamp(2rem,8vw,8rem)] py-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex gap-6">
-          {[
-            { label: 'Privacy Policy', href: '/privacy-policy' },
-            { label: 'Terms of Service', href: '/terms-of-service' },
-          ].map(link => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-[12px] transition-opacity duration-200 hover:opacity-60"
-              style={{ color: 'rgba(255,255,255,0.3)' }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-        <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
-          &copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.
-        </p>
-      </div>
-
-      {/* ── Scrolling TRINADE marquee ── */}
-      <div className="overflow-hidden" style={{ userSelect: 'none', pointerEvents: 'none' }}>
-        <div
-          className="footer-marquee flex whitespace-nowrap leading-none"
-          style={{
-            fontSize: 'clamp(280px, 38vw, 500px)',
-            fontWeight: 900,
-            letterSpacing: '-0.04em',
-          }}
-        >
-          {[0, 1].map(copy => (
-            <span key={copy} className="flex items-center shrink-0">
-              {[0, 1, 2, 3].map(rep => (
-                <span key={`${copy}-rep${rep}`} className="flex items-center">
-                  {['T','R','I','N','A','D','E'].map((letter, i) => (
-                    <span
-                      key={`${copy}-${rep}-${i}`}
-                      style={{
-                        display: 'inline-block',
-                        color: 'transparent',
-                        background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
-                        WebkitBackgroundClip: 'text',
-                        backgroundClip: 'text',
-                        WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
-                      }}
-                    >{letter}</span>
-                  ))}
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      color: 'transparent',
-                      background: 'linear-gradient(165deg, rgba(185,155,100,0.35) 0%, rgba(165,125,60,0.25) 40%, rgba(200,175,125,0.30) 100%)',
-                      WebkitBackgroundClip: 'text',
-                      backgroundClip: 'text',
-                      WebkitTextStroke: '1.5px rgba(185,155,100,0.15)',
-                      padding: '0 0.15em',
-                    }}
-                  >&nbsp;·&nbsp;</span>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
-    </footer>
-  )
-}
-
 
 // ═══════════════════════════════════════════════════════════
 // MAIN EXPORT
@@ -824,7 +897,9 @@ export default function SolutionsContent() {
       <MissionSection />
       <IndustriesSection />
       <ScrollCardsSection />
+      <ChallengesSection />
       <AccordionSection />
+      <DifferentiatorsSection />
       <CTASection />
       <SolutionsFooter />
     </main>

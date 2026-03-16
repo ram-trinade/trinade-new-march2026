@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 
@@ -15,8 +16,8 @@ const PANEL_WIDTH = 340
 const SCROLL_SEGMENTS = 5
 
 const menuLinks = [
-  { label: 'Products', href: '/products' },
-  { label: 'Solutions', href: '/' },
+  { label: 'Home', href: '/' },
+  { label: 'Solutions', href: '/solutions' },
   { label: 'Blog', href: '/blog' },
   { label: 'Company', href: '/company' },
   { label: 'Contact', href: '/contact' },
@@ -37,6 +38,7 @@ export default function SolutionsNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrollPercent, setScrollPercent] = useState(0)
   const navRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
 
   // Track scroll percentage
   useEffect(() => {
@@ -82,7 +84,7 @@ export default function SolutionsNavbar() {
     <>
       {/* ─── Trinade text on the left (inertia-style) ─── */}
       <a
-        href="/home"
+        href="/"
         className="fixed top-5 left-8 z-[9999] flex items-center"
         style={{ pointerEvents: 'auto', textDecoration: 'none' }}
       >
@@ -102,7 +104,7 @@ export default function SolutionsNavbar() {
 
       {/* ─── Logo on the top right ─── */}
       <a
-        href="/home"
+        href="/"
         className="fixed top-5 right-8 z-[9999] flex items-center"
         style={{ pointerEvents: 'auto' }}
       >
@@ -154,7 +156,7 @@ export default function SolutionsNavbar() {
           {/* Dark Pill — always visible */}
           <div className="flex justify-center">
             <div
-              className="flex items-center gap-1.5 px-2.5 py-2 select-none"
+              className="flex items-center gap-2.5 px-4 py-2 select-none"
               style={{
                 background: '#1a1a1e',
                 borderRadius: 22,
@@ -239,24 +241,47 @@ export default function SolutionsNavbar() {
                     Menu
                   </p>
                   <div className="space-y-0.5">
-                    {menuLinks.map((link, i) => (
-                      <motion.a
-                        key={link.label}
-                        href={link.href}
-                        initial={{ opacity: 0, x: -12 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: 0.1 + i * 0.05,
-                          ease: EASE,
-                        }}
-                        className="block text-[22px] font-semibold tracking-[-0.02em] py-1 transition-colors hover:text-[#999]"
-                        style={{ color: '#2a2218' }}
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {link.label}
-                      </motion.a>
-                    ))}
+                    {menuLinks.map((link, i) => {
+                      const isActive = link.href === '/'
+                        ? pathname === '/' || pathname === '/home'
+                        : pathname === link.href
+                      return (
+                        <motion.a
+                          key={link.label}
+                          href={link.href}
+                          initial={{ opacity: 0, x: -12 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{
+                            duration: 0.4,
+                            delay: 0.1 + i * 0.05,
+                            ease: EASE,
+                          }}
+                          className="flex items-center text-[22px] font-semibold tracking-[-0.02em] py-1 transition-colors hover:text-[#999]"
+                          style={{ color: '#2a2218' }}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {link.label}
+                          {isActive && (
+                            <motion.span
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ duration: 0.35, ease: EASE }}
+                              style={{
+                                display: 'inline-block',
+                                width: 8,
+                                height: 8,
+                                marginLeft: 6,
+                                borderRadius: '50%',
+                                background: 'linear-gradient(165deg, rgba(185,155,100,0.85) 0%, rgba(165,125,60,0.7) 40%, rgba(200,175,125,0.8) 100%)',
+                                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(130,95,30,0.15), 0 2px 6px rgba(130,95,30,0.3)',
+                                border: '1px solid rgba(180,150,95,0.5)',
+                                flexShrink: 0,
+                              }}
+                            />
+                          )}
+                        </motion.a>
+                      )
+                    })}
                   </div>
 
                   {/* Separator */}

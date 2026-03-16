@@ -9,14 +9,225 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: 8-point design polish + deployed to Vercel production.
-- In progress: None
-- Blocked: None
-- Next step: Mobile responsiveness, favicon, SEO metadata per page.
-- Last completed: Prompt 4 — Vercel production deploy
+- Done: Prompt 9 — ScrollCards fix, Challenges testimonial carousel, Preloader animation
+- In progress: Dev server verification of Prompt 8+9 changes (server was timing out during verification)
+- Blocked: Dev server startup issue (Next.js hangs before "Starting..." — likely resource exhaustion from previous sessions)
+- Next step: Verify all Prompt 8+9 changes work, then mobile responsiveness, Products page
+- Last completed: Prompt 9 code changes (untested — server wouldn't start)
 - Live URL: https://trinade-new.vercel.app
 
-**NOTE (2026-03-14):** From this point, SESSION_LOG.md is duplicated — one copy in the old website directory (`E:\FINAL Trinade CC\SESSION_LOG.md`) and one in the new website directory (`E:\FINAL Trinade CC\trinade-new\SESSION_LOG.md`). Each should be updated independently for their respective websites.
+---
+
+## 2026-03-16 — Prompt 9: ScrollCards Fix + Challenges Redesign + Preloader (IN PROGRESS)
+
+### What Was Done (code complete, needs verification)
+
+1. **ScrollCards/Approach section bug fix** (`solutions-content.tsx`)
+   - Fixed card overflow into Industries section — added `overflow: clip` on section
+   - Fixed broken scroll animation — restructured to sticky bg + natural card flow with `marginTop: -100vh`
+   - Removed void space — calculated height based on card count
+   - Heading stays pinned bottom-left while cards scroll on right
+
+2. **Challenges section redesign** (`solutions-content.tsx`)
+   - Transformed from grid-of-tag-cards to testimonial/social proof carousel
+   - Outsource Consultants-inspired layout: domain name left, large quote right, vertical divider
+   - 5 challenge testimonials with auto-advance (6s) and up/down navigation
+   - AnimatePresence transitions, counter "01/05", attribution text
+   - Cream background, editorial typography
+
+3. **Preloader animation** (`preloader-animation.tsx` — NEW)
+   - "TRINADE" character-by-character build with staggered timing
+   - Gold horizontal rule expanding from center
+   - Progress bar + counter (000→100)
+   - Transition: top/bottom halves split apart revealing page
+   - Gold particle burst during transition
+   - SessionStorage check to show only once per session
+   - Integrated into `app/page.tsx` via dynamic import
+
+### Unverified (server wouldn't start for Playwright testing)
+- All visual output of the above changes
+- Potential layout issues or animation timing
+
+---
+
+## 2026-03-16 — Prompt 8: Navbar Dots + Footer Fix + Contact Redesign + 404
+
+### What Was Done
+
+1. **Navbar active page dot** (`solutions-navbar.tsx`)
+   - Gold glass dot (8px) after each active nav item using `usePathname()`
+   - Scale animation on appearance via Motion v12
+
+2. **Footer marquee fix** (`solutions-footer.tsx`)
+   - Replaced inline footer in `solutions-content.tsx` with import of shared component
+   - Added CTA section ("Let's create something extraordinary") at top of gold glass card
+   - Simplified marquee: 2 identical text spans instead of individual letters
+   - Slowed from 10s to 25s for smooth loop
+   - Removed `maxHeight: '100vh'` that was clipping CTA
+
+3. **Contact page redesign** (`app/contact/page.tsx`)
+   - Section 1: Dark hero with spiral-lines-gold.jpg, "Have a project in mind?" with gold gradient
+   - Section 2: Split layout — LEFT tall card with spiral bg + contact details, RIGHT gold glass form
+   - Custom SubjectDropdown, character counter, social icons
+
+4. **404 page** (`app/not-found.tsx` — NEW)
+   - Dark bg with giant "404" watermark, "Page not found" heading
+   - "Return to Home" button with gold border, hover fill
+   - Gold gradient orb + grain overlay
+
+### Files Created
+- `app/not-found.tsx` — 404 page
+- `components/preloader-animation.tsx` — Preloader animation
+
+### Files Modified
+- `solutions-navbar.tsx` — Active page dot indicator
+- `solutions-footer.tsx` — CTA section, marquee fix
+- `solutions-content.tsx` — Replaced inline footer with import, ScrollCards fix, Challenges redesign
+- `app/contact/page.tsx` — Complete redesign
+- `app/page.tsx` — Preloader integration
+
+---
+
+## 2026-03-15 — Prompt 7: Solutions Page & Company Page Perfected
+
+### What Was Done
+Complete redo of Prompt 6 with higher quality. Browsed IT Solutions Inc live with Playwright to capture exact CSS structure, then perfected both pages.
+
+### Solutions Page (`solutions-content.tsx`)
+1. **Scroll cards section perfected** — Sticky 100vh container with `spiral-lines-gold.jpg`, heading pinned at `absolute bottom-10 left-10`, white cards on right 48% width scrolling upward (matching IT Solutions Inc exact layout)
+2. **Card backgrounds fixed** — Clean cream/off-white cards with gold bottom border on hover, no gradient blobs, readable text on hover
+3. **Content rebalanced** — 40% AI / 60% other: Cybersecurity & Compliance, Cloud Infrastructure, Managed IT Services, AI & Data Intelligence, Strategic Consulting, Professional Services
+4. **Reduced "enterprise" saturation** — Content focuses on practical business outcomes, not enterprise buzzwords
+5. **Industries grid** — Healthcare, Legal, Financial Services, Manufacturing, Logistics, Retail
+
+### Company Page (`company/page.tsx`)
+1. **Spiral backgrounds** — Applied at Hero (15%), Mission (12%), Values (8%), CTA (10%) opacity
+2. **No gradient transition dividers** — All dark↔cream gradient transitions removed
+3. **AROX-style values accordion** — V/01–V/06 labels, horizontal rows, AnimatePresence expand/collapse
+4. **No WordReveal/scroll effects** — All scroll text line effects removed from entire page
+5. **COMPANY watermark** — Increased to `rgba(255,255,255,0.035)`
+6. **MilestonesCarousel** — Replaced "Our Journey" timeline with horizontal dark cards (2021-2024), arrow navigation
+7. **TeamAccordion** — Click-to-expand numbered rows: Sale Pitchaiah (Founder & CEO) first, 8 team members total
+8. **Body text** — Minimum 16px, line-height 1.85
+
+### Verification (Playwright MCP)
+- Solutions hero: Clean with spiral inline images ✓
+- Solutions industries: Healthcare, Legal, Financial Services grid ✓
+- Solutions scroll cards: Sticky spiral container, heading bottom-left, white cards right ✓
+- Solutions services accordion: 6 balanced services ✓
+- Solutions differentiators: Process, People cards ✓
+- Company hero: Spiral bg, TRINADE headline, COMPANY watermark visible ✓
+- Company vision: Clean cream section, gold "intelligence" accent ✓
+- Company mission: Spiral bg, 3-column principles (01-03) ✓
+- Company values: AROX V/01-V/06 accordion rows ✓
+- Company milestones: 4 dark cards (2021-2024) with arrows ✓
+- Company team: Numbered accordion, Sale Pitchaiah first ✓
+- Company stats: Gold numbers (500+, 99.9%, 2.4B+, 12ms) ✓
+- Company CTA: Spiral bg, "Ready to engineer your next breakthrough?" ✓
+- No gradient transition dividers anywhere ✓
+
+### Files Modified
+- `components/solutions-content.tsx` — Complete rewrite (~976 lines)
+- `app/company/page.tsx` — Complete rewrite (~1505 lines)
+
+---
+
+## 2026-03-15 — Prompt 6: Solutions Page IT Solutions Layout + Company Page AROX Redesign
+
+### What Was Done
+Two-page parallel redesign: Solutions Page layout fixes + content rewrite, Company Page AROX-style accordion + milestones carousel + team accordion.
+
+### Solutions Page Changes (`solutions-content.tsx`)
+1. **Scroll cards section** — Rounded container with `spiral-lines-gold.jpg` background, sticky heading at bottom-left, white cards scrolling on right (inspired by IT Solutions Inc "Secure, Streamline, and Succeed" section)
+2. **Content rewrite** — 40% AI / 60% other solutions ratio. Reduced "enterprise" and "AI" saturation. Cards: Cybersecurity & Compliance, Cloud Solutions, Managed IT Services, AI-Powered Intelligence, Strategic Consulting, Digital Transformation
+3. **Industry cards** — Clean cream backgrounds with gold hover accents (removed lime blob overlays)
+4. **Service accordion** — 6 balanced services: Cybersecurity, Cloud, Managed IT, AI & Data Intelligence, Strategic Consulting, Professional Services
+5. **CTA section** — Uses spiral-lines-gold.jpg background
+
+### Company Page Changes (`company/page.tsx`)
+1. **Spiral backgrounds** — `spiral-lines-gold.jpg` added to Hero (15% opacity), Mission (12%), Values (8%), CTA (10%)
+2. **Removed ALL gradient transitions** — 5-6 instances of 120px `linear-gradient` dark↔cream dividers deleted
+3. **Values section** — Replaced interactive cards with AROX-style accordion: V/01–V/06 labels, horizontal rows, click-to-expand with AnimatePresence, geometric SVG icons on right
+4. **WordReveal removed** — Scroll text line effect removed from hero and all sections
+5. **Scroll indicator removed** — "Scroll" text + animated line removed from hero
+6. **COMPANY watermark** — Increased visibility from `rgba(255,255,255,0.015)` → `rgba(255,255,255,0.035)`
+7. **Journey → MilestonesCarousel** — Timeline replaced with horizontal scrollable dark cards (320x380px), gold year labels, left/right arrow navigation, scroll-snap
+8. **Team → TeamAccordion** — Grid replaced with full-width numbered rows: role (gold), name (36px), tagline (italic), +/× toggle, click-to-expand showing bio + fun fact + mesh gradient portrait (300px)
+9. **Body text** — Minimum 16px with line-height 1.85
+
+### New Components Created (in company/page.tsx)
+- `ValuesAccordion` — AROX-style horizontal rows with V/XX labels and expand/collapse
+- `MilestonesCarousel` — Horizontal scrolling dark cards with navigation arrows
+- `MilestoneCard` — Individual milestone card with gold year, title, description
+- `TeamAccordion` — Click-to-expand team member rows with numbered indices
+
+### Research Conducted
+- Browsed IT Solutions Inc (itsolutions-inc.com) with Playwright — identified sticky heading + scrolling cards layout pattern
+- Extracted 76 frames from AROX.webm at 4fps — identified accordion row design with V/XX labels
+
+### Files Modified
+- `components/solutions-content.tsx` — Layout, content, backgrounds (+328/-556 lines)
+- `app/company/page.tsx` — 8 changes applied (+813/-556 lines)
+
+### Files Created
+- `public/spiral-lines-gold.jpg` — Brown gold spiraling lines background image
+
+### Verification (Playwright MCP)
+- Solutions hero: Updated content, balanced ratio ✓
+- Solutions scroll cards: Spiral background, white cards scrolling ✓
+- Solutions challenges: 5 dark cards with balanced tags ✓
+- Solutions accordion: 6 balanced services ✓
+- Company hero: Spiral background, watermark visible, no scroll indicator ✓
+- Company values: AROX-style V/01-V/06 accordion rows ✓
+- Company milestones: Horizontal carousel with 2021-2024 dark cards ✓
+- Company team: Numbered accordion rows with gold role labels ✓
+- Company stats: 500+, 99.9%, 2.4B+, 12ms ✓
+- Company CTA: Spiral background, "Ready to engineer your next breakthrough?" ✓
+- No gradient transition dividers anywhere ✓
+
+---
+
+## 2026-03-15 — Prompt 5: Company Page Awwwards Redesign
+
+### What Was Done
+Complete redesign of `/company` page with 8 cinematic sections, each with a unique layout pattern. Independent design approach — no template repetition across sections.
+
+### Page Architecture (8 Sections)
+1. **Hero** (dark) — Letter-by-letter "TRINADE" reveal animation, gold gradient eyebrow, atmospheric gradient orbs, grain overlay
+2. **Vision** (cream) — Editorial split layout: large italic quote left, description right, gold rule divider
+3. **Mission** (dark) — 3-pillar grid with numbered gold accent bars, staggered reveal animations
+4. **Values** (dark) — 6 interactive cards with SVG icons, hover lift/glow/gold accent bar, 3x2 grid
+5. **Journey** (cream) — Alternating left/right timeline with animated gold connecting line, 6 milestones (2021-2026)
+6. **Team** (cream) — 3x2 grid with mesh gradient portrait placeholders, hover scale/shadow, role + bio text
+7. **Impact** (dark) — 4 animated stat counters (scroll-triggered), glassmorphic stat cards
+8. **CTA** (dark) — Cinematic closing with dual CTAs, atmospheric gradients
+
+### Section Transitions
+- 120px linear-gradient dividers between dark↔cream sections (DarkToLight / LightToDark components)
+
+### Other Changes
+- **Navbar pill width** — Increased inner pill padding from `px-2.5 gap-1.5` to `px-4 gap-2.5` for better spacing
+- **Logo fix** — Copied missing `logo-transparent.png` to worktree
+- **Team grid** — Changed from `auto-fit minmax` to `repeat(3, 1fr)` to force clean 3+3 layout
+
+### Key Components Created (in company/page.tsx)
+- `HeroLetterReveal` — Staggered letter animation with blur-in effect
+- `WordReveal` — Per-word scroll-triggered reveal
+- `AnimatedStat` — Intersection-observer counting animation
+- `TeamCard` — Hover-interactive team member card with mesh gradient
+- `ValueCard` — Interactive value card with icon, hover glow, gold accent
+- `TimelineNode` — Alternating timeline entry with animated connecting line
+- `Grain`, `GoldRule`, `SectionEyebrow`, `Reveal` — Reusable section utilities
+
+### Technical Decisions
+- Dark hero opening differentiates Company from other pages (which use cream heroes)
+- All animations use `useInView` (not `useScroll({ target })`) to avoid hydration errors
+- Mesh gradient backgrounds for team portraits use CSS `radial-gradient` stacking
+- Grain overlay via inline SVG `feTurbulence` filter for atmospheric depth
+
+### Files Modified
+- `trinade-new/app/company/page.tsx` — Complete rewrite (~900 lines, +1085/-626)
+- `trinade-new/components/solutions-navbar.tsx` — Pill width increase (+2/-2)
 
 ---
 

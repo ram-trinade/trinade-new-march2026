@@ -2,12 +2,14 @@
 
 import dynamic from 'next/dynamic'
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useInView } from 'motion/react'
+import Image from 'next/image'
 
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
 const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
 const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
+const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
 
 // ─── Custom Subject Dropdown ───
 const subjectOptions = [
@@ -29,7 +31,6 @@ function SubjectDropdown({
   const [isOpen, setIsOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
-  // Close on click outside
   useEffect(() => {
     if (!isOpen) return
     const handler = (e: MouseEvent) => {
@@ -41,7 +42,6 @@ function SubjectDropdown({
     return () => document.removeEventListener('mousedown', handler)
   }, [isOpen])
 
-  // Close on Escape
   useEffect(() => {
     if (!isOpen) return
     const handler = (e: KeyboardEvent) => {
@@ -55,7 +55,6 @@ function SubjectDropdown({
 
   return (
     <div ref={ref} style={{ position: 'relative' }}>
-      {/* Trigger button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -77,7 +76,6 @@ function SubjectDropdown({
         }}
       >
         {selectedLabel}
-        {/* Chevron */}
         <svg
           width="12"
           height="8"
@@ -95,7 +93,6 @@ function SubjectDropdown({
         </svg>
       </button>
 
-      {/* Dropdown panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -167,6 +164,34 @@ function SubjectDropdown({
   )
 }
 
+// ─── Social Icon Components ───
+function InstagramIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+function LinkedInIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  )
+}
+
+function XIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  )
+}
+
+// ─── Main Page ───
 export default function SolutionsContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -175,6 +200,11 @@ export default function SolutionsContactPage() {
     subject: '',
     message: '',
   })
+
+  const heroRef = useRef<HTMLDivElement>(null)
+  const formSectionRef = useRef<HTMLDivElement>(null)
+  const heroInView = useInView(heroRef, { once: true })
+  const formInView = useInView(formSectionRef, { once: true, margin: '-100px' })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -193,30 +223,37 @@ export default function SolutionsContactPage() {
     fontSize: '15px',
     width: '100%',
     outline: 'none',
-    transition: 'border-color 0.2s ease',
+    transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
     fontFamily: 'inherit',
   }
 
   const labelStyle: React.CSSProperties = {
     display: 'block',
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: 600,
     textTransform: 'uppercase' as const,
-    letterSpacing: '0.06em',
-    color: 'rgba(90,70,40,0.6)',
+    letterSpacing: '0.08em',
+    color: 'rgba(90,70,40,0.55)',
     marginBottom: '8px',
   }
+
+  // Hero headline words for staggered animation
+  const line1Words = ['Have', 'a', 'project']
+  const line2Words = ['in']
 
   return (
     <>
       <style>{`.solutions-page, .solutions-page * { cursor: none !important; }`}</style>
-      <div className="solutions-page relative bg-[#f2ede6]" style={{ cursor: 'none' }}>
+      <div className="solutions-page relative" style={{ cursor: 'none' }}>
         <PremiumCursor />
         <SolutionsNavbar />
         <SmoothScroll>
 
-          {/* Hero Section */}
+          {/* ══════════════════════════════════════════════
+              SECTION 1: HERO — Dark cinematic
+          ══════════════════════════════════════════════ */}
           <section
+            ref={heroRef}
             style={{
               minHeight: '100vh',
               display: 'flex',
@@ -225,287 +262,730 @@ export default function SolutionsContactPage() {
               justifyContent: 'center',
               position: 'relative',
               overflow: 'hidden',
-              backgroundColor: '#f2ede6',
+              backgroundColor: '#0a0a0a',
               textAlign: 'center',
               padding: '0 24px',
             }}
           >
-            {/* Atmospheric CSS background */}
+            {/* Background image — spiral-lines-gold at very low opacity */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              overflow: 'hidden',
+              zIndex: 0,
               pointerEvents: 'none',
             }}>
-              {/* Radial gradient orbs */}
+              <Image
+                src="/spiral-lines-gold.jpg"
+                alt=""
+                fill
+                style={{
+                  objectFit: 'cover',
+                  opacity: 0.11,
+                  mixBlendMode: 'lighten',
+                }}
+                priority
+              />
+            </div>
+
+            {/* Atmospheric gradient overlays */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              pointerEvents: 'none',
+              zIndex: 1,
+            }}>
               <div style={{
                 position: 'absolute',
                 top: '-20%',
                 right: '-10%',
-                width: '70%',
-                height: '70%',
+                width: '60%',
+                height: '60%',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(201,168,110,0.15) 0%, transparent 70%)',
-                filter: 'blur(60px)',
-              }} />
-              <div style={{
-                position: 'absolute',
-                bottom: '-30%',
-                left: '-15%',
-                width: '80%',
-                height: '80%',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(220,195,150,0.12) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(201,168,110,0.08) 0%, transparent 70%)',
                 filter: 'blur(80px)',
               }} />
               <div style={{
                 position: 'absolute',
-                top: '30%',
-                left: '40%',
-                width: '40%',
-                height: '40%',
+                bottom: '-20%',
+                left: '-15%',
+                width: '70%',
+                height: '70%',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(185,155,100,0.08) 0%, transparent 60%)',
-                filter: 'blur(50px)',
-              }} />
-              {/* Grain overlay */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                opacity: 0.35,
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
-                backgroundRepeat: 'repeat',
-                backgroundSize: '128px 128px',
+                background: 'radial-gradient(circle, rgba(160,120,60,0.06) 0%, transparent 70%)',
+                filter: 'blur(100px)',
               }} />
             </div>
 
-            {/* CONTACT watermark */}
+            {/* Grain overlay */}
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              fontSize: 'clamp(220px, 35vw, 450px)',
-              fontWeight: 900,
-              color: 'rgba(201,168,110,0.05)',
-              letterSpacing: '-0.04em',
-              userSelect: 'none',
+              inset: 0,
+              zIndex: 2,
+              opacity: 0.4,
               pointerEvents: 'none',
-              whiteSpace: 'nowrap',
-              lineHeight: 1,
-            }}>
-              CONTACT
-            </div>
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'repeat',
+              backgroundSize: '128px 128px',
+            }} />
 
+            {/* CONTACT watermark */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              style={{ position: 'relative', zIndex: 1 }}
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ duration: 2, delay: 0.8 }}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: 'clamp(180px, 28vw, 420px)',
+                fontWeight: 900,
+                color: 'rgba(201,168,110,0.04)',
+                letterSpacing: '-0.04em',
+                userSelect: 'none',
+                pointerEvents: 'none',
+                whiteSpace: 'nowrap',
+                lineHeight: 1,
+                zIndex: 2,
+              }}
             >
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  fontSize: 'clamp(4rem, 8vw, 7rem)',
-                  fontWeight: 600,
-                  color: '#2a2218',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.1,
-                  margin: '0 0 20px',
-                }}
-              >
-                Get in touch
-              </motion.h1>
+              CONTACT
+            </motion.div>
 
-              {/* Animated gold line */}
+            {/* Hero content */}
+            <div style={{ position: 'relative', zIndex: 3, maxWidth: '900px' }}>
+              {/* Line 1: "Have a project" */}
+              <div style={{
+                fontSize: 'clamp(3.5rem, 8vw, 7.5rem)',
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.93)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                marginBottom: '0',
+              }}>
+                {line1Words.map((word, i) => (
+                  <motion.span
+                    key={word + i}
+                    initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }}
+                    animate={heroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                    transition={{
+                      duration: 0.9,
+                      delay: 0.2 + i * 0.1,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    style={{ display: 'inline-block', marginRight: '0.3em' }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
+
+              {/* Line 2: "in mind?" */}
+              <div style={{
+                fontSize: 'clamp(3.5rem, 8vw, 7.5rem)',
+                fontWeight: 300,
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                marginBottom: '0',
+              }}>
+                {line2Words.map((word, i) => (
+                  <motion.span
+                    key={word + i}
+                    initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }}
+                    animate={heroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                    transition={{
+                      duration: 0.9,
+                      delay: 0.5 + i * 0.1,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    style={{
+                      display: 'inline-block',
+                      marginRight: '0.3em',
+                      color: 'rgba(255,255,255,0.93)',
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <motion.span
+                  initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }}
+                  animate={heroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                  transition={{
+                    duration: 0.9,
+                    delay: 0.65,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  style={{
+                    display: 'inline-block',
+                    background: 'linear-gradient(135deg, #d4bb8a 0%, #c9a86e 40%, #a0814a 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  mind?
+                </motion.span>
+              </div>
+
+              {/* Animated gold rule */}
               <motion.div
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: '80px', opacity: 1 }}
-                transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={heroInView ? { scaleX: 1, opacity: 1 } : {}}
+                transition={{ duration: 1.4, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 style={{
+                  width: '100px',
                   height: '1px',
                   background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.6), transparent)',
-                  margin: '0 auto 24px',
+                  margin: '36px auto 32px',
+                  transformOrigin: 'center',
                 }}
               />
 
+              {/* Subheadline */}
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={heroInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 1, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  fontSize: 'clamp(18px, 1.5vw, 22px)',
-                  color: 'rgba(42,34,24,0.7)',
-                  maxWidth: '600px',
+                  fontSize: 'clamp(16px, 1.4vw, 20px)',
+                  color: 'rgba(255,255,255,0.45)',
+                  maxWidth: '620px',
                   margin: '0 auto',
-                  lineHeight: 1.6,
+                  lineHeight: 1.75,
+                  fontWeight: 400,
                 }}
               >
-                We&apos;d love to hear from you. Let&apos;s discuss how our solutions can transform your enterprise.
+                We&apos;re always excited to discuss new opportunities and ideas. Whether you&apos;re
+                looking to transform operations, build intelligent systems, or explore what&apos;s
+                possible — reach out.
               </motion.p>
+            </div>
+
+            {/* Scroll indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ duration: 1, delay: 1.8 }}
+              style={{
+                position: 'absolute',
+                bottom: '48px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <span style={{
+                fontSize: '11px',
+                fontWeight: 500,
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                color: 'rgba(201,168,110,0.4)',
+              }}>
+                Scroll
+              </span>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                style={{
+                  width: '1px',
+                  height: '28px',
+                  background: 'linear-gradient(180deg, rgba(201,168,110,0.4), transparent)',
+                }}
+              />
             </motion.div>
           </section>
 
-          {/* Form Section */}
+          {/* ══════════════════════════════════════════════
+              SECTION 2: SPLIT LAYOUT — Form + Info
+          ══════════════════════════════════════════════ */}
           <section
+            ref={formSectionRef}
             style={{
-              padding: '80px 24px 0',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              backgroundColor: '#f2ede6',
+              padding: 'clamp(60px, 8vw, 120px) clamp(20px, 5vw, 80px)',
+              position: 'relative',
             }}
           >
-            <motion.div
-              initial={{ opacity: 0, y: 48, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                width: '100%',
-                maxWidth: '640px',
-                background: 'linear-gradient(165deg, rgba(201,168,110,0.35) 0%, rgba(180,130,55,0.25) 40%, rgba(220,195,150,0.30) 100%)',
-                backdropFilter: 'blur(24px) saturate(1.6)',
-                WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
-                boxShadow: '0 8px 32px rgba(160,120,50,0.15), inset 0 1px 0 rgba(255,255,255,0.25)',
-                border: '1px solid rgba(201,168,110,0.25)',
-                borderRadius: '28px',
-                padding: '48px',
-              }}
-            >
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {/* Grain overlay */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: 0.25,
+              pointerEvents: 'none',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'repeat',
+              backgroundSize: '128px 128px',
+            }} />
 
-                {/* Name */}
-                <div>
-                  <label htmlFor="name" style={labelStyle}>Name</label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Your full name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    style={inputStyle}
-                    onFocus={e => { (e.target as HTMLInputElement).style.borderColor = 'rgba(201,168,110,0.6)' }}
-                    onBlur={e => { (e.target as HTMLInputElement).style.borderColor = 'rgba(201,168,110,0.3)' }}
-                  />
-                </div>
+            <div style={{
+              maxWidth: '1320px',
+              margin: '0 auto',
+              display: 'flex',
+              gap: 'clamp(24px, 3vw, 48px)',
+              position: 'relative',
+              zIndex: 1,
+              flexWrap: 'wrap',
+            }}>
 
-                {/* Email */}
-                <div>
-                  <label htmlFor="email" style={labelStyle}>Email</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@company.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    style={inputStyle}
-                    onFocus={e => { (e.target as HTMLInputElement).style.borderColor = 'rgba(201,168,110,0.6)' }}
-                    onBlur={e => { (e.target as HTMLInputElement).style.borderColor = 'rgba(201,168,110,0.3)' }}
-                  />
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label htmlFor="phone" style={labelStyle}>Phone</label>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    placeholder="+91 00000 00000"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    style={inputStyle}
-                    onFocus={e => { (e.target as HTMLInputElement).style.borderColor = 'rgba(201,168,110,0.6)' }}
-                    onBlur={e => { (e.target as HTMLInputElement).style.borderColor = 'rgba(201,168,110,0.3)' }}
-                  />
-                </div>
-
-                {/* Subject — Custom Dropdown */}
-                <div>
-                  <label style={labelStyle}>Subject</label>
-                  <SubjectDropdown
-                    value={formData.subject}
-                    onChange={(val) => setFormData(prev => ({ ...prev, subject: val }))}
-                  />
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label htmlFor="message" style={labelStyle}>Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    placeholder="Tell us about your project or question…"
-                    value={formData.message}
-                    onChange={handleChange}
-                    style={{
-                      ...inputStyle,
-                      resize: 'vertical',
-                      minHeight: '120px',
-                    }}
-                    onFocus={e => { (e.target as HTMLTextAreaElement).style.borderColor = 'rgba(201,168,110,0.6)' }}
-                    onBlur={e => { (e.target as HTMLTextAreaElement).style.borderColor = 'rgba(201,168,110,0.3)' }}
-                  />
-                </div>
-
-                {/* Submit */}
-                <button
-                  type="submit"
+              {/* ── LEFT COLUMN: Info Card ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                animate={formInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  flex: '1 1 420px',
+                  minWidth: '320px',
+                  maxWidth: '100%',
+                  borderRadius: '28px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  minHeight: '700px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                }}
+              >
+                {/* Background image */}
+                <Image
+                  src="/spiral-lines-gold.jpg"
+                  alt=""
+                  fill
                   style={{
-                    background: '#1a1a1e',
-                    color: '#ffffff',
-                    fontWeight: 600,
-                    borderRadius: '9999px',
-                    height: '52px',
-                    width: '100%',
-                    border: 'none',
-                    fontSize: '15px',
-                    letterSpacing: '0.01em',
-                    cursor: 'none',
-                    transition: 'background 0.2s ease',
-                    fontFamily: 'inherit',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
                   }}
-                  onMouseEnter={e => { (e.target as HTMLButtonElement).style.background = '#2a2a2e' }}
-                  onMouseLeave={e => { (e.target as HTMLButtonElement).style.background = '#1a1a1e' }}
+                />
+                {/* Dark overlay */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.82) 60%, rgba(10,10,10,0.92) 100%)',
+                  zIndex: 1,
+                }} />
+
+                {/* Content on top of overlay */}
+                <div style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  padding: 'clamp(32px, 4vw, 56px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '40px',
+                }}>
+                  {/* Headline */}
+                  <div>
+                    <motion.p
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={formInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.2em',
+                        color: 'rgba(201,168,110,0.7)',
+                        marginBottom: '20px',
+                      }}
+                    >
+                      Get in touch
+                    </motion.p>
+                    <motion.h2
+                      initial={{ opacity: 0, y: 25 }}
+                      animate={formInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+                        fontWeight: 300,
+                        color: 'rgba(255,255,255,0.93)',
+                        lineHeight: 1.2,
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
+                      Let&apos;s build<br />the future,<br />
+                      <span style={{
+                        background: 'linear-gradient(135deg, #d4bb8a 0%, #c9a86e 50%, #a0814a 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}>
+                        together.
+                      </span>
+                    </motion.h2>
+                  </div>
+
+                  {/* Contact details */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={formInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+                  >
+                    {/* Email */}
+                    <div>
+                      <p style={{
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.15em',
+                        color: 'rgba(255,255,255,0.3)',
+                        marginBottom: '6px',
+                      }}>
+                        Email
+                      </p>
+                      <a
+                        href="mailto:info@trinade.com"
+                        style={{
+                          color: 'rgba(255,255,255,0.8)',
+                          textDecoration: 'none',
+                          fontSize: '15px',
+                          fontWeight: 400,
+                          transition: 'color 0.2s ease',
+                        }}
+                        onMouseEnter={e => { (e.target as HTMLAnchorElement).style.color = '#d4bb8a' }}
+                        onMouseLeave={e => { (e.target as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.8)' }}
+                      >
+                        info@trinade.com
+                      </a>
+                    </div>
+
+                    {/* Phone */}
+                    <div>
+                      <p style={{
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.15em',
+                        color: 'rgba(255,255,255,0.3)',
+                        marginBottom: '6px',
+                      }}>
+                        Phone
+                      </p>
+                      <a
+                        href="tel:+919490754923"
+                        style={{
+                          color: 'rgba(255,255,255,0.8)',
+                          textDecoration: 'none',
+                          fontSize: '15px',
+                          fontWeight: 400,
+                          transition: 'color 0.2s ease',
+                        }}
+                        onMouseEnter={e => { (e.target as HTMLAnchorElement).style.color = '#d4bb8a' }}
+                        onMouseLeave={e => { (e.target as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.8)' }}
+                      >
+                        +91 9490754923
+                      </a>
+                    </div>
+
+                    {/* Address */}
+                    <div>
+                      <p style={{
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.15em',
+                        color: 'rgba(255,255,255,0.3)',
+                        marginBottom: '6px',
+                      }}>
+                        Address
+                      </p>
+                      <p style={{
+                        color: 'rgba(255,255,255,0.6)',
+                        fontSize: '14px',
+                        lineHeight: 1.7,
+                        fontWeight: 400,
+                      }}>
+                        #06, Green Valley Apartments,<br />
+                        Gorantla, Guntur,<br />
+                        AP 522034, India
+                      </p>
+                    </div>
+                  </motion.div>
+
+                  {/* Separator */}
+                  <div style={{
+                    width: '100%',
+                    height: '1px',
+                    background: 'linear-gradient(90deg, rgba(201,168,110,0.3), rgba(201,168,110,0.08))',
+                  }} />
+
+                  {/* Social links */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={formInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ display: 'flex', gap: '12px' }}
+                  >
+                    {[
+                      { icon: <InstagramIcon />, href: 'https://instagram.com/trinadeai', label: 'Instagram' },
+                      { icon: <LinkedInIcon />, href: 'https://linkedin.com/company/trinadeai', label: 'LinkedIn' },
+                      { icon: <XIcon />, href: 'https://x.com/trinadeai', label: 'X' },
+                    ].map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={social.label}
+                        style={{
+                          width: '44px',
+                          height: '44px',
+                          borderRadius: '12px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          background: 'linear-gradient(135deg, rgba(201,168,110,0.3) 0%, rgba(160,129,74,0.2) 100%)',
+                          backdropFilter: 'blur(12px)',
+                          WebkitBackdropFilter: 'blur(12px)',
+                          border: '1px solid rgba(201,168,110,0.2)',
+                          color: 'rgba(255,255,255,0.7)',
+                          transition: 'all 0.25s ease',
+                          textDecoration: 'none',
+                        }}
+                        onMouseEnter={e => {
+                          const el = e.currentTarget as HTMLAnchorElement
+                          el.style.background = 'linear-gradient(135deg, rgba(201,168,110,0.5) 0%, rgba(160,129,74,0.35) 100%)'
+                          el.style.borderColor = 'rgba(201,168,110,0.4)'
+                          el.style.color = '#d4bb8a'
+                          el.style.transform = 'translateY(-2px)'
+                        }}
+                        onMouseLeave={e => {
+                          const el = e.currentTarget as HTMLAnchorElement
+                          el.style.background = 'linear-gradient(135deg, rgba(201,168,110,0.3) 0%, rgba(160,129,74,0.2) 100%)'
+                          el.style.borderColor = 'rgba(201,168,110,0.2)'
+                          el.style.color = 'rgba(255,255,255,0.7)'
+                          el.style.transform = 'translateY(0)'
+                        }}
+                      >
+                        {social.icon}
+                      </a>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* ── RIGHT COLUMN: Form Card ── */}
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={formInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  flex: '1.22 1 480px',
+                  minWidth: '340px',
+                  maxWidth: '100%',
+                  background: 'linear-gradient(165deg, rgba(201,168,110,0.25) 0%, rgba(180,130,55,0.18) 40%, rgba(220,195,150,0.22) 100%)',
+                  backdropFilter: 'blur(24px) saturate(1.6)',
+                  WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
+                  boxShadow: '0 8px 40px rgba(160,120,50,0.12), inset 0 1px 0 rgba(255,255,255,0.25)',
+                  border: '1px solid rgba(201,168,110,0.2)',
+                  borderRadius: '28px',
+                  padding: 'clamp(32px, 4vw, 56px)',
+                }}
+              >
+                {/* Form header */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={formInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ marginBottom: '36px' }}
                 >
-                  Send Message
-                </button>
-              </form>
-            </motion.div>
+                  <h3 style={{
+                    fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
+                    fontWeight: 400,
+                    color: '#2a2218',
+                    letterSpacing: '-0.01em',
+                    marginBottom: '10px',
+                  }}>
+                    Send us a message
+                  </h3>
+                  <p style={{
+                    fontSize: '14px',
+                    color: 'rgba(42,34,24,0.5)',
+                    lineHeight: 1.6,
+                  }}>
+                    Fill out the form below and we&apos;ll get back to you within 24 hours.
+                  </p>
+                </motion.div>
 
-            {/* Direct contact info */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                marginTop: '48px',
-                textAlign: 'center',
-                opacity: 0.5,
-                color: '#2a2218',
-              }}
-            >
-              <p style={{ fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '12px' }}>
-                Or reach us directly
-              </p>
-              <p style={{ fontSize: '14px', lineHeight: 1.8 }}>
-                <a href="mailto:info@trinade.com" style={{ color: 'inherit', textDecoration: 'none' }}>info@trinade.com</a>
-                <br />
-                <a href="tel:+919490754923" style={{ color: 'inherit', textDecoration: 'none' }}>+91 9490754923</a>
-              </p>
-            </motion.div>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
 
-            <div style={{ height: '120px' }} />
+                  {/* Name & Email row */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: '22px',
+                  }}>
+                    <div>
+                      <label htmlFor="name" style={labelStyle}>Name</label>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Your full name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        style={inputStyle}
+                        onFocus={e => {
+                          e.target.style.borderColor = 'rgba(201,168,110,0.6)'
+                          e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                        }}
+                        onBlur={e => {
+                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                          e.target.style.boxShadow = 'none'
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" style={labelStyle}>Email</label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@company.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        style={inputStyle}
+                        onFocus={e => {
+                          e.target.style.borderColor = 'rgba(201,168,110,0.6)'
+                          e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                        }}
+                        onBlur={e => {
+                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                          e.target.style.boxShadow = 'none'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phone & Subject row */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: '22px',
+                  }}>
+                    <div>
+                      <label htmlFor="phone" style={labelStyle}>Phone</label>
+                      <input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+91 00000 00000"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        style={inputStyle}
+                        onFocus={e => {
+                          e.target.style.borderColor = 'rgba(201,168,110,0.6)'
+                          e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                        }}
+                        onBlur={e => {
+                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                          e.target.style.boxShadow = 'none'
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Subject</label>
+                      <SubjectDropdown
+                        value={formData.subject}
+                        onChange={(val) => setFormData(prev => ({ ...prev, subject: val }))}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label htmlFor="message" style={labelStyle}>Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      placeholder="Tell us about your project or question..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      style={{
+                        ...inputStyle,
+                        resize: 'vertical',
+                        minHeight: '140px',
+                      }}
+                      onFocus={e => {
+                        e.target.style.borderColor = 'rgba(201,168,110,0.6)'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                      }}
+                      onBlur={e => {
+                        e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                        e.target.style.boxShadow = 'none'
+                      }}
+                    />
+                    {/* Character counter */}
+                    <p style={{
+                      fontSize: '12px',
+                      color: formData.message.length > 280
+                        ? 'rgba(180,100,60,0.7)'
+                        : 'rgba(90,70,40,0.35)',
+                      textAlign: 'right',
+                      marginTop: '6px',
+                      transition: 'color 0.2s ease',
+                    }}>
+                      {formData.message.length} / 300
+                    </p>
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    style={{
+                      background: '#1a1a1e',
+                      color: '#ffffff',
+                      fontWeight: 600,
+                      borderRadius: '9999px',
+                      height: '56px',
+                      width: '100%',
+                      border: 'none',
+                      fontSize: '15px',
+                      letterSpacing: '0.02em',
+                      cursor: 'none',
+                      transition: 'all 0.3s ease',
+                      fontFamily: 'inherit',
+                      marginTop: '8px',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                    onMouseEnter={e => {
+                      const el = e.currentTarget as HTMLButtonElement
+                      el.style.background = '#2a2a2e'
+                      el.style.transform = 'translateY(-1px)'
+                      el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
+                    }}
+                    onMouseLeave={e => {
+                      const el = e.currentTarget as HTMLButtonElement
+                      el.style.background = '#1a1a1e'
+                      el.style.transform = 'translateY(0)'
+                      el.style.boxShadow = 'none'
+                    }}
+                  >
+                    Send Message
+                    <span style={{
+                      display: 'inline-block',
+                      marginLeft: '10px',
+                      transition: 'transform 0.3s ease',
+                    }}>
+                      &rarr;
+                    </span>
+                  </button>
+                </form>
+              </motion.div>
+            </div>
           </section>
 
-          {/* Footer */}
+          {/* ══════════════════════════════════════════════
+              SECTION 3: Footer
+          ══════════════════════════════════════════════ */}
           <SolutionsFooter />
+
+          <SolutionsCookiePopup />
 
         </SmoothScroll>
       </div>

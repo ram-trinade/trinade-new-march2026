@@ -24,19 +24,20 @@ node node_modules/next/dist/bin/next dev --port 3006
 app/
   globals.css          # Tailwind v4 config, cream bg (#f2ede6), Manrope font, Lenis styles, gold selection
   layout.tsx           # Root layout — Manrope font import, metadata
-  page.tsx             # Homepage — SmoothScroll + SolutionsContent + PremiumCursor + CookiePopup
+  page.tsx             # Homepage — Preloader + SolutionsContent + PremiumCursor + CookiePopup
+  not-found.tsx        # 404 page — giant "404" watermark, gold border button, dark atmospheric
   blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
   company/page.tsx     # Company — "Est 2021" hero (bold gold gradient), mission, stats, values, approach, CTA
-  contact/page.tsx     # Contact — atmospheric CSS bg with gradient orbs, form with custom dropdown
+  contact/page.tsx     # Contact — dark hero with spiral bg, split layout (info card left + gold glass form right)
   privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
-  solutions-navbar.tsx    # Fixed navbar: "TRINADE" wordmark (left, clickable→/home) + Menu pill (center) + Logo 36px (right, clickable→/home)
-  homepage-content.tsx    # Homepage content: hero, 4 sticky scroll-over cards, challenges grid, CTA
-  solutions-content.tsx   # Homepage content: hero, sliding solutions, industries grid, features, differentiators, social proof, CTA
-  solutions-footer.tsx    # Brown gold liquid glass footer: contact CTA, nav links, social icons, copyright
+  solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname)
+  solutions-content.tsx   # Solutions: hero, mission, industries, sticky scroll cards (fixed), testimonial challenges carousel, accordion, differentiators, CTA, footer
+  solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
   solutions-cookie-popup.tsx # Gold glass cookie consent popup
   smooth-scroll.tsx       # Lenis smooth scroll provider
+  preloader-animation.tsx # Cinematic preloader: TRINADE letter build, gold rule, split reveal, particles (session-once)
 public/
   logo-transparent.png    # Trinade logo (transparent PNG)
   gradient-orbs-warm.jpg  # Decorative hero/section backgrounds
