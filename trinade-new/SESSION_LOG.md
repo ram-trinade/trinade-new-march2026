@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 56 — Complete content rewrite for Homepage + Solutions page
-- Last completed: Prompt 56 — Premium editorial copy with 40% AI / 60% other IT solutions balance
+- Done: Prompt 57 — Our Approach headline left alignment fix
+- Last completed: Prompt 57 — Moved headline outside max-width container for proper page alignment (x=128px, matching hero)
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 57: Our Approach Headline Left Alignment (Structural Fix)
+
+### What Was Done
+- Moved "Our approach" / "Built to perform, engineered to endure" headline outside the max-width 1600px centered container
+- Headline now positioned directly on the section with `px-[clamp(2rem,8vw,8rem)]` padding — matching all other sections
+- Result: headline left edge at x=128px, perfectly aligned with hero headline (also x=128px)
+- Previous issue: headline was inside a max-width 1600px container with margin auto, causing 160px offset on 1920px viewports
+
+### Files Modified
+- `components/homepage-content.tsx` — Restructured headline positioning in HomeScrollCardsSection
+
+### Verification
+- Playwright: "Our approach" at x=128px, hero h1 at x=128px — pixel-perfect alignment
 
 ---
 

@@ -450,35 +450,35 @@ function HomeScrollCardsSection() {
 
       <Grain id="homeScrollGrain" opacity={0.025} />
 
+      {/* Left: Headline pinned at bottom-left — outside max-width container for proper page alignment */}
+      <div
+        className="absolute z-20 px-[clamp(2rem,8vw,8rem)]"
+        style={{ bottom: '10vh', left: 0, width: '50%' }}
+      >
+        <p
+          className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
+          style={{ color: P.gold }}
+        >
+          Our approach
+        </p>
+        <h2
+          className="leading-[1.02] tracking-[-0.04em]"
+          style={{
+            fontSize: 'clamp(2.4rem, 5vw, 5rem)',
+            fontWeight: 500,
+            color: P.textDark,
+          }}
+        >
+          Built to perform,<br />
+          engineered<br />
+          to endure
+        </h2>
+      </div>
+
       <div
         className="relative flex"
         style={{ zIndex: 10, maxWidth: 1600, height: '100%', margin: '0 auto', alignItems: 'flex-start' }}
       >
-        {/* Left: Headline pinned at bottom-left */}
-        <div
-          className="absolute z-20"
-          style={{ bottom: '10vh', left: 'clamp(1.2rem,3vw,3rem)', width: '46%' }}
-        >
-          <p
-            className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
-            style={{ color: P.gold }}
-          >
-            Our approach
-          </p>
-          <h2
-            className="leading-[1.02] tracking-[-0.04em]"
-            style={{
-              fontSize: 'clamp(2.4rem, 5vw, 5rem)',
-              fontWeight: 500,
-              color: P.textDark,
-            }}
-          >
-            Built to perform,<br />
-            engineered<br />
-            to endure
-          </h2>
-        </div>
-
         {/* Right: Cards that scroll up via GSAP */}
         <div
           ref={rightColRef}
