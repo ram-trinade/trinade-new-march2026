@@ -457,7 +457,7 @@ function HomeScrollCardsSection() {
         {/* Left: Headline pinned at bottom-left */}
         <div
           className="absolute z-20"
-          style={{ bottom: '10vh', left: 'clamp(1.5rem,4vw,4rem)', width: '46%' }}
+          style={{ bottom: '10vh', left: 'clamp(1.2rem,3vw,3rem)', width: '46%' }}
         >
           <p
             className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
