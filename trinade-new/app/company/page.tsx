@@ -331,10 +331,11 @@ function ValuesAccordion() {
   return (
     <div ref={ref} style={{ width: '100%' }}>
       {/* Top border */}
-      <div style={{ height: '1px', background: 'rgba(42,34,24,0.08)' }} />
+      <div style={{ height: '1px', background: 'linear-gradient(90deg, rgba(201,168,110,0.3), rgba(42,34,24,0.08))' }} />
 
       {VALUES.map((value, i) => {
         const isExpanded = expandedIndex === i
+        const num = String(i + 1).padStart(2, '0')
 
         return (
           <motion.div
@@ -348,9 +349,10 @@ function ValuesAccordion() {
               style={{
                 width: '100%',
                 display: 'grid',
-                gridTemplateColumns: '80px 1fr auto',
+                gridTemplateColumns: '1fr auto auto',
                 alignItems: 'center',
-                padding: '28px 0',
+                gap: '24px',
+                padding: '36px 0',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
@@ -360,26 +362,31 @@ function ValuesAccordion() {
                 transition: 'opacity 0.3s ease',
               }}
             >
-              {/* Label */}
+              {/* Title — bold, prominent */}
               <span style={{
-                fontSize: '12px',
+                fontSize: 'clamp(24px, 3vw, 40px)',
                 fontWeight: 500,
-                color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.25)',
-                letterSpacing: '0.05em',
+                color: isExpanded ? '#2a2218' : 'rgba(42,34,24,0.7)',
+                letterSpacing: '-0.025em',
                 transition: 'color 0.4s ease',
-              }}>
-                {value.id}
-              </span>
-
-              {/* Title */}
-              <span style={{
-                fontSize: 'clamp(20px, 2.5vw, 32px)',
-                fontWeight: 400,
-                color: isExpanded ? '#2a2218' : 'rgba(42,34,24,0.6)',
-                letterSpacing: '-0.02em',
-                transition: 'color 0.4s ease',
+                lineHeight: 1.2,
               }}>
                 {value.title}
+              </span>
+
+              {/* Big number on right */}
+              <span style={{
+                fontSize: 'clamp(48px, 5vw, 72px)',
+                fontWeight: 200,
+                color: isExpanded ? 'rgba(201,168,110,0.35)' : 'rgba(42,34,24,0.06)',
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                transition: 'color 0.4s ease',
+                fontVariantNumeric: 'tabular-nums',
+                minWidth: '80px',
+                textAlign: 'right',
+              }}>
+                {num}
               </span>
 
               {/* Toggle icon */}
@@ -387,17 +394,18 @@ function ValuesAccordion() {
                 animate={{ rotate: isExpanded ? 45 : 0 }}
                 transition={{ duration: 0.3, ease: EASE_UI }}
                 style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '44px',
+                  height: '44px',
                   borderRadius: '50%',
-                  border: '1px solid rgba(42,34,24,0.1)',
+                  border: isExpanded ? '1px solid rgba(201,168,110,0.4)' : '1px solid rgba(42,34,24,0.1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '20px',
+                  fontSize: '22px',
                   fontWeight: 300,
                   color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.3)',
                   transition: 'border-color 0.4s ease, color 0.4s ease',
+                  flexShrink: 0,
                 }}
               >
                 +
@@ -415,32 +423,31 @@ function ValuesAccordion() {
                   style={{ overflow: 'hidden' }}
                 >
                   <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '80px 1fr auto',
-                    alignItems: 'start',
-                    paddingBottom: '32px',
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '40px',
+                    paddingBottom: '40px',
+                    paddingTop: '8px',
                   }}>
-                    {/* Spacer for alignment */}
-                    <div />
-
-                    {/* Description */}
-                    <p style={{
-                      fontSize: '16px',
-                      lineHeight: 1.85,
-                      color: 'rgba(42,34,24,0.55)',
-                      maxWidth: '600px',
-                      paddingRight: '40px',
-                    }}>
-                      {value.desc}
-                    </p>
-
-                    {/* Geometric icon */}
+                    {/* Icon — positioned top-left of expanded area */}
                     <div style={{
-                      color: 'rgba(201,168,110,0.4)',
-                      opacity: 0.7,
+                      color: '#c9a86e',
+                      opacity: 0.6,
+                      flexShrink: 0,
+                      marginTop: '4px',
                     }}>
                       {value.icon}
                     </div>
+
+                    {/* Description */}
+                    <p style={{
+                      fontSize: '17px',
+                      lineHeight: 1.85,
+                      color: 'rgba(42,34,24,0.6)',
+                      maxWidth: '640px',
+                    }}>
+                      {value.desc}
+                    </p>
                   </div>
                 </motion.div>
               )}
