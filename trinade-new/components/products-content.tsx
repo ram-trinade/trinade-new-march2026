@@ -505,7 +505,7 @@ function SplitUniverse() {
             </p>
 
             <motion.a
-              href="#flyhigh"
+              href="/products/flyhigh"
               whileHover={{ x: 4 }}
               style={{
                 display: 'inline-flex',
@@ -604,7 +604,7 @@ function SplitUniverse() {
             </p>
 
             <motion.a
-              href="#sleepalert"
+              href="/products/sleep-alert"
               whileHover={{ x: 4 }}
               style={{
                 display: 'inline-flex',
@@ -953,8 +953,6 @@ export default function ProductsContent() {
     <main>
       <HeroSection />
       <SplitUniverse />
-      <ProductDeepDive product={FLYHIGH} number="01" isDark={false} id="flyhigh" />
-      <ProductDeepDive product={SLEEPALERT} number="02" isDark={true} id="sleepalert" />
       <CTASection />
     </main>
   )
