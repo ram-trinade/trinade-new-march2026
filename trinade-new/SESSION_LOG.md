@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 59 — Our Approach background spiral lines visibility
-- Last completed: Prompt 59 — Added spiral-light.jpg bg image + increased concentric circle and gold orb opacity
+- Done: Prompt 60 — How We Work numbers + Contact page enhancements
+- Last completed: Prompt 60 — Larger numbers, phone country code dropdown, scrollable subject, taller message field
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 60: How We Work Numbers + Contact Page Enhancements
+
+### What Was Done
+1. **How We Work numbers** — Increased size from `clamp(3rem, 5vw, 4.5rem)` to `clamp(4.5rem, 8vw, 7.5rem)` for more visual impact
+2. **Phone country code dropdown** — Created `CountryCodeDropdown` component with 20 countries, flag emojis, `data-lenis-prevent`, `onWheel` scroll capture, gold glass styling
+3. **Subject dropdown scrollable** — Added `data-lenis-prevent`, `onWheel` with `stopPropagation`, `maxHeight: 220px`, `overscrollBehavior: contain`; expanded to 10 subject options
+4. **Message field** — Increased from rows 5→7, minHeight 140→180px
+
+### Files Modified
+- `components/homepage-content.tsx` — How We Work number font-size increase
+- `app/contact/page.tsx` — CountryCodeDropdown component, scrollable SubjectDropdown, taller message textarea
+
+### Verification
+- Playwright: How We Work numbers large and prominent (01, 02 visible)
+- Playwright: Contact form shows "IN +91" country code dropdown, subject dropdown, taller message area
 
 ---
 

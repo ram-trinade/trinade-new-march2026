@@ -11,6 +11,169 @@ const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: 
 const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
 const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
 
+// ─── Country codes for phone dropdown ───
+const countryCodes = [
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+1', country: 'United States', flag: '🇺🇸' },
+  { code: '+44', country: 'United Kingdom', flag: '🇬🇧' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+86', country: 'China', flag: '🇨🇳' },
+  { code: '+971', country: 'UAE', flag: '🇦🇪' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷' },
+  { code: '+82', country: 'South Korea', flag: '🇰🇷' },
+  { code: '+39', country: 'Italy', flag: '🇮🇹' },
+  { code: '+34', country: 'Spain', flag: '🇪🇸' },
+  { code: '+7', country: 'Russia', flag: '🇷🇺' },
+  { code: '+27', country: 'South Africa', flag: '🇿🇦' },
+  { code: '+52', country: 'Mexico', flag: '🇲🇽' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+62', country: 'Indonesia', flag: '🇮🇩' },
+]
+
+function CountryCodeDropdown({
+  value,
+  onChange,
+}: {
+  value: string
+  onChange: (val: string) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsOpen(false) }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [isOpen])
+
+  const selected = countryCodes.find(c => c.code === value) || countryCodes[0]
+
+  return (
+    <div ref={ref} style={{ position: 'relative', width: '110px', flexShrink: 0 }}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          background: 'rgba(255,255,255,0.45)',
+          border: isOpen ? '1px solid rgba(201,168,110,0.6)' : '1px solid rgba(201,168,110,0.3)',
+          borderRadius: '14px',
+          padding: '14px 12px',
+          paddingRight: '28px',
+          color: '#2a2218',
+          fontSize: '14px',
+          width: '100%',
+          textAlign: 'left',
+          cursor: 'none',
+          fontFamily: 'inherit',
+          outline: 'none',
+          transition: 'border-color 0.2s ease',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          position: 'relative',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span style={{ fontSize: '16px' }}>{selected.flag}</span>
+        <span style={{ fontWeight: 500 }}>{selected.code}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"
+          style={{ position: 'absolute', right: '10px', top: '50%', transform: `translateY(-50%) rotate(${isOpen ? 180 : 0}deg)`, transition: 'transform 0.3s ease' }}>
+          <path d="M1 1l4 4 4-4" stroke="rgba(90,70,40,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scaleY: 0.95 }}
+            animate={{ opacity: 1, y: 0, scaleY: 1 }}
+            exit={{ opacity: 0, y: -8, scaleY: 0.95 }}
+            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 6px)',
+              left: 0,
+              width: '240px',
+              zIndex: 50,
+              background: 'linear-gradient(165deg, rgba(201,168,110,0.45) 0%, rgba(180,130,55,0.35) 40%, rgba(220,195,150,0.40) 100%)',
+              backdropFilter: 'blur(28px) saturate(1.6)',
+              WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+              border: '1px solid rgba(201,168,110,0.3)',
+              borderRadius: '16px',
+              boxShadow: '0 12px 40px rgba(160,120,50,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
+              transformOrigin: 'top left',
+              padding: '4px',
+            }}
+          >
+            <div
+              ref={listRef}
+              data-lenis-prevent
+              onWheel={e => { e.stopPropagation(); if (listRef.current) listRef.current.scrollTop += e.deltaY }}
+              style={{
+                maxHeight: '240px',
+                overflowY: 'auto',
+                overscrollBehavior: 'contain',
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(201,168,110,0.3) transparent',
+              }}
+            >
+              {countryCodes.map((cc, i) => (
+                <motion.button
+                  key={cc.code}
+                  type="button"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.15, delay: i * 0.015, ease: [0.32, 0.72, 0, 1] }}
+                  onClick={() => { onChange(cc.code); setIsOpen(false) }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '10px 12px',
+                    fontSize: '13px',
+                    fontWeight: value === cc.code ? 600 : 400,
+                    color: value === cc.code ? '#2a2218' : 'rgba(42,34,24,0.75)',
+                    background: value === cc.code ? 'rgba(255,255,255,0.3)' : 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'none',
+                    fontFamily: 'inherit',
+                    transition: 'background 0.15s ease',
+                  }}
+                  onMouseEnter={e => { if (value !== cc.code) (e.target as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)' }}
+                  onMouseLeave={e => { if (value !== cc.code) (e.target as HTMLButtonElement).style.background = 'transparent' }}
+                >
+                  <span style={{ fontSize: '16px' }}>{cc.flag}</span>
+                  <span style={{ flex: 1 }}>{cc.country}</span>
+                  <span style={{ fontSize: '12px', opacity: 0.6 }}>{cc.code}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 // ─── Custom Subject Dropdown ───
 const subjectOptions = [
   { value: '', label: 'Select a topic' },
@@ -18,6 +181,10 @@ const subjectOptions = [
   { value: 'partnership', label: 'Partnership' },
   { value: 'enterprise', label: 'Enterprise Solutions' },
   { value: 'support', label: 'Technical Support' },
+  { value: 'careers', label: 'Careers' },
+  { value: 'media', label: 'Media & Press' },
+  { value: 'billing', label: 'Billing & Accounts' },
+  { value: 'feedback', label: 'Feedback' },
   { value: 'other', label: 'Other' },
 ]
 
@@ -30,13 +197,12 @@ function SubjectDropdown({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!isOpen) return
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setIsOpen(false)
-      }
+      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
@@ -44,9 +210,7 @@ function SubjectDropdown({
 
   useEffect(() => {
     if (!isOpen) return
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false)
-    }
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsOpen(false) }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [isOpen])
@@ -76,19 +240,8 @@ function SubjectDropdown({
         }}
       >
         {selectedLabel}
-        <svg
-          width="12"
-          height="8"
-          viewBox="0 0 12 8"
-          fill="none"
-          style={{
-            position: 'absolute',
-            right: '16px',
-            top: '50%',
-            transform: `translateY(-50%) rotate(${isOpen ? 180 : 0}deg)`,
-            transition: 'transform 0.3s ease',
-          }}
-        >
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
+          style={{ position: 'absolute', right: '16px', top: '50%', transform: `translateY(-50%) rotate(${isOpen ? 180 : 0}deg)`, transition: 'transform 0.3s ease' }}>
           <path d="M1 1l5 5 5-5" stroke="rgba(90,70,40,0.5)" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       </button>
@@ -112,51 +265,52 @@ function SubjectDropdown({
               border: '1px solid rgba(201,168,110,0.3)',
               borderRadius: '16px',
               boxShadow: '0 12px 40px rgba(160,120,50,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
-              overflow: 'hidden',
               transformOrigin: 'top center',
               padding: '4px',
             }}
           >
-            {subjectOptions.map((option, i) => (
-              <motion.button
-                key={option.value}
-                type="button"
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.2, delay: i * 0.03, ease: [0.32, 0.72, 0, 1] }}
-                onClick={() => {
-                  onChange(option.value)
-                  setIsOpen(false)
-                }}
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: '11px 16px',
-                  fontSize: '14px',
-                  fontWeight: value === option.value ? 600 : 400,
-                  color: value === option.value ? '#2a2218' : 'rgba(42,34,24,0.75)',
-                  background: value === option.value ? 'rgba(255,255,255,0.3)' : 'transparent',
-                  border: 'none',
-                  borderRadius: '12px',
-                  cursor: 'none',
-                  fontFamily: 'inherit',
-                  transition: 'background 0.15s ease, color 0.15s ease',
-                }}
-                onMouseEnter={e => {
-                  if (value !== option.value) {
-                    ;(e.target as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)'
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (value !== option.value) {
-                    ;(e.target as HTMLButtonElement).style.background = 'transparent'
-                  }
-                }}
-              >
-                {option.label}
-              </motion.button>
-            ))}
+            <div
+              ref={listRef}
+              data-lenis-prevent
+              onWheel={e => { e.stopPropagation(); if (listRef.current) listRef.current.scrollTop += e.deltaY }}
+              style={{
+                maxHeight: '220px',
+                overflowY: 'auto',
+                overscrollBehavior: 'contain',
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(201,168,110,0.3) transparent',
+              }}
+            >
+              {subjectOptions.map((option, i) => (
+                <motion.button
+                  key={option.value}
+                  type="button"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: i * 0.03, ease: [0.32, 0.72, 0, 1] }}
+                  onClick={() => { onChange(option.value); setIsOpen(false) }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '11px 16px',
+                    fontSize: '14px',
+                    fontWeight: value === option.value ? 600 : 400,
+                    color: value === option.value ? '#2a2218' : 'rgba(42,34,24,0.75)',
+                    background: value === option.value ? 'rgba(255,255,255,0.3)' : 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'none',
+                    fontFamily: 'inherit',
+                    transition: 'background 0.15s ease, color 0.15s ease',
+                  }}
+                  onMouseEnter={e => { if (value !== option.value) (e.target as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)' }}
+                  onMouseLeave={e => { if (value !== option.value) (e.target as HTMLButtonElement).style.background = 'transparent' }}
+                >
+                  {option.label}
+                </motion.button>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -169,6 +323,7 @@ export default function SolutionsContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    countryCode: '+91',
     phone: '',
     subject: '',
     message: '',
@@ -775,23 +930,29 @@ export default function SolutionsContactPage() {
                   }}>
                     <div>
                       <label htmlFor="phone" style={labelStyle}>Phone</label>
-                      <input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        placeholder="+91 00000 00000"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        style={inputStyle}
-                        onFocus={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.6)'
-                          e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
-                        }}
-                        onBlur={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
-                          e.target.style.boxShadow = 'none'
-                        }}
-                      />
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <CountryCodeDropdown
+                          value={formData.countryCode}
+                          onChange={(val) => setFormData(prev => ({ ...prev, countryCode: val }))}
+                        />
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          placeholder="00000 00000"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          style={{ ...inputStyle, flex: 1 }}
+                          onFocus={e => {
+                            e.target.style.borderColor = 'rgba(201,168,110,0.6)'
+                            e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                          }}
+                          onBlur={e => {
+                            e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                            e.target.style.boxShadow = 'none'
+                          }}
+                        />
+                      </div>
                     </div>
                     <div>
                       <label style={labelStyle}>Subject</label>
@@ -808,14 +969,14 @@ export default function SolutionsContactPage() {
                     <textarea
                       id="message"
                       name="message"
-                      rows={5}
+                      rows={7}
                       placeholder="Tell us about your project or question..."
                       value={formData.message}
                       onChange={handleChange}
                       style={{
                         ...inputStyle,
                         resize: 'vertical',
-                        minHeight: '140px',
+                        minHeight: '180px',
                       }}
                       onFocus={e => {
                         e.target.style.borderColor = 'rgba(201,168,110,0.6)'

@@ -629,12 +629,12 @@ function ValueRow({ item, index, isLast }: { item: typeof values[0]; index: numb
         <motion.span
           className="hidden lg:block shrink-0 tabular-nums leading-none"
           style={{
-            fontSize: 'clamp(3rem, 5vw, 4.5rem)',
+            fontSize: 'clamp(4.5rem, 8vw, 7.5rem)',
             fontWeight: 200,
             color: P.gold,
             letterSpacing: '-0.04em',
           }}
-          animate={{ opacity: isInRow ? 0.5 : 0.12 }}
+          animate={{ opacity: isInRow ? 0.4 : 0.08 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           {String(index + 1).padStart(2, '0')}
