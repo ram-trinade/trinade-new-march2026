@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 22 — Team cards redesign + Impact removed + Quote section
-- Last completed: Prompt 22 inspo-based team cards + striking quote layout
+- Done: Prompt 23 — CTA removed + Quote moved + Collapsing team images + 6 members
+- Last completed: Prompt 23 team card image collapse/expand + layout refinements
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 23: CTA Removal + Quote Repositioned + Collapsing Team Images
+
+### What Was Done
+1. **CTA section removed** — "Let's build together" section above footer deleted entirely. Footer now follows directly after team section.
+2. **Quote moved to top** — QuoteSection relocated from after team cards to after Vision section (Section 2), creating a powerful editorial flow: Vision → Quote → Mission.
+3. **Team card images collapse/expand** — Image dimensions now animate between small thumbnail (collapsed: ~80-120px wide, ~70-100px tall) and large portrait (expanded: ~180-280px wide, ~220-340px tall). Eliminates void space in collapsed state. Initials font size also scales. Portrait tilts -2° on expand with deeper shadow.
+4. **Team count reduced to 6** — Removed Priya Ramanathan (Head of Client Success) and Leo Nakamura (VP of Strategic Partnerships).
+
+### Components Changed
+- `TeamAccordion` — Rewritten with `motion.div` animating width/height/rotate/borderRadius on the portrait card. Collapsed = compact thumbnail aligned with text, expanded = large tilted portrait with bio below.
+- `QuoteSection` — Moved placement (component unchanged)
+- CTA section — Removed entirely (Section 7)
+
+### Files Changed
+- `app/company/page.tsx` — TEAM data (8→6), TeamAccordion rewrite, QuoteSection moved, CTA section removed
 
 ---
 

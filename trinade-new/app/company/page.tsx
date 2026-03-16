@@ -132,22 +132,6 @@ const TEAM = [
     funFact: 'Amateur astronomer — discovered a minor asteroid',
     mesh: 'radial-gradient(ellipse at 30% 75%, rgba(42,34,24,0.7) 0%, transparent 50%), radial-gradient(ellipse at 70% 25%, rgba(139,105,20,0.5) 0%, transparent 50%), radial-gradient(ellipse at 55% 50%, rgba(201,168,110,0.3) 0%, transparent 60%), linear-gradient(135deg, #121210 0%, #1a1816 100%)',
   },
-  {
-    name: 'Priya Ramanathan',
-    role: 'Head of Client Success',
-    bio: 'Champions the client experience from onboarding through long-term partnership. Ensures every deployment delivers measurable business outcomes and lasting relationships.',
-    tagline: 'Building relationships, not just systems',
-    funFact: 'Competitive chess player — ranked nationally in her age group',
-    mesh: 'radial-gradient(ellipse at 40% 60%, rgba(201,168,110,0.5) 0%, transparent 50%), radial-gradient(ellipse at 60% 40%, rgba(160,129,74,0.4) 0%, transparent 55%), radial-gradient(ellipse at 50% 50%, rgba(42,34,24,0.5) 0%, transparent 60%), linear-gradient(135deg, #1a1614 0%, #22201c 100%)',
-  },
-  {
-    name: 'Leo Nakamura',
-    role: 'VP of Strategic Partnerships',
-    bio: 'Builds the bridges between Trinade and the wider technology ecosystem. Identifies integration opportunities, forges alliances, and connects endpoints into thriving networks.',
-    tagline: 'Connecting ecosystems, not just endpoints',
-    funFact: 'Speaks five languages and collects vintage maps',
-    mesh: 'radial-gradient(ellipse at 35% 70%, rgba(139,105,20,0.4) 0%, transparent 50%), radial-gradient(ellipse at 65% 30%, rgba(201,168,110,0.5) 0%, transparent 55%), radial-gradient(ellipse at 50% 55%, rgba(42,34,24,0.6) 0%, transparent 60%), linear-gradient(135deg, #14120e 0%, #1c1a16 100%)',
-  },
 ]
 
 
@@ -681,7 +665,7 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
 }
 
 /* ═══════════════════════════════════════════
-   TEAM CARDS — Inspo-Based Collapsed/Expanded
+   TEAM CARDS — Collapsing/Expanding with Image
    ═══════════════════════════════════════════ */
 function TeamAccordion() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
@@ -689,7 +673,7 @@ function TeamAccordion() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <div ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+    <div ref={ref} style={{ display: 'flex', flexDirection: 'column' }}>
       {TEAM.map((member, i) => {
         const isExpanded = expandedIndex === i
         const num = String(i + 1).padStart(2, '0')
@@ -705,195 +689,191 @@ function TeamAccordion() {
             {/* Separator line */}
             <div style={{ height: '1px', background: 'rgba(42,34,24,0.08)' }} />
 
-            {/* Card container */}
+            {/* Card — clickable row */}
             <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr auto',
-                gap: '40px',
-                padding: '36px 0',
-                alignItems: 'start',
-                position: 'relative',
-                cursor: 'pointer',
-              }}
+              style={{ cursor: 'pointer', padding: 'clamp(24px, 3vw, 40px) 0' }}
               onClick={() => setExpandedIndex(isExpanded ? null : i)}
             >
-              {/* LEFT: Text content */}
-              <div style={{ position: 'relative', zIndex: 2 }}>
-                {/* Role label */}
-                <span style={{
-                  display: 'inline-block',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.2em',
-                  color: '#c9a86e',
-                  marginBottom: '10px',
-                }}>
-                  {member.role}
-                </span>
-
-                {/* Name row with ghost number */}
-                <div style={{ position: 'relative' }}>
-                  {/* Ghost number */}
+              {/* Top row: text left + image right */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr auto',
+                gap: 'clamp(20px, 3vw, 48px)',
+                alignItems: 'center',
+              }}>
+                {/* LEFT: Role + Name + Tagline */}
+                <div style={{ position: 'relative', zIndex: 2, minWidth: 0 }}>
+                  {/* Role label */}
                   <span style={{
-                    position: 'absolute',
-                    right: '0',
-                    top: '50%',
-                    transform: 'translateY(-50%) translateX(20%)',
-                    fontSize: 'clamp(80px, 10vw, 140px)',
-                    fontWeight: 200,
-                    color: 'rgba(42,34,24,0.04)',
-                    lineHeight: 1,
-                    userSelect: 'none',
-                    pointerEvents: 'none',
-                    letterSpacing: '-0.04em',
-                    zIndex: 0,
+                    display: 'inline-block',
+                    fontSize: '11px',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.2em',
+                    color: '#c9a86e',
+                    marginBottom: '8px',
                   }}>
-                    {num}
+                    {member.role}
                   </span>
 
-                  <h3 style={{
-                    fontSize: 'clamp(28px, 3.5vw, 42px)',
-                    fontWeight: 500,
-                    color: '#2a2218',
-                    letterSpacing: '-0.025em',
-                    lineHeight: 1.15,
+                  {/* Name with ghost number */}
+                  <div style={{ position: 'relative' }}>
+                    <span style={{
+                      position: 'absolute',
+                      right: '0',
+                      top: '50%',
+                      transform: 'translateY(-50%) translateX(20%)',
+                      fontSize: 'clamp(70px, 9vw, 130px)',
+                      fontWeight: 200,
+                      color: 'rgba(42,34,24,0.04)',
+                      lineHeight: 1,
+                      userSelect: 'none',
+                      pointerEvents: 'none',
+                      letterSpacing: '-0.04em',
+                      zIndex: 0,
+                    }}>
+                      {num}
+                    </span>
+                    <h3 style={{
+                      fontSize: 'clamp(26px, 3.2vw, 42px)',
+                      fontWeight: 500,
+                      color: '#2a2218',
+                      letterSpacing: '-0.025em',
+                      lineHeight: 1.15,
+                      position: 'relative',
+                      zIndex: 1,
+                    }}>
+                      {member.name}
+                    </h3>
+                  </div>
+
+                  <p style={{
+                    fontSize: '16px',
+                    fontStyle: 'italic',
+                    color: 'rgba(42,34,24,0.35)',
+                    marginTop: '6px',
+                    lineHeight: 1.5,
                     position: 'relative',
                     zIndex: 1,
                   }}>
-                    {member.name}
-                  </h3>
+                    {member.tagline}
+                  </p>
                 </div>
 
-                {/* Tagline */}
-                <p style={{
-                  fontSize: '17px',
-                  fontStyle: 'italic',
-                  color: 'rgba(42,34,24,0.35)',
-                  marginTop: '8px',
-                  lineHeight: 1.5,
-                  position: 'relative',
-                  zIndex: 1,
-                }}>
-                  {member.tagline}
-                </p>
-
-                {/* Expanded content */}
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
-                      style={{ overflow: 'hidden' }}
-                    >
-                      <div style={{ paddingTop: '24px' }}>
-                        <p style={{
-                          fontSize: '17px',
-                          lineHeight: 1.85,
-                          color: 'rgba(42,34,24,0.55)',
-                          maxWidth: '560px',
-                          marginBottom: '16px',
-                        }}>
-                          {member.bio}
-                        </p>
-                        <p style={{
-                          fontSize: '15px',
-                          lineHeight: 1.75,
-                          color: 'rgba(42,34,24,0.35)',
-                          display: 'flex',
-                          alignItems: 'baseline',
-                          gap: '8px',
-                        }}>
-                          <span style={{ color: '#c9a86e', fontWeight: 600, fontSize: '14px' }}>+</span>
-                          <span style={{ fontStyle: 'italic' }}>Fun fact: {member.funFact}</span>
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* RIGHT: Portrait card + Toggle */}
-              <div style={{ display: 'flex', alignItems: 'start', gap: '20px' }}>
-                {/* Mesh gradient portrait */}
-                <motion.div
-                  animate={{
-                    rotate: isExpanded ? -2 : 1,
-                    scale: isExpanded ? 1.03 : 1,
-                  }}
-                  transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
-                  style={{
-                    width: 'clamp(140px, 18vw, 240px)',
-                    height: 'clamp(170px, 22vw, 300px)',
-                    borderRadius: '16px',
-                    background: member.mesh,
-                    position: 'relative',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    boxShadow: isExpanded
-                      ? '0 20px 50px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1)'
-                      : '0 8px 24px rgba(0,0,0,0.08)',
-                    transition: 'box-shadow 0.6s ease',
-                  }}
-                >
-                  {/* Inner shadow */}
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    boxShadow: 'inset 0 -50px 70px rgba(0,0,0,0.25)',
-                    pointerEvents: 'none',
-                    zIndex: 2,
-                  }} />
-                  {/* Subtle grain on card */}
-                  <Grain id={`grain-member-${i}`} opacity={0.04} />
-                  {/* Large initials */}
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 1,
-                  }}>
-                    <span style={{
-                      fontSize: 'clamp(48px, 6vw, 80px)',
-                      fontWeight: 200,
-                      color: 'rgba(255,255,255,0.12)',
-                      letterSpacing: '0.08em',
-                      userSelect: 'none',
+                {/* RIGHT: Image + Toggle — image collapses/expands */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <motion.div
+                    animate={{
+                      width: isExpanded ? 'clamp(180px, 20vw, 280px)' : 'clamp(80px, 8vw, 120px)',
+                      height: isExpanded ? 'clamp(220px, 24vw, 340px)' : 'clamp(70px, 7vw, 100px)',
+                      rotate: isExpanded ? -2 : 0,
+                      borderRadius: isExpanded ? '16px' : '12px',
+                    }}
+                    transition={{ duration: 0.65, ease: EASE_CINEMATIC }}
+                    style={{
+                      background: member.mesh,
+                      position: 'relative',
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                      boxShadow: isExpanded
+                        ? '0 20px 50px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1)'
+                        : '0 4px 16px rgba(0,0,0,0.06)',
+                    }}
+                  >
+                    {/* Inner shadow */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      boxShadow: 'inset 0 -40px 60px rgba(0,0,0,0.25)',
+                      pointerEvents: 'none',
+                      zIndex: 2,
+                    }} />
+                    <Grain id={`grain-member-${i}`} opacity={0.04} />
+                    {/* Initials */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 1,
                     }}>
-                      {initials}
-                    </span>
-                  </div>
-                </motion.div>
+                      <motion.span
+                        animate={{
+                          fontSize: isExpanded ? 'clamp(48px, 5vw, 80px)' : 'clamp(24px, 2.5vw, 36px)',
+                        }}
+                        transition={{ duration: 0.65, ease: EASE_CINEMATIC }}
+                        style={{
+                          fontWeight: 200,
+                          color: 'rgba(255,255,255,0.12)',
+                          letterSpacing: '0.08em',
+                          userSelect: 'none',
+                        }}
+                      >
+                        {initials}
+                      </motion.span>
+                    </div>
+                  </motion.div>
 
-                {/* Toggle button */}
-                <motion.div
-                  animate={{ rotate: isExpanded ? 45 : 0 }}
-                  transition={{ duration: 0.35, ease: EASE_UI }}
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    border: `1px solid ${isExpanded ? 'rgba(201,168,110,0.4)' : 'rgba(42,34,24,0.1)'}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '22px',
-                    fontWeight: 300,
-                    color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.25)',
-                    flexShrink: 0,
-                    marginTop: '8px',
-                    transition: 'color 0.4s ease, border-color 0.4s ease, background 0.4s ease',
-                    background: isExpanded ? 'rgba(201,168,110,0.06)' : 'transparent',
-                  }}
-                >
-                  +
-                </motion.div>
+                  {/* Toggle */}
+                  <motion.div
+                    animate={{ rotate: isExpanded ? 45 : 0 }}
+                    transition={{ duration: 0.35, ease: EASE_UI }}
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      border: `1px solid ${isExpanded ? 'rgba(201,168,110,0.4)' : 'rgba(42,34,24,0.1)'}`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '22px',
+                      fontWeight: 300,
+                      color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.25)',
+                      flexShrink: 0,
+                      transition: 'color 0.4s ease, border-color 0.4s ease, background 0.4s ease',
+                      background: isExpanded ? 'rgba(201,168,110,0.06)' : 'transparent',
+                    }}
+                  >
+                    +
+                  </motion.div>
+                </div>
               </div>
+
+              {/* Expanded bio content */}
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div style={{ paddingTop: '24px', maxWidth: '600px' }}>
+                      <p style={{
+                        fontSize: '17px',
+                        lineHeight: 1.85,
+                        color: 'rgba(42,34,24,0.55)',
+                        marginBottom: '16px',
+                      }}>
+                        {member.bio}
+                      </p>
+                      <p style={{
+                        fontSize: '15px',
+                        lineHeight: 1.75,
+                        color: 'rgba(42,34,24,0.35)',
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        gap: '8px',
+                      }}>
+                        <span style={{ color: '#c9a86e', fontWeight: 600, fontSize: '14px' }}>+</span>
+                        <span style={{ fontStyle: 'italic' }}>Fun fact: {member.funFact}</span>
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         )
@@ -1230,6 +1210,9 @@ export default function CompanyPage() {
             </div>
 
             <GoldRule className="mt-16" />
+
+            {/* Quote — placed within Vision section for editorial flow */}
+            <QuoteSection />
           </section>
 
           {/* ══════════════════════════════════════════════
@@ -1435,129 +1418,6 @@ export default function CompanyPage() {
               </Reveal>
 
               <TeamAccordion />
-
-              <QuoteSection />
-            </div>
-          </section>
-
-          {/* ══════════════════════════════════════════════
-              SECTION 7: CTA — Cinematic Close
-              ══════════════════════════════════════════════ */}
-          <section
-            data-dark-section
-            style={{
-              padding: 'clamp(100px, 16vh, 220px) clamp(24px, 8vw, 120px)',
-              backgroundColor: '#0a0a0a',
-              color: 'rgba(255,255,255,0.93)',
-              textAlign: 'center',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <Grain id="grain-cta" opacity={0.035} />
-
-            {/* Spiral-lines-gold background with dark overlay */}
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.1, pointerEvents: 'none', zIndex: 0 }}>
-              <Image
-                src="/spiral-lines-gold.jpg"
-                alt=""
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.6) 100%)', pointerEvents: 'none', zIndex: 0 }} />
-
-            {/* Double ambient glow */}
-            <div style={{ position: 'absolute', top: '30%', left: '20%', width: '40vw', height: '40vw', borderRadius: '50%', background: 'radial-gradient(circle, rgba(201,168,110,0.05) 0%, transparent 60%)', pointerEvents: 'none', animation: 'float-slow 18s ease-in-out infinite' }} />
-            <div style={{ position: 'absolute', bottom: '20%', right: '15%', width: '30vw', height: '30vw', borderRadius: '50%', background: 'radial-gradient(circle, rgba(160,129,74,0.04) 0%, transparent 60%)', pointerEvents: 'none', animation: 'float-slow 22s ease-in-out infinite reverse' }} />
-
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <Reveal>
-                <p style={{
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.2em',
-                  color: '#c9a86e',
-                  marginBottom: '36px',
-                }}>
-                  Let&apos;s Build Together
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.1}>
-                <h2 style={{
-                  fontSize: 'clamp(32px, 5.5vw, 72px)',
-                  fontWeight: 200,
-                  lineHeight: 1.1,
-                  letterSpacing: '-0.035em',
-                  maxWidth: '800px',
-                  margin: '0 auto 28px',
-                }}>
-                  Ready to engineer your{' '}
-                  <span style={{
-                    background: 'linear-gradient(135deg, #c9a86e, #d4bb8a)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}>
-                    next breakthrough?
-                  </span>
-                </h2>
-              </Reveal>
-
-              <Reveal delay={0.2}>
-                <p style={{
-                  fontSize: '16px',
-                  lineHeight: 1.85,
-                  color: 'rgba(255,255,255,0.45)',
-                  maxWidth: '520px',
-                  margin: '0 auto 52px',
-                }}>
-                  Let&apos;s discuss how Trinade can accelerate your enterprise AI journey.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.3}>
-                <a
-                  href="/contact"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    padding: '20px 48px',
-                    background: 'linear-gradient(135deg, rgba(201,168,110,0.15), rgba(201,168,110,0.05))',
-                    border: '1px solid rgba(201,168,110,0.3)',
-                    color: '#d4bb8a',
-                    borderRadius: '9999px',
-                    fontSize: '16px',
-                    fontWeight: 500,
-                    textDecoration: 'none',
-                    letterSpacing: '0.03em',
-                    backdropFilter: 'blur(16px)',
-                    transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget
-                    el.style.background = 'linear-gradient(135deg, rgba(201,168,110,0.25), rgba(201,168,110,0.1))'
-                    el.style.borderColor = 'rgba(201,168,110,0.5)'
-                    el.style.transform = 'translateY(-2px)'
-                    el.style.boxShadow = '0 12px 40px rgba(201,168,110,0.15)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget
-                    el.style.background = 'linear-gradient(135deg, rgba(201,168,110,0.15), rgba(201,168,110,0.05))'
-                    el.style.borderColor = 'rgba(201,168,110,0.3)'
-                    el.style.transform = 'translateY(0)'
-                    el.style.boxShadow = 'none'
-                  }}
-                >
-                  Get in Touch
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </Reveal>
             </div>
           </section>
 
