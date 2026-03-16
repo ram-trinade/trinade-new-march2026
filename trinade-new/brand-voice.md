@@ -53,7 +53,7 @@
 
 ## Anti-patterns
 - Never: teal/green accents (that's the OLD site)
-- Never: gradient text (except "Est 2021" shimmer and footer TRINADE marquee which are intentional)
+- Never: gradient text (except "Est 2020" shimmer, milestone years, and footer TRINADE marquee which are intentional)
 - Never: neon glows, generic "AI brain" imagery, stock photos
 - Never: bouncy/playful animations on a premium corporate site
 - Never: walls of text without visual hierarchy

@@ -33,10 +33,10 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 ### 8 Pages — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | **Homepage** (landing page): preloader on first visit, hero ("Technology that works for you."), 4 sticky scroll-over cards (Discovery→Evolution), challenges grid, CTA | Premium scroll effect |
+| `/` | **Homepage** (landing page): preloader on EVERY visit, hero ("Technology that works for you." — viewport-contained), 4 sticky scroll-over cards (Discovery→Evolution), challenges grid, CTA | Premium scroll effect |
 | `/solutions` | Solutions: hero, mission, industries, sticky scroll cards, testimonial challenges carousel, accordion services, differentiators, CTA | Solid — full design system |
 | `/blog` | Editorial magazine: staggered hero, featured article card, 6-card grid, newsletter CTA, topic tags | Strong editorial feel |
-| `/company` | "Est 2021" bold gold gradient hero, mission, stats counters, values cards, approach split, CTA | Clean, atmospheric |
+| `/company` | "Est 2020" bold gold gradient hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members with bios) | Rich, editorial |
 | `/contact` | Dark hero with spiral bg + "Have a project in mind?", split info card + gold glass form | Redesigned — premium |
 | `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
@@ -62,10 +62,11 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **That's it.** No R3F, no GSAP, no ShadCN, no MagicUI.
 
 ### Shared Components
-- `solutions-navbar.tsx` — "TRINADE" wordmark (left, links to `/`) + Menu pill with scroll % (center) + Logo (right, links to `/`) + gold active page dot via `usePathname`. Menu links: Home→`/`, Solutions→`/solutions`, Blog→`/blog`, Company→`/company`, Contact→`/contact`
+- `solutions-navbar.tsx` — "TRINADE" wordmark (left, links to `/`) + Menu pill with scroll % (center) + Logo (right, links to `/`) + gold active page dot via `usePathname`. Menu links: Products→`/products` (404), Solutions→`/solutions`, Blog→`/blog`, Company→`/company`, Contact→`/contact`
 - `solutions-content.tsx` — Solutions page (`/solutions`): hero, mission, industries grid, sticky scroll cards, testimonial carousel, accordion, differentiators, CTA
 - `solutions-footer.tsx` — Gold glass card with CTA section, nav links (Home→`/`, Solutions→`/solutions`, etc.), smooth TRINADE marquee, social icons
-- `preloader-animation.tsx` — Cinematic "TRINADE" letter-by-letter build, gold rule, split reveal, particles (shows once per session)
+- `homepage-content.tsx` — Homepage sections: hero (viewport-contained), 4 sticky scroll cards, challenges grid, CTA
+- `preloader-animation.tsx` — Cinematic "TRINADE" letter-by-letter build, gold rule, split reveal, particles (plays EVERY homepage visit)
 - `solutions-cookie-popup.tsx` — Gold glass cookie consent
 - `smooth-scroll.tsx` — Lenis provider
 - `premium-cursor.tsx` — Custom cursor with mix-blend-mode difference

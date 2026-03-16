@@ -27,7 +27,7 @@ app/
   page.tsx             # Homepage — Preloader + SolutionsContent + PremiumCursor + CookiePopup
   not-found.tsx        # 404 page — giant "404" watermark, gold border button, dark atmospheric
   blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
-  company/page.tsx     # Company — "Est 2021" hero (bold gold gradient), mission, stats, values, approach, CTA
+  company/page.tsx     # Company — "Est 2020" hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members)
   contact/page.tsx     # Contact — dark hero with spiral bg, split layout (info card left + gold glass form right)
   privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
@@ -37,7 +37,8 @@ components/
   solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
   solutions-cookie-popup.tsx # Gold glass cookie consent popup
   smooth-scroll.tsx       # Lenis smooth scroll provider
-  preloader-animation.tsx # Cinematic preloader: TRINADE letter build, gold rule, split reveal, particles (session-once)
+  homepage-content.tsx    # Homepage sections: hero (viewport-contained), sticky scroll cards, challenges, CTA
+  preloader-animation.tsx # Cinematic preloader: TRINADE letter build, gold rule, split reveal, particles (plays every homepage visit)
 public/
   logo-transparent.png    # Trinade logo (transparent PNG)
   gradient-orbs-warm.jpg  # Decorative hero/section backgrounds
