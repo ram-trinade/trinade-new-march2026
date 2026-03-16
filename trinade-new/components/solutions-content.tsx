@@ -3,7 +3,13 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SolutionsFooter from './solutions-footer'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger)
+}
 
 // ═══════════════════════════════════════════════════════════
 // INDEPENDENT DESIGN SYSTEM V5 — IT Solutions-inspired
@@ -373,93 +379,146 @@ function IndustriesSection() {
 
 
 // ═══════════════════════════════════════════════════════════
-// SCROLL-DRIVEN CARDS — CSS sticky + natural scroll
-// Dark bg with spiral image stays sticky while cards scroll
-// on the right side. overflow:clip prevents card leakage.
+// SCROLL-DRIVEN CARDS — GSAP ScrollTrigger pinned section
+// IT Solutions reference: section pins, left headline fixed,
+// right cards scroll up via scrub. Gold concentric circles bg.
 // ═══════════════════════════════════════════════════════════
 function ScrollCardsSection() {
-  return (
-    <section className="relative" style={{ background: P.cream }}>
-      {/* Two-column grid: dark panel left (sticky heading), cards right */}
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: '48% 1fr',
-          minHeight: '100vh',
-          gap: 0,
-        }}
-      >
-        {/* Left: Dark panel (full-height) with sticky heading overlay */}
-        <div className="relative" style={{ marginLeft: 'clamp(1.5rem,6vw,6rem)' }}>
-          {/* Dark bg — absolute, covers the full column height */}
-          <div
-            className="absolute inset-0 overflow-hidden"
-            style={{ borderRadius: '24px' }}
-          >
-            <div className="absolute inset-0">
-              <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(26,26,30,0.85) 0%, rgba(26,26,30,0.68) 50%, rgba(26,26,30,0.78) 100%)' }} />
-            </div>
-            <Grain id="scrollGrain" opacity={0.03} />
-          </div>
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const cardsWrapperRef = useRef<HTMLDivElement>(null)
+  const rightColRef = useRef<HTMLDivElement>(null)
 
-          {/* Heading — sticky within the left column */}
-          <div className="sticky top-0 h-screen relative z-20 pointer-events-none">
-            <div className="absolute bottom-10 left-10 lg:left-14 pr-6">
-              <p className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: P.goldLight }}>
-                Our approach
-              </p>
-              <h2
-                className="leading-[1.08] tracking-[-0.03em]"
-                style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3.2rem)', fontWeight: 300, color: P.textOnDark }}
-              >
-                What makes Trinade<br />
-                different — and why<br />
-                it matters
-              </h2>
-            </div>
-          </div>
+  useEffect(() => {
+    if (!sectionRef.current || !cardsWrapperRef.current || !rightColRef.current) return
+
+    const cardsWrapper = cardsWrapperRef.current
+
+    // Calculate scroll distance: cards start at 100vh below, scroll up until last card is visible
+    const getScrollDistance = () => cardsWrapper.offsetHeight + window.innerHeight * 0.1
+
+    const ctx = gsap.context(() => {
+      gsap.to(rightColRef.current, {
+        y: () => -getScrollDistance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: () => `+=${getScrollDistance()}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative w-full overflow-hidden"
+      style={{
+        height: '100vh',
+        background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
+      }}
+    >
+      {/* Concentric circles — decorative bg element */}
+      <div
+        className="absolute pointer-events-none"
+        style={{ top: 0, left: '20%', width: '150vw', height: '150vw', maxWidth: 1800, maxHeight: 1800, zIndex: 0 }}
+      >
+        {[100, 70, 40].map((size, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              top: '20%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: `${size}%`,
+              height: `${size}%`,
+              border: `1px solid rgba(201,168,110,${0.12 - i * 0.03})`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Atmospheric gold orb */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '-15%',
+          right: '-5%',
+          width: '50vw',
+          height: '50vw',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 65%)',
+        }}
+      />
+
+      <Grain id="scrollGrain" opacity={0.025} />
+
+      <div
+        className="relative flex"
+        style={{ zIndex: 10, maxWidth: 1600, height: '100%', margin: '0 auto', alignItems: 'flex-start' }}
+      >
+        {/* Left: Headline pinned at bottom-left */}
+        <div
+          className="absolute z-20"
+          style={{ bottom: '5vh', left: 'clamp(2rem,6vw,6rem)', width: '46%' }}
+        >
+          <p
+            className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
+            style={{ color: P.gold }}
+          >
+            Our approach
+          </p>
+          <h2
+            className="leading-[1.02] tracking-[-0.04em]"
+            style={{
+              fontSize: 'clamp(2.4rem, 5vw, 5rem)',
+              fontWeight: 500,
+              color: P.textDark,
+              letterSpacing: '-0.04em',
+            }}
+          >
+            Secure, Streamline,<br />
+            and Succeed with<br />
+            Confidence
+          </h2>
         </div>
 
-        {/* Right: Scrolling cards column */}
+        {/* Right: Cards that scroll up via GSAP */}
         <div
+          ref={rightColRef}
           style={{
-            paddingRight: 'clamp(2.5rem,7vw,7rem)',
-            paddingTop: '18vh',
-            paddingBottom: '12vh',
+            width: '50%',
+            marginLeft: '50%',
+            paddingTop: '100vh',
             paddingLeft: 'clamp(1.5rem,3vw,3rem)',
+            paddingRight: 'clamp(2.5rem,7vw,7rem)',
+            paddingBottom: '4rem',
+            display: 'flex',
+            justifyContent: 'center',
           }}
         >
-          <div className="flex flex-col gap-5">
-            {scrollCards.map((card, i) => (
-              <motion.div
+          <div ref={cardsWrapperRef} className="relative w-full flex flex-col" style={{ maxWidth: 600, gap: '2.5rem' }}>
+            {scrollCards.map((card) => (
+              <div
                 key={card.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: i * 0.03, ease: EASE_OUT }}
-                className="group rounded-2xl p-9 relative overflow-hidden transition-all duration-500 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] hover:-translate-y-1"
+                className="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-[5px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)]"
                 style={{
-                  background: 'rgba(255,255,255,0.97)',
-                  border: '1px solid rgba(229,224,216,0.6)',
+                  background: '#ffffff',
+                  padding: 'clamp(2rem,4vw,4rem)',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.06)',
                 }}
               >
-                {/* Gold gradient accent wash at bottom */}
+                {/* Gold radial gradient on hover (bottom-right origin) */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 pointer-events-none transition-opacity duration-700"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{
-                    height: '45%',
-                    background: `linear-gradient(to bottom, transparent 0%, rgba(201,168,110,0.04) 30%, rgba(201,168,110,0.10) 70%, rgba(212,187,138,0.18) 100%)`,
-                    borderRadius: '0 0 16px 16px',
-                  }}
-                />
-                {/* Stronger gold wash on hover */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    height: '50%',
-                    background: `linear-gradient(to bottom, transparent 0%, rgba(201,168,110,0.08) 30%, rgba(201,168,110,0.18) 70%, rgba(212,187,138,0.28) 100%)`,
-                    borderRadius: '0 0 16px 16px',
+                    background: 'radial-gradient(circle at bottom right, rgba(201,168,110,0.25) 0%, transparent 70%)',
+                    zIndex: 0,
                   }}
                 />
 
@@ -468,7 +527,7 @@ function ScrollCardsSection() {
                   className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500"
                   style={{
                     background: `linear-gradient(90deg, transparent 0%, ${P.gold}44 20%, ${P.goldLight}66 50%, ${P.gold}44 80%, transparent 100%)`,
-                    opacity: 0.5,
+                    opacity: 0.4,
                   }}
                 />
                 <div
@@ -476,20 +535,26 @@ function ScrollCardsSection() {
                   style={{ background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight})` }}
                 />
 
-                <h3 className="text-[22px] font-medium tracking-[-0.015em] mb-3 relative z-10" style={{ color: P.textDark }}>
+                <h3
+                  className="relative z-10 tracking-[-0.015em] mb-3"
+                  style={{ fontSize: 'clamp(1.2rem, 1.6vw, 1.6rem)', fontWeight: 500, color: P.textDark }}
+                >
                   {card.title}
                 </h3>
-                <p className="text-[15px] leading-[1.75] mb-5 relative z-10" style={{ color: P.textMuted }}>
+                <p
+                  className="relative z-10 leading-[1.6] mb-5"
+                  style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', color: P.textMuted }}
+                >
                   {card.body}
                 </p>
 
-                <div className="relative z-10 flex items-center gap-1.5 transition-all duration-300">
-                  <span className="text-[13px] font-medium transition-colors duration-300" style={{ color: `${P.gold}99` }}>Learn more</span>
-                  <svg className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5" style={{ opacity: 0.6 }}>
+                <div className="relative z-10 flex items-center gap-1.5">
+                  <span className="text-[13px] font-medium transition-colors duration-300" style={{ color: `${P.gold}` }}>Learn more</span>
+                  <svg className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5" style={{ opacity: 0.7 }}>
                     <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

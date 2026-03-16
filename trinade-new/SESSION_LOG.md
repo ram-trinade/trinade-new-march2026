@@ -9,9 +9,38 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 48 — Fix hydration error + cream flash + dark screen after preloader
-- Last completed: Prompt 48 — Removed broken initial-screen from layout.tsx, moved dark overlay to page.tsx as proper React element
+- Done: Prompt 49 — GSAP ScrollTrigger "Our Approach" pinned section (IT Solutions reference)
+- Last completed: Prompt 49 — Rewrote ScrollCardsSection with GSAP pin + scrub, matching the IT Solutions reference implementation
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 49: GSAP ScrollTrigger "Our Approach" Pinned Section
+
+### What Was Done
+
+#### Implemented IT Solutions-Style Scroll-Pinned Cards Section
+- **Reference**: `Solutions Page Implementation/` folder (index.html + style.css + script.js) — IT Solutions-style section with GSAP ScrollTrigger pinning, left headline fixed, right cards scrolling up via scrub
+- **Installed GSAP** (`npm install gsap`) for ScrollTrigger pinning — the lean stack allows adding libraries for specific effects
+- **Rewrote `ScrollCardsSection`** in `solutions-content.tsx`:
+  - **GSAP ScrollTrigger pin**: Section pins at `top top`, cards scroll via `scrub: 1`
+  - **Left side**: Large headline "Secure, Streamline, and Succeed with Confidence" fixed at bottom-left (matching IT Solutions reference layout)
+  - **Right side**: 6 service cards start below viewport (`paddingTop: 100vh`), scroll up into view via GSAP `gsap.to(y: -scrollDistance)`
+  - **Scroll distance**: `cardsWrapper.offsetHeight + 10vh` — stops when last card enters view
+  - **Gold concentric circles**: 3 decorative circles (100%, 70%, 40%) with gold border tint, replacing the reference's green gradient bg
+  - **Atmospheric gold orb**: Subtle radial gradient for depth
+  - **Card styling**: White cards with gold radial gradient hover effect (bottom-right origin), gold bottom border with scale-x animation, "Learn more" CTA
+  - **Clean unpin**: Section releases naturally into Industries section below
+
+### Files Changed
+- `components/solutions-content.tsx` — Added GSAP/ScrollTrigger imports, rewrote ScrollCardsSection with pin+scrub
+- `package.json` — Added `gsap` dependency
+
+### Technical Notes
+- GSAP registered with `gsap.registerPlugin(ScrollTrigger)` inside `typeof window !== 'undefined'` guard
+- `gsap.context()` used for proper cleanup on unmount (`ctx.revert()`)
+- `invalidateOnRefresh: true` recalculates scroll distance on window resize
+- Previous CSS Grid + absolute positioning approach replaced — GSAP pin is more reliable with Lenis smooth scroll
 
 ---
 

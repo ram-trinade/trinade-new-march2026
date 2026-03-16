@@ -10,7 +10,8 @@ Awwwards-quality corporate website for Trinade AI Technologies Private Limited. 
 - **Scroll**: Lenis for smooth scrolling
 - **Types**: TypeScript strict mode
 - **Typography**: Manrope (single unified font, weights 200–800, CSS vars `--font-sans` and `--font-display`)
-- **NO**: React Three Fiber, GSAP, ShadCN, MagicUI — this project is deliberately lean
+- **Animation (scroll)**: GSAP ScrollTrigger (pinned scroll sections — "Our Approach" on Solutions page)
+- **NO**: React Three Fiber, ShadCN, MagicUI — this project is deliberately lean
 
 ## Quick Start
 ```bash
