@@ -16,8 +16,7 @@ const PANEL_WIDTH = 340
 const SCROLL_SEGMENTS = 5
 
 const menuLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Products', href: '/solutions' },
+  { label: 'Products', href: '/solutions', noActiveDot: true },
   { label: 'Solutions', href: '/solutions' },
   { label: 'Blog', href: '/blog' },
   { label: 'Company', href: '/company' },
@@ -244,9 +243,11 @@ export default function SolutionsNavbar() {
                   </p>
                   <div className="space-y-0.5">
                     {menuLinks.map((link, i) => {
-                      const isActive = link.href === '/'
-                        ? pathname === '/' || pathname === '/home'
-                        : pathname === link.href
+                      const isActive = link.noActiveDot
+                        ? false
+                        : link.href === '/'
+                          ? pathname === '/' || pathname === '/home'
+                          : pathname === link.href
                       return (
                         <motion.a
                           key={link.label}

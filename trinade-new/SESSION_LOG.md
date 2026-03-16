@@ -9,9 +9,21 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 11 — Navbar Products item + Solutions page gap fix
-- Last completed: Prompt 11 navbar and scroll cards section fixes
+- Done: Prompt 11b — Navbar cleanup (remove Home, fix double active dots)
+- Last completed: Prompt 11b navbar refinements
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 11b: Navbar Active Dot Fix + Remove Home
+
+### What Was Done
+1. **Fixed double active dots** (`solutions-navbar.tsx`)
+   - Products and Solutions both pointed to `/solutions`, causing two dots on the Solutions page
+   - Added `noActiveDot` flag to Products link — active dot only shows on Solutions
+2. **Removed "Home" from navbar menu**
+   - Users can navigate home via "TRINADE" wordmark (top-left) or logo (top-right)
+   - Menu now: Products, Solutions, Blog, Company, Contact
 
 ---
 
