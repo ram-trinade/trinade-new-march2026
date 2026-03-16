@@ -35,10 +35,10 @@ components/
   solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname)
   solutions-content.tsx   # Solutions: hero, mission, industries, sticky scroll cards (fixed), testimonial challenges carousel, accordion, differentiators, CTA, footer
   solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
-  solutions-cookie-popup.tsx # Gold glass cookie consent popup
+  solutions-cookie-popup.tsx # Gold glass cookie consent popup (data-lenis-prevent for 125%+ zoom scroll fix)
   smooth-scroll.tsx       # Lenis smooth scroll provider
-  homepage-content.tsx    # Homepage sections: hero (viewport-contained), sticky scroll cards, challenges, CTA
-  preloader-animation.tsx # Cinematic preloader: TRINADE letter build, gold rule, split reveal, particles (plays every homepage visit)
+  homepage-content.tsx    # Homepage sections: hero, AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges, CTA
+  preloader-animation.tsx # Cinematic preloader: warm gold gradient bg, breathing TRINADE text reveal with gold shimmer sweep, weight 200 (plays every homepage visit)
 public/
   logo-transparent.png    # Trinade logo (transparent PNG)
   gradient-orbs-warm.jpg  # Decorative hero/section backgrounds
