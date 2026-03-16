@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 53 — Scroll cards section layout refinements
-- Last completed: Prompt 53 — Headline alignment, card text layout, removed "Learn more"
+- Done: Prompt 54 — Spiral bg on Solutions Challenges + fixed "What we build" card grid
+- Last completed: Prompt 54 — Clean card grid, spiral-lines-gold.jpg background
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 54: Spiral BG + Card Grid Fix
+
+### What Was Done
+- Added spiral-lines-gold.jpg background to Solutions Challenges section (12% opacity with gradient overlay)
+- Fixed "What we build" card grid: removed random x/y offsets and rotations that made cards look misaligned
+- Cards now use clean grid layout with staggered entrance delays only
+- Hover still lifts cards (-6px) with subtle scale for interactivity
+
+### Files Modified
+- `components/homepage-content.tsx` — Replaced cardOffsets with cardDelays, clean grid animation
+- `components/solutions-content.tsx` — Added spiral background image to ChallengesSection
+
+### Verified via Playwright
+- Cards sit in proper 3x2 grid without random displacement
+- Spiral lines visible as subtle atmospheric texture behind Challenges section
 
 ---
 

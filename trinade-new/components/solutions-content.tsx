@@ -400,6 +400,11 @@ function ChallengesSection() {
 
   return (
     <section ref={ref} className="relative py-32 lg:py-40 overflow-hidden" style={{ background: '#0a0a0a' }}>
+      {/* Spiral lines background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" style={{ opacity: 0.12 }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.15) 50%, rgba(10,10,10,0.5) 100%)' }} />
+      </div>
       <Grain id="challengesGrain" opacity={0.025} />
 
       <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">

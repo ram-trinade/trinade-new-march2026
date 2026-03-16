@@ -231,15 +231,8 @@ const capabilityCards = [
   },
 ]
 
-// Staggered offsets for organic floating feel (like AROX/Hatamex)
-const cardOffsets = [
-  { x: 0, y: 0, rotate: -1, delay: 0 },
-  { x: 8, y: 20, rotate: 0.5, delay: 0.08 },
-  { x: -4, y: -8, rotate: -0.5, delay: 0.16 },
-  { x: 12, y: 12, rotate: 1, delay: 0.06 },
-  { x: -8, y: 24, rotate: -0.3, delay: 0.12 },
-  { x: 4, y: -4, rotate: 0.8, delay: 0.2 },
-]
+// Stagger delays for clean grid entrance
+const cardDelays = [0, 0.06, 0.12, 0.04, 0.10, 0.16]
 
 function FloatingCardsSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -310,36 +303,22 @@ function FloatingCardsSection() {
             />
           </div>
 
-          {/* Right: floating card grid (3 cols x 2 rows) */}
+          {/* Right: card grid (3 cols x 2 rows) */}
           <div className="lg:w-[62%]">
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-              {capabilityCards.map((card, i) => {
-                const offset = cardOffsets[i]
-                return (
+              {capabilityCards.map((card, i) => (
                   <motion.div
                     key={card.title}
-                    initial={{
-                      opacity: 0,
-                      y: 60 + (i % 2) * 20,
-                      x: (i % 3 - 1) * 15,
-                      scale: 0.92,
-                    }}
-                    animate={isInView ? {
-                      opacity: 1,
-                      y: offset.y,
-                      x: offset.x,
-                      scale: 1,
-                      rotate: offset.rotate,
-                    } : {}}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
                     transition={{
-                      duration: 0.9,
-                      delay: offset.delay,
+                      duration: 0.8,
+                      delay: cardDelays[i],
                       ease: EASE_OUT,
                     }}
                     whileHover={{
-                      y: offset.y - 8,
-                      scale: 1.03,
-                      rotate: 0,
+                      y: -6,
+                      scale: 1.02,
                       transition: { duration: 0.35, ease: EASE },
                     }}
                     className="group relative rounded-2xl overflow-hidden cursor-pointer"
@@ -382,8 +361,7 @@ function FloatingCardsSection() {
                       style={{ background: `radial-gradient(ellipse at 50% 100%, ${card.accent}, transparent 70%)` }}
                     />
                   </motion.div>
-                )
-              })}
+              ))}
             </div>
           </div>
         </div>
