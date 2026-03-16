@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 26 — Company page content update from Company.docx + team card spacing fix
-- Last completed: Prompt 26 Company.docx content mapping
+- Done: Prompt 27 — Products → 404 redirect + homepage hero viewport fix
+- Last completed: Prompt 27 hero containment + Products routing
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 27: Products → 404 Redirect + Homepage Hero Viewport Fix
+
+### What Was Done
+1. **Products link → 404 page** — Changed Products href from `/solutions` to `/products` in both navbar (`solutions-navbar.tsx`) and footer (`solutions-footer.tsx`). Since no `/products` route exists, Next.js renders the existing `not-found.tsx` (dark atmospheric 404 with gold gradient, giant watermark, "Return to Home" CTA).
+2. **Homepage hero contained in viewport** — Fixed hero section background overflow:
+   - Changed `min-h-[100vh]` → `h-[100vh] h-[100dvh]` (exact viewport height, respects mobile dynamic viewport)
+   - Made gradient card use `flex-1 min-h-0` to fill remaining space instead of `minHeight: 50vh`
+   - Reduced heading font size from `clamp(3rem, 7vw, 6rem)` → `clamp(2.6rem, 6vw, 5.2rem)`
+   - Tightened padding (`pt-40→pt-32`, `pb-12→pb-6`, `mb-20→mb-6`)
+   - Verified: section height === viewport height (945px = 945px), zero overflow
+
+### Files Changed
+- `components/solutions-navbar.tsx` — Products href `/solutions` → `/products`
+- `components/solutions-footer.tsx` — Products href `/solutions` → `/products`
+- `components/homepage-content.tsx` — Hero section height, padding, font sizing, card flex layout
 
 ---
 

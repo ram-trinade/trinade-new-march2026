@@ -98,19 +98,19 @@ function HomeHeroSection() {
   const isInView = useInView(ref, { once: true, margin: '-30px' })
 
   return (
-    <section ref={ref} className="relative min-h-[100vh] flex flex-col justify-center overflow-hidden" style={{ background: P.cream }}>
+    <section ref={ref} className="relative h-[100vh] h-[100dvh] flex flex-col overflow-hidden" style={{ background: P.cream }}>
       <div className="absolute inset-0 opacity-[0.4] pointer-events-none">
         <Image src="/gradient-orbs-warm.jpg" alt="" fill className="object-cover" priority />
       </div>
       <Grain id="homeHeroGrain" opacity={0.02} />
 
-      <div className="relative z-10 w-full px-[clamp(2rem,8vw,8rem)] pt-40 pb-12">
+      <div className="relative z-10 w-full px-[clamp(2rem,8vw,8rem)] pt-32 pb-6 shrink-0">
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, ease: EASE_OUT }}
           className="leading-[1.05] tracking-[-0.04em]"
-          style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', fontWeight: 400, color: P.textDark }}
+          style={{ fontSize: 'clamp(2.6rem, 6vw, 5.2rem)', fontWeight: 400, color: P.textDark }}
         >
           Technology that<br />works for you.
         </motion.h1>
@@ -121,23 +121,23 @@ function HomeHeroSection() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.0, delay: 0.3, ease: EASE_OUT }}
-        className="relative z-10 mx-[clamp(2rem,8vw,8rem)] mb-20"
+        className="relative z-10 mx-[clamp(2rem,8vw,8rem)] mb-6 flex-1 min-h-0"
       >
-        <div className="relative rounded-[24px] overflow-hidden" style={{ minHeight: '50vh' }}>
+        <div className="relative rounded-[24px] overflow-hidden h-full">
           <div className="absolute inset-0">
             <Image src="/gradient-mesh-warm.jpg" alt="" fill className="object-cover" />
           </div>
           <Grain id="heroCardGrain" opacity={0.03} />
 
-          <div className="relative z-10 p-[clamp(2rem,5vw,5rem)] flex flex-col justify-end min-h-[50vh]">
+          <div className="relative z-10 p-[clamp(1.5rem,4vw,4rem)] flex flex-col justify-end h-full">
             <p
               className="leading-[1.25] tracking-[-0.02em] max-w-[900px]"
-              style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontWeight: 400, color: P.textDark }}
+              style={{ fontSize: 'clamp(1.4rem, 3vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
             >
               From custom software and intelligent automation to scalable platforms, we deliver solutions designed to strengthen operations, sharpen decision-making, and drive measurable growth.
             </p>
 
-            <div className="flex items-center gap-6 mt-10">
+            <div className="flex items-center gap-6 mt-8">
               <a
                 href="/contact"
                 className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
