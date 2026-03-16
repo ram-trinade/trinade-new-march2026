@@ -11,7 +11,7 @@ export default function SolutionsFooter() {
   const isInView = useInView(ref, { once: true, margin: '-40px' })
 
   const navLinks = [
-    { label: 'Home', href: '/' },
+    { label: 'Products', href: '/solutions' },
     { label: 'Solutions', href: '/solutions' },
     { label: 'Blog', href: '/blog' },
     { label: 'Company', href: '/company' },

@@ -156,17 +156,18 @@ export default function SolutionsNavbar() {
           {/* Dark Pill — always visible */}
           <div className="flex justify-center">
             <div
-              className="flex items-center gap-4 px-5 py-2 select-none"
+              className="flex items-center justify-between py-2 pl-2 pr-2 select-none"
               style={{
                 background: '#1a1a1e',
                 borderRadius: 22,
                 pointerEvents: 'auto',
+                minWidth: 200,
               }}
             >
-              {/* Hamburger / X button */}
+              {/* Hamburger / X button — left side */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-2.5 pl-3 pr-2 py-1.5 rounded-full transition-colors hover:bg-white/[0.06]"
+                className="flex items-center gap-2 pl-2.5 pr-2 py-1.5 rounded-full transition-colors hover:bg-white/[0.06]"
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}
               >
                 <div className="relative w-5 h-5 flex items-center justify-center">
@@ -204,7 +205,7 @@ export default function SolutionsNavbar() {
                 </span>
               </button>
 
-              {/* Scroll Percentage — brown gold liquid glass */}
+              {/* Scroll Percentage — brown gold liquid glass — right side */}
               <div
                 className="flex items-center justify-center rounded-full text-[13px] font-semibold text-white tabular-nums"
                 style={{
@@ -268,13 +269,13 @@ export default function SolutionsNavbar() {
                               transition={{ duration: 0.35, ease: EASE }}
                               style={{
                                 display: 'inline-block',
-                                width: 8,
-                                height: 8,
-                                marginLeft: 6,
+                                width: 9,
+                                height: 9,
+                                marginLeft: 8,
                                 borderRadius: '50%',
-                                background: 'linear-gradient(165deg, rgba(185,155,100,0.85) 0%, rgba(165,125,60,0.7) 40%, rgba(200,175,125,0.8) 100%)',
-                                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(130,95,30,0.15), 0 2px 6px rgba(130,95,30,0.3)',
-                                border: '1px solid rgba(180,150,95,0.5)',
+                                background: 'linear-gradient(165deg, #8b6914 0%, #6b4f0e 40%, #a07820 100%)',
+                                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(60,40,10,0.3), 0 2px 8px rgba(100,70,15,0.5), 0 0 3px rgba(160,120,30,0.3)',
+                                border: '1px solid rgba(120,85,20,0.6)',
                                 flexShrink: 0,
                               }}
                             />
