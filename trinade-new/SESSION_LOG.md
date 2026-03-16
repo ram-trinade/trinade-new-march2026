@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 23 — CTA removed + Quote moved + Collapsing team images + 6 members
-- Last completed: Prompt 23 team card image collapse/expand + layout refinements
+- Done: Prompt 24 — Values static numbers + quote before Vision + team expand fix + brown gold buttons
+- Last completed: Prompt 24 polish pass on Company page
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 24: Values Numbers + Quote Placement + Team Expand + Button Colors
+
+### What Was Done
+1. **Team photo effect removed** — Removed rotate/scale animation on team member portrait when expanding. Images now simply resize without tilt.
+2. **Values static numbers** — Replaced `AnimatedCounter` (RAF-based animated 00→target) with static padded numbers (01, 02, 03, 04, 05). Numbers now visible immediately with slightly increased opacity.
+3. **Quote before Vision** — QuoteSection moved from after Vision to between Hero and Vision. Section order: Hero → Quote → Vision → Mission → Values → Milestones → Team → Footer.
+4. **Values text left-aligned** — Expanded description text changed from center to left alignment. Font size increased from 17px to 18px.
+5. **Values headline bolder** — "Principles that guide every decision we make." weight changed from 300 to 500.
+6. **Team card expand reduced** — Expanded image dimensions reduced from clamp(180px,18vw,280px) to clamp(140px,14vw,200px) width and clamp(220px,22vw,340px) to clamp(160px,16vw,240px) height.
+7. **Plus buttons brown gold** — All toggle buttons (Values + Team) changed from light gray to brown gold (#a0814a border rgba(201,168,110,0.35)).
+
+### Files Changed
+- `app/company/page.tsx` — AnimatedCounter removed, QuoteSection repositioned, Values/Team button colors, team image dimensions, headline weight
 
 ---
 
