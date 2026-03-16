@@ -33,11 +33,12 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 ### 6 Pages — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | Homepage: 7-section solutions showcase (hero, sliding cards, industries, features, differentiators, social proof, CTA) | Solid — uses full design system |
+| `/` | Solutions: 7-section showcase (hero, sliding cards, industries, accordion services, differentiators, social proof, CTA) | Solid — full design system |
+| `/home` | Homepage: hero, 4 sticky scroll-over cards (Discovery→Evolution), challenges grid, CTA | Premium scroll effect |
 | `/blog` | Editorial magazine: staggered hero, featured article card, 6-card grid, newsletter CTA, topic tags | Strong editorial feel |
-| `/company` | "Est 2025" cinematic hero, mission, stats counters, values cards, approach split, CTA | Clean, atmospheric |
-| `/contact` | Atmospheric CSS bg (gradient orbs + grain + watermark), gold glass form, custom dropdown | Premium |
-| `/privacy-policy` | Alternating cream (#f2ede6/#ebe5db) sections, gold accents | Clean legal page |
+| `/company` | "Est 2021" bold gold gradient hero, mission, stats counters, values cards, approach split, CTA | Clean, atmospheric |
+| `/contact` | Atmospheric CSS bg, bold "Get in touch" hero with CONTACT watermark, gold glass form | Premium |
+| `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
 
 ### Design System
@@ -58,7 +59,8 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **That's it.** No R3F, no GSAP, no ShadCN, no MagicUI.
 
 ### Shared Components
-- `solutions-navbar.tsx` — Inertia-style "trinade" wordmark (left) + Menu pill with scroll % (center) + Logo (right)
+- `solutions-navbar.tsx` — "TRINADE" wordmark (left, clickable→/home) + Menu pill with scroll % (center) + Logo 36px (right, clickable→/home)
+- `homepage-content.tsx` — Homepage: hero, 4 sticky scroll-over cards, challenges grid, CTA
 - `solutions-footer.tsx` — Brown gold liquid glass card on black bg
 - `solutions-content.tsx` — Homepage 7-section content
 - `solutions-cookie-popup.tsx` — Gold glass cookie consent

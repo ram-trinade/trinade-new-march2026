@@ -13,7 +13,7 @@
 - **Section headlines**: Weight 300, `clamp(2.4rem, 4.8vw, 4.2rem)`
 - **Body text**: Weight 400, high line-height (1.8), 55% opacity
 - **Eyebrow labels**: 12px, uppercase, tracking 0.2em, weight 600, gold (#c9a86e)
-- **Trinade wordmark**: 22px, weight 800, -0.04em tracking, inertia-style extended 'e'
+- **Trinade wordmark**: 28px, weight 800, -0.03em tracking, uppercase "TRINADE"
 - No Inter, Roboto, Arial, or generic system fonts — Manrope is the brand typeface
 
 ## Color System
@@ -53,7 +53,7 @@
 
 ## Anti-patterns
 - Never: teal/green accents (that's the OLD site)
-- Never: gradient text (except "Est 2025" shimmer which is intentional)
+- Never: gradient text (except "Est 2021" shimmer and footer TRINADE marquee which are intentional)
 - Never: neon glows, generic "AI brain" imagery, stock photos
 - Never: bouncy/playful animations on a premium corporate site
 - Never: walls of text without visual hierarchy

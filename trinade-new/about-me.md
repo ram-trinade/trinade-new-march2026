@@ -41,12 +41,14 @@
 - Website sections and pages will be added incrementally, inspired by different award-winning sites
 
 ## Current Pages
-- **Homepage** (`/`): Hero + 7-section solutions content + PremiumCursor + CookiePopup
+- **Solutions** (`/`): Hero + 7-section solutions showcase + PremiumCursor + CookiePopup
+- **Homepage** (`/home`): Hero, 4 sticky scroll-over cards, challenges grid, CTA
 - **Blog** (`/blog`): Editorial magazine — hero, featured article, 6-card grid, newsletter, topics
-- **Company** (`/company`): "Est 2025" hero, mission, stats, values, approach, CTA
-- **Contact** (`/contact`): Atmospheric CSS bg, form with custom dropdown, footer
+- **Company** (`/company`): "Est 2021" bold gold hero, mission, stats, values, approach, CTA
+- **Contact** (`/contact`): Atmospheric CSS bg, bold "Get in touch" hero, form with custom dropdown
 - **Privacy Policy** (`/privacy-policy`): Alternating cream sections
 - **Terms of Service** (`/terms-of-service`): Numbered sections
+- **Live URL**: https://trinade-new.vercel.app
 
 ## What's Next
 - Mobile responsiveness pass (currently desktop-first)

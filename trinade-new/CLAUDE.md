@@ -26,12 +26,13 @@ app/
   layout.tsx           # Root layout — Manrope font import, metadata
   page.tsx             # Homepage — SmoothScroll + SolutionsContent + PremiumCursor + CookiePopup
   blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
-  company/page.tsx     # Company — "Est 2025" hero, mission, stats, values, approach, CTA
+  company/page.tsx     # Company — "Est 2021" hero (bold gold gradient), mission, stats, values, approach, CTA
   contact/page.tsx     # Contact — atmospheric CSS bg with gradient orbs, form with custom dropdown
   privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
-  solutions-navbar.tsx    # Fixed navbar: "trinade" wordmark (left, inertia-style extended 'e') + Menu pill (center) + Logo (right)
+  solutions-navbar.tsx    # Fixed navbar: "TRINADE" wordmark (left, clickable→/home) + Menu pill (center) + Logo 36px (right, clickable→/home)
+  homepage-content.tsx    # Homepage content: hero, 4 sticky scroll-over cards, challenges grid, CTA
   solutions-content.tsx   # Homepage content: hero, sliding solutions, industries grid, features, differentiators, social proof, CTA
   solutions-footer.tsx    # Brown gold liquid glass footer: contact CTA, nav links, social icons, copyright
   solutions-cookie-popup.tsx # Gold glass cookie consent popup
@@ -73,10 +74,10 @@ public/
 - Grows on interactive elements (buttons, links, inputs)
 
 ### Navbar (solutions-navbar.tsx)
-- "trinade" wordmark: fixed top-left, 22px/800 weight, inertia-style extended 'e' with double horizontal strokes
+- "TRINADE" wordmark: fixed top-left, 28px/800 weight, clickable → `/home`
 - Menu pill: fixed top-center, gold glass, contains "Menu" + scroll percentage
-- Logo: fixed top-right, 28px, inverted filter at 55% opacity
-- Full-screen overlay menu with page links + social links
+- Logo: fixed top-right, 36px, black filter at 85% opacity, clickable → `/home`
+- Expandable panel menu with page links + social links
 
 ### Footer (solutions-footer.tsx)
 - Brown gold liquid glass card on #0a0a0a background
