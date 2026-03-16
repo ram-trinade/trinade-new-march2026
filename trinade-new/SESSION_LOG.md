@@ -902,3 +902,16 @@ Custom cursor was a single dot (20px white circle with mix-blend-mode difference
 - `HANDOFF_PROMPT.md` — Updated route table, added routing warnings
 
 ---
+
+## 2026-03-16 — Prompt 10b: Navbar pill layout, active dot, footer label
+
+### Changes
+1. **Navbar pill layout** — Changed from `gap-4` centered to `justify-between` with `minWidth: 200px`. Menu/hamburger sits on the left, scroll percentage badge on the right. Proper spacing without cramping.
+2. **Active page dot** — Made significantly darker: `#8b6914 → #6b4f0e → #a07820` gradient with stronger `boxShadow` (0.4 white inset highlight, 0.5 outer glow). Now clearly visible against the gold panel background.
+3. **Footer "Products" label** — Restored "Products" text in footer nav (links to `/solutions`). User wants this label, not "Home".
+
+### Files Changed
+- `components/solutions-navbar.tsx` — Pill justify-between layout, darker active dot
+- `components/solutions-footer.tsx` — Restored "Products" label
+
+---
