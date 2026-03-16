@@ -9,9 +9,36 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 15 — Dynamic TRINADE/logo color + marquee speed reduction
-- Last completed: Prompt 15 navbar dynamic color adaptation
+- Done: Prompt 15b — Fixed dynamic TRINADE/logo color detection on dark sections
+- Last completed: Prompt 15b dark bg detection fix + Vercel deploy
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 15b: Fix Dark Background Detection + Deploy
+
+### What Was Done
+1. **Fixed dynamic color detection** (`solutions-navbar.tsx`)
+   - Root cause: `elementsFromPoint` + `backgroundColor` only caught solid colors, but dark sections use `linear-gradient` overlays (e.g., `rgba(26,26,30,0.72)`) which set `backgroundImage`, not `backgroundColor`
+   - Added `backgroundImage` gradient parsing — extracts rgba values from gradient strings and calculates luminance
+   - Added `data-dark-section` attribute check as reliable explicit marking
+   - Removed fragile inline style string matching approach
+2. **Added `data-dark-section` to all dark sections across site:**
+   - `solutions-content.tsx`: MissionSection, CTA card
+   - `solutions-footer.tsx`: Footer
+   - `company/page.tsx`: Hero, Mission, Values, Milestones, Impact, CTA (6 sections)
+   - `contact/page.tsx`: Hero section
+3. **Rigorous Playwright verification** across all pages:
+   - Solutions: Hero (cream→dark brown ✓), Mission dark (→light gold ✓)
+   - Company: Hero dark (→light gold ✓), Light section (→dark brown ✓), Mission dark (→light gold ✓)
+   - Contact: Hero dark (→light gold ✓), Form section cream (→dark brown ✓)
+   - Blog: Hero cream (→dark brown ✓), Footer dark (→light gold ✓)
+4. **Deployed to Vercel** — production build successful
+
+### Technical Lessons
+- `getComputedStyle(el).backgroundColor` returns `rgba(0,0,0,0)` for gradient backgrounds — must also check `backgroundImage`
+- `backgroundImage.matchAll(/rgba?\(...\)/g)` reliably extracts colors from CSS gradient strings
+- `data-dark-section` attributes are the most reliable detection method — immune to CSS parsing edge cases
 
 ---
 
