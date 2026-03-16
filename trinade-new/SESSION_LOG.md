@@ -9,9 +9,33 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 49 — GSAP ScrollTrigger "Our Approach" pinned section (IT Solutions reference)
-- Last completed: Prompt 49 — Rewrote ScrollCardsSection with GSAP pin + scrub, matching the IT Solutions reference implementation
+- Done: Prompt 50 — Transferred GSAP "Our Approach" section to homepage
+- Last completed: Prompt 50 — Added HomeScrollCardsSection to homepage after FloatingCardsSection
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 50: Transfer "Our Approach" Section to Homepage
+
+### What Was Done
+
+#### Added GSAP Pinned Scroll Cards to Homepage
+- Copied ScrollCardsSection from solutions page to homepage as `HomeScrollCardsSection`
+- Added GSAP + ScrollTrigger imports to homepage-content.tsx
+- Added `scrollCards` data array (6 service cards)
+- Inserted after FloatingCardsSection and before WhyChooseUsSection
+- Used unique grain ID (`homeScrollGrain`) to avoid SVG filter conflicts
+
+### Homepage Section Order (6 sections)
+1. HomeHeroSection — "Technology that works for you."
+2. FloatingCardsSection — "What We Build" dark card grid
+3. **HomeScrollCardsSection** — "Our Approach" cream pinned section with GSAP scrub (NEW)
+4. WhyChooseUsSection — "Why Choose Us" dark accordion
+5. ChallengesSection — "Overcoming real business challenges"
+6. HomeCTASection — CTA
+
+### Files Changed
+- `components/homepage-content.tsx` — Added GSAP imports, scrollCards data, HomeScrollCardsSection, updated render order
 
 ---
 
