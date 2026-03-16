@@ -9,9 +9,22 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 11b — Navbar cleanup (remove Home, fix double active dots)
-- Last completed: Prompt 11b navbar refinements
+- Done: Prompt 12 — Remove Our Approach section + restore Prompt 7 Company page
+- Last completed: Prompt 12 solutions cleanup and company page restoration
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 12: Remove Our Approach + Restore Company Page
+
+### What Was Done
+1. **Removed "Our Approach" (ScrollCardsSection) from Solutions page** (`solutions-content.tsx`)
+   - Removed `<ScrollCardsSection />` from the render output
+   - Industries section now flows directly into Challenges section
+2. **Restored Prompt 7 Company page** (`app/company/page.tsx`)
+   - Current simplified version (916 lines) backed up as `page-current-backup.tsx`
+   - Restored the richer Prompt 7 version (1505 lines) from git commit `175d5d8`
+   - Restored version has: cinematic dark hero with "OUR STORY" + giant "TRINADE", values accordion (V/01-V/06), full team section (8 members with expandable bios), timeline, stats, and CTA
 
 ---
 

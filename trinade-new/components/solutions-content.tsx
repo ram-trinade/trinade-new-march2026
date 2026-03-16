@@ -893,7 +893,6 @@ export default function SolutionsContent() {
       <HeroSection />
       <MissionSection />
       <IndustriesSection />
-      <ScrollCardsSection />
       <ChallengesSection />
       <AccordionSection />
       <DifferentiatorsSection />
