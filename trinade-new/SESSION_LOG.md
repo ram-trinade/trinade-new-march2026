@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 58 — Dark gradient scroll cards + How We Work redesign
-- Last completed: Prompt 58 — Dark glow cards for Our Approach, smooth How We Work with numbers on right
+- Done: Prompt 59 — Our Approach background spiral lines visibility
+- Last completed: Prompt 59 — Added spiral-light.jpg bg image + increased concentric circle and gold orb opacity
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 59: Our Approach Background Spiral Lines Visibility
+
+### What Was Done
+- Added `spiral-light.jpg` as a background image to the Our Approach (scroll cards) section at 9% opacity
+- Added cream gradient overlay on top of the image to keep it subtle
+- Increased concentric circle border opacity from (0.12, 0.09, 0.06) to (0.22, 0.17, 0.12)
+- Increased atmospheric gold orb from 0.06 to 0.10 opacity
+- Result: spiral flowing lines now clearly visible as warm texture in the background
+
+### Files Modified
+- `components/homepage-content.tsx` — Added Image import usage + opacity adjustments in HomeScrollCardsSection
+
+### Verification
+- Playwright: Spiral lines visible with flowing curves, concentric circles more defined
 
 ---
 

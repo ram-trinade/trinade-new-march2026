@@ -415,6 +415,12 @@ function HomeScrollCardsSection() {
         background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
       }}
     >
+      {/* Spiral lines background image — subtle warm texture */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image src="/spiral-light.jpg" alt="" fill className="object-cover" style={{ opacity: 0.09 }} />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${P.cream}cc 0%, ${P.cream}88 40%, ${P.cream}bb 100%)` }} />
+      </div>
+
       {/* Concentric circles — decorative bg element */}
       <div
         className="absolute pointer-events-none"
@@ -430,7 +436,7 @@ function HomeScrollCardsSection() {
               transform: 'translate(-50%, -50%)',
               width: `${size}%`,
               height: `${size}%`,
-              border: `1px solid rgba(201,168,110,${0.12 - i * 0.03})`,
+              border: `1px solid rgba(201,168,110,${0.22 - i * 0.05})`,
             }}
           />
         ))}
@@ -444,7 +450,7 @@ function HomeScrollCardsSection() {
           right: '-5%',
           width: '50vw',
           height: '50vw',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 65%)',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.1) 0%, transparent 65%)',
         }}
       />
 
