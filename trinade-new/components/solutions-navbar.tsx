@@ -141,9 +141,9 @@ export default function SolutionsNavbar() {
       {/* ─── Trinade text on the left (inertia-style) ─── */}
       <a
         href="/"
-        className="fixed top-5 left-8 z-[9999] flex items-center"
+        className="fixed left-8 z-[9999] flex items-center"
         data-navbar
-        style={{ pointerEvents: 'auto', textDecoration: 'none' }}
+        style={{ pointerEvents: 'auto', textDecoration: 'none', top: '34px' }}
       >
         <span
           style={{
@@ -162,9 +162,9 @@ export default function SolutionsNavbar() {
       {/* ─── Logo on the top right ─── */}
       <a
         href="/"
-        className="fixed top-5 right-8 z-[9999] flex items-center"
+        className="fixed right-8 z-[9999] flex items-center"
         data-navbar
-        style={{ pointerEvents: 'auto' }}
+        style={{ pointerEvents: 'auto', top: '30px' }}
       >
         <Image
           src="/logo-transparent.png"
@@ -175,8 +175,10 @@ export default function SolutionsNavbar() {
           style={{
             width: '36px',
             height: '36px',
-            filter: isOnDark ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6)' : 'brightness(0)',
-            opacity: 0.85,
+            filter: isOnDark
+              ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
+              : 'brightness(0) contrast(3)',
+            opacity: 1,
             transition: 'filter 0.5s ease',
           }}
         />

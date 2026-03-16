@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 29 — Company page polish: values alignment, team card spacing/sizing, bio width
-- Last completed: Prompt 29 Company page refinements
+- Done: Prompt 30 — Navbar alignment polish, logo contrast boost, Products folder reorganization
+- Last completed: Prompt 30 navbar/logo refinements
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 30: Navbar Alignment + Logo Strength + Folder Reorganization
+
+### What Was Done
+1. **TRINADE text + logo aligned to Menu pill text** — Previously both were at `top-5` (20px), aligned with the pill's top edge. Measured centers precisely via Playwright: TRINADE center was 43px, Menu text center was 48px. Adjusted TRINADE to `top: 34px` and logo to `top: 30px` so all three elements share a vertical center of 48px.
+2. **Logo outlines strengthened 3x** — Added `contrast(3)` to the logo CSS filter on both light and dark backgrounds. Also bumped opacity from 0.85 → 1 for maximum clarity. The neural mesh details are now crisp and bold.
+3. **Products folder moved to Content/** — Moved `trinade-new/Products/` into `trinade-new/Content/Products/` for better content organization.
+
+### Files Changed
+- `components/solutions-navbar.tsx` — TRINADE text top position (20px → 34px), logo top position (20px → 30px), logo filter added `contrast(3)`, logo opacity 0.85 → 1
+- `Content/Products/` — Moved from `Products/` root
+
+### Verification
+- Playwright `getBoundingClientRect()` confirms all three navbar elements (TRINADE, Menu text, logo) share vertical center at 48px
+- Tested on both light (homepage hero) and dark (footer) sections — adaptive color transitions work correctly
 
 ---
 
