@@ -19,7 +19,14 @@ export default function HomePage() {
         .solutions-page, .solutions-page * { cursor: none !important; }
       `}</style>
       <PreloaderAnimation onComplete={() => setPreloaderDone(true)} />
-      <div className="solutions-page relative bg-[#e8e4de]">
+      <div
+        className="solutions-page relative bg-[#e8e4de]"
+        style={{
+          opacity: preloaderDone ? 1 : 0,
+          visibility: preloaderDone ? 'visible' : 'hidden',
+          transition: 'opacity 0.5s ease',
+        }}
+      >
         <PremiumCursor />
         <SolutionsNavbar />
         <SmoothScroll>

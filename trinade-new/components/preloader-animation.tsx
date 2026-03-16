@@ -349,44 +349,47 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                 overflow: 'hidden',
               }}
             >
-              {/* Gold shimmer line that sweeps on each transition */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`shimmer-${milestoneIndex}`}
-                  initial={{ x: '-100%', opacity: 0 }}
-                  animate={{ x: '200%', opacity: [0, 0.6, 0] }}
-                  transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '40%',
-                    height: '100%',
-                    background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.25), transparent)',
-                    pointerEvents: 'none',
-                    zIndex: 2,
-                  }}
-                />
-              </AnimatePresence>
-
-              {/* Animated number with vertical slide */}
-              <span style={{ display: 'inline-block', position: 'relative', overflow: 'hidden' }}>
-                <AnimatePresence mode="popLayout" initial={false}>
-                  <motion.span
-                    key={MILESTONES[milestoneIndex].value}
-                    initial={{ y: '100%', filter: 'blur(8px)', opacity: 0 }}
-                    animate={{ y: '0%', filter: 'blur(0px)', opacity: 1 }}
-                    exit={{ y: '-100%', filter: 'blur(6px)', opacity: 0 }}
-                    transition={{
-                      duration: 0.38,
-                      ease: [0.22, 1, 0.36, 1],
+              {/* Per-digit staggered vertical slide — each digit animates independently */}
+              {(() => {
+                const digits = String(MILESTONES[milestoneIndex].value).split('')
+                return digits.map((digit, i) => (
+                  <span
+                    key={`pos-${i}`}
+                    style={{
+                      display: 'inline-block',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      // Fixed width per digit to prevent layout shift
+                      width: '0.62em',
+                      height: '1em',
                     }}
-                    style={{ display: 'inline-block' }}
                   >
-                    {MILESTONES[milestoneIndex].value}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      <motion.span
+                        key={`${milestoneIndex}-${i}-${digit}`}
+                        initial={{ y: '110%', opacity: 0 }}
+                        animate={{ y: '0%', opacity: 1 }}
+                        exit={{ y: '-110%', opacity: 0 }}
+                        transition={{
+                          duration: 0.4,
+                          ease: [0.22, 1, 0.36, 1],
+                          // Stagger: rightmost digit leads, leftmost follows
+                          delay: (digits.length - 1 - i) * 0.06,
+                        }}
+                        style={{
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                        }}
+                      >
+                        {digit}
+                      </motion.span>
+                    </AnimatePresence>
+                  </span>
+                ))
+              })()}
 
               <span
                 style={{

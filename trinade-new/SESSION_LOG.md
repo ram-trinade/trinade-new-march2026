@@ -9,9 +9,35 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 45 — Preloader cinematic vertical slide counter
-- Last completed: Prompt 45 — AnimatePresence vertical slide transitions for milestone numbers, gold shimmer sweep, weight 600
+- Done: Prompt 46 — Preloader content flash fix + per-digit staggered counter
+- Last completed: Prompt 46 — hidden content during preloader, removed shimmer, per-digit non-sync vertical slide
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 46: Preloader Content Flash Fix + Per-Digit Counter
+
+### What Was Done
+
+#### 1. Fixed Homepage Content Showing Before Preloader
+- **Problem**: Homepage content (hero, navbar, footer) was visible behind/before the preloader mounted
+- **Fix**: Added `opacity: 0; visibility: hidden` to the main content div, gated by `preloaderDone` state
+- Content fades in with `transition: opacity 0.5s ease` after preloader completes
+
+#### 2. Fixed Footer Flash on Load
+- Same root fix — footer is inside the hidden content container, so it can't flash before preloader finishes
+
+#### 3. Per-Digit Staggered Vertical Slide (Removed Shimmer)
+- **Removed**: Gold shimmer sweep overlay on number transitions
+- **Added**: Each digit animates independently — splits the milestone number into individual characters
+- Each digit slides up with `y: 110% → 0%` enter, `y: 0% → -110%` exit
+- **Non-sync stagger**: Rightmost digit leads, leftmost follows (0.06s delay per position)
+- Fixed-width digit slots (0.62em) prevent layout shift during transitions
+- Duration: 400ms with ease `[0.22, 1, 0.36, 1]`
+
+### Files Changed
+- `app/page.tsx` — Content hidden until `preloaderDone`, fade-in transition
+- `components/preloader-animation.tsx` — Removed shimmer, per-digit AnimatePresence with stagger
 
 ---
 
