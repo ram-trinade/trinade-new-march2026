@@ -9,9 +9,23 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 19 — Values accordion premium redesign
-- Last completed: Prompt 19 Awwwards-quality accordion with big numbers on right
+- Done: Prompt 20 — Milestone cards fixed layout + larger size
+- Last completed: Prompt 20 fixed year position and card dimensions
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 20: Milestone Cards Layout Fix
+
+### What Was Done
+1. **Fixed year position** — changed `justifyContent: 'flex-end'` to `'space-between'` so year stays pinned at top regardless of content length
+2. **Increased card size** — from 320×380px to 380×440px for less congestion
+3. **Larger year typography** — 48px → 56px for more visual impact
+4. **Better spacing** — padding increased from 36px 32px to 40px 36px, title 20px → 22px
+5. **Content structure** — year at top, title+description wrapped in bottom div via space-between layout
+
+### Files Changed
+- `app/company/page.tsx` — MilestoneCard component (~lines 577-662)
 
 ---
 

@@ -581,17 +581,17 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        minWidth: '320px',
-        maxWidth: '320px',
-        height: '380px',
+        minWidth: '380px',
+        maxWidth: '380px',
+        height: '440px',
         borderRadius: '20px',
         background: '#1a1a1e',
         position: 'relative',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '36px 32px',
+        justifyContent: 'space-between',
+        padding: '40px 36px',
         scrollSnapAlign: 'start',
         flexShrink: 0,
         transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease',
@@ -614,9 +614,9 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
       {/* Grain */}
       <Grain id={`grain-card-${index}`} opacity={0.03} />
 
-      {/* Year */}
+      {/* Year — fixed at top */}
       <p style={{
-        fontSize: '48px',
+        fontSize: '56px',
         fontWeight: 200,
         letterSpacing: '-0.04em',
         background: 'linear-gradient(135deg, #c9a86e, #d4bb8a)',
@@ -624,36 +624,34 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
         lineHeight: 1,
-        marginBottom: '20px',
         position: 'relative',
         zIndex: 2,
       }}>
         {item.year}
       </p>
 
-      {/* Title */}
-      <h4 style={{
-        fontSize: '20px',
-        fontWeight: 600,
-        color: 'rgba(255,255,255,0.93)',
-        marginBottom: '12px',
-        letterSpacing: '-0.01em',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        {item.title}
-      </h4>
+      {/* Content — pushed to bottom */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        {/* Title */}
+        <h4 style={{
+          fontSize: '22px',
+          fontWeight: 600,
+          color: 'rgba(255,255,255,0.93)',
+          marginBottom: '14px',
+          letterSpacing: '-0.01em',
+        }}>
+          {item.title}
+        </h4>
 
-      {/* Description */}
-      <p style={{
-        fontSize: '16px',
-        lineHeight: 1.85,
-        color: 'rgba(255,255,255,0.45)',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        {item.desc}
-      </p>
+        {/* Description */}
+        <p style={{
+          fontSize: '15px',
+          lineHeight: 1.75,
+          color: 'rgba(255,255,255,0.5)',
+        }}>
+          {item.desc}
+        </p>
+      </div>
     </motion.div>
   )
 }
