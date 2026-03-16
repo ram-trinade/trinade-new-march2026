@@ -985,9 +985,9 @@ export default function CompanyPage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 2, ease: EASE_CINEMATIC }}
                 style={{
-                  fontSize: '13px',
+                  fontSize: '14px',
                   fontWeight: 500,
-                  color: 'rgba(255,255,255,0.2)',
+                  color: 'rgba(255,255,255,0.5)',
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
                   marginTop: '40px',
@@ -1144,7 +1144,7 @@ export default function CompanyPage() {
                       <span style={{
                         fontSize: '44px',
                         fontWeight: 200,
-                        color: 'rgba(201,168,110,0.12)',
+                        color: 'rgba(201,168,110,0.3)',
                         lineHeight: 1,
                         display: 'block',
                         marginBottom: '24px',
@@ -1163,7 +1163,7 @@ export default function CompanyPage() {
                       <p style={{
                         fontSize: '16px',
                         lineHeight: 1.85,
-                        color: 'rgba(255,255,255,0.45)',
+                        color: 'rgba(255,255,255,0.65)',
                       }}>
                         {pillar.desc}
                       </p>
