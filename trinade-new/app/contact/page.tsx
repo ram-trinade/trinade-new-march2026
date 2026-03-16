@@ -149,8 +149,8 @@ function CountryCodeDropdown({
                     textAlign: 'left',
                     padding: '10px 12px',
                     fontSize: '13px',
-                    fontWeight: value === cc.code ? 600 : 400,
-                    color: value === cc.code ? '#2a2218' : 'rgba(42,34,24,0.75)',
+                    fontWeight: value === cc.code ? 600 : 450,
+                    color: value === cc.code ? '#2a2218' : 'rgba(42,34,24,0.92)',
                     background: value === cc.code ? 'rgba(255,255,255,0.3)' : 'transparent',
                     border: 'none',
                     borderRadius: '12px',
@@ -163,7 +163,7 @@ function CountryCodeDropdown({
                 >
                   <span style={{ fontSize: '16px' }}>{cc.flag}</span>
                   <span style={{ flex: 1 }}>{cc.country}</span>
-                  <span style={{ fontSize: '12px', opacity: 0.6 }}>{cc.code}</span>
+                  <span style={{ fontSize: '12px', opacity: 0.75, fontWeight: 500 }}>{cc.code}</span>
                 </motion.button>
               ))}
             </div>
@@ -295,8 +295,8 @@ function SubjectDropdown({
                     textAlign: 'left',
                     padding: '11px 16px',
                     fontSize: '14px',
-                    fontWeight: value === option.value ? 600 : 400,
-                    color: value === option.value ? '#2a2218' : 'rgba(42,34,24,0.75)',
+                    fontWeight: value === option.value ? 600 : 450,
+                    color: value === option.value ? '#2a2218' : 'rgba(42,34,24,0.92)',
                     background: value === option.value ? 'rgba(255,255,255,0.3)' : 'transparent',
                     border: 'none',
                     borderRadius: '12px',

@@ -10,7 +10,7 @@ Awwwards-quality corporate website for Trinade AI Technologies Private Limited. 
 - **Scroll**: Lenis for smooth scrolling
 - **Types**: TypeScript strict mode
 - **Typography**: Manrope (single unified font, weights 200–800, CSS vars `--font-sans` and `--font-display`)
-- **Animation (scroll)**: GSAP ScrollTrigger (pinned scroll sections — "Our Approach" on Solutions page)
+- **Animation (scroll)**: GSAP ScrollTrigger (pinned scroll sections — "Our Approach" on both Solutions + Homepage)
 - **NO**: React Three Fiber, ShadCN, MagicUI — this project is deliberately lean
 
 ## Quick Start
@@ -29,16 +29,16 @@ app/
   not-found.tsx        # 404 page — giant "404" watermark, gold border button, dark atmospheric
   blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
   company/page.tsx     # Company — "Est 2020" hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members)
-  contact/page.tsx     # Contact — dark hero with spiral bg, split layout (info card left + gold glass form right)
+  contact/page.tsx     # Contact — dark hero with spiral bg, split layout (info card left + gold glass form right), CountryCodeDropdown (20 countries), scrollable SubjectDropdown
   privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
   solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname)
-  solutions-content.tsx   # Solutions: hero, mission, industries, testimonial challenges carousel, accordion, CTA
+  solutions-content.tsx   # Solutions: hero, mission, industries, Our Approach scroll cards (GSAP pinned), testimonial challenges carousel, accordion, CTA
   solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
   solutions-cookie-popup.tsx # Gold glass cookie consent popup (data-lenis-prevent for 125%+ zoom scroll fix)
   smooth-scroll.tsx       # Lenis smooth scroll provider
-  homepage-content.tsx    # Homepage sections: hero, AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges, CTA
+  homepage-content.tsx    # Homepage sections: hero, floating cards, Our Approach scroll cards (GSAP pinned, dark gradient + gold glow), How We Work accordion (large numbered steps), challenges, CTA
   preloader-animation.tsx # Frontend-w.com inspired preloader: dark gradient bg, lens flare, "You Envision — We Build" tagline, per-digit milestone counter (0→25→50→75→100%, staggered vertical slide, weight 600)
 public/
   logo-transparent.png    # Trinade logo (transparent PNG)
