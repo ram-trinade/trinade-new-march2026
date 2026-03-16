@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 52 — Content rebalanced to 40% AI / 60% other solutions + Challenges dark bg
-- Last completed: Prompt 52 — Homepage & Solutions content updates, Solutions Challenges section dark background
+- Done: Prompt 53 — Scroll cards section layout refinements
+- Last completed: Prompt 53 — Headline alignment, card text layout, removed "Learn more"
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 53: Scroll Cards Section Layout Refinements
+
+### What Was Done
+- Headline "Secure, Streamline, and Succeed with Confidence" shifted left (6vw → 4vw) and lifted up (bottom 5vh → 10vh)
+- Card body text constrained with max-w-[480px] for editorial left-aligned feel
+- Increased title-body spacing (mb-3 → mb-4) for breathing room
+- Removed "Learn more" link + arrow from all scroll cards — cleaner, more refined
+
+### Files Modified
+- `components/homepage-content.tsx` — 3 edits in HomeScrollCardsSection
+
+### Verified via Playwright
+- Headline position more editorial, cards cleaner without "Learn more"
 
 ---
 

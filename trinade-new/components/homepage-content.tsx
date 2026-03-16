@@ -479,7 +479,7 @@ function HomeScrollCardsSection() {
         {/* Left: Headline pinned at bottom-left */}
         <div
           className="absolute z-20"
-          style={{ bottom: '5vh', left: 'clamp(2rem,6vw,6rem)', width: '46%' }}
+          style={{ bottom: '10vh', left: 'clamp(1.5rem,4vw,4rem)', width: '46%' }}
         >
           <p
             className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
@@ -549,24 +549,17 @@ function HomeScrollCardsSection() {
                 />
 
                 <h3
-                  className="relative z-10 tracking-[-0.015em] mb-3"
+                  className="relative z-10 tracking-[-0.015em] mb-4"
                   style={{ fontSize: 'clamp(1.2rem, 1.6vw, 1.6rem)', fontWeight: 500, color: P.textDark }}
                 >
                   {card.title}
                 </h3>
                 <p
-                  className="relative z-10 leading-[1.6] mb-5"
+                  className="relative z-10 leading-[1.7] max-w-[480px]"
                   style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', color: P.textMuted }}
                 >
                   {card.body}
                 </p>
-
-                <div className="relative z-10 flex items-center gap-1.5">
-                  <span className="text-[13px] font-medium" style={{ color: P.gold }}>Learn more</span>
-                  <svg className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5" style={{ opacity: 0.7 }}>
-                    <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
               </div>
             ))}
           </div>
