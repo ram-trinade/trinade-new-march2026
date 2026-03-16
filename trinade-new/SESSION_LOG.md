@@ -9,9 +9,38 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 57 — Our Approach headline left alignment fix
-- Last completed: Prompt 57 — Moved headline outside max-width container for proper page alignment (x=128px, matching hero)
+- Done: Prompt 58 — Dark gradient scroll cards + How We Work redesign
+- Last completed: Prompt 58 — Dark glow cards for Our Approach, smooth How We Work with numbers on right
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 58: Dark Gradient Scroll Cards + How We Work Redesign
+
+### What Was Done
+1. **Our Approach scroll cards** — Converted from white to dark gradient design:
+   - Background: `linear-gradient(135deg, #1a1a1e, #0f0f12, #131318)` with `border: 1px solid rgba(255,255,255,0.06)`
+   - Gold glow: radial-gradient from bottom-right corner, 60% opacity → 100% on hover, with 30px blur
+   - Gold left-edge accent line that extends on hover (15%→5% inset)
+   - Per-card grain overlay for texture
+   - Light text on dark: titles at 93% white, body at 45% white
+   - Shadow: darker `rgba(0,0,0,0.2)` base, `rgba(0,0,0,0.25)` on hover
+
+2. **How We Work section** — Redesigned for smoother experience:
+   - Removed V/01, V/02 etc. small label numbers from left column
+   - Removed decorative SVG icons (ValueIcon component deleted)
+   - Added large "01", "02", "03", "04" numbers on the right side (4.5rem, weight 200, gold)
+   - Switched from 3-column grid to flexbox (title+desc left, number right)
+   - Replaced AnimatePresence expand/collapse with smooth `motion.div` height animation
+   - Smoother ease curve: `[0.16, 1, 0.3, 1]` with 0.8s duration
+   - Divider line color transitions with active state
+
+### Files Modified
+- `components/homepage-content.tsx` — Scroll cards dark gradient + How We Work redesign
+
+### Verification
+- Playwright: Dark cards rendering with gold glow on cream background
+- Playwright: How We Work shows clean title left / number right layout with smooth animations
 
 ---
 

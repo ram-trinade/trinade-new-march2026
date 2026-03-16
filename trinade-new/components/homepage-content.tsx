@@ -494,47 +494,53 @@ function HomeScrollCardsSection() {
           }}
         >
           <div ref={cardsWrapperRef} className="relative w-full flex flex-col" style={{ maxWidth: 600, gap: '2.5rem' }}>
-            {scrollCards.map((card) => (
+            {scrollCards.map((card, i) => (
               <div
                 key={card.title}
-                className="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-[5px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)]"
+                className="group relative rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-[5px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
                 style={{
-                  background: '#ffffff',
+                  background: 'linear-gradient(135deg, #1a1a1e 0%, #0f0f12 60%, #131318 100%)',
                   padding: 'clamp(2rem,4vw,4rem)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.06)',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+                  border: '1px solid rgba(255,255,255,0.06)',
                 }}
               >
-                {/* Gold radial gradient on hover */}
+                {/* Gold glow from bottom-right corner */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  className="absolute pointer-events-none transition-opacity duration-700 opacity-60 group-hover:opacity-100"
                   style={{
-                    background: 'radial-gradient(circle at bottom right, rgba(201,168,110,0.25) 0%, transparent 70%)',
-                    zIndex: 0,
+                    bottom: '-20%',
+                    right: '-10%',
+                    width: '70%',
+                    height: '70%',
+                    background: `radial-gradient(ellipse at center, rgba(201,168,110,${i % 2 === 0 ? '0.15' : '0.12'}) 0%, rgba(201,168,110,0.04) 50%, transparent 80%)`,
+                    filter: 'blur(30px)',
                   }}
                 />
 
-                {/* Gold bottom border line */}
+                {/* Subtle grain on card */}
+                <div className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay">
+                  <svg width="100%" height="100%">
+                    <filter id={`cardGrain${i}`}><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" /></filter>
+                    <rect width="100%" height="100%" filter={`url(#cardGrain${i})`} />
+                  </svg>
+                </div>
+
+                {/* Gold left edge accent */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500"
-                  style={{
-                    background: `linear-gradient(90deg, transparent 0%, ${P.gold}44 20%, ${P.goldLight}66 50%, ${P.gold}44 80%, transparent 100%)`,
-                    opacity: 0.4,
-                  }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-[2px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-                  style={{ background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight})` }}
+                  className="absolute top-[15%] bottom-[15%] left-0 w-[2px] transition-all duration-500 group-hover:top-[5%] group-hover:bottom-[5%]"
+                  style={{ background: `linear-gradient(180deg, transparent, ${P.gold}55, transparent)` }}
                 />
 
                 <h3
                   className="relative z-10 tracking-[-0.015em] mb-4"
-                  style={{ fontSize: 'clamp(1.2rem, 1.6vw, 1.6rem)', fontWeight: 500, color: P.textDark }}
+                  style={{ fontSize: 'clamp(1.2rem, 1.6vw, 1.6rem)', fontWeight: 500, color: 'rgba(240,237,232,0.93)' }}
                 >
                   {card.title}
                 </h3>
                 <p
                   className="relative z-10 leading-[1.7] max-w-[480px]"
-                  style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', color: P.textMuted }}
+                  style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)', color: 'rgba(240,237,232,0.45)' }}
                 >
                   {card.body}
                 </p>
@@ -554,47 +560,10 @@ function HomeScrollCardsSection() {
 // horizontal gold dividers, scroll-triggered expand/collapse
 // ═══════════════════════════════════════════════════════════
 
-// Decorative line-art SVG icons for each value
-function ValueIcon({ type }: { type: string }) {
-  const stroke = 'rgba(201,168,110,0.4)'
-  const w = 80
-  if (type === 'search') return (
-    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="35" cy="35" r="22" stroke={stroke} strokeWidth="1.5" />
-      <line x1="51" y1="51" x2="68" y2="68" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="35" cy="35" r="8" stroke="rgba(201,168,110,0.2)" strokeWidth="1" strokeDasharray="3 3" />
-    </svg>
-  )
-  if (type === 'grid') return (
-    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="12" y="12" width="24" height="24" stroke={stroke} strokeWidth="1.5" />
-      <rect x="44" y="12" width="24" height="24" stroke={stroke} strokeWidth="1.5" />
-      <rect x="12" y="44" width="24" height="24" stroke={stroke} strokeWidth="1.5" />
-      <rect x="44" y="44" width="24" height="24" stroke="rgba(201,168,110,0.2)" strokeWidth="1.5" strokeDasharray="3 3" />
-    </svg>
-  )
-  if (type === 'code') return (
-    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="24,28 12,40 24,52" stroke={stroke} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <polyline points="56,28 68,40 56,52" stroke={stroke} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <line x1="46" y1="22" x2="34" y2="58" stroke="rgba(201,168,110,0.25)" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  )
-  // evolve
-  return (
-    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 60 C20 40, 40 35, 40 20" stroke={stroke} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      <path d="M40 20 C40 35, 60 40, 60 60" stroke="rgba(201,168,110,0.2)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeDasharray="3 3" />
-      <circle cx="40" cy="18" r="4" stroke={stroke} strokeWidth="1.5" />
-      <line x1="16" y1="62" x2="64" y2="62" stroke="rgba(201,168,110,0.15)" strokeWidth="1" />
-    </svg>
-  )
-}
-
-// Single value row — scroll-triggered expand
+// Single value row — smooth scroll-triggered with number on right
 function ValueRow({ item, index, isLast }: { item: typeof values[0]; index: number; isLast: boolean }) {
   const rowRef = useRef<HTMLDivElement>(null)
-  const isActive = useInView(rowRef, { margin: '-35% 0px -35% 0px' })
+  const isInRow = useInView(rowRef, { margin: '-30% 0px -30% 0px' })
 
   return (
     <div ref={rowRef}>
@@ -606,31 +575,18 @@ function ValueRow({ item, index, isLast }: { item: typeof values[0]; index: numb
         transition={{ duration: 1, ease: EASE_OUT }}
         style={{
           height: '1px',
-          background: 'rgba(201,168,110,0.25)',
+          background: `linear-gradient(90deg, rgba(201,168,110,${isInRow ? '0.4' : '0.15'}), rgba(255,255,255,0.04))`,
           transformOrigin: 'left',
+          transition: 'background 0.8s ease',
         }}
       />
 
       <div
-        className="grid py-10 lg:py-14"
-        style={{
-          gridTemplateColumns: 'clamp(80px, 12vw, 180px) 1fr auto',
-          gap: 'clamp(1rem, 3vw, 3rem)',
-          alignItems: 'start',
-        }}
+        className="flex items-start justify-between py-12 lg:py-16"
+        style={{ gap: 'clamp(2rem, 4vw, 4rem)' }}
       >
-        {/* Number */}
-        <motion.span
-          className="text-[13px] font-medium tracking-[0.15em] uppercase pt-2"
-          style={{ color: P.gold, opacity: isActive ? 1 : 0.4 }}
-          animate={{ opacity: isActive ? 1 : 0.4 }}
-          transition={{ duration: 0.5 }}
-        >
-          {item.number}
-        </motion.span>
-
-        {/* Title + Description */}
-        <div>
+        {/* Left: Title + Description */}
+        <div className="flex-1 min-w-0">
           <motion.h3
             className="tracking-[-0.02em] leading-[1.15]"
             style={{
@@ -638,37 +594,45 @@ function ValueRow({ item, index, isLast }: { item: typeof values[0]; index: numb
               fontWeight: 300,
               color: P.textOnDark,
             }}
-            animate={{ opacity: isActive ? 0.95 : 0.45 }}
-            transition={{ duration: 0.5 }}
+            animate={{ opacity: isInRow ? 0.95 : 0.35 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             {item.title}
           </motion.h3>
 
-          {/* Description — expands when active */}
-          <AnimatePresence>
-            {isActive && (
-              <motion.p
-                initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                animate={{ opacity: 1, height: 'auto', marginTop: 20 }}
-                exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                transition={{ duration: 0.6, ease: EASE_OUT }}
-                className="text-[15px] leading-[1.85] max-w-[560px] overflow-hidden"
-                style={{ color: P.textOnDarkMuted }}
-              >
-                {item.description}
-              </motion.p>
-            )}
-          </AnimatePresence>
+          {/* Description — smooth height animation */}
+          <motion.div
+            className="overflow-hidden"
+            animate={{
+              height: isInRow ? 'auto' : 0,
+              opacity: isInRow ? 1 : 0,
+              marginTop: isInRow ? 20 : 0,
+            }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p
+              className="text-[15px] leading-[1.85] max-w-[560px]"
+              style={{ color: P.textOnDarkMuted }}
+            >
+              {item.description}
+            </p>
+          </motion.div>
         </div>
 
-        {/* Decorative icon — visible when active */}
-        <motion.div
-          className="hidden lg:block pt-2"
-          animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.8 }}
-          transition={{ duration: 0.6, ease: EASE_OUT }}
+        {/* Right: Large number */}
+        <motion.span
+          className="hidden lg:block shrink-0 tabular-nums leading-none"
+          style={{
+            fontSize: 'clamp(3rem, 5vw, 4.5rem)',
+            fontWeight: 200,
+            color: P.gold,
+            letterSpacing: '-0.04em',
+          }}
+          animate={{ opacity: isInRow ? 0.5 : 0.12 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <ValueIcon type={item.icon} />
-        </motion.div>
+          {String(index + 1).padStart(2, '0')}
+        </motion.span>
       </div>
 
       {/* Bottom divider for last item */}
@@ -680,7 +644,7 @@ function ValueRow({ item, index, isLast }: { item: typeof values[0]; index: numb
           transition={{ duration: 1, ease: EASE_OUT }}
           style={{
             height: '1px',
-            background: 'rgba(201,168,110,0.25)',
+            background: 'rgba(201,168,110,0.15)',
             transformOrigin: 'left',
           }}
         />
