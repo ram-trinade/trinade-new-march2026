@@ -92,12 +92,12 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             pointerEvents: isExiting ? 'none' : 'auto',
           }}
         >
-          {/* ─── Background ─── */}
+          {/* ─── Background — warm dark gold gradient ─── */}
           <motion.div
             style={{
               position: 'absolute',
               inset: 0,
-              background: '#0a0a0a',
+              background: 'linear-gradient(135deg, #1a1610 0%, #2a1f14 40%, #1e1810 70%, #1a1610 100%)',
             }}
             animate={isExiting ? {
               y: '-100%',
@@ -109,6 +109,30 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
               ease: EASE_CINE,
               delay: 0.15,
             } : undefined}
+          />
+
+          {/* ─── Gold glass radial overlay ─── */}
+          <motion.div
+            animate={isExiting ? { y: '-100%' } : { y: '0%' }}
+            transition={isExiting ? { duration: 0.9, ease: EASE_CINE, delay: 0.15 } : undefined}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,110,0.08) 0%, rgba(160,129,74,0.04) 40%, transparent 70%)',
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* ─── Subtle warm vignette ─── */}
+          <motion.div
+            animate={isExiting ? { y: '-100%' } : { y: '0%' }}
+            transition={isExiting ? { duration: 0.9, ease: EASE_CINE, delay: 0.15 } : undefined}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'radial-gradient(ellipse at center, transparent 30%, rgba(15,12,8,0.5) 100%)',
+              pointerEvents: 'none',
+            }}
           />
 
           {/* ─── Subtle grain texture ─── */}
@@ -215,14 +239,14 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
 
             {/* ─── "TRINADE" brand text reveal ─── */}
             <motion.div
-              initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+              initial={{ opacity: 0 }}
               animate={
                 isBrandRevealed
-                  ? { opacity: 1, y: -60, filter: 'blur(0px)' }
-                  : { opacity: 0, y: 30, filter: 'blur(8px)' }
+                  ? { opacity: 1, y: -60 }
+                  : { opacity: 0, y: 0 }
               }
               transition={{
-                duration: 0.8,
+                duration: 0.6,
                 ease: EASE_OUT,
               }}
               style={{
@@ -233,7 +257,14 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
               }}
             >
               {/* Logo next to text */}
-              <div
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, filter: 'blur(6px)' }}
+                animate={
+                  isBrandRevealed
+                    ? { opacity: 1, scale: 1, filter: 'blur(0px)' }
+                    : { opacity: 0, scale: 0.8, filter: 'blur(6px)' }
+                }
+                transition={{ duration: 0.6, ease: EASE_OUT }}
                 style={{
                   width: 'clamp(40px, 4.5vw, 60px)',
                   height: 'clamp(40px, 4.5vw, 60px)',
@@ -251,18 +282,60 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                   }}
                   priority
                 />
-              </div>
+              </motion.div>
+
+              {/* Letter-by-letter stagger with blur-to-sharp + gold shimmer */}
               <span
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-                  fontWeight: 700,
+                  fontWeight: 300,
                   letterSpacing: '0.12em',
-                  color: 'rgba(242,237,230,0.93)',
                   whiteSpace: 'nowrap',
+                  display: 'flex',
+                  position: 'relative',
                 }}
               >
-                Trinade
+                {'Trinade'.split('').map((letter, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 20, filter: 'blur(12px)' }}
+                    animate={
+                      isBrandRevealed
+                        ? { opacity: 1, y: 0, filter: 'blur(0px)' }
+                        : { opacity: 0, y: 20, filter: 'blur(12px)' }
+                    }
+                    transition={{
+                      duration: 0.5,
+                      ease: EASE_OUT,
+                      delay: isBrandRevealed ? i * 0.06 : 0,
+                    }}
+                    style={{
+                      display: 'inline-block',
+                      color: 'rgba(242,237,230,0.93)',
+                    }}
+                  >
+                    {letter}
+                  </motion.span>
+                ))}
+
+                {/* Gold shimmer sweep overlay */}
+                <motion.span
+                  initial={{ x: '-120%' }}
+                  animate={isBrandRevealed ? { x: '120%' } : { x: '-120%' }}
+                  transition={{
+                    duration: 0.8,
+                    ease: EASE_CINE,
+                    delay: isBrandRevealed ? 0.3 : 0,
+                  }}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(201,168,110,0.35) 45%, rgba(212,187,138,0.5) 50%, rgba(201,168,110,0.35) 55%, transparent 100%)',
+                    pointerEvents: 'none',
+                    mixBlendMode: 'screen',
+                  }}
+                />
               </span>
             </motion.div>
           </motion.div>

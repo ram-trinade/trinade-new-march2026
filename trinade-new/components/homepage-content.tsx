@@ -53,26 +53,30 @@ const challenges = [
   },
 ]
 
-const processCards = [
+const values = [
   {
-    label: 'Discovery',
-    body: 'We begin by understanding your business — mapping workflows, identifying pain points, and uncovering opportunities where technology can create the most impact.',
-    image: '/spiral-card.jpg',
+    number: 'V / 01',
+    title: 'Led by deep discovery',
+    description: 'We begin by understanding your business — mapping workflows, identifying pain points, and uncovering opportunities where technology can create the most impact.',
+    icon: 'search',
   },
   {
-    label: 'Architecture',
-    body: 'Every solution starts with a blueprint. We design scalable, secure systems tailored to your industry — from data pipelines to user-facing platforms.',
-    image: '/spiral-motion.jpg',
+    number: 'V / 02',
+    title: 'to architect with precision',
+    description: 'Every solution starts with a blueprint. We design scalable, secure systems tailored to your industry — from data pipelines to user-facing platforms.',
+    icon: 'grid',
   },
   {
-    label: 'Engineering',
-    body: 'Our team builds with precision — clean code, rigorous testing, and continuous integration ensuring every release is production-ready from day one.',
-    image: '/gradient-mesh-warm.jpg',
+    number: 'V / 03',
+    title: 'building with engineering excellence',
+    description: 'Our team builds with precision — clean code, rigorous testing, and continuous integration ensuring every release is production-ready from day one.',
+    icon: 'code',
   },
   {
-    label: 'Evolution',
-    body: 'Technology doesn\'t stand still, and neither do we. We monitor, optimize, and evolve your systems to keep pace with changing demands and new possibilities.',
-    image: '/gradient-orbs-warm.jpg',
+    number: 'V / 04',
+    title: 'to drive continuous evolution.',
+    description: 'Technology doesn\'t stand still, and neither do we. We monitor, optimize, and evolve your systems to keep pace with changing demands and new possibilities.',
+    icon: 'evolve',
   },
 ]
 
@@ -168,93 +172,179 @@ function HomeHeroSection() {
 
 
 // ═══════════════════════════════════════════════════════════
-// WHY CHOOSE US + PROCESS/PEOPLE — IT Solutions inspired
+// WHY CHOOSE US — AROX "Our Values" inspired
+// Dark editorial section with numbered accordion items,
+// horizontal gold dividers, scroll-triggered expand/collapse
 // ═══════════════════════════════════════════════════════════
+
+// Decorative line-art SVG icons for each value
+function ValueIcon({ type }: { type: string }) {
+  const stroke = 'rgba(201,168,110,0.4)'
+  const w = 80
+  if (type === 'search') return (
+    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="35" cy="35" r="22" stroke={stroke} strokeWidth="1.5" />
+      <line x1="51" y1="51" x2="68" y2="68" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="35" cy="35" r="8" stroke="rgba(201,168,110,0.2)" strokeWidth="1" strokeDasharray="3 3" />
+    </svg>
+  )
+  if (type === 'grid') return (
+    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="12" width="24" height="24" stroke={stroke} strokeWidth="1.5" />
+      <rect x="44" y="12" width="24" height="24" stroke={stroke} strokeWidth="1.5" />
+      <rect x="12" y="44" width="24" height="24" stroke={stroke} strokeWidth="1.5" />
+      <rect x="44" y="44" width="24" height="24" stroke="rgba(201,168,110,0.2)" strokeWidth="1.5" strokeDasharray="3 3" />
+    </svg>
+  )
+  if (type === 'code') return (
+    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polyline points="24,28 12,40 24,52" stroke={stroke} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <polyline points="56,28 68,40 56,52" stroke={stroke} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="46" y1="22" x2="34" y2="58" stroke="rgba(201,168,110,0.25)" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+  // evolve
+  return (
+    <svg width={w} height={w} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 60 C20 40, 40 35, 40 20" stroke={stroke} strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      <path d="M40 20 C40 35, 60 40, 60 60" stroke="rgba(201,168,110,0.2)" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeDasharray="3 3" />
+      <circle cx="40" cy="18" r="4" stroke={stroke} strokeWidth="1.5" />
+      <line x1="16" y1="62" x2="64" y2="62" stroke="rgba(201,168,110,0.15)" strokeWidth="1" />
+    </svg>
+  )
+}
+
+// Single value row — scroll-triggered expand
+function ValueRow({ item, index, isLast }: { item: typeof values[0]; index: number; isLast: boolean }) {
+  const rowRef = useRef<HTMLDivElement>(null)
+  const isActive = useInView(rowRef, { margin: '-35% 0px -35% 0px' })
+
+  return (
+    <div ref={rowRef}>
+      {/* Top divider line */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, ease: EASE_OUT }}
+        style={{
+          height: '1px',
+          background: 'rgba(201,168,110,0.25)',
+          transformOrigin: 'left',
+        }}
+      />
+
+      <div
+        className="grid py-10 lg:py-14"
+        style={{
+          gridTemplateColumns: 'clamp(80px, 12vw, 180px) 1fr auto',
+          gap: 'clamp(1rem, 3vw, 3rem)',
+          alignItems: 'start',
+        }}
+      >
+        {/* Number */}
+        <motion.span
+          className="text-[13px] font-medium tracking-[0.15em] uppercase pt-2"
+          style={{ color: P.gold, opacity: isActive ? 1 : 0.4 }}
+          animate={{ opacity: isActive ? 1 : 0.4 }}
+          transition={{ duration: 0.5 }}
+        >
+          {item.number}
+        </motion.span>
+
+        {/* Title + Description */}
+        <div>
+          <motion.h3
+            className="tracking-[-0.02em] leading-[1.15]"
+            style={{
+              fontSize: 'clamp(1.6rem, 3.5vw, 2.6rem)',
+              fontWeight: 300,
+              color: P.textOnDark,
+            }}
+            animate={{ opacity: isActive ? 0.95 : 0.45 }}
+            transition={{ duration: 0.5 }}
+          >
+            {item.title}
+          </motion.h3>
+
+          {/* Description — expands when active */}
+          <AnimatePresence>
+            {isActive && (
+              <motion.p
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 20 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                transition={{ duration: 0.6, ease: EASE_OUT }}
+                className="text-[15px] leading-[1.85] max-w-[560px] overflow-hidden"
+                style={{ color: P.textOnDarkMuted }}
+              >
+                {item.description}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Decorative icon — visible when active */}
+        <motion.div
+          className="hidden lg:block pt-2"
+          animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.8 }}
+          transition={{ duration: 0.6, ease: EASE_OUT }}
+        >
+          <ValueIcon type={item.icon} />
+        </motion.div>
+      </div>
+
+      {/* Bottom divider for last item */}
+      {isLast && (
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: EASE_OUT }}
+          style={{
+            height: '1px',
+            background: 'rgba(201,168,110,0.25)',
+            transformOrigin: 'left',
+          }}
+        />
+      )}
+    </div>
+  )
+}
+
 function WhyChooseUsSection() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative overflow-hidden" style={{ background: P.white }}>
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <Image src="/gradient-orbs-warm.jpg" alt="" fill className="object-cover" />
-      </div>
+    <section ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a' }}>
+      <Grain id="valuesGrain" opacity={0.04} />
 
-      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] pt-32 pb-8">
-        {/* Why choose us heading */}
-        <motion.div
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] pt-32 pb-24">
+        {/* Section heading */}
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="max-w-[800px] mb-16"
+          className="leading-[1.1] tracking-[-0.03em] mb-20"
+          style={{
+            fontSize: 'clamp(2.2rem, 5vw, 4rem)',
+            fontWeight: 300,
+            color: P.textOnDark,
+          }}
         >
-          <h2 className="leading-[1.15] tracking-[-0.025em]" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)', fontWeight: 400 }}>
-            <span style={{ color: P.textDark }}>Why choose us? </span>
-            <span style={{ color: P.textMuted }}>
-              From custom software development to intelligent automation, we deliver tailored solutions that help your business work smarter and move faster.
-            </span>
-          </h2>
-        </motion.div>
-      </div>
+          Why Choose Us
+        </motion.h2>
 
-      {/* Sticky scroll-over cards */}
-      <div className="relative" style={{ marginBottom: '0' }}>
-        {processCards.map((card, i) => (
-          <div
-            key={card.label}
-            className="sticky"
-            style={{
-              top: `${100 + i * 20}px`,
-              zIndex: i + 1,
-              marginBottom: i < processCards.length - 1 ? '80vh' : '0',
-            }}
-          >
-            <div className="px-[clamp(2rem,8vw,8rem)]">
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.7, ease: EASE }}
-                className="rounded-[24px] overflow-hidden"
-                style={{
-                  border: `1px solid ${P.creamDark}`,
-                  boxShadow: '0 8px 40px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.04)',
-                  background: P.creamMid,
-                }}
-              >
-                <div className="flex flex-col lg:flex-row" style={{ minHeight: '420px' }}>
-                  {/* Text area */}
-                  <div
-                    className="flex-1 p-12 lg:p-16 flex flex-col justify-between"
-                    style={{ background: P.creamMid }}
-                  >
-                    <div>
-                      <span
-                        className="text-[13px] font-semibold uppercase tracking-[0.15em] mb-4 block"
-                        style={{ color: P.gold }}
-                      >
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <h3 className="text-[32px] font-medium tracking-[-0.02em] mb-6" style={{ color: P.textDark }}>
-                        {card.label}
-                      </h3>
-                    </div>
-                    <p className="text-[15px] leading-[1.9]" style={{ color: P.textMuted }}>
-                      {card.body}
-                    </p>
-                  </div>
-
-                  {/* Image area */}
-                  <div className="relative w-full lg:w-[45%] min-h-[280px] lg:min-h-0">
-                    <Image src={card.image} alt={card.label} fill className="object-cover" />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
+        {/* Value rows */}
+        {values.map((item, i) => (
+          <ValueRow
+            key={item.number}
+            item={item}
+            index={i}
+            isLast={i === values.length - 1}
+          />
         ))}
-        {/* Spacer for last card to scroll into view */}
-        <div style={{ height: '40vh' }} />
       </div>
     </section>
   )

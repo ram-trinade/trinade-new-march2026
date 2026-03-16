@@ -9,9 +9,53 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 37 — Hatamex-inspired preloader with logo + synced line + brand reveal
-- Last completed: Prompt 37 — Preloader redesign v3
+- Done: Prompt 39 — Cookie scroll fix, preloader gold restyle, Why Choose Us AROX redesign
+- Last completed: Prompt 39 — 4 fixes/redesigns
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 39: Cookie Fix + Preloader Gold Restyle + Why Choose Us AROX Redesign
+
+### What Was Done
+
+#### 1. Cookie Popup Scroll Fix (125%+ Zoom)
+- **Problem**: At 125%+ browser zoom, expanded cookie settings modal wouldn't scroll with mouse wheel — only scrollbar worked
+- **Root cause**: Lenis smooth scroll was intercepting wheel events on the modal
+- **Fix**: Added `data-lenis-prevent` attribute to the expanded modal `<div>`, telling Lenis to allow native scroll behavior on that element
+
+#### 2. Preloader Background — Brown Gold Liquid Glass
+- **Problem**: Preloader background was flat black (#0a0a0a)
+- **Fix**: Replaced with warm dark gold gradient (`linear-gradient(135deg, #1a1610, #2a1f14, #1e1810)`) + radial gold glass overlay (`rgba(201,168,110,0.08)`) + warm vignette (`rgba(15,12,8,0.5)`)
+- Background now feels luxurious and warm, matching the charcoal/cream/gold design system
+
+#### 3. Preloader Text Animation + Weight
+- **Problem**: "Trinade" text was too bold (weight 700) and animation was basic fade/slide
+- **Fix**:
+  - Changed weight from 700 → 300 (light, editorial)
+  - Letter-by-letter stagger reveal with blur-to-sharp (12px→0px blur, 20px→0px y-offset, 0.06s stagger per letter)
+  - Gold shimmer sweep overlay (linear-gradient with rgba(201,168,110,0.35) moving across text)
+  - Logo now has scale + blur animation during brand reveal
+
+#### 4. Why Choose Us — AROX "Our Values" Inspired Redesign
+- **Problem**: Previous stacking cards approach wasn't working (sticky + overflow-hidden conflict, gaps between cards, CSS sticky limitations with Lenis)
+- **Complete redesign** inspired by AROX Awwwards site "Our Values" section:
+  - Dark background (#0a0a0a) with grain texture overlay
+  - Large "Why Choose Us" heading (weight 300, editorial)
+  - 4 value rows with V/01–V/04 gold numbering on left, large light headlines on right
+  - Full-width gold horizontal divider lines (rgba(201,168,110,0.25)) between items
+  - Scroll-triggered accordion: items expand (description + decorative icon) when in center 30% of viewport, collapse (just dimmed title) when outside
+  - Decorative line-art SVG icons per item: search magnifier, grid/architecture, code brackets, evolution path
+  - AnimatePresence for smooth height/opacity transitions
+  - `useInView(ref, { margin: '-35% 0px -35% 0px' })` for active zone detection
+
+### Files Changed
+- `components/solutions-cookie-popup.tsx` — Added `data-lenis-prevent` to expanded modal
+- `components/preloader-animation.tsx` — Gold gradient bg, radial overlay, vignette, letter-stagger animation, gold shimmer sweep, weight 300
+- `components/homepage-content.tsx` — Complete WhyChooseUsSection rewrite: removed processCards/stacking-cards, added values data array + ValueIcon SVG component + ValueRow scroll-accordion component + AROX-inspired dark editorial layout
+
+### Git
+- Commit: Prompt 39
 
 ---
 

@@ -300,6 +300,7 @@ export default function SolutionsCookiePopup() {
               <motion.div
                 key="expanded"
                 className="cookie-modal-expanded"
+                data-lenis-prevent
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
