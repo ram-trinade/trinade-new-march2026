@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence, useInView } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
@@ -201,10 +201,36 @@ export default function SolutionsContactPage() {
     message: '',
   })
 
+  const [heroInView, setHeroInView] = useState(false)
+  const [formInView, setFormInView] = useState(false)
   const heroRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
-  const heroInView = useInView(heroRef, { once: true })
-  const formInView = useInView(formSectionRef, { once: true, margin: '-100px' })
+
+  // Hero is always visible on load — trigger animations immediately after mount
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroInView(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Scroll-based trigger for form section (Lenis transform breaks IntersectionObserver)
+  useEffect(() => {
+    const checkFormVisibility = () => {
+      const el = formSectionRef.current
+      if (!el || formInView) return
+      const rect = el.getBoundingClientRect()
+      if (rect.top < window.innerHeight + 100) {
+        setFormInView(true)
+      }
+    }
+    window.addEventListener('scroll', checkFormVisibility, { passive: true })
+    // Also check after a delay in case Lenis doesn't fire native scroll
+    const timer = setTimeout(checkFormVisibility, 2000)
+    checkFormVisibility()
+    return () => {
+      window.removeEventListener('scroll', checkFormVisibility)
+      clearTimeout(timer)
+    }
+  }, [formInView])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))

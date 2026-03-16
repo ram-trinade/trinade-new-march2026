@@ -882,3 +882,23 @@ Custom cursor was a single dot (20px white circle with mix-blend-mode difference
 - Premium background with CSS dot pattern + atmospheric gradient layers
 
 ---
+
+## 2026-03-16 — Prompt 10: Bug fixes, routing verification, navbar pill width
+
+### Issues Found & Fixed
+1. **Worktree server was still running on port 3008** — old worktree at `G:\Claude Worktrees\` was serving stale code with Solutions at `/`. PowerShell `Stop-Process` was needed to kill it (bash `taskkill` failed due to path mangling).
+2. **Contact page hero text invisible** — `useInView` from motion/react doesn't trigger inside Lenis smooth scroll wrapper. Fixed by using `useState` + `useEffect` with `setTimeout(100ms)` for the hero (always visible on load).
+3. **Contact page form section invisible** — Same `useInView` issue. Fixed with manual scroll event listener + `getBoundingClientRect()` check + 2s fallback timeout.
+4. **Footer nav links broken** — "Products" and "Solutions" both pointed to `#`. Fixed: Home→`/`, Solutions→`/solutions`.
+5. **Navbar pill too narrow** — Increased pill gap from `gap-2.5` to `gap-4`, padding from `px-4` to `px-5`, giving more breathing room between Menu text and scroll percentage.
+
+### Key Lesson
+**`useInView` from motion/react does NOT work inside Lenis smooth scroll.** Lenis uses `transform: translateY()` on a wrapper div, which means elements don't actually move relative to the viewport from IntersectionObserver's perspective. Use manual scroll listeners with `getBoundingClientRect()` or trigger animations on mount with `useEffect` for above-the-fold content.
+
+### Files Changed
+- `app/contact/page.tsx` — Replaced `useInView` with manual animation triggers
+- `components/solutions-navbar.tsx` — Wider pill (gap-4, px-5)
+- `components/solutions-footer.tsx` — Fixed nav links (Home→/, Solutions→/solutions)
+- `HANDOFF_PROMPT.md` — Updated route table, added routing warnings
+
+---

@@ -33,14 +33,16 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 ### 8 Pages — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | Solutions: hero, mission, industries, sticky scroll cards, testimonial challenges carousel, accordion services, differentiators, CTA + preloader on first visit | Solid — full design system |
-| `/home` | Homepage: hero, 4 sticky scroll-over cards (Discovery→Evolution), challenges grid, CTA | Premium scroll effect |
+| `/` | **Homepage** (landing page): preloader on first visit, hero ("Technology that works for you."), 4 sticky scroll-over cards (Discovery→Evolution), challenges grid, CTA | Premium scroll effect |
+| `/solutions` | Solutions: hero, mission, industries, sticky scroll cards, testimonial challenges carousel, accordion services, differentiators, CTA | Solid — full design system |
 | `/blog` | Editorial magazine: staggered hero, featured article card, 6-card grid, newsletter CTA, topic tags | Strong editorial feel |
 | `/company` | "Est 2021" bold gold gradient hero, mission, stats counters, values cards, approach split, CTA | Clean, atmospheric |
 | `/contact` | Dark hero with spiral bg + "Have a project in mind?", split info card + gold glass form | Redesigned — premium |
 | `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
 | 404 | Giant "404" watermark, "Page not found", gold border "Return to Home" button | Atmospheric dark |
+
+> **CRITICAL ROUTING**: Homepage is at `/` (app/page.tsx uses HomepageContent). Solutions is at `/solutions` (app/solutions/page.tsx uses SolutionsContent). There is NO `/home` route — it was deleted. Do NOT create `/home` or move Homepage away from `/`. All nav links must point to `/` for Home and `/solutions` for Solutions.
 
 ### Design System
 - **Palette**: Charcoal (#1a1a1e, #0a0a0a) / Cream (#f2ede6, #ebe5db) / Gold (#c9a86e, #d4bb8a, #a0814a)
@@ -60,9 +62,9 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **That's it.** No R3F, no GSAP, no ShadCN, no MagicUI.
 
 ### Shared Components
-- `solutions-navbar.tsx` — "TRINADE" wordmark (left) + Menu pill with scroll % (center) + Logo (right) + gold active page dot
-- `solutions-content.tsx` — Solutions page: hero, mission, industries grid, sticky scroll cards, testimonial carousel, accordion, differentiators, CTA
-- `solutions-footer.tsx` — Gold glass card with CTA section, nav links, smooth TRINADE marquee, social icons
+- `solutions-navbar.tsx` — "TRINADE" wordmark (left, links to `/`) + Menu pill with scroll % (center) + Logo (right, links to `/`) + gold active page dot via `usePathname`. Menu links: Home→`/`, Solutions→`/solutions`, Blog→`/blog`, Company→`/company`, Contact→`/contact`
+- `solutions-content.tsx` — Solutions page (`/solutions`): hero, mission, industries grid, sticky scroll cards, testimonial carousel, accordion, differentiators, CTA
+- `solutions-footer.tsx` — Gold glass card with CTA section, nav links (Home→`/`, Solutions→`/solutions`, etc.), smooth TRINADE marquee, social icons
 - `preloader-animation.tsx` — Cinematic "TRINADE" letter-by-letter build, gold rule, split reveal, particles (shows once per session)
 - `solutions-cookie-popup.tsx` — Gold glass cookie consent
 - `smooth-scroll.tsx` — Lenis provider
@@ -144,11 +146,15 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 1. **Dev server can be slow to start** — Next.js sometimes hangs before "Starting..." on Windows. Fix: kill all node processes, delete `.next/`, restart. Use a fresh port if the previous one has zombie connections.
 
-2. **Prompt 8+9 changes are code-complete but UNVERIFIED** — The ScrollCards fix, Challenges redesign, preloader, contact redesign, 404 page, navbar dots, and footer fixes were all written but the dev server wouldn't cooperate for Playwright testing. First task should be verifying these visually.
+2. **Prompts 8+9 are VERIFIED and DEPLOYED** — Preloader, 404 page, contact redesign, navbar dots, footer fixes, and route restructure are all committed and live at trinade-new.vercel.app.
 
-3. **This project is lean** — Motion v12 + Tailwind + Lenis. No R3F, GSAP, ShadCN, WebGL. The charcoal/cream/gold palette only. No teal. No green.
+3. **Homepage is at `/`, NOT `/home`** — This was changed in Prompts 8+9. The old `/home` route was deleted. `app/page.tsx` renders HomepageContent with preloader. `app/solutions/page.tsx` renders SolutionsContent. Do NOT revert this. All links (navbar, footer, etc.) already point to the correct routes.
 
-4. **Creativity is encouraged** — This site needs to EVOLVE. New ideas, interactions, and design moments are welcome. Understand the design system, then push it forward.
+4. **This project is lean** — Motion v12 + Tailwind + Lenis. No R3F, GSAP, ShadCN, WebGL. The charcoal/cream/gold palette only. No teal. No green.
+
+5. **Creativity is encouraged** — This site needs to EVOLVE. New ideas, interactions, and design moments are welcome. Understand the design system, then push it forward.
+
+6. **Live deployment**: trinade-new.vercel.app — deploy with `npx vercel --prod --yes` from the project root.
 
 ---
 
