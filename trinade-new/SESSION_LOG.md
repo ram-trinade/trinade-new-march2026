@@ -9,9 +9,36 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 36 — Cookie scrollbar styling + minimal preloader redesign
-- Last completed: Prompt 36 — Cookie scrollbar + preloader
+- Done: Prompt 37 — Hatamex-inspired preloader with logo + synced line + brand reveal
+- Last completed: Prompt 37 — Preloader redesign v3
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 37: Hatamex-Inspired Preloader Redesign
+
+### What Was Done
+Complete preloader redesign inspired by Hatamex Awwwards site. 5-phase cinematic preloader:
+
+1. **Loading phase** — Dark (#0a0a0a) background, Trinade logo centered (gold-filtered PNG), thin gold progress line underneath that grows from center synced with 0→100% counter, large percentage at bottom-right (clamp 4rem–8.5rem, weight 200, 12% opacity ghost text), corner L-bracket accents, subtle grain texture overlay
+2. **Complete phase** — Brief hold at 100%
+3. **Brand reveal phase** — Logo + progress line fade out, "Trinade" text with logo slides up from below with blur-to-sharp animation (logo + "Trinade" 700 weight with 0.12em tracking)
+4. **Exit phase** — Everything slides up (`y: -100%`) with cinematic ease [0.76, 0, 0.24, 1] revealing the homepage beneath
+5. **Done** — Component unmounts, triggers `onComplete` callback for cookie popup
+
+### Design Details
+- Logo uses `next/image` with gold filter (`brightness(1.2) sepia(0.3) hue-rotate(-10deg) saturate(0.8)`)
+- Progress line: gradient with transparent edges, gold center, synced `scaleX` with progress/100
+- Percentage: oversized ghost text at 12% opacity, tabular-nums, "%" suffix at 0.4em
+- Grain texture: inline SVG feTurbulence at 3% opacity
+- Total duration: ~5.2 seconds (2.7s loading + 0.5s complete + 1s brand + 1s exit)
+- z-index 10001 to stay above navbar (z-9999)
+
+### Files Changed
+- `components/preloader-animation.tsx` — Complete rewrite: Hatamex-inspired 5-phase preloader
+
+### Git
+- Commit: Prompt 37
 
 ---
 

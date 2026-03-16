@@ -2,14 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import Image from 'next/image'
 
 // ═══════════════════════════════════════════════════════════
-// MINIMAL PRELOADER — Typographic percentage + thin progress
-// Clean, elegant, no brand text. Just a beautiful counter
-// that builds to 100, then a smooth curtain reveal.
+// HATAMEX-INSPIRED PRELOADER — Logo + synced line + percentage
+// Phase 1: Logo centered, line grows under it, large % bottom-right
+// Phase 2: "TRINADE" text slides in next to logo
+// Phase 3: Everything slides up to reveal page
 // ═══════════════════════════════════════════════════════════
 
-type Phase = 'loading' | 'complete' | 'reveal' | 'done'
+type Phase = 'loading' | 'complete' | 'brandReveal' | 'exit' | 'done'
 
 const EASE_CINE = [0.76, 0, 0.24, 1] as const
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
@@ -24,21 +26,21 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
   const startTime = useRef(Date.now())
   const rafRef = useRef<number>(0)
 
-  // Smooth progress counter
+  // Smooth progress counter 0→100
   useEffect(() => {
-    if (phase === 'reveal' || phase === 'done') return
+    if (phase === 'brandReveal' || phase === 'exit' || phase === 'done') return
 
-    const TOTAL_DURATION = 2400
+    const TOTAL_DURATION = 2600
 
     const animate = () => {
       const elapsed = Date.now() - startTime.current
       const t = Math.min(elapsed / TOTAL_DURATION, 1)
-      // Ease: slow start, cruise, slow finish
-      const eased = t < 0.2
-        ? t * t * 25 * 0.1            // slow ramp 0-10%
-        : t < 0.75
-          ? 0.1 + ((t - 0.2) / 0.55) * 0.75  // cruise 10-85%
-          : 0.85 + ((t - 0.75) / 0.25) * 0.15 // slow finish 85-100%
+      // Custom ease: slow start, fast middle, slow end
+      const eased = t < 0.15
+        ? t * t * (1 / 0.0225) * 0.08
+        : t < 0.7
+          ? 0.08 + ((t - 0.15) / 0.55) * 0.72
+          : 0.8 + ((t - 0.7) / 0.3) * 0.2
       setProgress(Math.min(Math.round(eased * 100), 100))
 
       if (t < 1) {
@@ -50,16 +52,18 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
     return () => cancelAnimationFrame(rafRef.current)
   }, [phase])
 
-  // Phase transitions
+  // Phase state machine
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = []
 
-    // loading → complete (counter hits 100)
-    timers.push(setTimeout(() => setPhase('complete'), 2500))
-    // complete → reveal (brief hold at 100)
-    timers.push(setTimeout(() => setPhase('reveal'), 3000))
-    // reveal → done (curtain finished)
-    timers.push(setTimeout(() => setPhase('done'), 4000))
+    // loading → complete (counter finishes)
+    timers.push(setTimeout(() => setPhase('complete'), 2700))
+    // complete → brandReveal (brief hold, then TRINADE text appears)
+    timers.push(setTimeout(() => setPhase('brandReveal'), 3200))
+    // brandReveal → exit (text shown, now slide everything away)
+    timers.push(setTimeout(() => setPhase('exit'), 4200))
+    // exit → done
+    timers.push(setTimeout(() => setPhase('done'), 5200))
 
     return () => timers.forEach(clearTimeout)
   }, [])
@@ -72,8 +76,9 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
 
   if (phase === 'done') return null
 
-  const isRevealing = phase === 'reveal'
-  const isComplete = phase === 'complete' || phase === 'reveal'
+  const isExiting = phase === 'exit'
+  const isBrandRevealed = phase === 'brandReveal' || phase === 'exit'
+  const isComplete = phase === 'complete' || isBrandRevealed
 
   return (
     <AnimatePresence>
@@ -84,7 +89,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             inset: 0,
             zIndex: 10001,
             overflow: 'hidden',
-            pointerEvents: isRevealing ? 'none' : 'auto',
+            pointerEvents: isExiting ? 'none' : 'auto',
           }}
         >
           {/* ─── Background ─── */}
@@ -94,130 +99,269 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
               inset: 0,
               background: '#0a0a0a',
             }}
-            animate={isRevealing ? {
-              clipPath: 'inset(0 0 100% 0)',
+            animate={isExiting ? {
+              y: '-100%',
             } : {
-              clipPath: 'inset(0 0 0% 0)',
+              y: '0%',
             }}
-            transition={isRevealing ? {
-              duration: 0.85,
+            transition={isExiting ? {
+              duration: 0.9,
               ease: EASE_CINE,
-              delay: 0.1,
+              delay: 0.15,
             } : undefined}
           />
 
-          {/* ─── Percentage Counter (centered, large, elegant) ─── */}
+          {/* ─── Subtle grain texture ─── */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={
-              isRevealing
-                ? { opacity: 0, y: -40 }
-                : { opacity: 1, y: 0 }
-            }
-            transition={
-              isRevealing
-                ? { duration: 0.4, ease: EASE_CINE }
-                : { duration: 0.8, delay: 0.1, ease: EASE_OUT }
-            }
+            animate={isExiting ? { y: '-100%' } : { y: '0%' }}
+            transition={isExiting ? { duration: 0.9, ease: EASE_CINE, delay: 0.15 } : undefined}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: 0.03,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* ─── Center: Logo + Progress Line ─── */}
+          <motion.div
+            animate={isExiting ? { y: '-100%' } : { y: '0%' }}
+            transition={isExiting ? { duration: 0.9, ease: EASE_CINE, delay: 0.1 } : undefined}
             style={{
               position: 'absolute',
               inset: 0,
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
               pointerEvents: 'none',
             }}
           >
-            <div style={{ textAlign: 'center' }}>
-              {/* Large number */}
-              <div
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontVariantNumeric: 'tabular-nums',
-                  fontSize: 'clamp(4.5rem, 10vw, 9rem)',
-                  fontWeight: 200,
-                  letterSpacing: '-0.02em',
-                  color: 'rgba(242,237,230,0.9)',
-                  lineHeight: 1,
-                }}
-              >
-                {progress}
-              </div>
-
-              {/* Thin gold rule below number */}
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={
-                  isRevealing
-                    ? { scaleX: 0, opacity: 0 }
-                    : { scaleX: 1, opacity: 1 }
-                }
-                transition={
-                  isRevealing
-                    ? { duration: 0.3 }
-                    : { duration: 1.2, ease: EASE_OUT, delay: 0.3 }
-                }
-                style={{
-                  width: 'clamp(40px, 6vw, 64px)',
-                  height: 1,
-                  background: 'rgba(201,168,110,0.4)',
-                  margin: '16px auto 0',
-                  transformOrigin: 'center',
-                }}
-              />
-            </div>
-          </motion.div>
-
-          {/* ─── Bottom progress bar (full width, very thin) ─── */}
-          <div
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 2,
-              background: 'rgba(201,168,110,0.08)',
-            }}
-          >
+            {/* Logo image */}
             <motion.div
-              initial={{ scaleX: 0 }}
+              initial={{ opacity: 0, scale: 0.85 }}
               animate={
-                isRevealing
-                  ? { scaleX: 1, opacity: 0 }
-                  : { scaleX: progress / 100 }
+                isBrandRevealed
+                  ? { opacity: 0, scale: 0.9, y: -20 }
+                  : { opacity: 1, scale: 1, y: 0 }
               }
               transition={
-                isRevealing
-                  ? { duration: 0.4 }
-                  : { duration: 0.15, ease: 'linear' }
+                isBrandRevealed
+                  ? { duration: 0.5, ease: EASE_CINE }
+                  : { duration: 0.8, ease: EASE_OUT, delay: 0.1 }
               }
               style={{
-                height: '100%',
-                background: 'linear-gradient(90deg, rgba(201,168,110,0.3) 0%, rgba(201,168,110,0.7) 100%)',
-                transformOrigin: 'left',
+                width: 'clamp(52px, 6vw, 80px)',
+                height: 'clamp(52px, 6vw, 80px)',
+                position: 'relative',
+              }}
+            >
+              <Image
+                src="/logo-transparent.png"
+                alt="Trinade"
+                fill
+                style={{
+                  objectFit: 'contain',
+                  filter: 'brightness(1.2) sepia(0.3) hue-rotate(-10deg) saturate(0.8)',
+                }}
+                priority
+              />
+            </motion.div>
+
+            {/* Gold progress line under logo — synced with percentage */}
+            <motion.div
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={
+                isBrandRevealed
+                  ? { scaleX: 0, opacity: 0 }
+                  : { scaleX: progress / 100, opacity: 1 }
+              }
+              transition={
+                isBrandRevealed
+                  ? { duration: 0.4, ease: EASE_CINE }
+                  : { duration: 0.1, ease: 'linear' }
+              }
+              style={{
+                width: 'clamp(160px, 20vw, 280px)',
+                height: 1.5,
+                background: 'linear-gradient(90deg, transparent 0%, rgba(201,168,110,0.5) 20%, rgba(212,187,138,0.8) 50%, rgba(201,168,110,0.5) 80%, transparent 100%)',
+                marginTop: 'clamp(16px, 2vw, 24px)',
+                transformOrigin: 'center',
                 willChange: 'transform',
               }}
             />
-          </div>
 
-          {/* ─── Flash overlay on reveal ─── */}
+            {/* Glow behind line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={
+                isBrandRevealed
+                  ? { opacity: 0 }
+                  : isComplete
+                    ? { opacity: 0.6 }
+                    : { opacity: progress > 20 ? 0.3 : 0 }
+              }
+              transition={{ duration: 0.5 }}
+              style={{
+                width: 'clamp(120px, 16vw, 220px)',
+                height: 40,
+                background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.12) 0%, transparent 70%)',
+                filter: 'blur(16px)',
+                marginTop: -20,
+                pointerEvents: 'none',
+              }}
+            />
+
+            {/* ─── "TRINADE" brand text reveal ─── */}
+            <motion.div
+              initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+              animate={
+                isBrandRevealed
+                  ? { opacity: 1, y: -60, filter: 'blur(0px)' }
+                  : { opacity: 0, y: 30, filter: 'blur(8px)' }
+              }
+              transition={{
+                duration: 0.8,
+                ease: EASE_OUT,
+              }}
+              style={{
+                position: 'absolute',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'clamp(12px, 1.5vw, 20px)',
+              }}
+            >
+              {/* Logo next to text */}
+              <div
+                style={{
+                  width: 'clamp(40px, 4.5vw, 60px)',
+                  height: 'clamp(40px, 4.5vw, 60px)',
+                  position: 'relative',
+                  flexShrink: 0,
+                }}
+              >
+                <Image
+                  src="/logo-transparent.png"
+                  alt=""
+                  fill
+                  style={{
+                    objectFit: 'contain',
+                    filter: 'brightness(1.2) sepia(0.3) hue-rotate(-10deg) saturate(0.8)',
+                  }}
+                  priority
+                />
+              </div>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                  fontWeight: 700,
+                  letterSpacing: '0.12em',
+                  color: 'rgba(242,237,230,0.93)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Trinade
+              </span>
+            </motion.div>
+          </motion.div>
+
+          {/* ─── Bottom-right percentage counter ─── */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={
-              isRevealing
-                ? { opacity: [0, 0.15, 0] }
-                : { opacity: 0 }
+              isExiting
+                ? { opacity: 0, y: '-100vh' }
+                : isBrandRevealed
+                  ? { opacity: 0, y: 20 }
+                  : { opacity: 1, y: 0 }
             }
             transition={
-              isRevealing
-                ? { duration: 0.7, ease: 'easeOut', times: [0, 0.12, 1] }
-                : undefined
+              isExiting
+                ? { duration: 0.9, ease: EASE_CINE, delay: 0.1 }
+                : isBrandRevealed
+                  ? { duration: 0.4, ease: EASE_CINE }
+                  : { duration: 0.6, ease: EASE_OUT, delay: 0.2 }
             }
             style={{
               position: 'absolute',
-              inset: 0,
-              background: 'rgba(242,237,230,0.1)',
+              bottom: 'clamp(24px, 4vh, 56px)',
+              right: 'clamp(28px, 4vw, 72px)',
               pointerEvents: 'none',
+            }}
+          >
+            <div
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontVariantNumeric: 'tabular-nums',
+                fontSize: 'clamp(4rem, 9vw, 8.5rem)',
+                fontWeight: 200,
+                letterSpacing: '-0.03em',
+                lineHeight: 0.85,
+                color: 'rgba(242,237,230,0.12)',
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              <span>{String(progress).padStart(2, '0')}</span>
+              <span
+                style={{
+                  fontSize: '0.4em',
+                  fontWeight: 300,
+                  letterSpacing: '0.02em',
+                  marginLeft: '0.08em',
+                  opacity: 0.7,
+                }}
+              >
+                %
+              </span>
+            </div>
+          </motion.div>
+
+          {/* ─── Corner accents ─── */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={
+              isExiting
+                ? { opacity: 0, y: '-100vh' }
+                : { opacity: 0.25 }
+            }
+            transition={
+              isExiting
+                ? { duration: 0.9, ease: EASE_CINE, delay: 0.1 }
+                : { duration: 1.0, delay: 0.6 }
+            }
+            style={{
+              position: 'absolute',
+              top: 'clamp(24px, 3vh, 48px)',
+              left: 'clamp(28px, 3vw, 48px)',
+              width: 28,
+              height: 28,
+              borderLeft: '1px solid rgba(201,168,110,0.4)',
+              borderTop: '1px solid rgba(201,168,110,0.4)',
+            }}
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={
+              isExiting
+                ? { opacity: 0, y: '-100vh' }
+                : { opacity: 0.25 }
+            }
+            transition={
+              isExiting
+                ? { duration: 0.9, ease: EASE_CINE, delay: 0.1 }
+                : { duration: 1.0, delay: 0.7 }
+            }
+            style={{
+              position: 'absolute',
+              bottom: 'clamp(24px, 3vh, 48px)',
+              left: 'clamp(28px, 3vw, 48px)',
+              width: 28,
+              height: 28,
+              borderLeft: '1px solid rgba(201,168,110,0.4)',
+              borderBottom: '1px solid rgba(201,168,110,0.4)',
             }}
           />
         </motion.div>
