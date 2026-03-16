@@ -38,61 +38,61 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 // ─── Data ───
 const challenges = [
   {
-    title: 'Technology Investments Without Clear Returns',
-    tags: ['Strategy Assessment', 'Use Case Prioritization', 'ROI Analysis'],
+    title: 'Infrastructure That Cannot Keep Pace',
+    tags: ['Cloud Migration', 'Capacity Planning', 'Performance Engineering'],
   },
   {
-    title: 'Disconnected Systems Blocking Growth',
-    tags: ['System Integration', 'Data Unification', 'Platform Architecture'],
+    title: 'Siloed Data Across Dozens of Platforms',
+    tags: ['Unified Architecture', 'API Orchestration', 'Real-Time Sync'],
   },
   {
-    title: 'Compliance in Regulated Industries',
-    tags: ['Healthcare Standards', 'Financial Compliance', 'Audit-Ready Systems'],
+    title: 'Security Posture Falling Behind Threats',
+    tags: ['Zero-Trust Design', 'Incident Response', 'Compliance Automation'],
   },
   {
-    title: 'Scaling from Pilot to Full Deployment',
-    tags: ['Operations Monitoring', 'Auto-Scaling Infrastructure', 'Continuous Delivery'],
+    title: 'Vendor Sprawl Draining Budgets',
+    tags: ['Platform Consolidation', 'License Optimization', 'Managed Operations'],
   },
   {
-    title: 'Legacy Systems Resisting Modernization',
-    tags: ['API-First Integration', 'System Migration', 'Cloud Transition'],
+    title: 'Digital Initiatives Stalling at Scale',
+    tags: ['Delivery Acceleration', 'Change Management', 'Outcome Measurement'],
   },
 ]
 
 const values = [
   {
     number: 'V / 01',
-    title: 'Led by deep discovery',
-    description: 'We begin by understanding your business — mapping workflows, identifying pain points, and uncovering opportunities where technology can create the most impact.',
+    title: 'Understand before we act',
+    description: 'We start with your business, not our toolset. Through structured workshops and technical audits, we map your operations, surface friction, and identify where technology will deliver the highest return.',
     icon: 'search',
   },
   {
     number: 'V / 02',
-    title: 'to architect with precision',
-    description: 'Every solution starts with a blueprint. We design scalable, secure systems tailored to your industry — from data pipelines to user-facing platforms.',
+    title: 'Design with intent',
+    description: 'Architecture is a commitment. We draft systems that account for where you are today and where you need to be in three years — built for resilience, security, and graceful scale.',
     icon: 'grid',
   },
   {
     number: 'V / 03',
-    title: 'building with engineering excellence',
-    description: 'Our team builds with precision — clean code, rigorous testing, and continuous integration ensuring every release is production-ready from day one.',
+    title: 'Engineer without compromise',
+    description: 'Every line of code ships through automated testing, peer review, and continuous integration. We treat production-readiness as the baseline, not the finish line.',
     icon: 'code',
   },
   {
     number: 'V / 04',
-    title: 'to drive continuous evolution.',
-    description: 'Technology doesn\'t stand still, and neither do we. We monitor, optimize, and evolve your systems to keep pace with changing demands and new possibilities.',
+    title: 'Sustain and sharpen over time.',
+    description: 'Delivery is only the midpoint. We monitor performance, tighten security posture, and refine your systems quarter over quarter — so your technology compounds in value, not in technical debt.',
     icon: 'evolve',
   },
 ]
 
 const scrollCards = [
-  { title: 'Cybersecurity & Compliance.', body: 'Proactive threat management, zero-trust architecture, and compliance frameworks that keep your business protected and audit-ready across every regulatory landscape.' },
-  { title: 'Cloud Infrastructure.', body: 'Multi-cloud orchestration, seamless migration, and hybrid environments designed for performance, resilience, and cost efficiency at any scale.' },
-  { title: 'Managed IT Services.', body: '24/7 monitoring, helpdesk support, and network management that keeps your operations running smoothly — so your team can focus on what matters.' },
-  { title: 'AI & Data Intelligence.', body: 'Predictive analytics, natural language processing, and computer vision that turn raw data into actionable insights and smarter business decisions.' },
-  { title: 'Strategic Consulting.', body: 'IT roadmap planning, digital strategy, and change management that align technology investments with your business goals and long-term vision.' },
-  { title: 'Professional Services.', body: 'End-to-end project management, system integration, and custom development delivered by experienced teams who understand your industry.' },
+  { title: 'Cybersecurity & Compliance.', body: 'Threat landscapes shift daily. We build layered defenses — from zero-trust networks to real-time monitoring — and maintain the compliance frameworks that keep regulators satisfied and breaches contained.' },
+  { title: 'Cloud Infrastructure.', body: 'We architect multi-cloud and hybrid environments tuned for your workload profile. Migration, orchestration, and cost governance — handled end to end, with no performance trade-offs.' },
+  { title: 'Managed IT Services.', body: 'Round-the-clock monitoring, proactive maintenance, and a single point of accountability for your entire technology estate. Your team focuses on the business; we keep the systems running.' },
+  { title: 'AI & Data Intelligence.', body: 'We embed machine learning, predictive models, and intelligent automation into your existing workflows — turning operational data into decisions that move faster than intuition alone.' },
+  { title: 'Strategic Consulting.', body: 'Technology without direction is just overhead. We align IT roadmaps to business objectives, model investment scenarios, and sequence initiatives so every dollar deployed earns its place.' },
+  { title: 'Professional Services.', body: 'Dedicated engineering teams for high-stakes builds — custom platforms, system integrations, and enterprise migrations delivered on timeline, on budget, and with full knowledge transfer.' },
 ]
 
 
@@ -131,7 +131,7 @@ function HomeHeroSection() {
           className="leading-[1.05] tracking-[-0.04em]"
           style={{ fontSize: 'clamp(2.6rem, 6vw, 5.2rem)', fontWeight: 400, color: P.textDark }}
         >
-          Technology that<br />works for you.
+          Precision-built<br />technology, at scale.
         </motion.h1>
       </div>
 
@@ -153,7 +153,7 @@ function HomeHeroSection() {
               className="leading-[1.25] tracking-[-0.02em] max-w-[900px]"
               style={{ fontSize: 'clamp(1.4rem, 3vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
             >
-              From cybersecurity and cloud management to custom software and strategic consulting, we deliver solutions designed to strengthen operations, streamline workflows, and drive measurable growth.
+              We design, build, and manage the systems that enterprises depend on — cloud infrastructure, cybersecurity, custom platforms, data intelligence, and the strategic consulting that ties it all together.
             </p>
 
             <div className="flex items-center gap-6 mt-8">
@@ -195,37 +195,37 @@ function HomeHeroSection() {
 const capabilityCards = [
   {
     title: 'Custom Software',
-    subtitle: 'Tailored applications built for your workflows',
+    subtitle: 'Purpose-built platforms shaped around your operations',
     image: '/gradient-mesh-warm.jpg',
     accent: 'rgba(201,168,110,0.35)',
   },
   {
     title: 'Enterprise Integration',
-    subtitle: 'Connect systems, unify data, accelerate growth',
+    subtitle: 'Unified data, connected systems, single source of truth',
     image: '/gradient-orbs-warm.jpg',
     accent: 'rgba(212,187,138,0.30)',
   },
   {
     title: 'Cloud Infrastructure',
-    subtitle: 'Scalable, resilient, cost-efficient',
+    subtitle: 'Architected for resilience, governed for cost',
     image: '/spiral-bg-dark.jpg',
     accent: 'rgba(160,128,64,0.25)',
   },
   {
     title: 'Cybersecurity',
-    subtitle: 'Zero-trust architecture & compliance',
+    subtitle: 'Layered defense from perimeter to endpoint',
     image: '/spiral-wide.jpg',
     accent: 'rgba(201,168,110,0.30)',
   },
   {
     title: 'Strategic Consulting',
-    subtitle: 'Align technology with business vision',
+    subtitle: 'IT roadmaps tied to measurable business outcomes',
     image: '/spiral-light.jpg',
     accent: 'rgba(212,187,138,0.25)',
   },
   {
     title: 'Managed Services',
-    subtitle: '24/7 monitoring and support',
+    subtitle: 'Always-on operations, always accountable',
     image: '/spiral-zoom.jpg',
     accent: 'rgba(201,168,110,0.20)',
   },
@@ -275,9 +275,9 @@ function FloatingCardsSection() {
                 color: P.textOnDark,
               }}
             >
-              The space between<br />
-              ambition and<br />
-              execution
+              Where strategy<br />
+              becomes<br />
+              infrastructure
             </motion.h2>
 
             <motion.p
@@ -287,7 +287,7 @@ function FloatingCardsSection() {
               className="text-[15px] leading-[1.85] max-w-[380px]"
               style={{ color: P.textOnDarkMuted }}
             >
-              We bridge the gap between where your technology is and where it needs to be — with solutions designed to compound in value over time.
+              Six disciplines, one integrated practice. We bring the full depth of enterprise IT under a single engagement — so nothing falls between the seams.
             </motion.p>
 
             {/* Gold rule */}
@@ -473,9 +473,9 @@ function HomeScrollCardsSection() {
               color: P.textDark,
             }}
           >
-            Secure, Streamline,<br />
-            and Succeed with<br />
-            Confidence
+            Built to perform,<br />
+            engineered<br />
+            to endure
           </h2>
         </div>
 
@@ -710,7 +710,7 @@ function WhyChooseUsSection() {
             color: P.textOnDark,
           }}
         >
-          Why Choose Us
+          How We Work
         </motion.h2>
 
         {/* Value rows */}
@@ -750,9 +750,9 @@ function ChallengesSection() {
           className="max-w-[900px] mb-20"
         >
           <h2 className="leading-[1.15] tracking-[-0.025em]" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 400 }}>
-            <span style={{ color: P.textDark }}>Overcoming real business challenges </span>
+            <span style={{ color: P.textDark }}>The problems that stall growth </span>
             <span style={{ color: P.textMuted }}>
-              to drive continuous progress — keeping your organization agile, competitive, and ready for what comes next.
+              are rarely about a single system. They are about the compounding weight of decisions deferred — and we solve them methodically.
             </span>
           </h2>
         </motion.div>
@@ -826,7 +826,7 @@ function HomeCTASection() {
               className="leading-[1.08] tracking-[-0.03em] mb-8"
               style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
             >
-              Ready to elevate<br />your technology?
+              Let&apos;s build what<br />comes next.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -835,7 +835,7 @@ function HomeCTASection() {
               className="text-[15px] leading-[1.9] mb-12"
               style={{ color: P.textOnDarkMuted }}
             >
-              Whether you&apos;re modernizing infrastructure or building new capabilities — let&apos;s talk about what&apos;s possible.
+              A 30-minute conversation is where most of our best work begins. No pitch deck, no pressure — just a clear look at where your technology stands and where it could go.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}

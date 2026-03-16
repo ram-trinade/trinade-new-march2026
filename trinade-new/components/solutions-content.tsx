@@ -34,89 +34,89 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
 // ─── Data ───
 const industries = [
-  { name: 'Healthcare', desc: 'Secure, compliant technology solutions that enhance patient care, streamline operations, and protect sensitive health data.' },
-  { name: 'Legal', desc: 'Reliable and secure solutions tailored to meet the unique demands of modern law firms and legal departments.' },
-  { name: 'Financial Services', desc: 'Advanced security and compliance solutions that safeguard transactions, enhance efficiency, and meet strict regulatory requirements.' },
-  { name: 'Manufacturing', desc: 'Process optimization, quality monitoring, and supply chain management solutions for modern production environments.' },
-  { name: 'Logistics', desc: 'Route optimization, demand forecasting, and real-time visibility across your entire supply chain.' },
-  { name: 'Retail', desc: 'Customer engagement platforms, inventory management, and data-driven insights that drive growth at scale.' },
+  { name: 'Healthcare', desc: 'Patient records scattered across incompatible systems. Compliance audits that consume entire quarters. We unify clinical data, automate HIPAA workflows, and give care teams the tools to focus on medicine.' },
+  { name: 'Legal', desc: 'Discovery timelines are shrinking while document volumes multiply. Our secure infrastructure and intelligent search platforms help firms move faster without compromising privilege or confidentiality.' },
+  { name: 'Financial Services', desc: 'Fraud patterns shift daily. Regulatory frameworks overlap. We build security architectures and compliance engines that keep pace with both, so your teams can focus on the business of finance.' },
+  { name: 'Manufacturing', desc: 'Downtime on a production line costs more per hour than most annual IT budgets. We deliver predictive monitoring, connected factory systems, and supply chain visibility that keeps operations running.' },
+  { name: 'Logistics', desc: 'When shipment data arrives 48 hours late, decisions are already wrong. We build real-time tracking, demand sensing, and route intelligence that close the gap between what happened and what\u2019s happening now.' },
+  { name: 'Retail', desc: 'Inventory blind spots, fragmented customer data, and seasonal demand spikes that overwhelm legacy systems. We build the infrastructure that turns every transaction into insight and every insight into action.' },
 ]
 
 
 const challengeTestimonials = [
   {
     domain: 'Enterprise',
-    quote: '\u201COur data was siloed across twelve different systems with no unified view. We needed a partner who could bring everything together without disrupting daily operations.\u201D',
-    attribution: 'CTO, Fortune 500 Manufacturing',
-    tags: ['Data Integration', 'System Unification'],
+    quote: '\u201CWe were managing nine separate vendor relationships for infrastructure alone. Nothing talked to anything else. Trinade consolidated the entire stack in four months \u2014 and our teams didn\u2019t miss a single day of uptime.\u201D',
+    attribution: 'VP of Infrastructure, Global Industrial Conglomerate',
+    tags: ['Systems Integration', 'Managed IT'],
   },
   {
     domain: 'FinTech',
-    quote: '\u201CRegulatory requirements were changing faster than our security infrastructure could adapt. Every audit felt like a scramble, and compliance gaps kept growing.\u201D',
-    attribution: 'VP Security, Digital Banking Platform',
-    tags: ['Cybersecurity', 'Compliance Automation'],
+    quote: '\u201CEvery new regulation meant six weeks of manual remediation. We brought Trinade in to build an automated compliance layer, and our last three audits closed without a single finding.\u201D',
+    attribution: 'Chief Risk Officer, Digital Payments Platform',
+    tags: ['Compliance Automation', 'Cloud Architecture'],
   },
   {
     domain: 'Healthcare',
-    quote: '\u201CLegacy systems from three different acquisitions couldn\u2019t communicate. Patient data was fragmented, and our clinical teams were losing hours every day to manual workarounds.\u201D',
-    attribution: 'CIO, Regional Health Network',
-    tags: ['Legacy Modernization', 'Integration'],
+    quote: '\u201CAfter two acquisitions, our clinicians were logging into five different systems to see one patient\u2019s history. Trinade unified everything behind a single pane of glass without disrupting a single clinical workflow.\u201D',
+    attribution: 'CIO, Multi-State Hospital Network',
+    tags: ['Data Unification', 'Legacy Modernization'],
   },
   {
     domain: 'Logistics',
-    quote: '\u201CWe had no real-time visibility across our supply chain. Decisions were based on data that was already 48 hours old, and the cost of that delay was enormous.\u201D',
-    attribution: 'SVP Operations, Global Logistics Firm',
-    tags: ['Real-Time Analytics', 'Supply Chain'],
+    quote: '\u201COur forecasting was based on spreadsheets and gut instinct. Trinade built a demand sensing platform that cut our inventory carrying costs by 23% in the first quarter alone.\u201D',
+    attribution: 'COO, Asia-Pacific Freight & Distribution',
+    tags: ['Predictive Analytics', 'Supply Chain Intelligence'],
   },
   {
     domain: 'Legal',
-    quote: '\u201COur technology strategy was reactive \u2014 always putting out fires. We needed a roadmap that aligned IT investments with where the firm was actually heading.\u201D',
-    attribution: 'Managing Partner, AmLaw 100 Firm',
-    tags: ['Strategic Consulting', 'IT Roadmap'],
+    quote: '\u201CWe were spending more on IT firefighting than on strategic technology. Trinade gave us a three-year roadmap, migrated us to the cloud, and our per-attorney IT cost dropped by a third.\u201D',
+    attribution: 'Managing Partner, 200-Attorney National Firm',
+    tags: ['IT Strategy', 'Cloud Migration'],
   },
 ]
 
 const services = [
   {
     title: 'Cybersecurity & Compliance',
-    body: 'Proactive security and threat management that keeps your business protected. From compliance frameworks like HIPAA, SOC2, and GDPR to vCISO services, risk assessments, and backup & disaster recovery — we build security into every layer.',
-    areas: ['Threat Management', 'Compliance (HIPAA, SOC2, GDPR)', 'vCISO Services', 'Risk Assessments', 'Backup & Disaster Recovery'],
+    body: 'Security is not a product you install \u2014 it\u2019s a posture you maintain. We architect layered defenses, run continuous threat monitoring, and keep your compliance certifications current so your business stays protected and your auditors stay satisfied.',
+    areas: ['Threat Detection & Response', 'HIPAA / SOC2 / GDPR Compliance', 'Virtual CISO Services', 'Penetration Testing & Risk Audits', 'Disaster Recovery Planning'],
   },
   {
     title: 'Cloud Services',
-    body: 'Multi-cloud orchestration, migration, and hybrid environments designed for performance and cost efficiency. Auto-scaling infrastructure and infrastructure-as-code practices that keep your systems resilient and your teams agile.',
-    areas: ['Multi-Cloud Orchestration', 'Cloud Migration', 'Hybrid Environments', 'Auto-Scaling', 'Infrastructure as Code'],
+    body: 'Whether you\u2019re migrating a legacy application or orchestrating workloads across three providers, we design cloud environments that perform under pressure. Cost-optimized, auto-scaling, and built to survive the traffic spike you didn\u2019t plan for.',
+    areas: ['Multi-Cloud & Hybrid Architecture', 'Cloud Migration & Modernization', 'Cost Optimization & FinOps', 'Auto-Scaling Infrastructure', 'Infrastructure as Code'],
   },
   {
     title: 'Managed IT',
-    body: '24/7 monitoring, helpdesk support, and network management that keeps your business running without interruption. From vendor management to co-managed IT arrangements — flexible support that fits how your team operates.',
-    areas: ['24/7 Monitoring', 'Helpdesk Support', 'Network Management', 'Vendor Management', 'Co-Managed IT'],
+    body: 'Your internal team handles strategy. We handle everything else. Round-the-clock monitoring, helpdesk resolution, network health, and vendor coordination \u2014 all delivered under SLAs that hold us accountable, not just available.',
+    areas: ['24/7 Infrastructure Monitoring', 'Tiered Helpdesk Support', 'Network & Endpoint Management', 'Vendor Coordination', 'Co-Managed IT Partnerships'],
   },
   {
     title: 'AI & Data Intelligence',
-    body: 'Predictive analytics, natural language processing, computer vision, and recommendation engines that turn your data into a competitive advantage. Anomaly detection and intelligent automation that scale with your business.',
-    areas: ['Predictive Analytics', 'NLP', 'Computer Vision', 'Recommendation Engines', 'Anomaly Detection'],
+    body: 'Most companies are sitting on data they\u2019ve never fully used. We build the models, pipelines, and interfaces that turn dormant information into operational intelligence \u2014 from demand forecasting to anomaly detection to natural language search across your own documents.',
+    areas: ['Predictive & Prescriptive Analytics', 'Natural Language Processing', 'Computer Vision Systems', 'Anomaly & Fraud Detection', 'Custom ML Model Development'],
   },
   {
     title: 'Strategic Consulting',
-    body: 'IT roadmap planning, digital strategy, and change management that align technology investments with business outcomes. Executive workshops and ROI modeling that give leadership the clarity to move forward with confidence.',
-    areas: ['IT Roadmap', 'Digital Strategy', 'Change Management', 'ROI Modeling', 'Executive Workshops'],
+    body: 'Technology decisions compound. A wrong architecture choice today becomes a million-dollar migration three years from now. We help leadership teams build IT roadmaps grounded in business reality, with clear milestones and honest cost projections.',
+    areas: ['IT Roadmap & Architecture Review', 'Digital Transformation Strategy', 'Organizational Change Management', 'Technology Due Diligence', 'Executive Decision Workshops'],
   },
   {
     title: 'Professional Services',
-    body: 'End-to-end project management, system integration, and custom development delivered by experienced teams. Training programs and ongoing optimization that ensure your technology investment keeps delivering value.',
-    areas: ['Project Management', 'System Integration', 'Custom Development', 'Training', 'Ongoing Optimization'],
+    body: 'When you need experienced engineers embedded in a project \u2014 not a pitch deck, but actual delivery \u2014 our professional services teams step in. System integrations, custom builds, and training programs that transfer knowledge, not just deliverables.',
+    areas: ['Enterprise System Integration', 'Custom Application Development', 'Technical Project Management', 'Staff Augmentation & Advisory', 'Training & Knowledge Transfer'],
   },
 ]
 
 const differentiators = [
   {
     label: 'Process',
-    desc: 'Industry-recognized methodologies backed by continuous improvement ensure consistently high-quality service and rapid response.',
+    desc: 'Documented frameworks, measurable SLAs, and structured escalation paths \u2014 not because process is exciting, but because it\u2019s the only thing that scales. Every engagement follows the same disciplined methodology, whether it\u2019s a two-week audit or a two-year transformation.',
   },
   {
     label: 'People',
-    desc: 'A dedicated team of engineers, security specialists, and strategists invested in your long-term success and growth.',
+    desc: 'Senior engineers who\u2019ve built and broken production systems. Security architects who\u2019ve closed real breaches. Consultants who\u2019ve sat in boardrooms and translated technical risk into business language. We assign people with tenure, not trainees with checklists.',
   },
 ]
 
@@ -156,19 +156,19 @@ function HeroSection() {
           className="max-w-[1200px]"
         >
           <h1 className="leading-[1.12] tracking-[-0.03em]" style={{ fontSize: 'clamp(2.6rem, 5.8vw, 5rem)', fontWeight: 400, color: P.textDark }}>
-            At Trinade, we&apos;ve designed solutions{' '}
+            We architect the systems{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-card.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            to address every challenge, providing reliable, scalable{' '}
+            that enterprises depend on — security, cloud, infrastructure,{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-motion.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>
-            {' '}and secure technology solutions tailored to your business{' '}
+            {' '}and intelligence — built precisely for how your business{' '}
             <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(80px, 9vw, 120px)', height: 'clamp(44px, 5vw, 68px)' }}>
               <Image src="/spiral-rotated.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
-            needs.
+            actually operates.
           </h1>
         </motion.div>
 
@@ -218,7 +218,7 @@ function MissionSection() {
           className="leading-[1.2] tracking-[-0.02em] max-w-[1100px]"
           style={{ fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', fontWeight: 300, color: P.textOnDark }}
         >
-          From cybersecurity and cloud infrastructure to managed IT and strategic consulting, we deliver tailored technology solutions that strengthen security, streamline operations, and position your business for long-term growth.
+          Trinade exists to close the gap between where your technology is and where your business needs it to be. We secure what matters, modernize what holds you back, and build the infrastructure that lets your teams move with confidence and speed.
         </motion.p>
       </div>
     </section>
@@ -309,7 +309,7 @@ function IndustriesSection() {
               className="leading-[1.1] tracking-[-0.025em]"
               style={{ fontSize: 'clamp(2rem, 3.8vw, 3rem)', fontWeight: 400, color: P.textDark }}
             >
-              Solutions built for your industry, not adapted to it.
+              Deep expertise where it counts most.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -318,7 +318,7 @@ function IndustriesSection() {
               className="text-[16px] leading-[1.7] mt-4 max-w-[500px]"
               style={{ color: P.textMuted }}
             >
-              Every sector has unique challenges, regulations, and workflows. We build technology that respects those realities.
+              We don&apos;t retrofit generic platforms. We build solutions shaped by the regulations, workflows, and operational realities of your sector.
             </motion.p>
           </div>
           {/* Navigation arrows like IT Solutions */}
@@ -416,7 +416,7 @@ function ChallengesSection() {
           className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-16"
           style={{ color: P.gold }}
         >
-          Challenges we solve
+          What our clients say
         </motion.p>
 
         {/* Main layout: left column + vertical line + right column */}
@@ -590,7 +590,7 @@ function AccordionSection() {
           className="leading-[1.1] tracking-[-0.025em] text-center mb-20"
           style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)', fontWeight: 400, color: P.textDark }}
         >
-          What we do — end to end,<br />from strategy to scale
+          Six disciplines, one partner.<br />From assessment to operation.
         </motion.h2>
 
         <div className="max-w-[1100px] mx-auto space-y-3">
@@ -749,7 +749,7 @@ function CTASection() {
               className="leading-[1.08] tracking-[-0.03em] mb-8"
               style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
             >
-              Ready to transform your<br />IT infrastructure?
+              The right conversation<br />starts here.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -758,7 +758,7 @@ function CTASection() {
               className="text-[16px] leading-[1.9] mb-12"
               style={{ color: P.textOnDarkMuted }}
             >
-              Let&apos;s discuss how our solutions can strengthen your security, streamline operations, and accelerate growth.
+              Tell us what&apos;s keeping you up at night. We&apos;ll tell you exactly how we&apos;d fix it — no pitch deck, no discovery phase, just a direct technical conversation.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
