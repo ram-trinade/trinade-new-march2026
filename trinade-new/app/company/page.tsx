@@ -24,7 +24,7 @@ const VALUES = [
   {
     id: 'V/01',
     title: 'Led by Integrity',
-    desc: 'Transparency and honesty in every engagement. We build trust through ethical practices and open communication — no black boxes, no hidden agendas. Our clients have full visibility into our processes, our pricing, and our decision-making. When something goes wrong, we own it. When we succeed, we share the credit.',
+    desc: 'Transparent communication, professional relationships, and delivery that matches commitments. Trust is treated as a long-term asset.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -33,19 +33,18 @@ const VALUES = [
   },
   {
     id: 'V/02',
-    title: 'Driven by Innovation',
-    desc: 'We push boundaries not for novelty, but to solve problems that matter. Every experiment, every prototype — in pursuit of solutions that move the needle. Our R&D process is relentless: we test hundreds of approaches so our clients only see the one that works. From edge computing to federated learning, we stay ahead so you never fall behind.',
+    title: 'Engineering Excellence',
+    desc: 'Strong architecture, readable systems, disciplined testing, and maintainable foundations built to perform today and scale tomorrow.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
       </svg>
     ),
   },
   {
     id: 'V/03',
-    title: 'Built on Partnership',
-    desc: 'Your challenges become ours. We invest deeply in understanding your domain, your constraints, your ambitions — and co-create solutions that are uniquely yours. We don\'t do handoffs; we do collaboration. Our engineers sit with your teams, learn your workflows, and build systems that feel like a natural extension of how you already work.',
+    title: 'Customer-Fit Solutions',
+    desc: 'Every engagement is tailored to the client\u2019s context \u2014 industry, workflow, and goals \u2014 so solutions are usable, practical, and aligned with real needs.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
@@ -54,18 +53,19 @@ const VALUES = [
   },
   {
     id: 'V/04',
-    title: 'Engineering Excellence',
-    desc: 'Every architecture decision, every line of code, every deployment — held to the highest standard. We build systems that work at 3 AM on a holiday weekend. Our engineering culture values clarity over cleverness, reliability over speed, and maintainability over shortcuts. Code reviews are sacred. Testing is non-negotiable. Production is personal.',
+    title: 'Responsible AI',
+    desc: 'AI is applied with care and intention \u2014 focused on accuracy, reliability, and outcomes that teams can confidently stand behind.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
       </svg>
     ),
   },
   {
     id: 'V/05',
-    title: 'Human-Centered Design',
-    desc: 'Technology that augments, never replaces. We design systems for collaboration between human expertise and machine capability. Every interface we build starts with empathy — understanding the people who will use it daily, their frustrations, their workflows, their aspirations. Great technology disappears into the work. That\'s our measure of success.',
+    title: 'Sustainable Growth',
+    desc: 'Growth is pursued through responsible expansion \u2014 building across sectors while preserving quality, trust, and long-term value.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -75,61 +75,55 @@ const VALUES = [
 ]
 
 const TIMELINE = [
-  { year: '2021', title: 'Founded', desc: 'Founded in Guntur with a conviction: AI should empower enterprises, not intimidate them. Three engineers, one vision, zero shortcuts.' },
-  { year: '2022', title: 'First Solutions', desc: 'Delivered our first AI-powered platform for healthcare document processing. Proved that enterprise-grade AI doesn\'t require enterprise-grade complexity.' },
-  { year: '2023', title: 'Enterprise Trust', desc: 'Secured partnerships across healthcare, legal, and financial services. Our systems processed their first billion data points with zero downtime.' },
-  { year: '2024', title: 'Scaling', desc: 'Expanded into manufacturing and logistics verticals. Built our modular architecture framework that lets clients scale without starting over.' },
-  { year: '2025', title: 'Platform Launch', desc: 'Launched Trinade Core — our flagship platform. Sub-12ms response times, 99.9% uptime, and the trust of organizations who bet their operations on our systems.' },
-  { year: '2026', title: 'Global Vision', desc: 'Pushing into edge AI, federated learning, and next-generation interfaces. The mission hasn\'t changed — the ambition has grown.' },
+  { year: '2020', title: 'Founded', desc: 'Trinade AI Technologies Pvt. Ltd. established in Guntur with a long-term focus on building useful products and dependable services.' },
+  { year: '2021', title: 'Product + Services Direction', desc: 'Committed to a dual model \u2014 building products while delivering software and web solutions that improve business operations.' },
+  { year: '2023', title: 'Expansion Roadmap', desc: 'Defined plans to expand into multiple sectors guided by trust, reliability, and measurable outcomes.' },
+  { year: '2024', title: 'Sleep Alert Device', desc: 'Initiated development of a safety-focused concept for automotive applications designed for real-world impact.' },
+  { year: '2025', title: 'Fly High', desc: 'Began building Fly High as part of Trinade\u2019s product roadmap and platform direction.' },
+  { year: '2026', title: 'Website + Offerings Launch', desc: 'Launch of the website and structured offerings \u2014 opening collaborations with businesses, startups, and community initiatives.' },
 ]
 
 const TEAM = [
   {
-    name: 'Sale Pitchaiah',
-    role: 'Founder & CEO',
-    bio: 'Visionary technologist who founded Trinade with the belief that AI should amplify human potential, not replace it. Leads strategy, culture, and the relentless pursuit of engineering excellence.',
-    tagline: 'Builds systems that think in decades',
-    funFact: 'Collects rare fountain pens from the 1920s',
+    name: 'Shubham Sakhare',
+    role: 'AI & Full Stack Developer',
+    bio: 'AI & Full Stack Developer with 6+ years of experience delivering scalable web applications with AI/ML integrations. Strong in React/Angular, Node/Java/Spring Boot, and AWS, with hands-on work in predictive analytics, NLP, and recommendation systems. Known for leading builds end-to-end with a focus on performance, reliability, and business impact.',
+    tagline: 'Builds AI-enhanced applications that scale cleanly from concept to production',
     mesh: 'radial-gradient(ellipse at 25% 75%, rgba(201,168,110,0.7) 0%, transparent 55%), radial-gradient(ellipse at 75% 25%, rgba(212,187,138,0.6) 0%, transparent 55%), radial-gradient(ellipse at 50% 50%, rgba(139,105,20,0.4) 0%, transparent 65%), linear-gradient(135deg, #2a2218 0%, #1a1a1e 100%)',
   },
   {
-    name: 'Vikram Rao',
-    role: 'CTO',
-    bio: 'Architect of Trinade\'s technical vision. 12+ years building distributed systems and ML pipelines at scale. Obsessed with clean abstractions and production reliability.',
-    tagline: 'Architect of distributed intelligence',
-    funFact: 'Has completed 14 ultra-marathons across 6 continents',
+    name: 'Akash Sakhare',
+    role: 'Software Developer',
+    bio: 'Software Developer with 1+ years of experience building modern full-stack applications using React/Angular, Java/Spring Boot, Node.js, SQL, and MongoDB. Comfortable designing REST APIs, optimizing performance, and writing clean, maintainable code. Works well in Agile teams and delivers user-focused solutions.',
+    tagline: 'Builds clean, scalable web applications with a user-first mindset',
     mesh: 'radial-gradient(ellipse at 30% 70%, rgba(42,42,94,0.6) 0%, transparent 55%), radial-gradient(ellipse at 70% 30%, rgba(201,168,110,0.4) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(26,26,62,0.5) 0%, transparent 60%), linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 100%)',
   },
   {
-    name: 'Deepa Menon',
-    role: 'Head of AI Research',
-    bio: 'Leads our research lab, translating cutting-edge ML papers into production systems. Specializes in NLP, computer vision, and making the impossible feel routine.',
-    tagline: 'Translating research into production',
-    funFact: 'Published poet in three languages',
+    name: 'Renu Kumari',
+    role: 'Scrum Master / QA Project Manager',
+    bio: 'Scrum Master and QA Project Manager with 10+ years across STLC, UAT, defect management, and test leadership. Experienced with automation and performance tools (RPT, QTP, LoadRunner) and databases (DB2, Oracle). Drives planning, risk control, stakeholder reporting, and high-quality delivery across teams.',
+    tagline: 'Leads delivery and quality with strong execution discipline',
     mesh: 'radial-gradient(ellipse at 20% 80%, rgba(160,129,74,0.5) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(201,168,110,0.6) 0%, transparent 50%), radial-gradient(ellipse at 45% 55%, rgba(42,34,24,0.6) 0%, transparent 55%), linear-gradient(135deg, #1a1510 0%, #2a2218 100%)',
   },
   {
-    name: 'Rahul Krishnan',
-    role: 'VP of Engineering',
-    bio: 'Builds and leads the engineering team that turns prototypes into production-grade systems. Expert in cloud infrastructure, DevOps, and systems that scale gracefully under pressure.',
-    tagline: 'Engineering at scale, under pressure',
-    funFact: 'Restored a 1967 Royal Enfield from scratch',
+    name: 'Havilah Sale',
+    role: 'Business Intelligence Analyst',
+    bio: 'BI Analyst with an MS in Business Intelligence & Analytics (Stevens, GPA 3.84) and experience across pharma and e-commerce analytics. Strong in SQL, Python, Power BI, and Tableau \u2014 building KPI dashboards and stakeholder-ready insights. At Trinade, supports requirements, process flows, Excel analysis, and UAT for early-stage initiatives.',
+    tagline: 'Converts data into dashboards, decisions, and measurable impact',
     mesh: 'radial-gradient(ellipse at 35% 65%, rgba(139,105,20,0.5) 0%, transparent 50%), radial-gradient(ellipse at 65% 35%, rgba(42,34,24,0.7) 0%, transparent 55%), radial-gradient(ellipse at 50% 50%, rgba(201,168,110,0.3) 0%, transparent 60%), linear-gradient(135deg, #15130e 0%, #1e1c17 100%)',
   },
   {
-    name: 'Ananya Sharma',
-    role: 'Head of Product & Design',
-    bio: 'Bridges the gap between engineering brilliance and human usability. Ensures every product we ship is as intuitive as it is intelligent. Where empathy meets interface.',
-    tagline: 'Where empathy meets interface',
-    funFact: 'Teaches calligraphy workshops on weekends',
+    name: 'George Gideon',
+    role: 'Product & Strategy Lead',
+    bio: 'Product and strategy leader focused on building practical solutions that customers adopt quickly. Drives product clarity, go-to-market alignment, and cross-functional execution from concept to launch. Keeps delivery structured, measurable, and business-first.',
+    tagline: 'Shapes clear roadmaps and turns ideas into launch-ready products',
     mesh: 'radial-gradient(ellipse at 25% 70%, rgba(212,187,138,0.5) 0%, transparent 50%), radial-gradient(ellipse at 75% 30%, rgba(180,130,55,0.4) 0%, transparent 50%), radial-gradient(ellipse at 50% 60%, rgba(242,237,230,0.2) 0%, transparent 55%), linear-gradient(135deg, #1e1a14 0%, #262218 100%)',
   },
   {
-    name: 'Karthik Nair',
-    role: 'Director of Cloud Architecture',
-    bio: 'Designs and oversees the cloud infrastructure that powers Trinade\'s entire platform. Builds systems that treat infrastructure as a competitive moat, not just a utility.',
-    tagline: 'Infrastructure as a competitive moat',
-    funFact: 'Amateur astronomer — discovered a minor asteroid',
+    name: 'Peter',
+    role: 'Founder / CMD & CEO',
+    bio: 'Founder and CMD of Trinade, focused on creating products and services that make life better through responsible innovation. Leads the company\u2019s vision across AI-backed solutions, product engineering, and trusted delivery. Believes the strongest technology supports human intelligence and real-world progress.',
+    tagline: 'Builds responsibly \u2014 combining human judgment with intelligent systems',
     mesh: 'radial-gradient(ellipse at 30% 75%, rgba(42,34,24,0.7) 0%, transparent 50%), radial-gradient(ellipse at 70% 25%, rgba(139,105,20,0.5) 0%, transparent 50%), radial-gradient(ellipse at 55% 50%, rgba(201,168,110,0.3) 0%, transparent 60%), linear-gradient(135deg, #121210 0%, #1a1816 100%)',
   },
 ]
@@ -504,7 +498,7 @@ function MilestonesCarousel() {
               color: 'rgba(255,255,255,0.93)',
               maxWidth: '500px',
             }}>
-              A journey of relentless progress.
+              A journey of disciplined progress.
             </h2>
           </Reveal>
         </div>
@@ -692,7 +686,7 @@ function TeamAccordion() {
 
             {/* Card — clickable row */}
             <div
-              style={{ cursor: 'pointer', padding: 'clamp(24px, 3vw, 40px) 0' }}
+              style={{ cursor: 'pointer', padding: 'clamp(16px, 2vw, 28px) 0' }}
               onClick={() => setExpandedIndex(isExpanded ? null : i)}
             >
               {/* Top row: text left + image right */}
@@ -850,25 +844,13 @@ function TeamAccordion() {
                     transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
                     style={{ overflow: 'hidden' }}
                   >
-                    <div style={{ paddingTop: '24px', maxWidth: '600px' }}>
+                    <div style={{ paddingTop: '16px', maxWidth: '600px' }}>
                       <p style={{
                         fontSize: '17px',
                         lineHeight: 1.85,
                         color: 'rgba(42,34,24,0.55)',
-                        marginBottom: '16px',
                       }}>
                         {member.bio}
-                      </p>
-                      <p style={{
-                        fontSize: '15px',
-                        lineHeight: 1.75,
-                        color: 'rgba(42,34,24,0.35)',
-                        display: 'flex',
-                        alignItems: 'baseline',
-                        gap: '8px',
-                      }}>
-                        <span style={{ color: '#c9a86e', fontWeight: 600, fontSize: '14px' }}>+</span>
-                        <span style={{ fontStyle: 'italic' }}>Fun fact: {member.funFact}</span>
                       </p>
                     </div>
                   </motion.div>
@@ -937,7 +919,7 @@ function QuoteSection() {
             borderLeft: '2px solid rgba(201,168,110,0.3)',
           }}
         >
-          The best technology disappears. It doesn&apos;t demand attention — it earns trust, quietly, by making everything around it work better.
+          AI is the force shaping the next era — and responsible building is what turns that power into real progress.
         </motion.blockquote>
 
         {/* Attribution */}
@@ -972,7 +954,7 @@ function QuoteSection() {
               color: '#2a2218',
               letterSpacing: '0.02em',
             }}>
-              Sale Pitchaiah
+              Peter
             </p>
             <p style={{
               fontSize: '13px',
@@ -982,7 +964,7 @@ function QuoteSection() {
               color: 'rgba(42,34,24,0.35)',
               marginTop: '4px',
             }}>
-              Founder &amp; CEO, Trinade
+              CMD / CEO, Trinade
             </p>
           </div>
         </motion.div>
@@ -1123,7 +1105,7 @@ export default function CompanyPage() {
                   letterSpacing: '0.01em',
                 }}
               >
-                Engineering intelligence for the enterprise of tomorrow.
+                We saw the future coming and we wanted to build it responsibly.
               </motion.p>
 
               {/* Est detail */}
@@ -1140,7 +1122,7 @@ export default function CompanyPage() {
                   marginTop: '40px',
                 }}
               >
-                Est. 2021 &middot; Guntur, India
+                Est. 2020 &middot; Guntur, India
               </motion.p>
             </div>
           </section>
@@ -1189,14 +1171,14 @@ export default function CompanyPage() {
                     letterSpacing: '-0.035em',
                     color: '#2a2218',
                   }}>
-                    A world where every enterprise operates at the speed of{' '}
+                    A trusted global solution provider creating products and services for a{' '}
                     <span style={{
                       background: 'linear-gradient(135deg, #c9a86e, #a08040)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
                     }}>
-                      intelligence.
+                      better future.
                     </span>
                   </h2>
                 </Reveal>
@@ -1209,14 +1191,7 @@ export default function CompanyPage() {
                       color: 'rgba(42,34,24,0.55)',
                       marginBottom: '24px',
                     }}>
-                      We envision a future where AI isn&apos;t a competitive advantage — it&apos;s the baseline. Where every hospital, every law firm, every factory, every logistics network operates with intelligence woven into its DNA.
-                    </p>
-                    <p style={{
-                      fontSize: '16px',
-                      lineHeight: 1.85,
-                      color: 'rgba(42,34,24,0.55)',
-                    }}>
-                      Not artificial intelligence that replaces human judgment, but augmented intelligence that makes every decision sharper, every process faster, every outcome more predictable. That&apos;s the world we&apos;re building toward — one system, one partnership, one breakthrough at a time.
+                      Trinade&apos;s vision is to build technology that makes life better through meaningful products, dependable services, and responsible innovation. AI is a key accelerator in this journey, helping organizations move faster, work smarter, and make clearer decisions across industries and communities.
                     </p>
                   </div>
                 </Reveal>
@@ -1266,8 +1241,21 @@ export default function CompanyPage() {
                   maxWidth: '900px',
                   marginBottom: '72px',
                 }}>
-                  To deliver AI solutions that are not just intelligent, but trustworthy, scalable, and deeply integrated into the fabric of modern enterprise.
+                  To deliver products and services that are effective, reliable, and scalable, using AI to enhance productivity, efficiency, and decision-making.
                 </h2>
+              </Reveal>
+
+              <Reveal delay={0.15}>
+                <p style={{
+                  fontSize: '16px',
+                  lineHeight: 1.85,
+                  color: 'rgba(255,255,255,0.55)',
+                  maxWidth: '800px',
+                  marginBottom: '56px',
+                  marginTop: '-40px',
+                }}>
+                  Trinade serves individuals, projects, and organizations across public, private, and community sectors, contributing to a more sustainable society through technology and social responsibility.
+                </p>
               </Reveal>
 
               {/* Three mission pillars */}
@@ -1279,18 +1267,18 @@ export default function CompanyPage() {
                 {[
                   {
                     num: '01',
-                    title: 'Empower, Don\'t Replace',
-                    desc: 'AI that augments human expertise. We design for collaboration between people and machines — amplifying what teams do best while automating what slows them down.',
+                    title: 'Empower Expertise',
+                    desc: 'AI-backed solutions designed to elevate teams \u2014 automating repetitive work, improving clarity, and supporting better outcomes with human judgment in control.',
                   },
                   {
                     num: '02',
                     title: 'Build for the Real World',
-                    desc: 'Production-grade from day one. Every system handles edge cases, scales under load, and stays reliable when it matters most — because in enterprise, downtime isn\'t an option.',
+                    desc: 'Production-ready engineering from day one: clean architecture, strong testing discipline, stable performance, and solutions that remain dependable after launch.',
                   },
                   {
                     num: '03',
                     title: 'Measure What Matters',
-                    desc: 'We track business outcomes, not vanity metrics. Success means your operations move faster, your decisions are sharper, and your competitive position is stronger.',
+                    desc: 'Success is defined by real results \u2014 faster operations, improved productivity, clearer decisions, and measurable efficiency delivered consistently.',
                   },
                 ].map((pillar, i) => (
                   <Reveal key={pillar.num} delay={i * 0.12}>

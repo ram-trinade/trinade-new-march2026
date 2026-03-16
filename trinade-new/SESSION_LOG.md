@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 25 — Remove Learn more + grainy gold glow on sector cards (Solutions page)
-- Last completed: Prompt 25 sector card polish on Solutions page
+- Done: Prompt 26 — Company page content update from Company.docx + team card spacing fix
+- Last completed: Prompt 26 Company.docx content mapping
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 26: Company Page Content Update from Company.docx + Team Card Spacing
+
+### What Was Done
+1. **Company.docx content mapped** — Extracted all content from `Content/Company Page CONTENT/Company.docx` and mapped to every section of the Company page:
+   - **Hero**: Subtitle → "We saw the future coming and we wanted to build it responsibly." Est. 2021 → Est. 2020
+   - **Quote**: New quote about responsible AI building. Attribution changed to Peter, CMD / CEO
+   - **Vision**: New headline about being a trusted global solution provider. New supporting paragraph about AI as accelerator
+   - **Mission**: New headline about delivering effective/reliable/scalable products. Added supporting paragraph. Updated 3 pillars: Empower Expertise, Build for the Real World, Measure What Matters
+   - **Values**: All 5 updated — Led by Integrity, Engineering Excellence, Customer-Fit Solutions, Responsible AI, Sustainable Growth
+   - **Milestones**: All 6 updated — 2020 Founded, 2021 Product + Services Direction, 2023 Expansion Roadmap, 2024 Sleep Alert Device, 2025 Fly High, 2026 Website + Offerings Launch
+   - **Team**: All 6 members replaced — Shubham Sakhare, Akash Sakhare, Renu Kumari, Havilah Sale, George Gideon, Peter (with bios from docx)
+2. **Team card expanded spacing reduced** — Reduced padding around team member name/role area in expanded cards. Photo now better centered within the expanded card area. Removed fun fact section.
+
+### Files Changed
+- `app/company/page.tsx` — All content arrays (VALUES, TIMELINE, TEAM), hero, quote, vision, mission sections updated. Team card padding reduced.
 
 ---
 
