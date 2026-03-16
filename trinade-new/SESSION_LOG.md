@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 34 — Cookie popup fix (always shows on every page visit)
-- Last completed: Prompt 34 — Cookie popup persistence fix
+- Done: Prompt 35 — Team card spacing: taller collapsed cards, tighter expanded bio, symmetric photo centering
+- Last completed: Prompt 35 — Team card spacing polish
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 35: Team Card Spacing Polish
+
+### What Was Done
+Three spacing refinements to the team accordion on the Company page:
+1. **Collapsed card height increased** — Padding from `clamp(14px, 1.6vw, 22px)` → `clamp(24px, 2.4vw, 36px)`, giving each card more breathing room
+2. **Expanded bio spacing tightened** — Bio `paddingTop` from `12px` → `4px`, role label `marginBottom` from `8px` → `6px`, eliminating excess void above/below text
+3. **Photo vertically centered between separators** — Measured via Playwright: collapsed cards have 36px above and 36px below the photo relative to separator lines — perfectly symmetric
+
+### Files Changed
+- `app/company/page.tsx` — TeamAccordion card padding, bio paddingTop, role marginBottom
+
+### Git
+- Commit: Prompt 35
 
 ---
 

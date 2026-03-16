@@ -686,7 +686,7 @@ function TeamAccordion() {
 
             {/* Card — clickable row */}
             <div
-              style={{ cursor: 'pointer', padding: 'clamp(14px, 1.6vw, 22px) 0' }}
+              style={{ cursor: 'pointer', padding: 'clamp(24px, 2.4vw, 36px) 0' }}
               onClick={() => setExpandedIndex(isExpanded ? null : i)}
             >
               {/* Top row: text left + image right */}
@@ -706,7 +706,7 @@ function TeamAccordion() {
                     textTransform: 'uppercase',
                     letterSpacing: '0.2em',
                     color: '#c9a86e',
-                    marginBottom: '8px',
+                    marginBottom: '6px',
                   }}>
                     {member.role}
                   </span>
@@ -844,7 +844,7 @@ function TeamAccordion() {
                     transition={{ duration: 0.6, ease: EASE_CINEMATIC }}
                     style={{ overflow: 'hidden' }}
                   >
-                    <div style={{ paddingTop: '12px', maxWidth: '850px' }}>
+                    <div style={{ paddingTop: '4px', maxWidth: '850px' }}>
                       <p style={{
                         fontSize: '17px',
                         lineHeight: 1.85,
