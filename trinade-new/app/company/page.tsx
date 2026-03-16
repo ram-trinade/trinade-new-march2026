@@ -895,6 +895,7 @@ export default function CompanyPage() {
               SECTION 1: HERO — Dark Cinematic Opening
               ══════════════════════════════════════════════ */}
           <section
+            data-dark-section
             style={{
               minHeight: '100vh',
               display: 'flex',
@@ -1068,6 +1069,7 @@ export default function CompanyPage() {
               SECTION 3: MISSION — Dark with 3 Pillars
               ══════════════════════════════════════════════ */}
           <section
+            data-dark-section
             style={{
               padding: 'clamp(60px, 12vh, 140px) clamp(24px, 8vw, 120px)',
               backgroundColor: '#0a0a0a',
@@ -1176,6 +1178,7 @@ export default function CompanyPage() {
               SECTION 4: VALUES — AROX-Style Accordion Rows
               ══════════════════════════════════════════════ */}
           <section
+            data-dark-section
             style={{
               padding: 'clamp(60px, 12vh, 140px) clamp(24px, 8vw, 120px)',
               backgroundColor: '#0a0a0a',
@@ -1221,6 +1224,7 @@ export default function CompanyPage() {
               SECTION 5: MILESTONES — Horizontal Card Carousel
               ══════════════════════════════════════════════ */}
           <section
+            data-dark-section
             style={{
               padding: 'clamp(60px, 12vh, 140px) clamp(24px, 8vw, 120px)',
               backgroundColor: '#0a0a0a',
@@ -1284,6 +1288,7 @@ export default function CompanyPage() {
               SECTION 7: IMPACT — Stats on Dark
               ══════════════════════════════════════════════ */}
           <section
+            data-dark-section
             style={{
               padding: 'clamp(80px, 14vh, 160px) clamp(24px, 8vw, 120px)',
               backgroundColor: '#0a0a0a',
@@ -1360,6 +1365,7 @@ export default function CompanyPage() {
               SECTION 8: CTA — Cinematic Close
               ══════════════════════════════════════════════ */}
           <section
+            data-dark-section
             style={{
               padding: 'clamp(100px, 16vh, 220px) clamp(24px, 8vw, 120px)',
               backgroundColor: '#0a0a0a',

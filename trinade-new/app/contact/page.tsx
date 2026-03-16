@@ -253,6 +253,7 @@ export default function SolutionsContactPage() {
           ══════════════════════════════════════════════ */}
           <section
             ref={heroRef}
+            data-dark-section
             style={{
               minHeight: '100vh',
               display: 'flex',

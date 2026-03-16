@@ -49,23 +49,57 @@ export default function SolutionsNavbar() {
       const percent = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0
       setScrollPercent(Math.min(100, Math.max(0, percent)))
 
-      // Sample background color at the TRINADE text position (top-left area)
+      // Detect dark background at the TRINADE text position
       const sampleX = 40
       const sampleY = 40
       const els = document.elementsFromPoint(sampleX, sampleY)
       let dark = false
+
       for (const el of els) {
-        if (el.closest('[data-navbar]')) continue // skip navbar elements
-        const bg = getComputedStyle(el).backgroundColor
-        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
-          const match = bg.match(/\d+/g)
-          if (match) {
-            const [r, g, b] = match.map(Number)
-            // Luminance check: dark if below threshold
-            const luminance = (0.299 * r + 0.587 * g + 0.114 * b)
-            dark = luminance < 80
-          }
+        if (el.closest('[data-navbar]')) continue
+
+        // Check for explicit data-dark-section attribute first (most reliable)
+        if (el.getAttribute('data-dark-section') !== null) {
+          dark = true
           break
+        }
+
+        const style = getComputedStyle(el)
+        const bg = style.backgroundColor
+
+        // Check solid backgroundColor
+        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+          const match = bg.match(/[\d.]+/g)
+          if (match && match.length >= 3) {
+            const [r, g, b] = match.map(Number)
+            const a = match.length >= 4 ? Number(match[3]) : 1
+            if (a > 0.3) {
+              const luminance = (0.299 * r + 0.587 * g + 0.114 * b)
+              if (luminance < 80) {
+                dark = true
+                break
+              }
+              if (a > 0.5) break
+            }
+          }
+        }
+
+        // Check backgroundImage for dark gradients (catches linear-gradient overlays)
+        const bgImage = style.backgroundImage
+        if (bgImage && bgImage !== 'none') {
+          const rgbaMatches = bgImage.matchAll(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/g)
+          for (const m of rgbaMatches) {
+            const [r, g, b] = [Number(m[1]), Number(m[2]), Number(m[3])]
+            const a = m[4] !== undefined ? Number(m[4]) : 1
+            if (a > 0.3) {
+              const luminance = 0.299 * r + 0.587 * g + 0.114 * b
+              if (luminance < 50) {
+                dark = true
+                break
+              }
+            }
+          }
+          if (dark) break
         }
       }
       setIsOnDark(dark)

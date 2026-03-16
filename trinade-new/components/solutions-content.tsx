@@ -211,7 +211,7 @@ function MissionSection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative overflow-hidden" style={{ minHeight: '80vh' }}>
+    <section ref={ref} className="relative overflow-hidden" data-dark-section style={{ minHeight: '80vh' }}>
       <div className="absolute inset-0">
         <Image src="/spiral-arcs.jpg" alt="" fill className="object-cover" />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(26,26,30,0.72), rgba(26,26,30,0.4))' }} />
@@ -828,7 +828,7 @@ function CTASection() {
   return (
     <section ref={ref} className="relative py-32" style={{ background: P.cream }}>
       <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="relative rounded-[28px] overflow-hidden py-28 px-12 lg:px-24">
+        <div className="relative rounded-[28px] overflow-hidden py-28 px-12 lg:px-24" data-dark-section>
           {/* spiral-lines-gold background */}
           <div className="absolute inset-0">
             <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />

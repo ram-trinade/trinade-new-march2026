@@ -25,7 +25,7 @@ export default function SolutionsFooter() {
   ]
 
   return (
-    <footer ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a' }}>
+    <footer ref={ref} className="relative overflow-hidden" data-dark-section style={{ background: '#0a0a0a' }}>
       <style>{`
         @keyframes marquee-scroll {
           0% { transform: translate3d(0, 0, 0); }
