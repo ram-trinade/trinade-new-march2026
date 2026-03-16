@@ -382,7 +382,7 @@ function ValuesAccordion() {
               <span style={{
                 fontSize: 'clamp(48px, 5vw, 72px)',
                 fontWeight: 200,
-                color: isExpanded ? 'rgba(201,168,110,0.35)' : 'rgba(42,34,24,0.06)',
+                color: isExpanded ? 'rgba(201,168,110,0.35)' : 'rgba(42,34,24,0.12)',
                 letterSpacing: '-0.04em',
                 lineHeight: 1,
                 transition: 'color 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -390,7 +390,7 @@ function ValuesAccordion() {
                 minWidth: '80px',
                 textAlign: 'right',
               }}>
-                <AnimatedCounter target={targetNum} isActive={isExpanded} />
+{String(i + 1).padStart(2, '0')}
               </span>
 
               {/* Toggle icon */}
@@ -401,13 +401,13 @@ function ValuesAccordion() {
                   width: '44px',
                   height: '44px',
                   borderRadius: '50%',
-                  border: isExpanded ? '1px solid rgba(201,168,110,0.4)' : '1px solid rgba(42,34,24,0.1)',
+                  border: isExpanded ? '1px solid rgba(201,168,110,0.5)' : '1px solid rgba(201,168,110,0.35)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '22px',
                   fontWeight: 300,
-                  color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.3)',
+                  color: isExpanded ? '#c9a86e' : '#a0814a',
                   transition: 'border-color 0.4s ease, color 0.4s ease',
                   flexShrink: 0,
                 }}
@@ -446,10 +446,11 @@ function ValuesAccordion() {
 
                     {/* Description */}
                     <p style={{
-                      fontSize: '17px',
+                      fontSize: '18px',
                       lineHeight: 1.85,
                       color: 'rgba(42,34,24,0.6)',
                       maxWidth: '640px',
+                      textAlign: 'left',
                     }}>
                       {value.desc}
                     </p>
@@ -764,9 +765,8 @@ function TeamAccordion() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                   <motion.div
                     animate={{
-                      width: isExpanded ? 'clamp(180px, 20vw, 280px)' : 'clamp(80px, 8vw, 120px)',
-                      height: isExpanded ? 'clamp(220px, 24vw, 340px)' : 'clamp(70px, 7vw, 100px)',
-                      rotate: isExpanded ? -2 : 0,
+                      width: isExpanded ? 'clamp(140px, 14vw, 200px)' : 'clamp(80px, 8vw, 120px)',
+                      height: isExpanded ? 'clamp(160px, 16vw, 240px)' : 'clamp(70px, 7vw, 100px)',
                       borderRadius: isExpanded ? '16px' : '12px',
                     }}
                     transition={{ duration: 0.65, ease: EASE_CINEMATIC }}
@@ -823,16 +823,16 @@ function TeamAccordion() {
                       width: '40px',
                       height: '40px',
                       borderRadius: '50%',
-                      border: `1px solid ${isExpanded ? 'rgba(201,168,110,0.4)' : 'rgba(42,34,24,0.1)'}`,
+                      border: `1px solid ${isExpanded ? 'rgba(201,168,110,0.5)' : 'rgba(201,168,110,0.35)'}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       fontSize: '22px',
                       fontWeight: 300,
-                      color: isExpanded ? '#c9a86e' : 'rgba(42,34,24,0.25)',
+                      color: isExpanded ? '#c9a86e' : '#a0814a',
                       flexShrink: 0,
                       transition: 'color 0.4s ease, border-color 0.4s ease, background 0.4s ease',
-                      background: isExpanded ? 'rgba(201,168,110,0.06)' : 'transparent',
+                      background: isExpanded ? 'rgba(201,168,110,0.08)' : 'transparent',
                     }}
                   >
                     +
@@ -1146,6 +1146,20 @@ export default function CompanyPage() {
           </section>
 
           {/* ══════════════════════════════════════════════
+              QUOTE — Before Vision
+              ══════════════════════════════════════════════ */}
+          <section style={{
+            padding: 'clamp(40px, 8vh, 100px) clamp(24px, 8vw, 120px)',
+            backgroundColor: '#f2ede6',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
+              <QuoteSection />
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════
               SECTION 2: VISION — Editorial Split
               ══════════════════════════════════════════════ */}
           <section
@@ -1210,9 +1224,6 @@ export default function CompanyPage() {
             </div>
 
             <GoldRule className="mt-16" />
-
-            {/* Quote — placed within Vision section for editorial flow */}
-            <QuoteSection />
           </section>
 
           {/* ══════════════════════════════════════════════
@@ -1343,7 +1354,7 @@ export default function CompanyPage() {
               <Reveal>
                 <h2 style={{
                   fontSize: 'clamp(26px, 3.5vw, 44px)',
-                  fontWeight: 300,
+                  fontWeight: 500,
                   letterSpacing: '-0.03em',
                   color: '#2a2218',
                   marginBottom: '64px',
