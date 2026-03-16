@@ -9,9 +9,24 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 40 — Preloader brand reveal redesign, Vercel deploy, .md review + session prompt
-- Last completed: Prompt 40 — preloader polish + deploy + handoff
+- Done: Prompt 41 — Navbar pill curvature tweak (22→26px border-radius)
+- Last completed: Prompt 41 — subtle design polish
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 41: Navbar Pill Curvature Tweak
+
+### What Was Done
+- **Change**: Increased navbar dark pill `borderRadius` from `22px` → `26px` for a slightly more curved capsule shape
+- Pill is 200x54px — 26px radius is nearly half the height, giving a smooth premium pill form
+- Verified via Playwright: computed `borderRadius: 26px` confirmed
+
+### Files Changed
+- `components/solutions-navbar.tsx` — `borderRadius: 22` → `borderRadius: 26` on dark pill div
+
+### Git
+- Commit: Prompt 41
 
 ---
 
