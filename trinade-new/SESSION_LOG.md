@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 20 — Milestone cards fixed layout + larger size
-- Last completed: Prompt 20 fixed year position and card dimensions
+- Done: Prompt 21 — Values animated counter + milestones gap fix
+- Last completed: Prompt 21 cinematic accordion + compact milestone cards
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 21: Values Animated Counter + Milestones Refinement
+
+### What Was Done
+1. **Animated counter numbers** — Values accordion numbers now animate cinematically from 00→value on expand, value→00 on collapse using RAF with quartic ease curves
+2. **More value content** — Each value description expanded with 2-3 additional sentences of meaningful content
+3. **Text positioning** — Expanded value text shifted beyond center with `paddingLeft: clamp(60px, 12vw, 200px)`
+4. **Milestone cards gap fix** — Removed fixed 440px height, cards now auto-size to content. Year has `marginBottom: 32px` instead of `space-between` causing huge void. Font 56px→48px, weight 200→300 for elegance
+5. **Gold accent line** — Milestone top accent transitions on hover for subtle interactivity
+
+### New Components
+- `AnimatedCounter` — RAF-based number counter with quartic ease-out (expand) and quadratic ease-in (collapse)
+
+### Files Changed
+- `app/company/page.tsx` — VALUES data, ValuesAccordion, AnimatedCounter (new), MilestoneCard
 
 ---
 

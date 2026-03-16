@@ -24,7 +24,7 @@ const VALUES = [
   {
     id: 'V/01',
     title: 'Led by Integrity',
-    desc: 'Transparency and honesty in every engagement. We build trust through ethical practices and open communication — no black boxes, no hidden agendas.',
+    desc: 'Transparency and honesty in every engagement. We build trust through ethical practices and open communication — no black boxes, no hidden agendas. Our clients have full visibility into our processes, our pricing, and our decision-making. When something goes wrong, we own it. When we succeed, we share the credit.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -34,7 +34,7 @@ const VALUES = [
   {
     id: 'V/02',
     title: 'Driven by Innovation',
-    desc: 'We push boundaries not for novelty, but to solve problems that matter. Every experiment, every prototype — in pursuit of solutions that move the needle.',
+    desc: 'We push boundaries not for novelty, but to solve problems that matter. Every experiment, every prototype — in pursuit of solutions that move the needle. Our R&D process is relentless: we test hundreds of approaches so our clients only see the one that works. From edge computing to federated learning, we stay ahead so you never fall behind.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="3" />
@@ -45,7 +45,7 @@ const VALUES = [
   {
     id: 'V/03',
     title: 'Built on Partnership',
-    desc: 'Your challenges become ours. We invest deeply in understanding your domain, your constraints, your ambitions — and co-create solutions that are uniquely yours.',
+    desc: 'Your challenges become ours. We invest deeply in understanding your domain, your constraints, your ambitions — and co-create solutions that are uniquely yours. We don\'t do handoffs; we do collaboration. Our engineers sit with your teams, learn your workflows, and build systems that feel like a natural extension of how you already work.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
@@ -55,7 +55,7 @@ const VALUES = [
   {
     id: 'V/04',
     title: 'Engineering Excellence',
-    desc: 'Every architecture decision, every line of code, every deployment — held to the highest standard. We build systems that work at 3 AM on a holiday weekend.',
+    desc: 'Every architecture decision, every line of code, every deployment — held to the highest standard. We build systems that work at 3 AM on a holiday weekend. Our engineering culture values clarity over cleverness, reliability over speed, and maintainability over shortcuts. Code reviews are sacred. Testing is non-negotiable. Production is personal.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /><line x1="14" y1="4" x2="10" y2="20" />
@@ -65,7 +65,7 @@ const VALUES = [
   {
     id: 'V/05',
     title: 'Human-Centered Design',
-    desc: 'Technology that augments, never replaces. We design systems for collaboration between human expertise and machine capability.',
+    desc: 'Technology that augments, never replaces. We design systems for collaboration between human expertise and machine capability. Every interface we build starts with empathy — understanding the people who will use it daily, their frustrations, their workflows, their aspirations. Great technology disappears into the work. That\'s our measure of success.',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
@@ -321,6 +321,58 @@ function HeroLetterReveal() {
 }
 
 /* ═══════════════════════════════════════════
+   ANIMATED COUNTER — Cinematic number animation
+   ═══════════════════════════════════════════ */
+function AnimatedCounter({ target, isActive }: { target: number; isActive: boolean }) {
+  const [count, setCount] = useState(0)
+  const frameRef = useRef<number>(0)
+
+  useEffect(() => {
+    if (isActive) {
+      // Animate from 0 to target
+      const duration = 800 // ms
+      const startTime = performance.now()
+      const startVal = count
+
+      const animate = (now: number) => {
+        const elapsed = now - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        // Cinematic ease-out curve
+        const eased = 1 - Math.pow(1 - progress, 4)
+        setCount(Math.round(startVal + (target - startVal) * eased))
+
+        if (progress < 1) {
+          frameRef.current = requestAnimationFrame(animate)
+        }
+      }
+      frameRef.current = requestAnimationFrame(animate)
+    } else {
+      // Animate back to 0
+      const duration = 500
+      const startTime = performance.now()
+      const startVal = count
+
+      const animate = (now: number) => {
+        const elapsed = now - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        const eased = progress * progress // ease-in for collapse
+        setCount(Math.round(startVal + (0 - startVal) * eased))
+
+        if (progress < 1) {
+          frameRef.current = requestAnimationFrame(animate)
+        }
+      }
+      frameRef.current = requestAnimationFrame(animate)
+    }
+
+    return () => cancelAnimationFrame(frameRef.current)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive, target])
+
+  return <>{String(count).padStart(2, '0')}</>
+}
+
+/* ═══════════════════════════════════════════
    VALUES ACCORDION — AROX-Style Rows
    ═══════════════════════════════════════════ */
 function ValuesAccordion() {
@@ -335,7 +387,7 @@ function ValuesAccordion() {
 
       {VALUES.map((value, i) => {
         const isExpanded = expandedIndex === i
-        const num = String(i + 1).padStart(2, '0')
+        const targetNum = i + 1
 
         return (
           <motion.div
@@ -374,19 +426,19 @@ function ValuesAccordion() {
                 {value.title}
               </span>
 
-              {/* Big number on right */}
+              {/* Big animated number on right */}
               <span style={{
                 fontSize: 'clamp(48px, 5vw, 72px)',
                 fontWeight: 200,
                 color: isExpanded ? 'rgba(201,168,110,0.35)' : 'rgba(42,34,24,0.06)',
                 letterSpacing: '-0.04em',
                 lineHeight: 1,
-                transition: 'color 0.4s ease',
+                transition: 'color 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
                 fontVariantNumeric: 'tabular-nums',
                 minWidth: '80px',
                 textAlign: 'right',
               }}>
-                {num}
+                <AnimatedCounter target={targetNum} isActive={isExpanded} />
               </span>
 
               {/* Toggle icon */}
@@ -428,6 +480,7 @@ function ValuesAccordion() {
                     gap: '40px',
                     paddingBottom: '40px',
                     paddingTop: '8px',
+                    paddingLeft: 'clamp(60px, 12vw, 200px)',
                   }}>
                     {/* Icon — positioned top-left of expanded area */}
                     <div style={{
@@ -583,14 +636,12 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
       style={{
         minWidth: '380px',
         maxWidth: '380px',
-        height: '440px',
         borderRadius: '20px',
         background: '#1a1a1e',
         position: 'relative',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
         padding: '40px 36px',
         scrollSnapAlign: 'start',
         flexShrink: 0,
@@ -607,18 +658,21 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
         top: 0,
         left: 0,
         right: 0,
-        height: '4px',
-        background: 'linear-gradient(90deg, #a08040, #c9a86e, #d4bb8a)',
+        height: '3px',
+        background: isHovered
+          ? 'linear-gradient(90deg, #c9a86e, #d4bb8a, #c9a86e)'
+          : 'linear-gradient(90deg, rgba(160,128,64,0.6), rgba(201,168,110,0.6), rgba(212,187,138,0.6))',
+        transition: 'background 0.5s ease',
       }} />
 
       {/* Grain */}
       <Grain id={`grain-card-${index}`} opacity={0.03} />
 
-      {/* Year — fixed at top */}
+      {/* Year */}
       <p style={{
-        fontSize: '56px',
-        fontWeight: 200,
-        letterSpacing: '-0.04em',
+        fontSize: '48px',
+        fontWeight: 300,
+        letterSpacing: '-0.03em',
         background: 'linear-gradient(135deg, #c9a86e, #d4bb8a)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
@@ -626,32 +680,34 @@ function MilestoneCard({ item, index, isInView }: { item: typeof TIMELINE[0]; in
         lineHeight: 1,
         position: 'relative',
         zIndex: 2,
+        marginBottom: '32px',
       }}>
         {item.year}
       </p>
 
-      {/* Content — pushed to bottom */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
-        {/* Title */}
-        <h4 style={{
-          fontSize: '22px',
-          fontWeight: 600,
-          color: 'rgba(255,255,255,0.93)',
-          marginBottom: '14px',
-          letterSpacing: '-0.01em',
-        }}>
-          {item.title}
-        </h4>
+      {/* Title */}
+      <h4 style={{
+        fontSize: '22px',
+        fontWeight: 600,
+        color: 'rgba(255,255,255,0.93)',
+        marginBottom: '14px',
+        letterSpacing: '-0.01em',
+        position: 'relative',
+        zIndex: 2,
+      }}>
+        {item.title}
+      </h4>
 
-        {/* Description */}
-        <p style={{
-          fontSize: '15px',
-          lineHeight: 1.75,
-          color: 'rgba(255,255,255,0.5)',
-        }}>
-          {item.desc}
-        </p>
-      </div>
+      {/* Description */}
+      <p style={{
+        fontSize: '15px',
+        lineHeight: 1.75,
+        color: 'rgba(255,255,255,0.5)',
+        position: 'relative',
+        zIndex: 2,
+      }}>
+        {item.desc}
+      </p>
     </motion.div>
   )
 }
