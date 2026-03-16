@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 46 — Preloader content flash fix + per-digit staggered counter
-- Last completed: Prompt 46 — hidden content during preloader, removed shimmer, per-digit non-sync vertical slide
+- Done: Prompt 47 — Initial dark screen to prevent cream flash before preloader
+- Last completed: Prompt 47 — SSR dark overlay in layout.tsx, auto-removed on hydration
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 47: Initial Dark Screen Fix
+
+### What Was Done
+
+#### Fixed Cream Flash Before Preloader
+- **Problem**: Blank cream (#f2ede6) body background visible for ~0.5-1s while JS bundles load, before preloader component mounts
+- **Root cause**: All components use `dynamic()` with `ssr: false`, so nothing renders until client-side JS executes. Body bg shows through.
+- **Fix**: Added server-rendered dark overlay div in `layout.tsx` (SSR, renders immediately in HTML)
+  - Matches preloader gradient: `linear-gradient(135deg, #0d0b08 ... #0d0b08)`
+  - `position: fixed; inset: 0; z-index: 9999` (below preloader's 10001)
+  - Inline `<script>` uses double `requestAnimationFrame` to fade+remove (~32ms after hydration)
+  - Other pages unaffected — dark overlay removed before content paints
+
+### Files Changed
+- `app/layout.tsx` — Added initial-screen dark overlay div + inline removal script
 
 ---
 

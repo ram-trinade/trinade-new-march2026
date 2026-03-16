@@ -22,7 +22,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={manrope.variable}>
-      <body>{children}</body>
+      <body>
+        {/* Initial dark screen — matches preloader bg, prevents cream flash on homepage */}
+        <div
+          id="initial-screen"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            background: 'linear-gradient(135deg, #0d0b08 0%, #1c160d 20%, #0f0d0a 40%, #201811 60%, #150f08 80%, #0d0b08 100%)',
+            pointerEvents: 'none',
+            transition: 'opacity 0.3s ease',
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Hide initial screen once React hydrates (preloader takes over at z-10001)
+              requestAnimationFrame(function() {
+                requestAnimationFrame(function() {
+                  var el = document.getElementById('initial-screen');
+                  if (el) { el.style.opacity = '0'; setTimeout(function() { el.remove(); }, 400); }
+                });
+              });
+            `,
+          }}
+        />
+        {children}
+      </body>
     </html>
   )
 }
