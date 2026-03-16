@@ -9,9 +9,22 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 16 — Company hero typography improvements
-- Last completed: Prompt 16 bolder TRINADE text + larger hero fonts
+- Done: Prompt 17 — Company page visibility fixes
+- Last completed: Prompt 17 improved text visibility across hero & mission sections
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 17: Company Page Visibility Fixes
+
+### What Was Done
+1. **"Est. 2021 · Guntur, India"** — increased opacity from 0.2→0.5 and font from 13px→14px for readability
+2. **Mission numbers (01, 02, 03)** — gold opacity from 0.12→0.3, now visible as decorative elements
+3. **Mission body text** — white opacity from 0.45→0.65, significantly improved readability
+
+### Technical Lessons
+- Very low opacity values (<0.2) are essentially invisible on dark backgrounds — minimum 0.3 for decorative, 0.5+ for readable text
+- Verified all changes with Playwright MCP screenshots
 
 ---
 
