@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 13b — Footer marquee letter outlines fix + speed adjustment
-- Last completed: Prompt 13b marquee polish
+- Done: Prompt 14 — Spiral image audit (dimensions report for user to re-export)
+- Last completed: Prompt 14 image quality audit
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 14: Spiral Image Dimensions Audit
+
+### What Was Done
+- Audited all spiral images across every page using Playwright
+- **Critical finding**: `spiral-lines-gold.jpg` is 736×1472 (portrait) but rendered at 1920×945+ across 9 usages — 2.6x upscale causing severe blur
+- Provided recommended re-export dimensions:
+  - `spiral-lines-gold.jpg` → 3840×2160 (4K landscape)
+  - `spiral-arcs.jpg` → 3840×2160
+  - `spiral-gold.jpg` → 3840×2160
+  - `spiral-card.jpg` → 1500×1000
+  - `spiral-motion.jpg` → 1500×1000
+
+### Action Required
+- User needs to re-export/regenerate these images at the recommended dimensions
 
 ---
 
