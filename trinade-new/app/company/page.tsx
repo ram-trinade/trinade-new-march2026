@@ -311,13 +311,13 @@ function HeroLetterReveal() {
           }}
           style={{
             display: 'inline-block',
-            fontSize: 'clamp(60px, 14vw, 200px)',
-            fontWeight: 200,
-            letterSpacing: '-0.04em',
+            fontSize: 'clamp(72px, 15vw, 220px)',
+            fontWeight: 400,
+            letterSpacing: '-0.03em',
             lineHeight: 0.85,
             color: 'transparent',
-            WebkitTextStroke: '1.5px rgba(201,168,110,0.5)',
-            background: 'linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(201,168,110,0.6) 100%)',
+            WebkitTextStroke: '1px rgba(201,168,110,0.35)',
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(212,187,138,0.7) 100%)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             userSelect: 'none',
@@ -932,12 +932,12 @@ export default function CompanyPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: EASE_CINEMATIC }}
                 style={{
-                  fontSize: '12px',
+                  fontSize: '14px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
                   letterSpacing: '0.25em',
                   color: '#c9a86e',
-                  marginBottom: '48px',
+                  marginBottom: '52px',
                 }}
               >
                 Our Story
@@ -966,13 +966,13 @@ export default function CompanyPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 1.5, ease: EASE_CINEMATIC }}
                 style={{
-                  fontSize: 'clamp(16px, 1.8vw, 22px)',
+                  fontSize: 'clamp(18px, 2.2vw, 26px)',
                   fontWeight: 300,
-                  color: 'rgba(255,255,255,0.5)',
+                  color: 'rgba(255,255,255,0.55)',
                   textAlign: 'center',
-                  maxWidth: '600px',
+                  maxWidth: '680px',
                   margin: '0 auto',
-                  lineHeight: 1.7,
+                  lineHeight: 1.65,
                   letterSpacing: '0.01em',
                 }}
               >
@@ -985,7 +985,7 @@ export default function CompanyPage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 2, ease: EASE_CINEMATIC }}
                 style={{
-                  fontSize: '12px',
+                  fontSize: '13px',
                   fontWeight: 500,
                   color: 'rgba(255,255,255,0.2)',
                   letterSpacing: '0.15em',
