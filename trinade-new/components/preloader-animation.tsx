@@ -65,15 +65,6 @@ export default function PreloaderAnimation() {
     }
   }, [phase])
 
-  // Store in sessionStorage when complete
-  useEffect(() => {
-    if (phase === 'complete') {
-      try {
-        sessionStorage.setItem('trinade-preloader-seen', 'true')
-      } catch {}
-    }
-  }, [phase])
-
   if (phase === 'complete') return null
 
   return (

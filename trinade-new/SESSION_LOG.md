@@ -9,9 +9,21 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 27 — Products → 404 redirect + homepage hero viewport fix
-- Last completed: Prompt 27 hero containment + Products routing
+- Done: Prompt 28 — Preloader shows every time user lands on homepage
+- Last completed: Prompt 28 preloader always-on
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 28: Preloader Always Shows on Homepage
+
+### What Was Done
+1. **Preloader triggers every visit** — Removed `sessionStorage` gating from `app/page.tsx` so the cinematic TRINADE preloader animation plays every time a user lands on or navigates to the homepage, not just once per session.
+2. **Cleaned up sessionStorage** — Removed `sessionStorage.setItem('trinade-preloader-seen')` from `preloader-animation.tsx` since it's no longer needed. Removed unused `useEffect` import from `page.tsx`.
+
+### Files Changed
+- `app/page.tsx` — Removed sessionStorage check, `showPreloader` defaults to `true`
+- `components/preloader-animation.tsx` — Removed sessionStorage write on completion
 
 ---
 

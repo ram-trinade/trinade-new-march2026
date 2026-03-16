@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 const PreloaderAnimation = dynamic(() => import('@/components/preloader-animation'), { ssr: false })
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
@@ -11,17 +11,7 @@ const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), {
 const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
 
 export default function HomePage() {
-  const [showPreloader, setShowPreloader] = useState(false)
-
-  useEffect(() => {
-    try {
-      if (!sessionStorage.getItem('trinade-preloader-seen')) {
-        setShowPreloader(true)
-      }
-    } catch {
-      // sessionStorage unavailable — skip preloader
-    }
-  }, [])
+  const [showPreloader, setShowPreloader] = useState(true)
 
   return (
     <>
