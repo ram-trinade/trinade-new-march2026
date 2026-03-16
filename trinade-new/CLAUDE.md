@@ -23,8 +23,8 @@ node node_modules/next/dist/bin/next dev --port 3006
 ```
 app/
   globals.css          # Tailwind v4 config, cream bg (#f2ede6), Manrope font, Lenis styles, gold selection
-  layout.tsx           # Root layout — Manrope font import, metadata
-  page.tsx             # Homepage — Preloader + SolutionsContent + PremiumCursor + CookiePopup
+  layout.tsx           # Root layout — Manrope font, metadata, SSR dark initial-screen overlay (prevents cream flash before preloader)
+  page.tsx             # Homepage — Preloader + content (hidden until preloader done) + PremiumCursor + CookiePopup
   not-found.tsx        # 404 page — giant "404" watermark, gold border button, dark atmospheric
   blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
   company/page.tsx     # Company — "Est 2020" hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members)
@@ -33,12 +33,12 @@ app/
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
   solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname)
-  solutions-content.tsx   # Solutions: hero, mission, industries, sticky scroll cards (fixed), testimonial challenges carousel, accordion, differentiators, CTA, footer
+  solutions-content.tsx   # Solutions: hero, mission, industries, Our Approach scroll cards (CSS Grid + absolute dark bg), testimonial challenges carousel, accordion, CTA
   solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
   solutions-cookie-popup.tsx # Gold glass cookie consent popup (data-lenis-prevent for 125%+ zoom scroll fix)
   smooth-scroll.tsx       # Lenis smooth scroll provider
   homepage-content.tsx    # Homepage sections: hero, AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges, CTA
-  preloader-animation.tsx # Cinematic preloader: warm gold gradient bg, breathing TRINADE text reveal with gold shimmer sweep, weight 200 (plays every homepage visit)
+  preloader-animation.tsx # Frontend-w.com inspired preloader: dark gradient bg, lens flare, "You Envision — We Build" tagline, per-digit milestone counter (0→25→50→75→100%, staggered vertical slide, weight 600)
 public/
   logo-transparent.png    # Trinade logo (transparent PNG)
   gradient-orbs-warm.jpg  # Decorative hero/section backgrounds

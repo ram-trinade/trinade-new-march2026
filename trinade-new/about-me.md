@@ -41,8 +41,8 @@
 - Website sections and pages will be added incrementally, inspired by different award-winning sites
 
 ## Current Pages
-- **Homepage** (`/`): Preloader (every visit), hero ("Technology that works for you."), 4 sticky scroll-over cards, challenges grid, CTA
-- **Solutions** (`/solutions`): Hero + mission + industries grid + sticky scroll cards + testimonial carousel + accordion + differentiators + CTA
+- **Homepage** (`/`): Cinematic preloader (every visit, frontend-w.com inspired with per-digit milestone counter), hero ("Technology that works for you."), AROX accordion, challenges grid, CTA
+- **Solutions** (`/solutions`): Hero + mission + industries grid + Our Approach scroll cards (CSS Grid) + testimonial carousel + accordion + CTA
 - **Blog** (`/blog`): Editorial magazine — hero, featured article, 6-card grid, newsletter, topics
 - **Company** (`/company`): "Est 2020" bold gold hero, quote, vision, mission, values accordion, milestones carousel, team accordion with expanding cards
 - **Contact** (`/contact`): Atmospheric CSS bg, bold "Get in touch" hero, form with custom dropdown

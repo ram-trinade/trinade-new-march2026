@@ -33,8 +33,8 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 ### 8 Pages — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | **Homepage** (landing page): cinematic preloader (breathing "TRINADE" text + gold shimmer) on EVERY visit, hero ("Technology that works for you." — viewport-contained), AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered expand/collapse), challenges grid, CTA | Premium scroll + editorial |
-| `/solutions` | Solutions: hero, mission, industries, sticky scroll cards, testimonial challenges carousel, accordion services, differentiators, CTA | Solid — full design system |
+| `/` | **Homepage** (landing page): cinematic preloader (frontend-w.com inspired — dark gradient bg, lens flare, "You Envision — We Build" tagline, per-digit staggered milestone counter 0→25→50→75→100%) on EVERY visit, content hidden until preloader completes, hero ("Technology that works for you."), AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges grid, CTA | Premium scroll + editorial |
+| `/solutions` | Solutions: hero, mission, industries, Our Approach scroll cards (CSS Grid + absolute dark bg panel, sticky heading), testimonial challenges carousel, accordion services, CTA | Solid — full design system |
 | `/blog` | Editorial magazine: staggered hero, featured article card, 6-card grid, newsletter CTA, topic tags | Strong editorial feel |
 | `/company` | "Est 2020" bold gold gradient hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members with bios) | Rich, editorial |
 | `/contact` | Dark hero with spiral bg + "Have a project in mind?", split info card + gold glass form | Redesigned — premium |
@@ -63,10 +63,10 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ### Shared Components
 - `solutions-navbar.tsx` — "TRINADE" wordmark (left, links to `/`) + Menu pill with scroll % (center) + Logo (right, links to `/`) + gold active page dot via `usePathname`. Menu links: Products→`/products` (404), Solutions→`/solutions`, Blog→`/blog`, Company→`/company`, Contact→`/contact`
-- `solutions-content.tsx` — Solutions page (`/solutions`): hero, mission, industries grid, sticky scroll cards, testimonial carousel, accordion, differentiators, CTA
+- `solutions-content.tsx` — Solutions page (`/solutions`): hero, mission, industries grid, Our Approach scroll cards (CSS Grid layout), testimonial carousel, accordion, CTA
 - `solutions-footer.tsx` — Gold glass card with CTA section, nav links (Home→`/`, Solutions→`/solutions`, etc.), smooth TRINADE marquee, social icons
 - `homepage-content.tsx` — Homepage sections: hero (viewport-contained), AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges grid, CTA
-- `preloader-animation.tsx` — Cinematic preloader: logo + progress line → breathing "TRINADE" text reveal with gold shimmer sweep → slide-up exit (plays EVERY homepage visit)
+- `preloader-animation.tsx` — Frontend-w.com inspired preloader: dark gradient bg, lens flare, "You Envision — We Build" tagline, per-digit staggered milestone counter (0→25→50→75→100%), SSR dark initial-screen in layout.tsx prevents cream flash (plays EVERY homepage visit)
 - `solutions-cookie-popup.tsx` — Gold glass cookie consent
 - `smooth-scroll.tsx` — Lenis provider
 - `premium-cursor.tsx` — Custom cursor with mix-blend-mode difference
