@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 import SolutionsFooter from './solutions-footer'
@@ -43,36 +43,33 @@ const industries = [
 ]
 
 
-const challengeTestimonials = [
+const impactMetrics = [
   {
-    domain: 'Enterprise',
-    quote: '\u201CWe were managing nine separate vendor relationships for infrastructure alone. Nothing talked to anything else. Trinade consolidated the entire stack in four months \u2014 and our teams didn\u2019t miss a single day of uptime.\u201D',
-    attribution: 'VP of Infrastructure, Global Industrial Conglomerate',
-    tags: ['Systems Integration', 'Managed IT'],
+    value: 150,
+    suffix: '+',
+    label: 'Enterprise Deployments',
+    desc: 'Mission-critical systems delivered across six industries — each one built to the exact specifications of the business it serves.',
   },
   {
-    domain: 'FinTech',
-    quote: '\u201CEvery new regulation meant six weeks of manual remediation. We brought Trinade in to build an automated compliance layer, and our last three audits closed without a single finding.\u201D',
-    attribution: 'Chief Risk Officer, Digital Payments Platform',
-    tags: ['Compliance Automation', 'Cloud Architecture'],
+    value: 99.97,
+    suffix: '%',
+    label: 'Uptime SLA Maintained',
+    desc: 'Across every managed client, every quarter. Not a marketing number — a contractual commitment we haven\u2019t broken.',
+    isDecimal: true,
   },
   {
-    domain: 'Healthcare',
-    quote: '\u201CAfter two acquisitions, our clinicians were logging into five different systems to see one patient\u2019s history. Trinade unified everything behind a single pane of glass without disrupting a single clinical workflow.\u201D',
-    attribution: 'CIO, Multi-State Hospital Network',
-    tags: ['Data Unification', 'Legacy Modernization'],
+    value: 4.2,
+    suffix: 'x',
+    label: 'Average Client ROI',
+    desc: 'Measured at 18 months post-deployment. Infrastructure that pays for itself — and then some.',
+    isDecimal: true,
   },
   {
-    domain: 'Logistics',
-    quote: '\u201COur forecasting was based on spreadsheets and gut instinct. Trinade built a demand sensing platform that cut our inventory carrying costs by 23% in the first quarter alone.\u201D',
-    attribution: 'COO, Asia-Pacific Freight & Distribution',
-    tags: ['Predictive Analytics', 'Supply Chain Intelligence'],
-  },
-  {
-    domain: 'Legal',
-    quote: '\u201CWe were spending more on IT firefighting than on strategic technology. Trinade gave us a three-year roadmap, migrated us to the cloud, and our per-attorney IT cost dropped by a third.\u201D',
-    attribution: 'Managing Partner, 200-Attorney National Firm',
-    tags: ['IT Strategy', 'Cloud Migration'],
+    value: 12,
+    prefix: '<',
+    suffix: 'hr',
+    label: 'Mean Incident Response',
+    desc: 'From detection to resolution. Our SOC doesn\u2019t sleep, and neither does our commitment to uptime.',
   },
 ]
 
@@ -365,201 +362,205 @@ function IndustriesSection() {
 
 
 // ═══════════════════════════════════════════════════════════
-// CHALLENGES — Testimonial/Social Proof Carousel
-// Editorial layout: domain name left + quote right, vertical divider
+// ANIMATED COUNTER — Scroll-triggered count-up hook
 // ═══════════════════════════════════════════════════════════
-function ChallengesSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-  const [activeIndex, setActiveIndex] = useState(0)
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const total = challengeTestimonials.length
-
-  const resetTimer = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => {
-      setActiveIndex(prev => (prev + 1) % total)
-    }, 6000)
-  }, [total])
+function useCountUp(target: number, isInView: boolean, duration = 2000, isDecimal = false) {
+  const [count, setCount] = useState(0)
+  const hasAnimated = useRef(false)
 
   useEffect(() => {
-    resetTimer()
-    return () => { if (timerRef.current) clearInterval(timerRef.current) }
-  }, [resetTimer])
+    if (!isInView || hasAnimated.current) return
+    hasAnimated.current = true
 
-  const goUp = () => {
-    setActiveIndex(prev => (prev - 1 + total) % total)
-    resetTimer()
-  }
-  const goDown = () => {
-    setActiveIndex(prev => (prev + 1) % total)
-    resetTimer()
-  }
+    const startTime = performance.now()
+    const step = (now: number) => {
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      // Cubic ease-out for dramatic deceleration
+      const eased = 1 - Math.pow(1 - progress, 3)
+      const current = isDecimal
+        ? Math.round(eased * target * 100) / 100
+        : Math.round(eased * target)
+      setCount(current)
+      if (progress < 1) requestAnimationFrame(step)
+    }
+    requestAnimationFrame(step)
+  }, [isInView, target, duration, isDecimal])
 
-  const current = challengeTestimonials[activeIndex]
+  return count
+}
+
+// ═══════════════════════════════════════════════════════════
+// PROVEN IMPACT — Oversized animated metrics on dark bg
+// Dramatic typography, gold accents, editorial layout
+// ═══════════════════════════════════════════════════════════
+function MetricCard({ metric, index, isInView }: { metric: typeof impactMetrics[0]; index: number; isInView: boolean }) {
+  const count = useCountUp(metric.value, isInView, 2200, metric.isDecimal)
+
+  const formattedValue = metric.isDecimal
+    ? count.toFixed(metric.value.toString().split('.')[1]?.length || 0)
+    : count.toString()
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.9, delay: 0.15 + index * 0.12, ease: EASE_OUT }}
+      className="group relative"
+    >
+      {/* Gold top accent line */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={isInView ? { scaleX: 1 } : {}}
+        transition={{ duration: 1.2, delay: 0.3 + index * 0.12, ease: EASE_OUT }}
+        className="h-[2px] mb-8 origin-left"
+        style={{
+          background: `linear-gradient(90deg, ${P.gold}, ${P.goldLight}40, transparent)`,
+        }}
+      />
+
+      {/* Number row */}
+      <div className="flex items-baseline gap-1">
+        {metric.prefix && (
+          <span
+            className="tracking-[-0.04em] leading-[0.85]"
+            style={{
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              fontWeight: 200,
+              color: P.gold,
+            }}
+          >
+            {metric.prefix}
+          </span>
+        )}
+        <span
+          className="tracking-[-0.04em] leading-[0.85]"
+          style={{
+            fontSize: 'clamp(3.5rem, 7vw, 6rem)',
+            fontWeight: 200,
+            color: P.textOnDark,
+            opacity: 0.95,
+          }}
+        >
+          {formattedValue}
+        </span>
+        <span
+          className="tracking-[-0.02em] leading-[0.85]"
+          style={{
+            fontSize: 'clamp(1.8rem, 3.5vw, 3rem)',
+            fontWeight: 300,
+            color: P.gold,
+          }}
+        >
+          {metric.suffix}
+        </span>
+      </div>
+
+      {/* Label */}
+      <p
+        className="text-[12px] uppercase tracking-[0.18em] font-semibold mt-5"
+        style={{ color: 'rgba(240,237,232,0.6)' }}
+      >
+        {metric.label}
+      </p>
+
+      {/* Description */}
+      <p
+        className="text-[15px] leading-[1.75] mt-4 max-w-[320px]"
+        style={{ color: P.textOnDarkMuted }}
+      >
+        {metric.desc}
+      </p>
+    </motion.div>
+  )
+}
+
+function ProvenImpactSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
     <section ref={ref} className="relative py-32 lg:py-40 overflow-hidden" style={{ background: '#0a0a0a' }}>
       {/* Spiral lines background */}
       <div className="absolute inset-0 pointer-events-none">
-        <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" style={{ opacity: 0.12 }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.15) 50%, rgba(10,10,10,0.5) 100%)' }} />
+        <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" style={{ opacity: 0.10 }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.1) 40%, rgba(10,10,10,0.5) 100%)' }} />
       </div>
-      <Grain id="challengesGrain" opacity={0.025} />
+
+      {/* Atmospheric gold orb — bottom right */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          bottom: '-10%',
+          right: '-5%',
+          width: '500px',
+          height: '500px',
+          background: `radial-gradient(circle, rgba(201,168,110,0.08) 0%, transparent 70%)`,
+          filter: 'blur(60px)',
+        }}
+      />
+
+      <Grain id="impactGrain" opacity={0.025} />
 
       <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
-        {/* Eyebrow */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: EASE }}
-          className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-16"
-          style={{ color: P.gold }}
-        >
-          What our clients say
-        </motion.p>
+        {/* Header row: eyebrow + editorial headline */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-20 gap-8">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, ease: EASE }}
+              className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-6"
+              style={{ color: P.gold }}
+            >
+              Proven Impact
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.08, ease: EASE_OUT }}
+              className="leading-[1.08] tracking-[-0.03em] max-w-[700px]"
+              style={{
+                fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)',
+                fontWeight: 300,
+                color: P.textOnDark,
+              }}
+            >
+              Numbers we stand behind.{' '}
+              <span style={{ color: 'rgba(240,237,232,0.35)' }}>
+                Not projections — outcomes.
+              </span>
+            </motion.h2>
+          </div>
 
-        {/* Main layout: left column + vertical line + right column */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+            className="text-[15px] leading-[1.8] max-w-[380px] lg:text-right"
+            style={{ color: P.textOnDarkMuted }}
+          >
+            Every metric here is drawn from active client engagements. We don&apos;t publish benchmarks we can&apos;t defend.
+          </motion.p>
+        </div>
+
+        {/* Metrics grid — 4 columns on desktop */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          {impactMetrics.map((metric, i) => (
+            <MetricCard key={metric.label} metric={metric} index={i} isInView={isInView} />
+          ))}
+        </div>
+
+        {/* Bottom decorative line */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT }}
-          className="flex flex-col lg:flex-row relative"
-          style={{ minHeight: '340px' }}
-        >
-          {/* LEFT COLUMN — ~35% */}
-          <div className="lg:w-[35%] flex flex-col justify-between pb-8 lg:pb-0 lg:pr-12 relative">
-            {/* Thin vertical line — runs full height on left edge */}
-            <div
-              className="absolute top-0 bottom-0 left-0 w-[1px] hidden lg:block"
-              style={{ background: `linear-gradient(180deg, ${P.gold}33, rgba(255,255,255,0.06), ${P.gold}33)` }}
-            />
-
-            <div className="lg:pl-10">
-              {/* Domain name — large bold */}
-              <AnimatePresence mode="wait">
-                <motion.h3
-                  key={current.domain}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.4, ease: EASE_OUT }}
-                  className="tracking-[-0.02em] leading-[1.1]"
-                  style={{
-                    fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-                    fontWeight: 700,
-                    color: P.textOnDark,
-                  }}
-                >
-                  {current.domain}
-                </motion.h3>
-              </AnimatePresence>
-
-              {/* Tags */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`tags-${activeIndex}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                  className="flex flex-wrap gap-2 mt-5"
-                >
-                  {current.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 rounded-full text-[11px] font-medium uppercase tracking-[0.06em]"
-                      style={{
-                        background: 'rgba(201,168,110,0.12)',
-                        color: P.goldLight,
-                        border: '1px solid rgba(201,168,110,0.25)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Up/Down nav buttons */}
-              <div className="flex items-center gap-3 mt-10">
-                <button
-                  onClick={goUp}
-                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
-                  style={{ borderColor: 'rgba(255,255,255,0.15)' }}
-                  aria-label="Previous challenge"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 12V2M3 6l4-4 4 4" />
-                  </svg>
-                </button>
-                <button
-                  onClick={goDown}
-                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
-                  style={{ borderColor: 'rgba(255,255,255,0.15)' }}
-                  aria-label="Next challenge"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 2v10M3 8l4 4 4-4" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Counter + attribution at bottom */}
-            <div className="lg:pl-10 mt-10 lg:mt-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`meta-${activeIndex}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <p
-                    className="text-[13px] font-semibold tracking-[0.08em] uppercase"
-                    style={{ color: P.textOnDark }}
-                  >
-                    {String(activeIndex + 1).padStart(2, '0')}/{String(total).padStart(2, '0')}
-                  </p>
-                  <p
-                    className="text-[13px] tracking-[0.06em] uppercase mt-1.5"
-                    style={{ color: P.textOnDarkMuted }}
-                  >
-                    {current.attribution}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* VERTICAL DIVIDER — between columns */}
-          <div
-            className="hidden lg:block w-[1px] mx-0 self-stretch"
-            style={{ background: 'rgba(255,255,255,0.08)' }}
-          />
-
-          {/* RIGHT COLUMN — ~65% */}
-          <div className="lg:w-[65%] lg:pl-16 flex items-center">
-            <AnimatePresence mode="wait">
-              <motion.blockquote
-                key={current.domain}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: EASE_OUT }}
-                className="leading-[1.4] tracking-[-0.01em]"
-                style={{
-                  fontSize: 'clamp(1.5rem, 2.8vw, 2.2rem)',
-                  fontWeight: 300,
-                  color: 'rgba(240,237,232,0.88)',
-                }}
-              >
-                {current.quote}
-              </motion.blockquote>
-            </AnimatePresence>
-          </div>
-        </motion.div>
+          initial={{ scaleX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{ duration: 1.8, delay: 0.6, ease: EASE_OUT }}
+          className="h-[1px] mt-20 origin-left"
+          style={{
+            background: `linear-gradient(90deg, ${P.gold}40, rgba(255,255,255,0.06), transparent)`,
+          }}
+        />
       </div>
     </section>
   )
@@ -798,7 +799,7 @@ export default function SolutionsContent() {
       <HeroSection />
       <MissionSection />
       <IndustriesSection />
-      <ChallengesSection />
+      <ProvenImpactSection />
       <AccordionSection />
       <CTASection />
       <SolutionsFooter />
