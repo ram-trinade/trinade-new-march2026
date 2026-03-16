@@ -9,9 +9,44 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 43 — Frontend-w.com inspired preloader animation
-- Last completed: Prompt 43 — cinematic preloader with animated gradient, lens flare, tagline, counter
+- Done: Prompt 44 — Solutions page fixes + preloader milestone counter
+- Last completed: Prompt 44 — removed Differentiators section, fixed Our Approach sticky layout, preloader milestone counter 0→25→50→75→100%
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-16 — Prompt 44: Solutions Page Fixes + Preloader Milestone Counter
+
+### What Was Done
+
+#### 1. Removed "What Sets Us Apart" (DifferentiatorsSection) from Solutions Page
+- Removed `<DifferentiatorsSection />` from the render tree in `solutions-content.tsx`
+- Section no longer appears on the page (verified via Playwright text search)
+
+#### 2. Fixed "Our Approach" ScrollCardsSection — Permanent Fix
+- **Problem**: CSS `position: sticky` was broken due to Lenis setting `overflow: hidden auto` on `<html>`, which interferes with sticky positioning
+- **Solution**: CSS Grid layout with absolute-positioned dark background panel
+  - Two-column grid: `gridTemplateColumns: '48% 1fr'`
+  - Left column: `position: absolute; inset: 0` dark bg with spiral image (always covers full column height regardless of sticky behavior)
+  - Sticky heading overlay within left column for the "OUR APPROACH" text
+  - Right column: scrolling service cards with proper padding
+- **Result**: Dark panel reliably covers full left side at all scroll positions, verified at scroll 2000, 2800
+
+#### 3. Preloader Milestone Counter
+- Changed from slow continuous 0→100 RAF counter to elegant milestone steps: 0→25→50→75→100%
+- Milestone timings: 0ms, 350ms, 750ms, 1150ms, 1600ms with ease-out interpolation between each
+- Reduced overall preloader duration: complete=1800ms, exit=2400ms, done=3200ms
+- Gradient animation durations shortened (2.0s, 2.5s, 1.8s)
+- Font weight increased: 200→400 (bolder numbers)
+- Color lightened: `rgba(255,252,247,0.18)` (was 0.12) for softer, lighter appearance
+
+### Files Changed
+- `components/solutions-content.tsx` — Removed DifferentiatorsSection render, rewrote ScrollCardsSection to CSS Grid + absolute positioning
+- `components/preloader-animation.tsx` — Milestone-based counter, bolder + lighter percentage text, faster timings
+
+### Technical Notes
+- Lenis `overflow: hidden auto` on `<html>` breaks CSS sticky in certain configurations — absolute positioning is more reliable for fixed background panels
+- Milestone counter uses per-segment ease-out: `1 - Math.pow(1 - segT, 2.5)` for smooth counting between steps
 
 ---
 

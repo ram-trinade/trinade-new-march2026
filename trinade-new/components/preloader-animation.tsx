@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
 // ═══════════════════════════════════════════════════════════
 // FRONTEND-W INSPIRED PRELOADER
 // Animated gradient background with shifting warm tones,
-// moving lens flare, centered tagline, large % counter
+// moving lens flare, centered tagline, milestone % counter
+// Steps: 0 → 25 → 50 → 75 → 100 with elegant transitions
 // ═══════════════════════════════════════════════════════════
 
 type Phase = 'loading' | 'complete' | 'exit' | 'done'
@@ -14,35 +15,56 @@ type Phase = 'loading' | 'complete' | 'exit' | 'done'
 const EASE_CINE = [0.76, 0, 0.24, 1] as const
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
+// Milestone steps and their timing (ms from start)
+const MILESTONES = [
+  { value: 0, at: 0 },
+  { value: 25, at: 350 },
+  { value: 50, at: 750 },
+  { value: 75, at: 1150 },
+  { value: 100, at: 1600 },
+]
+
 interface PreloaderProps {
   onComplete?: () => void
 }
 
 export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState<Phase>('loading')
-  const [progress, setProgress] = useState(0)
+  const [displayValue, setDisplayValue] = useState(0)
   const startTime = useRef(Date.now())
   const rafRef = useRef<number>(0)
 
-  // Smooth progress counter 0→100
+  // Milestone-based counter: snaps through 0→25→50→75→100
+  // with smooth counting between each milestone
   useEffect(() => {
     if (phase === 'exit' || phase === 'done') return
 
-    const TOTAL_DURATION = 3200
-
     const animate = () => {
       const elapsed = Date.now() - startTime.current
-      const t = Math.min(elapsed / TOTAL_DURATION, 1)
-      // Custom ease: slow start, fast middle, slow end
-      const eased = t < 0.12
-        ? t * t * (1 / 0.0144) * 0.06
-        : t < 0.65
-          ? 0.06 + ((t - 0.12) / 0.53) * 0.70
-          : 0.76 + ((t - 0.65) / 0.35) * 0.24
-      setProgress(Math.min(Math.round(eased * 100), 100))
 
-      if (t < 1) {
+      // Find which milestone segment we're in
+      let currentValue = 0
+      for (let i = 0; i < MILESTONES.length - 1; i++) {
+        const from = MILESTONES[i]
+        const to = MILESTONES[i + 1]
+        if (elapsed >= from.at && elapsed < to.at) {
+          // Ease within this segment
+          const segT = (elapsed - from.at) / (to.at - from.at)
+          // Smooth ease-out for each segment
+          const eased = 1 - Math.pow(1 - segT, 2.5)
+          currentValue = Math.round(from.value + (to.value - from.value) * eased)
+          break
+        } else if (elapsed >= to.at && i === MILESTONES.length - 2) {
+          currentValue = to.value
+        }
+      }
+
+      setDisplayValue(currentValue)
+
+      if (elapsed < MILESTONES[MILESTONES.length - 1].at) {
         rafRef.current = requestAnimationFrame(animate)
+      } else {
+        setDisplayValue(100)
       }
     }
 
@@ -50,16 +72,16 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
     return () => cancelAnimationFrame(rafRef.current)
   }, [phase])
 
-  // Phase state machine
+  // Phase state machine — faster overall
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = []
 
-    // loading → complete
-    timers.push(setTimeout(() => setPhase('complete'), 3400))
+    // loading → complete (after counter finishes)
+    timers.push(setTimeout(() => setPhase('complete'), 1800))
     // complete → exit (hold for a beat)
-    timers.push(setTimeout(() => setPhase('exit'), 4200))
+    timers.push(setTimeout(() => setPhase('exit'), 2400))
     // exit → done
-    timers.push(setTimeout(() => setPhase('done'), 5200))
+    timers.push(setTimeout(() => setPhase('done'), 3200))
 
     return () => timers.forEach(clearTimeout)
   }, [])
@@ -88,7 +110,6 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
           }}
         >
           {/* ─── Animated gradient background ─── */}
-          {/* Base layer: rich dark warm gradient */}
           <motion.div
             initial={{ opacity: 1 }}
             animate={isExiting ? { opacity: 0 } : { opacity: 1 }}
@@ -100,7 +121,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             }}
           />
 
-          {/* Animated color layer 1: warm gold glow — shifts position */}
+          {/* Animated color layer 1: warm gold glow */}
           <motion.div
             initial={{ x: '-20%', y: '-10%', opacity: 0.35 }}
             animate={
@@ -111,7 +132,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                   : { x: '10%', y: '-20%', opacity: 0.55, scale: 1.3 }
             }
             transition={{
-              duration: isExiting ? 0.8 : 3.5,
+              duration: isExiting ? 0.8 : 2.0,
               ease: [0.25, 0.1, 0.25, 1],
             }}
             style={{
@@ -126,7 +147,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             }}
           />
 
-          {/* Animated color layer 2: deep amber — opposite movement */}
+          {/* Animated color layer 2: deep amber */}
           <motion.div
             initial={{ x: '20%', y: '10%', opacity: 0.25 }}
             animate={
@@ -137,7 +158,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                   : { x: '-15%', y: '-5%', opacity: 0.45, scale: 1.2 }
             }
             transition={{
-              duration: isExiting ? 0.8 : 4.0,
+              duration: isExiting ? 0.8 : 2.5,
               ease: [0.25, 0.1, 0.25, 1],
             }}
             style={{
@@ -152,18 +173,14 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             }}
           />
 
-          {/* Animated color layer 3: subtle warm wash — adds depth */}
+          {/* Animated color layer 3: subtle warm wash */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={
-              isExiting
-                ? { opacity: 0 }
-                : { opacity: 0.3 }
-            }
+            animate={isExiting ? { opacity: 0 } : { opacity: 0.3 }}
             transition={{
-              duration: isExiting ? 0.6 : 2.5,
+              duration: isExiting ? 0.6 : 1.8,
               ease: [0.25, 0.1, 0.25, 1],
-              delay: isExiting ? 0 : 0.5,
+              delay: isExiting ? 0 : 0.3,
             }}
             style={{
               position: 'absolute',
@@ -187,7 +204,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                   : { x: '-5vw', y: '-5vh', opacity: 0.65, scale: 1.2 }
             }
             transition={{
-              duration: isExiting ? 0.6 : 3.0,
+              duration: isExiting ? 0.6 : 2.0,
               ease: EASE_OUT,
             }}
             style={{
@@ -203,7 +220,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             }}
           />
 
-          {/* Secondary lens flare — smaller, brighter core */}
+          {/* Secondary lens flare — brighter core */}
           <motion.div
             initial={{ x: '-25vw', y: '-15vh', opacity: 0 }}
             animate={
@@ -214,9 +231,9 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                   : { x: '0vw', y: '-2vh', opacity: 0.4 }
             }
             transition={{
-              duration: isExiting ? 0.5 : 2.5,
+              duration: isExiting ? 0.5 : 1.8,
               ease: EASE_OUT,
-              delay: isExiting ? 0 : 0.3,
+              delay: isExiting ? 0 : 0.2,
             }}
             style={{
               position: 'absolute',
@@ -258,7 +275,6 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(16px, 3vw, 40px)' }}>
-              {/* "You Envision" */}
               <motion.span
                 initial={{ opacity: 0, x: -30, filter: 'blur(8px)' }}
                 animate={
@@ -267,9 +283,9 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                     : { opacity: 0.9, x: 0, filter: 'blur(0px)' }
                 }
                 transition={{
-                  duration: 1.0,
+                  duration: 0.8,
                   ease: EASE_OUT,
-                  delay: isExiting ? 0 : 0.4,
+                  delay: isExiting ? 0 : 0.2,
                 }}
                 style={{
                   fontFamily: 'var(--font-display)',
@@ -283,7 +299,6 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                 You Envision
               </motion.span>
 
-              {/* Em dash separator */}
               <motion.span
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={
@@ -292,9 +307,9 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                     : { opacity: 0.5, scaleX: 1 }
                 }
                 transition={{
-                  duration: 0.8,
+                  duration: 0.6,
                   ease: EASE_OUT,
-                  delay: isExiting ? 0 : 0.7,
+                  delay: isExiting ? 0 : 0.4,
                 }}
                 style={{
                   width: 'clamp(28px, 4.5vw, 60px)',
@@ -305,7 +320,6 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                 }}
               />
 
-              {/* "We Build" */}
               <motion.span
                 initial={{ opacity: 0, x: 30, filter: 'blur(8px)' }}
                 animate={
@@ -314,9 +328,9 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                     : { opacity: 0.9, x: 0, filter: 'blur(0px)' }
                 }
                 transition={{
-                  duration: 1.0,
+                  duration: 0.8,
                   ease: EASE_OUT,
-                  delay: isExiting ? 0.05 : 0.5,
+                  delay: isExiting ? 0.05 : 0.3,
                 }}
                 style={{
                   fontFamily: 'var(--font-display)',
@@ -343,7 +357,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             transition={
               isExiting
                 ? { duration: 0.6, ease: EASE_CINE }
-                : { duration: 0.8, ease: EASE_OUT, delay: 0.2 }
+                : { duration: 0.6, ease: EASE_OUT, delay: 0.1 }
             }
             style={{
               position: 'absolute',
@@ -358,22 +372,22 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
                 fontFamily: 'var(--font-display)',
                 fontVariantNumeric: 'tabular-nums',
                 fontSize: 'clamp(5rem, 12vw, 11rem)',
-                fontWeight: 200,
+                fontWeight: 400,
                 letterSpacing: '-0.04em',
                 lineHeight: 0.82,
-                color: 'rgba(242,237,230,0.12)',
+                color: 'rgba(255,252,247,0.18)',
                 display: 'flex',
                 alignItems: 'baseline',
               }}
             >
-              <span>{progress}</span>
+              <span>{displayValue}</span>
               <span
                 style={{
                   fontSize: '0.35em',
-                  fontWeight: 300,
+                  fontWeight: 400,
                   letterSpacing: '0.02em',
                   marginLeft: '0.06em',
-                  opacity: 0.8,
+                  opacity: 0.7,
                 }}
               >
                 %
@@ -381,11 +395,11 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
             </div>
           </motion.div>
 
-          {/* ─── Corner accents — subtle geometric detail ─── */}
+          {/* ─── Corner accents ─── */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isExiting ? { opacity: 0 } : { opacity: 0.25 }}
-            transition={{ duration: isExiting ? 0.4 : 1.2, delay: isExiting ? 0 : 0.8 }}
+            transition={{ duration: isExiting ? 0.4 : 0.8, delay: isExiting ? 0 : 0.4 }}
             style={{
               position: 'absolute',
               top: 'clamp(20px, 3vh, 40px)',
@@ -399,7 +413,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={isExiting ? { opacity: 0 } : { opacity: 0.25 }}
-            transition={{ duration: isExiting ? 0.4 : 1.2, delay: isExiting ? 0 : 0.9 }}
+            transition={{ duration: isExiting ? 0.4 : 0.8, delay: isExiting ? 0 : 0.5 }}
             style={{
               position: 'absolute',
               top: 'clamp(20px, 3vh, 40px)',
@@ -413,7 +427,7 @@ export default function PreloaderAnimation({ onComplete }: PreloaderProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={isExiting ? { opacity: 0 } : { opacity: 0.25 }}
-            transition={{ duration: isExiting ? 0.4 : 1.2, delay: isExiting ? 0 : 1.0 }}
+            transition={{ duration: isExiting ? 0.4 : 0.8, delay: isExiting ? 0 : 0.6 }}
             style={{
               position: 'absolute',
               bottom: 'clamp(20px, 3vh, 40px)',

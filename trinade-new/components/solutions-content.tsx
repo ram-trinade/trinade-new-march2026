@@ -379,29 +379,33 @@ function IndustriesSection() {
 // ═══════════════════════════════════════════════════════════
 function ScrollCardsSection() {
   return (
-    <section className="relative" style={{ overflow: 'clip', background: P.cream }}>
-      <div style={{ position: 'relative' }}>
-
-        {/* Sticky dark background — stays pinned while cards scroll past */}
-        <div
-          className="sticky top-0 w-full overflow-hidden"
-          style={{ height: '100vh', zIndex: 1 }}
-        >
+    <section className="relative" style={{ background: P.cream }}>
+      {/* Two-column grid: dark panel left (sticky heading), cards right */}
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: '48% 1fr',
+          minHeight: '100vh',
+          gap: 0,
+        }}
+      >
+        {/* Left: Dark panel (full-height) with sticky heading overlay */}
+        <div className="relative" style={{ marginLeft: 'clamp(1.5rem,6vw,6rem)' }}>
+          {/* Dark bg — absolute, covers the full column height */}
           <div
-            className="absolute overflow-hidden"
-            style={{
-              inset: '0 clamp(1.5rem,6vw,6rem)',
-              borderRadius: '24px',
-            }}
+            className="absolute inset-0 overflow-hidden"
+            style={{ borderRadius: '24px' }}
           >
             <div className="absolute inset-0">
               <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(26,26,30,0.82) 0%, rgba(26,26,30,0.65) 50%, rgba(26,26,30,0.75) 100%)' }} />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(26,26,30,0.85) 0%, rgba(26,26,30,0.68) 50%, rgba(26,26,30,0.78) 100%)' }} />
             </div>
             <Grain id="scrollGrain" opacity={0.03} />
+          </div>
 
-            {/* Heading — bottom-left of the sticky container */}
-            <div className="absolute bottom-10 left-10 lg:left-14 z-20 max-w-[45%]">
+          {/* Heading — sticky within the left column */}
+          <div className="sticky top-0 h-screen relative z-20 pointer-events-none">
+            <div className="absolute bottom-10 left-10 lg:left-14 pr-6">
               <p className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5" style={{ color: P.goldLight }}>
                 Our approach
               </p>
@@ -417,16 +421,13 @@ function ScrollCardsSection() {
           </div>
         </div>
 
-        {/* Cards column — overlaps the sticky container via negative margin */}
+        {/* Right: Scrolling cards column */}
         <div
           style={{
-            marginTop: '-100vh',
-            paddingLeft: '52%',
             paddingRight: 'clamp(2.5rem,7vw,7rem)',
             paddingTop: '18vh',
-            paddingBottom: '4vh',
-            position: 'relative',
-            zIndex: 10,
+            paddingBottom: '12vh',
+            paddingLeft: 'clamp(1.5rem,3vw,3rem)',
           }}
         >
           <div className="flex flex-col gap-5">
@@ -443,7 +444,7 @@ function ScrollCardsSection() {
                   border: '1px solid rgba(229,224,216,0.6)',
                 }}
               >
-                {/* IT Solutions-inspired gold gradient accent wash at bottom */}
+                {/* Gold gradient accent wash at bottom */}
                 <div
                   className="absolute bottom-0 left-0 right-0 pointer-events-none transition-opacity duration-700"
                   style={{
@@ -462,7 +463,7 @@ function ScrollCardsSection() {
                   }}
                 />
 
-                {/* Gold bottom border line — always visible subtle, stronger on hover */}
+                {/* Gold bottom border line */}
                 <div
                   className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-500"
                   style={{
@@ -482,7 +483,6 @@ function ScrollCardsSection() {
                   {card.body}
                 </p>
 
-                {/* Learn more — always visible like IT Solutions, emphasized on hover */}
                 <div className="relative z-10 flex items-center gap-1.5 transition-all duration-300">
                   <span className="text-[13px] font-medium transition-colors duration-300" style={{ color: `${P.gold}99` }}>Learn more</span>
                   <svg className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5" style={{ opacity: 0.6 }}>
@@ -931,7 +931,6 @@ export default function SolutionsContent() {
       <IndustriesSection />
       <ChallengesSection />
       <AccordionSection />
-      <DifferentiatorsSection />
       <CTASection />
       <SolutionsFooter />
     </main>
