@@ -248,6 +248,22 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
         ...gridStyle,
       }}
     >
+      {/* Grainy gold glow from bottom-right corner */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at 100% 100%, rgba(201,168,110,0.18) 0%, rgba(201,168,110,0.06) 40%, transparent 70%)',
+        }}
+      />
+      {/* Grain texture overlay */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.35]" style={{ mixBlendMode: 'multiply' }}>
+        <filter id={`grain-${ind.name.replace(/\s+/g, '-')}`}>
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter={`url(#grain-${ind.name.replace(/\s+/g, '-')})`} />
+      </svg>
+
       {/* Gold bottom border on hover */}
       <div
         className="absolute bottom-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
@@ -257,7 +273,7 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
       {/* Subtle warm tint on hover */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ background: 'rgba(201,168,110,0.04)' }}
+        style={{ background: 'rgba(201,168,110,0.06)' }}
       />
 
       <h3
@@ -275,13 +291,6 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
           {ind.desc}
         </p>
 
-        {/* Learn more — appears on hover */}
-        <div className="flex items-center gap-1.5 mt-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
-          <span className="text-[13px] font-medium" style={{ color: P.gold }}>Learn more</span>
-          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 16 16" stroke={P.gold} strokeWidth="1.5">
-            <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
       </div>
     </div>
   )
