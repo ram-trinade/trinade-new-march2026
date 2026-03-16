@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 
@@ -293,38 +293,234 @@ function AnimCounter({ value, label }: { value: string; label: string }) {
 }
 
 // ═══════════════════════════════════════════════════════════
-// HERO SECTION — Cinematic opening
+// HERO SECTION — Cinematic editorial opening
+// Asymmetric layout, mouse-reactive orbital, staggered word
+// reveals, animated product counter, parallax depth layers
 // ═══════════════════════════════════════════════════════════
+
+// Decorative orbital ring with rotating dashes
+function GoldOrbital({ mouseX, mouseY }: { mouseX: number; mouseY: number }) {
+  return (
+    <div
+      className="pointer-events-none absolute"
+      style={{
+        right: 'clamp(40px, 8vw, 160px)',
+        top: '50%',
+        transform: `translate(${mouseX * 0.02}px, calc(-50% + ${mouseY * 0.02}px))`,
+        transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+        width: 'clamp(280px, 30vw, 480px)',
+        height: 'clamp(280px, 30vw, 480px)',
+      }}
+    >
+      {/* Outer ring — rotating dashes */}
+      <motion.svg
+        viewBox="0 0 400 400"
+        className="absolute inset-0 w-full h-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+      >
+        <circle
+          cx="200" cy="200" r="190"
+          fill="none"
+          stroke="rgba(201,168,110,0.12)"
+          strokeWidth="0.5"
+          strokeDasharray="12 8"
+        />
+      </motion.svg>
+
+      {/* Middle ring — counter-rotating */}
+      <motion.svg
+        viewBox="0 0 400 400"
+        className="absolute inset-0 w-full h-full"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+      >
+        <circle
+          cx="200" cy="200" r="150"
+          fill="none"
+          stroke="rgba(201,168,110,0.08)"
+          strokeWidth="0.5"
+          strokeDasharray="6 20"
+        />
+      </motion.svg>
+
+      {/* Inner ring — slow rotation */}
+      <motion.svg
+        viewBox="0 0 400 400"
+        className="absolute inset-0 w-full h-full"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}
+      >
+        <circle
+          cx="200" cy="200" r="110"
+          fill="none"
+          stroke="rgba(201,168,110,0.06)"
+          strokeWidth="0.5"
+        />
+      </motion.svg>
+
+      {/* Center glow */}
+      <div
+        className="absolute"
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '60%',
+          height: '60%',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.08) 0%, transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+      />
+
+      {/* Floating accent dots */}
+      {[0, 72, 144, 216, 288].map((angle, i) => (
+        <motion.div
+          key={i}
+          animate={{
+            opacity: [0.2, 0.7, 0.2],
+            scale: [0.8, 1.2, 0.8],
+          }}
+          transition={{
+            duration: 3 + i * 0.5,
+            repeat: Infinity,
+            delay: i * 0.6,
+            ease: 'easeInOut',
+          }}
+          style={{
+            position: 'absolute',
+            top: `${50 + 42 * Math.sin((angle * Math.PI) / 180)}%`,
+            left: `${50 + 42 * Math.cos((angle * Math.PI) / 180)}%`,
+            width: 4,
+            height: 4,
+            borderRadius: '50%',
+            background: '#c9a86e',
+            boxShadow: '0 0 8px rgba(201,168,110,0.5)',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+// Staggered word reveal component
+function WordReveal({
+  text,
+  inView,
+  baseDelay = 0,
+  style,
+}: {
+  text: string
+  inView: boolean
+  baseDelay?: number
+  style?: React.CSSProperties
+}) {
+  const words = text.split(' ')
+  return (
+    <span style={{ ...style, display: 'flex', flexWrap: 'wrap', gap: '0 0.3em' }}>
+      {words.map((word, i) => (
+        <span key={i} style={{ overflow: 'hidden', display: 'inline-block' }}>
+          <motion.span
+            initial={{ y: '110%', rotate: 3 }}
+            animate={inView ? { y: '0%', rotate: 0 } : {}}
+            transition={{
+              duration: 0.9,
+              delay: baseDelay + i * 0.08,
+              ease: EASE,
+            }}
+            style={{ display: 'inline-block', willChange: 'transform' }}
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </span>
+  )
+}
 
 function HeroSection() {
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true })
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+    const x = (e.clientX - rect.left - rect.width / 2) / rect.width
+    const y = (e.clientY - rect.top - rect.height / 2) / rect.height
+    setMouse({ x: x * 100, y: y * 100 })
+  }, [])
 
   return (
     <section
       ref={ref}
-      className="relative flex flex-col items-center justify-center overflow-hidden"
+      className="relative overflow-hidden"
       style={{ minHeight: '100vh', background: '#f2ede6' }}
+      onMouseMove={handleMouseMove}
     >
       <Grain opacity={0.03} />
 
-      {/* Atmospheric orbs */}
+      {/* ─── Layered atmospheric background ─── */}
+
+      {/* Warm gradient mesh */}
       <div
         className="pointer-events-none absolute"
         style={{
-          width: '60%',
-          height: '60%',
-          top: '15%',
-          left: '20%',
-          background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.08) 0%, transparent 70%)',
+          width: '120%',
+          height: '120%',
+          top: '-10%',
+          left: '-10%',
+          background: `
+            radial-gradient(ellipse at 20% 50%, rgba(201,168,110,0.09) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 30%, rgba(160,129,74,0.06) 0%, transparent 40%),
+            radial-gradient(ellipse at 60% 80%, rgba(201,168,110,0.04) 0%, transparent 50%)
+          `,
+          transform: `translate(${mouse.x * 0.01}px, ${mouse.y * 0.01}px)`,
+          transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       />
 
-      {/* PRODUCTS watermark */}
+      {/* Diagonal decorative lines */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 0.03 } : {}}
-        transition={{ duration: 1.2, delay: 0.4 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 1.5, delay: 0.8 }}
+        className="pointer-events-none absolute inset-0"
+      >
+        {/* Line 1 */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '15%',
+            right: '35%',
+            width: 1,
+            height: '35%',
+            background: 'linear-gradient(180deg, transparent, rgba(201,168,110,0.12), transparent)',
+            transform: 'rotate(-20deg)',
+            transformOrigin: 'top',
+          }}
+        />
+        {/* Line 2 */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '25%',
+            right: '32%',
+            width: 1,
+            height: '25%',
+            background: 'linear-gradient(180deg, transparent, rgba(201,168,110,0.08), transparent)',
+            transform: 'rotate(-20deg)',
+            transformOrigin: 'top',
+          }}
+        />
+      </motion.div>
+
+      {/* PRODUCTS watermark */}
+      <motion.div
+        initial={{ opacity: 0, x: -40 }}
+        animate={inView ? { opacity: 0.03, x: 0 } : {}}
+        transition={{ duration: 1.6, delay: 0.2, ease: EASE }}
         className="pointer-events-none absolute select-none"
         style={{
           fontSize: 'clamp(8rem, 22vw, 28rem)',
@@ -332,86 +528,278 @@ function HeroSection() {
           color: '#2a2218',
           letterSpacing: '-0.04em',
           lineHeight: 0.85,
+          top: '50%',
+          left: '50%',
+          transform: `translate(-50%, -50%) translate(${mouse.x * -0.005}px, ${mouse.y * -0.005}px)`,
+          transition: 'transform 1s ease-out',
         }}
       >
         PRODUCTS
       </motion.div>
 
-      {/* Content */}
-      <div className="relative z-20 flex flex-col items-center text-center px-8">
+      {/* ─── Gold Orbital (right side) ─── */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 1.2, delay: 0.6, ease: EASE }}
+      >
+        <GoldOrbital mouseX={mouse.x} mouseY={mouse.y} />
+      </motion.div>
+
+      {/* ─── Main content — left-aligned editorial ─── */}
+      <div
+        className="relative z-20 flex flex-col justify-center"
+        style={{
+          minHeight: '100vh',
+          padding: 'clamp(120px, 15vh, 200px) clamp(40px, 8vw, 160px)',
+          maxWidth: '65%',
+        }}
+      >
+        {/* Eyebrow with animated line */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+          className="flex items-center gap-4"
+          style={{ marginBottom: 32 }}
         >
-          <GoldPill>WHAT WE BUILD</GoldPill>
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={inView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
+            style={{
+              width: 48,
+              height: 1,
+              background: '#c9a86e',
+              transformOrigin: 'left',
+            }}
+          />
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              letterSpacing: '0.25em',
+              color: '#c9a86e',
+              textTransform: 'uppercase' as const,
+            }}
+          >
+            What We Build
+          </span>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
-          style={{
-            fontSize: 'clamp(3rem, 7vw, 7rem)',
-            fontWeight: 300,
-            color: '#2a2218',
-            lineHeight: 1.05,
-            letterSpacing: '-0.03em',
-            marginTop: 28,
-            maxWidth: 900,
-          }}
-        >
-          Technology built for{' '}
-          <em style={{ fontStyle: 'italic', color: '#a0814a' }}>what matters</em>
-        </motion.h1>
+        {/* Headline — word-by-word reveal */}
+        <h1>
+          <WordReveal
+            text="Technology"
+            inView={inView}
+            baseDelay={0.4}
+            style={{
+              fontSize: 'clamp(3.5rem, 8vw, 8rem)',
+              fontWeight: 300,
+              color: '#2a2218',
+              lineHeight: 1.0,
+              letterSpacing: '-0.04em',
+            }}
+          />
+          <WordReveal
+            text="built for"
+            inView={inView}
+            baseDelay={0.55}
+            style={{
+              fontSize: 'clamp(3.5rem, 8vw, 8rem)',
+              fontWeight: 300,
+              color: '#2a2218',
+              lineHeight: 1.0,
+              letterSpacing: '-0.04em',
+            }}
+          />
+          <span style={{ overflow: 'hidden', display: 'inline-block' }}>
+            <motion.em
+              initial={{ y: '110%', rotate: 2 }}
+              animate={inView ? { y: '0%', rotate: 0 } : {}}
+              transition={{ duration: 1.0, delay: 0.75, ease: EASE }}
+              style={{
+                display: 'inline-block',
+                fontSize: 'clamp(3.5rem, 8vw, 8rem)',
+                fontWeight: 300,
+                fontStyle: 'italic',
+                color: '#a0814a',
+                lineHeight: 1.0,
+                letterSpacing: '-0.04em',
+                willChange: 'transform',
+              }}
+            >
+              what matters.
+            </motion.em>
+          </span>
+        </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
-          style={{
-            fontSize: 'clamp(15px, 1.2vw, 18px)',
-            fontWeight: 400,
-            color: '#2a2218',
-            opacity: 0.55,
-            lineHeight: 1.8,
-            marginTop: 24,
-            maxWidth: 560,
-          }}
-        >
-          From expert consultation platforms to life-saving IoT devices — products
-          engineered with precision, delivered with conviction.
-        </motion.p>
-
+        {/* Gold rule */}
         <motion.div
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={inView ? { scaleX: 1, opacity: 1 } : {}}
+          transition={{ duration: 1.0, delay: 0.9, ease: EASE }}
           style={{
-            width: 60,
+            width: 80,
             height: 2,
-            background: 'linear-gradient(90deg, transparent, #c9a86e, transparent)',
-            transformOrigin: 'center',
+            background: 'linear-gradient(90deg, #c9a86e, #d4bb8a, transparent)',
+            transformOrigin: 'left',
             marginTop: 40,
           }}
         />
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 1.0, ease: EASE }}
+          style={{
+            fontSize: 'clamp(15px, 1.15vw, 18px)',
+            fontWeight: 400,
+            color: '#2a2218',
+            opacity: 0.5,
+            lineHeight: 1.9,
+            marginTop: 28,
+            maxWidth: 480,
+          }}
+        >
+          From expert consultation platforms to life-saving IoT devices —
+          products engineered with precision, delivered with conviction.
+        </motion.p>
+
+        {/* Product count badge + CTA row */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 1.15, ease: EASE }}
+          className="flex items-center gap-6 flex-wrap"
+          style={{ marginTop: 48 }}
+        >
+          {/* Product count */}
+          <div
+            className="flex items-center gap-3"
+            style={{
+              padding: '10px 20px 10px 14px',
+              borderRadius: 40,
+              background: 'rgba(201,168,110,0.08)',
+              border: '1px solid rgba(201,168,110,0.15)',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={inView ? { scale: 1 } : {}}
+              transition={{ duration: 0.5, delay: 1.3, ease: EASE }}
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 13,
+                fontWeight: 700,
+                color: '#fff',
+              }}
+            >
+              2
+            </motion.div>
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 500,
+                letterSpacing: '0.04em',
+                color: 'rgba(42,34,24,0.6)',
+              }}
+            >
+              Products
+            </span>
+          </div>
+
+          {/* Explore CTA */}
+          <motion.a
+            href="#split-universe"
+            whileHover={{ x: 4 }}
+            className="flex items-center gap-2"
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: '#a0814a',
+              textDecoration: 'none',
+              letterSpacing: '0.02em',
+            }}
+          >
+            Explore our lineup
+            <motion.svg
+              width="20" height="20" viewBox="0 0 20 20" fill="none"
+              animate={{ x: [0, 3, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <path d="M4 10h12M12 6l4 4-4 4" stroke="#a0814a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </motion.svg>
+          </motion.a>
+        </motion.div>
       </div>
 
-      {/* Scroll hint */}
+      {/* ─── Bottom bar — coordinates + scroll ─── */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 0.4 } : {}}
-        transition={{ duration: 0.6, delay: 1.2 }}
-        className="absolute bottom-10 flex flex-col items-center gap-2"
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, delay: 1.4 }}
+        className="absolute bottom-0 left-0 right-0 flex items-center justify-between z-20"
+        style={{
+          padding: 'clamp(20px, 3vh, 40px) clamp(40px, 8vw, 160px)',
+          borderTop: '1px solid rgba(201,168,110,0.08)',
+        }}
       >
-        <span style={{ fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: '#2a2218' }}>
-          Scroll
+        {/* Left: decorative coordinates */}
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 400,
+            letterSpacing: '0.12em',
+            color: 'rgba(42,34,24,0.3)',
+            fontVariantNumeric: 'tabular-nums',
+          }}
+        >
+          16.3066° N, 80.4365° E
         </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: 1, height: 24, background: 'rgba(201,168,110,0.4)' }}
-        />
+
+        {/* Center: scroll indicator */}
+        <div className="flex flex-col items-center gap-2">
+          <span
+            style={{
+              fontSize: 10,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase' as const,
+              color: 'rgba(42,34,24,0.35)',
+              fontWeight: 500,
+            }}
+          >
+            Scroll
+          </span>
+          <motion.div
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              width: 1,
+              height: 20,
+              background: 'linear-gradient(180deg, rgba(201,168,110,0.4), transparent)',
+            }}
+          />
+        </div>
+
+        {/* Right: year */}
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 400,
+            letterSpacing: '0.12em',
+            color: 'rgba(42,34,24,0.3)',
+          }}
+        >
+          &copy; 2026
+        </span>
       </motion.div>
     </section>
   )
@@ -429,6 +817,7 @@ function SplitUniverse() {
   return (
     <section
       ref={ref}
+      id="split-universe"
       className="relative overflow-hidden"
       style={{ minHeight: '85vh', background: '#f2ede6' }}
     >
