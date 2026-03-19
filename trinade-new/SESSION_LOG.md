@@ -9,9 +9,30 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 64 — Comprehensive Awwwards design audit of all 8 pages
-- Last completed: Prompt 64 — Design review checklist (137 items) + gaps report (60 issues across 10 severity-ranked categories)
+- Done: Prompt 65 — Contact page Group 1 polish fixes (experimental)
+- Last completed: Prompt 65 — Character counter enforcement + send button arrow hover transform
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 65: Contact Page — Group 1 Polish Fixes (Experimental)
+
+### What Was Done
+1. **Character counter enforcement** — Added `maxLength={300}` to textarea so browser prevents typing past 300 characters. Counter already displayed "X / 300" but wasn't enforced.
+2. **Send button arrow hover transform** — Arrow (`→`) now slides right 5px on hover via `translateX(5px)` with cinematic easing `cubic-bezier(0.32, 0.72, 0, 1)`. Uses `.send-arrow` class for querySelector targeting from parent button hover handlers.
+
+### Verification (Playwright MCP)
+- `maxLength="300"` confirmed via DOM attribute check
+- Arrow transform confirmed: `matrix(1, 0, 0, 1, 5, 0)` computed on hover
+- Screenshot captured: form section with both fixes visible
+
+### Files Modified
+- `app/experimental/contact/page.tsx` — Both fixes applied (EXPERIMENTAL ONLY, original untouched)
+
+### Next Steps
+- Group 2 fixes: Form label tracking (0.08em → 0.2em), scroll indicator fade-out
+- Group 3 fixes: Form validation + error/success states
+- Then proceed to other pages per design-gaps-report.md
 
 ---
 

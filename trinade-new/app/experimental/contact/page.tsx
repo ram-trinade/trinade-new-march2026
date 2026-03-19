@@ -970,6 +970,7 @@ export default function SolutionsContactPage() {
                       id="message"
                       name="message"
                       rows={7}
+                      maxLength={300}
                       placeholder="Tell us about your project or question..."
                       value={formData.message}
                       onChange={handleChange}
@@ -1026,20 +1027,27 @@ export default function SolutionsContactPage() {
                       el.style.background = '#2a2a2e'
                       el.style.transform = 'translateY(-1px)'
                       el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
+                      const arrow = el.querySelector('.send-arrow') as HTMLSpanElement
+                      if (arrow) arrow.style.transform = 'translateX(5px)'
                     }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#1a1a1e'
                       el.style.transform = 'translateY(0)'
                       el.style.boxShadow = 'none'
+                      const arrow = el.querySelector('.send-arrow') as HTMLSpanElement
+                      if (arrow) arrow.style.transform = 'translateX(0)'
                     }}
                   >
                     Send Message
-                    <span style={{
-                      display: 'inline-block',
-                      marginLeft: '10px',
-                      transition: 'transform 0.3s ease',
-                    }}>
+                    <span
+                      className="send-arrow"
+                      style={{
+                        display: 'inline-block',
+                        marginLeft: '10px',
+                        transition: 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)',
+                      }}
+                    >
                       &rarr;
                     </span>
                   </button>
