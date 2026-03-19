@@ -9,9 +9,43 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 65 — Contact ALL groups + Blog Groups 1-2 + Blog card redesign (experimental)
-- Last completed: Prompt 65 — Blog: gold liquid glass cards, title-first layout, redesigned categories, circular persistent arrows
+- Done: Prompt 66 — Blog article cards v2 + article detail page (experimental)
+- Last completed: Prompt 66 — Blog: big editorial numbers, spiral bg, longer cards, AI Healthcare article page
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 66: Blog Article Cards V2 + Article Detail Page (Experimental)
+
+### What Was Done
+1. **Article cards redesigned** — Replaced gold liquid glass cards with clean editorial layout:
+   - Big editorial numbers matching homepage style (`clamp(4rem, 7vw, 6.5rem)`, weight 200, gold at 10% opacity → 40% on hover)
+   - Cards are longer with more vertical padding (`py-12 md:py-16 lg:py-20`)
+   - Title-first layout with category pill, read time, date below
+   - Circular arrow button (56px) always visible, enlarges on hover
+   - All cards wrapped in `<a>` links with proper slugs
+2. **Fixed dark horizontal band** — Removed old hover background treatment that caused the darker portion on first card
+3. **Spiral lines background** — Added SVG spiral decoration to articles section (Fibonacci-inspired arcs + concentric dashed circles at 4% opacity)
+4. **Varied authors** — Changed from "Trinade Team" to: Priya Sharma, Arjun Mehta, Kavitha Rao, Vikram Desai, Neha Kapoor, Rohan Iyer
+5. **Article detail page** — Created full article page at `/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care`:
+   - Cinematic dark hero (85vh) with warm gradient, grain, gold pill, massive editorial title
+   - Read progress bar (gold, fixed top, scroll-driven)
+   - Floating back arrow (appears after 300px scroll, gold glass circle)
+   - 4 content sections with gold rule dividers
+   - Pull quotes with gold left border, italic typography
+   - Tags row with gold-accented pills
+   - Author bio section on alternate cream background
+   - "Continue Reading" related articles (2-column grid)
+   - Full footer integration
+
+### Files Changed
+- `app/blog/page.tsx` — Article card redesign, spiral background, varied authors, slugs
+- `app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page.tsx` — NEW article detail page
+
+### Design Decisions
+- Moved from gold liquid glass cards back to clean editorial style with big numbers — matches homepage "How We Work" accordion aesthetic
+- Article page follows luxury editorial magazine pattern: cinematic hero → long-form content → author → related
+- Pull quotes use italic weight 300 with gold left border for visual rhythm breaks
 
 ---
 

@@ -93,55 +93,61 @@ const ARTICLES = [
     category: 'Healthcare AI',
     title: 'AI in Healthcare: From Diagnostics to Patient-Centric Care',
     excerpt: 'How intelligent systems are transforming clinical workflows, enhancing diagnostic accuracy, and creating patient experiences that feel personal — without compromising on compliance or data security.',
-    author: 'Trinade Team',
+    author: 'Priya Sharma',
     date: 'March 1, 2026',
     readTime: '8 min read',
     number: '02',
+    slug: 'ai-in-healthcare-from-diagnostics-to-patient-centric-care',
   },
   {
     category: 'Legal Tech',
     title: 'Intelligent Contract Analysis: How AI Is Reshaping Legal Operations',
     excerpt: 'Law firms and legal departments are adopting AI not to replace counsel, but to surface insights buried in thousands of documents — turning weeks of review into hours of strategic action.',
-    author: 'Trinade Team',
+    author: 'Arjun Mehta',
     date: 'February 22, 2026',
     readTime: '10 min read',
     number: '03',
+    slug: 'intelligent-contract-analysis-how-ai-is-reshaping-legal-operations',
   },
   {
     category: 'FinTech',
     title: 'Predictive Intelligence in Financial Services',
     excerpt: 'From fraud detection to portfolio optimization, AI-first financial solutions are redefining how institutions manage risk, serve customers, and stay ahead of regulatory complexity.',
-    author: 'Trinade Team',
+    author: 'Kavitha Rao',
     date: 'February 14, 2026',
     readTime: '7 min read',
     number: '04',
+    slug: 'predictive-intelligence-in-financial-services',
   },
   {
     category: 'Manufacturing',
     title: 'Smart Factories: Where AI Meets the Production Floor',
     excerpt: 'Predictive maintenance, quality control, and supply chain intelligence — the factory of tomorrow is already here, and it runs on adaptive AI that learns from every production cycle.',
-    author: 'Trinade Team',
+    author: 'Vikram Desai',
     date: 'February 6, 2026',
     readTime: '9 min read',
     number: '05',
+    slug: 'smart-factories-where-ai-meets-the-production-floor',
   },
   {
     category: 'Cloud & Security',
     title: 'Building Secure AI Infrastructure at Scale',
     excerpt: 'Enterprise AI demands more than just powerful models. It requires zero-trust architectures, automated compliance, and infrastructure that scales without sacrificing security or governance.',
-    author: 'Trinade Team',
+    author: 'Neha Kapoor',
     date: 'January 28, 2026',
     readTime: '11 min read',
     number: '06',
+    slug: 'building-secure-ai-infrastructure-at-scale',
   },
   {
     category: 'AI Strategy',
     title: 'From Pilot to Production: Scaling AI Across the Enterprise',
     excerpt: 'Most AI initiatives stall at proof-of-concept. We explore the organizational, technical, and strategic patterns that separate successful enterprise AI deployments from abandoned experiments.',
-    author: 'Trinade Team',
+    author: 'Rohan Iyer',
     date: 'January 19, 2026',
     readTime: '14 min read',
     number: '07',
+    slug: 'from-pilot-to-production-scaling-ai-across-the-enterprise',
   },
 ]
 
@@ -175,6 +181,44 @@ function MarqueeRow() {
   )
 }
 
+/* ─── Spiral Background Decoration ─── */
+function SpiralLines() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.04]">
+      <svg
+        className="absolute w-full h-full"
+        viewBox="0 0 1200 900"
+        fill="none"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        {/* Fibonacci-inspired spiral arcs */}
+        <path
+          d="M200 450 C200 250, 400 100, 600 100 C800 100, 1000 250, 1000 450 C1000 650, 800 800, 600 800 C450 800, 350 700, 350 550 C350 420, 430 340, 550 340 C650 340, 720 400, 720 480"
+          stroke="#c9a86e"
+          strokeWidth="1"
+          fill="none"
+        />
+        <path
+          d="M100 200 C300 50, 600 0, 900 100 C1100 180, 1200 350, 1150 550"
+          stroke="#c9a86e"
+          strokeWidth="0.8"
+          fill="none"
+        />
+        <path
+          d="M50 600 C150 700, 350 780, 600 750 C850 720, 1050 600, 1100 400"
+          stroke="#c9a86e"
+          strokeWidth="0.6"
+          fill="none"
+        />
+        {/* Concentric partial circles */}
+        <circle cx="600" cy="450" r="300" stroke="#c9a86e" strokeWidth="0.5" fill="none" strokeDasharray="8 16" />
+        <circle cx="600" cy="450" r="200" stroke="#c9a86e" strokeWidth="0.4" fill="none" strokeDasharray="4 20" />
+        <circle cx="600" cy="450" r="420" stroke="#c9a86e" strokeWidth="0.3" fill="none" strokeDasharray="12 24" />
+      </svg>
+    </div>
+  )
+}
+
 /* ─── Vertical Article Card (Editorial Long Card) ─── */
 function VerticalArticleCard({
   article,
@@ -196,125 +240,139 @@ function VerticalArticleCard({
       className="group relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ cursor: 'none' }}
     >
       {/* Full-width horizontal divider */}
       <div
         className="w-full"
         style={{
           height: '1px',
-          background: 'linear-gradient(90deg, rgba(201,168,110,0.06), rgba(201,168,110,0.12), rgba(201,168,110,0.06))',
+          background: 'linear-gradient(90deg, rgba(201,168,110,0.06), rgba(201,168,110,0.15), rgba(201,168,110,0.06))',
         }}
       />
 
-      <div
-        className="relative py-10 md:py-14 px-0 md:px-6 transition-all duration-700 overflow-hidden"
-        style={{
-          background: hovered ? 'rgba(201,168,110,0.03)' : 'transparent',
-          borderRadius: hovered ? '16px' : '0px',
-        }}
-      >
-        {/* Hover: subtle left gold accent bar */}
-        <motion.div
-          className="absolute left-0 top-[15%] bottom-[15%] w-[2px]"
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{ scaleY: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: EASE_SMOOTH }}
+      <a href={`/blog/${article.slug}`} className="block">
+        <div
+          className="relative py-12 md:py-16 lg:py-20 px-4 md:px-8 transition-all duration-700 overflow-hidden"
           style={{
-            background: 'linear-gradient(to bottom, transparent, #c9a86e, transparent)',
-            transformOrigin: 'top',
+            background: hovered ? 'rgba(201,168,110,0.03)' : 'transparent',
+            borderRadius: hovered ? '20px' : '0px',
           }}
-        />
+        >
+          {/* Hover: subtle left gold accent bar */}
+          <motion.div
+            className="absolute left-0 top-[10%] bottom-[10%] w-[2px]"
+            initial={{ scaleY: 0, opacity: 0 }}
+            animate={{ scaleY: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
+            transition={{ duration: 0.5, ease: EASE_SMOOTH }}
+            style={{
+              background: 'linear-gradient(to bottom, transparent, #c9a86e, transparent)',
+              transformOrigin: 'top',
+            }}
+          />
 
-        {/* Top row: Number + Category + Date */}
-        <div className="flex items-center justify-between mb-6 md:mb-8">
-          <div className="flex items-center gap-5">
+          {/* Main content: big number left, content center, arrow right */}
+          <div className="flex items-start gap-6 lg:gap-10">
+            {/* Large editorial number — homepage style */}
             <motion.span
-              className="text-xs font-semibold tracking-[0.15em]"
-              animate={{ color: hovered ? '#c9a86e' : 'rgba(42,34,24,0.25)' }}
-              transition={{ duration: 0.4 }}
+              className="hidden lg:block shrink-0 tabular-nums leading-none select-none"
+              style={{
+                fontSize: 'clamp(4rem, 7vw, 6.5rem)',
+                fontWeight: 200,
+                letterSpacing: '-0.04em',
+              }}
+              animate={{
+                color: hovered ? 'rgba(201,168,110,0.4)' : 'rgba(201,168,110,0.1)',
+              }}
+              transition={{ duration: 0.6 }}
             >
               {article.number}
             </motion.span>
-            <GoldPill>{article.category}</GoldPill>
-          </div>
-          <div className="flex items-center gap-5">
-            <span className="text-xs tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
-              {article.readTime}
-            </span>
-            <span className="text-xs" style={{ color: 'rgba(42,34,24,0.3)' }}>
-              {article.date}
-            </span>
-          </div>
-        </div>
 
-        {/* Main content row */}
-        <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-12">
-          {/* Title — takes most space */}
-          <div className="lg:flex-[2]">
-            <motion.h3
-              className="text-[clamp(1.5rem,3.2vw,2.6rem)] font-semibold leading-[1.15] tracking-tight"
-              animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
-              transition={{ duration: 0.5 }}
-            >
-              {article.title}
-            </motion.h3>
-          </div>
+            {/* Content block */}
+            <div className="flex-1 min-w-0">
+              {/* Title — prominent, first */}
+              <motion.h3
+                className="text-[clamp(1.6rem,3.5vw,2.8rem)] font-medium leading-[1.12] tracking-tight mb-5"
+                animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
+                transition={{ duration: 0.5 }}
+              >
+                {article.title}
+              </motion.h3>
 
-          {/* Excerpt — right side */}
-          <div className="lg:flex-[1] flex flex-col gap-5">
-            <p
-              className="text-[15px] leading-relaxed"
-              style={{ color: 'rgba(42,34,24,0.45)' }}
+              {/* Category + Read time + Date row */}
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <GoldPill>{article.category}</GoldPill>
+                <span className="text-xs tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
+                  {article.readTime}
+                </span>
+                <span className="hidden md:inline text-xs" style={{ color: 'rgba(42,34,24,0.25)' }}>•</span>
+                <span className="hidden md:inline text-xs" style={{ color: 'rgba(42,34,24,0.3)' }}>
+                  {article.date}
+                </span>
+              </div>
+
+              {/* Excerpt */}
+              <p
+                className="text-[15px] leading-[1.8] max-w-3xl mb-6"
+                style={{ color: 'rgba(42,34,24,0.45)' }}
+              >
+                {article.excerpt}
+              </p>
+
+              {/* Author */}
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
+                    color: '#c9a86e',
+                    border: '1px solid rgba(201,168,110,0.15)',
+                  }}
+                >
+                  {article.author.split(' ').map(n => n[0]).join('')}
+                </div>
+                <span className="text-xs font-medium" style={{ color: 'rgba(42,34,24,0.55)' }}>
+                  {article.author}
+                </span>
+              </div>
+            </div>
+
+            {/* Arrow indicator — always visible, larger */}
+            <motion.div
+              className="hidden lg:flex items-center justify-center shrink-0 self-center"
+              animate={{
+                x: hovered ? 8 : 0,
+                scale: hovered ? 1.15 : 1,
+              }}
+              transition={{ duration: 0.4, ease: EASE_SMOOTH }}
             >
-              {article.excerpt}
-            </p>
-            {/* Author */}
-            <div className="flex items-center gap-3">
               <div
-                className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+                className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
-                  color: '#c9a86e',
-                  border: '1px solid rgba(201,168,110,0.15)',
+                  background: hovered ? 'rgba(201,168,110,0.12)' : 'rgba(201,168,110,0.04)',
+                  border: `1px solid ${hovered ? 'rgba(201,168,110,0.3)' : 'rgba(201,168,110,0.1)'}`,
                 }}
               >
-                {article.author.split(' ').map(n => n[0]).join('')}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </div>
-              <span className="text-xs font-medium" style={{ color: 'rgba(42,34,24,0.55)' }}>
-                {article.author}
-              </span>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Arrow indicator */}
+          {/* Hover gold underline */}
           <motion.div
-            className="hidden lg:flex items-center justify-center shrink-0"
-            animate={{
-              x: hovered ? 6 : 0,
-              opacity: hovered ? 1 : 0.2,
-              scale: hovered ? 1.1 : 1,
+            className="absolute bottom-0 left-0 right-0 h-[1.5px]"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: hovered ? 1 : 0 }}
+            transition={{ duration: 0.6, ease: EASE }}
+            style={{
+              background: 'linear-gradient(90deg, transparent, #c9a86e, transparent)',
+              transformOrigin: 'left',
             }}
-            transition={{ duration: 0.4, ease: EASE_SMOOTH }}
-          >
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M6 22L22 6M22 6H10M22 6v12" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </motion.div>
+          />
         </div>
-
-        {/* Hover gold underline */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-[1.5px]"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: hovered ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          style={{
-            background: 'linear-gradient(90deg, transparent, #c9a86e, transparent)',
-            transformOrigin: 'left',
-          }}
-        />
-      </div>
+      </a>
     </motion.article>
   )
 }
@@ -443,6 +501,9 @@ export default function BlogPage() {
 
           {/* ═══════════════ ARTICLES — Vertical Editorial List ═══════════════ */}
           <section className="relative py-12 md:py-20 px-6 md:px-12 lg:px-20 xl:px-32" style={{ background: '#f2ede6' }}>
+            {/* Spiral lines background decoration */}
+            <SpiralLines />
+
             {/* Grain */}
             <div
               className="absolute inset-0 pointer-events-none opacity-[0.03]"
