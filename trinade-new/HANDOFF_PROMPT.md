@@ -57,9 +57,10 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - Next.js 15 App Router
 - Tailwind CSS v4 (CSS-first config)
 - Motion v12 (import from `'motion/react'`)
+- GSAP ScrollTrigger (pinned scroll sections on Homepage)
 - Lenis (smooth scroll)
 - TypeScript strict
-- **That's it.** No R3F, no GSAP, no ShadCN, no MagicUI.
+- **That's it.** No R3F, no ShadCN, no MagicUI.
 
 ### Shared Components
 - `solutions-navbar.tsx` — "TRINADE" wordmark (left, links to `/`) + Menu pill with scroll % (center) + Logo (right, links to `/`) + gold active page dot via `usePathname`. Menu links: Products→`/products` (404), Solutions→`/solutions`, Blog→`/blog`, Company→`/company`, Contact→`/contact`
@@ -143,19 +144,33 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ---
 
+## Recent Audit (Prompt 64)
+
+A comprehensive Awwwards design audit was completed. Two key files:
+- **`design-review-checklist.md`** — 137 checkpoints across 13 categories
+- **`design-gaps-report.md`** — 60 issues found (10 critical, 25 medium, 25 minor)
+
+Read `design-gaps-report.md` for the full priority matrix. The top critical issues are there.
+
+## Products (for new pages)
+
+Two real products need dedicated pages:
+- **Fly High** — Enterprise travel management platform. Docs in `Products/FlyHigh_Details/`
+- **Sleep Alert Device** — IoT drowsiness detection device. Docs in `Products/Sleeping_Alert_Device_Details/`
+
+Read the product docs to understand what each product does before designing their pages.
+
+---
+
 ## Known Issues & Session Notes
 
-1. **Dev server can be slow to start** — Next.js sometimes hangs before "Starting..." on Windows. Fix: kill all node processes, delete `.next/`, restart. Use a fresh port if the previous one has zombie connections.
+1. **Homepage is at `/`, NOT `/home`** — Do NOT create `/home`. All nav links point to `/` for Home and `/solutions` for Solutions.
 
-2. **Prompts 8+9 are VERIFIED and DEPLOYED** — Preloader, 404 page, contact redesign, navbar dots, footer fixes, and route restructure are all committed and live at trinade-new.vercel.app.
+2. **Dev server**: port 3006, no Turbopack, kill node + delete `.next/` if HMR breaks.
 
-3. **Homepage is at `/`, NOT `/home`** — This was changed in Prompts 8+9. The old `/home` route was deleted. `app/page.tsx` renders HomepageContent with preloader. `app/solutions/page.tsx` renders SolutionsContent. Do NOT revert this. All links (navbar, footer, etc.) already point to the correct routes.
+3. **Creativity is encouraged** — Understand the design system, then push it forward. Each page should have its own character and at least one memorable design moment.
 
-4. **This project is lean** — Motion v12 + Tailwind + Lenis. No R3F, GSAP, ShadCN, WebGL. The charcoal/cream/gold palette only. No teal. No green.
-
-5. **Creativity is encouraged** — This site needs to EVOLVE. New ideas, interactions, and design moments are welcome. Understand the design system, then push it forward.
-
-6. **Live deployment**: trinade-new.vercel.app — deploy with `npx vercel --prod --yes` from the project root.
+4. **Live deployment**: trinade-new.vercel.app
 
 ---
 

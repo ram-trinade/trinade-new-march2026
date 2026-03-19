@@ -10,7 +10,7 @@ Awwwards-quality corporate website for Trinade AI Technologies Private Limited. 
 - **Scroll**: Lenis for smooth scrolling
 - **Types**: TypeScript strict mode
 - **Typography**: Manrope (single unified font, weights 200–800, CSS vars `--font-sans` and `--font-display`)
-- **Animation (scroll)**: GSAP ScrollTrigger (pinned scroll sections — "Our Approach" on both Solutions + Homepage)
+- **Animation (scroll)**: GSAP ScrollTrigger (pinned scroll sections — "Our Approach" on Homepage)
 - **NO**: React Three Fiber, ShadCN, MagicUI — this project is deliberately lean
 
 ## Quick Start
@@ -77,9 +77,9 @@ public/
 - Grows on interactive elements (buttons, links, inputs)
 
 ### Navbar (solutions-navbar.tsx)
-- "TRINADE" wordmark: fixed top-left, 28px/800 weight, clickable → `/home`
+- "TRINADE" wordmark: fixed top-left, 28px/800 weight, clickable → `/`
 - Menu pill: fixed top-center, gold glass, contains "Menu" + scroll percentage
-- Logo: fixed top-right, 36px, black filter at 85% opacity, clickable → `/home`
+- Logo: fixed top-right, 36px, black filter at 85% opacity, clickable → `/`
 - Expandable panel menu with page links + social links
 
 ### Footer (solutions-footer.tsx)
