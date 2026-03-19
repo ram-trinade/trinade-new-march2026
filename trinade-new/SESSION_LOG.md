@@ -9,9 +9,33 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 66 — Blog article cards v2 + article detail page (experimental)
-- Last completed: Prompt 66 — Blog: big editorial numbers, spiral bg, longer cards, AI Healthcare article page
+- Done: Prompt 68 — Blog V2 photo+info split cards (experimental duplicate)
+- Last completed: Prompt 68 — Blog-v2: split card layout with alternating photo/info columns
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 68: Blog V2 — Photo + Info Split Cards (Experimental Duplicate)
+
+### What Was Done
+1. **Created `/experimental/blog-v2`** — Duplicated blog page with completely new card layout
+2. **Split card design** — Two-column layout: photo LEFT (45%) + article info RIGHT (55%)
+   - Photos use existing spiral/gradient images from `/public/`
+   - Images fill full height with grain overlay + dark gradient edge for depth
+   - Big number overlaid on image bottom-left (weight 200, white at 15% opacity, grows to 35% on hover)
+   - Right column: gold pill category, title, excerpt, author row, circular arrow CTA
+3. **Alternating zigzag** — Even cards have photo LEFT, odd cards flip to photo RIGHT (`flex-row-reverse`)
+4. **Featured card** — Uses `gradient-orbs-warm.jpg` with full dark overlay + editorial text
+5. **Hover states** — Image zoom (1.06x), elevated shadow, "Read" label appears, gold underline
+6. **All links** point to `/experimental/blog/...` article pages
+
+### Files Created
+- `app/experimental/blog-v2/page.tsx` — NEW photo+info split card blog page
+
+### Design Decisions
+- Portrait/tall photos work best for the split layout — creates dramatic visual weight
+- Alternating left/right creates a zigzag reading flow (very Awwwards-editorial)
+- Big numbers are subtle overlays on images rather than prominent — doesn't disrupt balance
 
 ---
 
