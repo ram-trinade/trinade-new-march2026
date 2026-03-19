@@ -9,9 +9,35 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 65 — Contact page ALL groups + Blog page Groups 1-2 (experimental)
-- Last completed: Prompt 65 — Blog: varied authors, title weight, tighter spacing, clickable cards, bigger arrows
+- Done: Prompt 65 — Contact ALL groups + Blog Groups 1-2 + Blog card redesign (experimental)
+- Last completed: Prompt 65 — Blog: gold liquid glass cards, title-first layout, redesigned categories, circular persistent arrows
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 65: Blog Page — Card Redesign with Gold Liquid Glass (Experimental)
+
+### What Was Done
+1. **VerticalArticleCard complete redesign** — Replaced flat editorial cards with brown gold liquid glass cards:
+   - Background: `linear-gradient(165deg, rgba(210,192,158,0.35)..., rgba(195,168,120,0.20))` with `backdrop-blur(28px) saturate(1.6)`
+   - Border: `1px solid rgba(201,168,110,0.2)` with `border-radius: 22px`
+   - Hover: elevated shadow `0 24px 60px rgba(160,120,50,0.18)` + warm glow orb
+   - Interior grain overlay at 4% opacity for texture
+2. **Title-first layout** — h3 title now appears above category/number instead of below
+3. **Category redesign** — Changed from GoldPill to underline-style: number + category text with `border-bottom: 2px solid rgba(201,168,110,0.4)` + read time inline
+4. **Persistent circular arrow** — 52px gold-tinted circle with 22x22 diagonal arrow SVG, visible at all times, scales to 1.12x + translates 6px on hover
+5. **FeaturedCard arrow** — Upgraded to same 52px circular treatment with "Read Article" label
+6. **Truncated excerpts** — Limited to 160 characters with ellipsis for consistent card height
+
+### Verification (Playwright MCP)
+- All 6 cards render with gold glass background
+- Title appears first in each card (h3 before category)
+- Circular arrows visible on all cards
+- All cards clickable via <a> wrappers
+- No console errors
+
+### Files Modified
+- `app/experimental/blog/page.tsx` — Complete card redesign (EXPERIMENTAL ONLY)
 
 ---
 

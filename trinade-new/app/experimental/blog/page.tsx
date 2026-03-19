@@ -175,7 +175,7 @@ function MarqueeRow() {
   )
 }
 
-/* ─── Vertical Article Card (Editorial Long Card) ─── */
+/* ─── Vertical Article Card — Brown Gold Liquid Glass ─── */
 function VerticalArticleCard({
   article,
   index,
@@ -190,131 +190,148 @@ function VerticalArticleCard({
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.9, delay: index * 0.08, ease: EASE }}
-      className="group relative"
+      transition={{ duration: 0.9, delay: index * 0.1, ease: EASE }}
+      className="group relative mb-6"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       <a href="#" onClick={e => e.preventDefault()} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-      {/* Full-width horizontal divider */}
-      <div
-        className="w-full"
-        style={{
-          height: '1px',
-          background: 'linear-gradient(90deg, rgba(201,168,110,0.06), rgba(201,168,110,0.12), rgba(201,168,110,0.06))',
-        }}
-      />
-
-      <div
-        className="relative py-8 md:py-10 px-0 md:px-6 transition-all duration-700 overflow-hidden"
-        style={{
-          background: hovered ? 'rgba(201,168,110,0.03)' : 'transparent',
-          borderRadius: hovered ? '16px' : '0px',
-        }}
-      >
-        {/* Hover: subtle left gold accent bar */}
+        {/* Brown Gold Liquid Glass Card */}
         <motion.div
-          className="absolute left-0 top-[15%] bottom-[15%] w-[2px]"
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{ scaleY: hovered ? 1 : 0, opacity: hovered ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: EASE_SMOOTH }}
-          style={{
-            background: 'linear-gradient(to bottom, transparent, #c9a86e, transparent)',
-            transformOrigin: 'top',
+          className="relative overflow-hidden"
+          animate={{
+            boxShadow: hovered
+              ? '0 24px 60px rgba(160,120,50,0.18), 0 8px 24px rgba(42,34,24,0.08), inset 0 1px 0 rgba(255,255,255,0.2)'
+              : '0 4px 20px rgba(160,120,50,0.06), 0 2px 8px rgba(42,34,24,0.03), inset 0 1px 0 rgba(255,255,255,0.15)',
           }}
-        />
+          transition={{ duration: 0.5 }}
+          style={{
+            borderRadius: '22px',
+            background: 'linear-gradient(165deg, rgba(210,192,158,0.35) 0%, rgba(185,155,100,0.22) 35%, rgba(220,200,160,0.28) 70%, rgba(195,168,120,0.20) 100%)',
+            backdropFilter: 'blur(28px) saturate(1.6)',
+            WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+            border: '1px solid rgba(201,168,110,0.2)',
+            padding: 'clamp(24px, 3vw, 40px)',
+          }}
+        >
+          {/* Grain overlay inside card */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.04]"
+            style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', borderRadius: '22px' }}
+          />
 
-        {/* Top row: Number + Category + Date */}
-        <div className="flex items-center justify-between mb-6 md:mb-8">
-          <div className="flex items-center gap-5">
-            <motion.span
-              className="text-xs font-semibold tracking-[0.15em]"
-              animate={{ color: hovered ? '#c9a86e' : 'rgba(42,34,24,0.25)' }}
-              transition={{ duration: 0.4 }}
-            >
-              {article.number}
-            </motion.span>
-            <GoldPill>{article.category}</GoldPill>
-          </div>
-          <div className="flex items-center gap-5">
-            <span className="text-xs tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
-              {article.readTime}
-            </span>
-            <span className="text-xs" style={{ color: 'rgba(42,34,24,0.3)' }}>
-              {article.date}
-            </span>
-          </div>
-        </div>
-
-        {/* Main content row */}
-        <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-12">
-          {/* Title — takes most space */}
-          <div className="lg:flex-[2]">
-            <motion.h3
-              className="text-[clamp(1.5rem,3.2vw,2.6rem)] font-medium leading-[1.15] tracking-tight"
-              animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
-              transition={{ duration: 0.5 }}
-            >
-              {article.title}
-            </motion.h3>
-          </div>
-
-          {/* Excerpt — right side */}
-          <div className="lg:flex-[1] flex flex-col gap-5">
-            <p
-              className="text-[15px] leading-relaxed"
-              style={{ color: 'rgba(42,34,24,0.45)' }}
-            >
-              {article.excerpt}
-            </p>
-            {/* Author */}
-            <div className="flex items-center gap-3">
-              <div
-                className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
-                  color: '#c9a86e',
-                  border: '1px solid rgba(201,168,110,0.15)',
-                }}
-              >
-                {article.author.split(' ').map(n => n[0]).join('')}
-              </div>
-              <span className="text-xs font-medium" style={{ color: 'rgba(42,34,24,0.55)' }}>
-                {article.author}
-              </span>
-            </div>
-          </div>
-
-          {/* Arrow indicator — always visible, bigger */}
+          {/* Subtle warm glow on hover */}
           <motion.div
-            className="flex items-center justify-center shrink-0"
-            animate={{
-              x: hovered ? 8 : 0,
-              opacity: hovered ? 1 : 0.35,
-              scale: hovered ? 1.15 : 1,
+            className="absolute pointer-events-none"
+            animate={{ opacity: hovered ? 1 : 0 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              width: '40%', height: '60%',
+              top: '-10%', right: '-5%',
+              background: 'radial-gradient(ellipse, rgba(201,168,110,0.1) 0%, transparent 65%)',
+              filter: 'blur(40px)',
             }}
-            transition={{ duration: 0.4, ease: EASE_SMOOTH }}
-          >
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <path d="M8 28L28 8M28 8H14M28 8v14" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </motion.div>
-        </div>
+          />
 
-        {/* Hover gold underline */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-[1.5px]"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: hovered ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: EASE }}
-          style={{
-            background: 'linear-gradient(90deg, transparent, #c9a86e, transparent)',
-            transformOrigin: 'left',
-          }}
-        />
-      </div>
+          <div className="relative z-10 flex flex-col lg:flex-row gap-6 lg:gap-10">
+            {/* Left: Title + Category — takes 60% */}
+            <div className="lg:flex-[3] flex flex-col gap-4">
+              {/* Title FIRST — bold editorial */}
+              <motion.h3
+                className="text-[clamp(1.4rem,2.8vw,2.2rem)] font-medium leading-[1.2] tracking-tight"
+                animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.8)' }}
+                transition={{ duration: 0.4 }}
+              >
+                {article.title}
+              </motion.h3>
+
+              {/* Category pill — redesigned: underline style with number */}
+              <div className="flex items-center gap-4">
+                <span
+                  className="text-[11px] font-bold tracking-[0.2em] uppercase"
+                  style={{ color: 'rgba(42,34,24,0.2)' }}
+                >
+                  {article.number}
+                </span>
+                <span
+                  className="text-[11px] font-semibold tracking-[0.15em] uppercase px-3 py-1"
+                  style={{
+                    color: '#a0814a',
+                    borderBottom: '2px solid rgba(201,168,110,0.4)',
+                  }}
+                >
+                  {article.category}
+                </span>
+                <span className="text-[11px]" style={{ color: 'rgba(42,34,24,0.3)' }}>
+                  {article.readTime}
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Excerpt + Author + Arrow — takes 40% */}
+            <div className="lg:flex-[2] flex flex-col justify-between gap-5">
+              <p
+                className="text-[14px] leading-[1.75]"
+                style={{ color: 'rgba(42,34,24,0.45)' }}
+              >
+                {article.excerpt.length > 160 ? article.excerpt.slice(0, 160) + '...' : article.excerpt}
+              </p>
+
+              {/* Author row + date */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-[9px] font-bold"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(201,168,110,0.3), rgba(201,168,110,0.1))',
+                      color: '#a0814a',
+                      border: '1px solid rgba(201,168,110,0.2)',
+                    }}
+                  >
+                    {article.author.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <span className="text-[12px] font-medium block" style={{ color: 'rgba(42,34,24,0.6)' }}>
+                      {article.author}
+                    </span>
+                    <span className="text-[11px]" style={{ color: 'rgba(42,34,24,0.3)' }}>
+                      {article.date}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Persistent floating arrow — always visible, prominent */}
+            <motion.div
+              className="flex items-center justify-center shrink-0 self-center"
+              animate={{
+                x: hovered ? 6 : 0,
+                scale: hovered ? 1.12 : 1,
+              }}
+              transition={{ duration: 0.4, ease: EASE_SMOOTH }}
+              style={{
+                width: '52px',
+                height: '52px',
+                borderRadius: '50%',
+                background: hovered
+                  ? 'rgba(201,168,110,0.18)'
+                  : 'rgba(201,168,110,0.08)',
+                border: '1px solid rgba(201,168,110,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'background 0.4s ease, border-color 0.4s ease',
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path d="M5 17L17 5M17 5H9M17 5v8" stroke="#a0814a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </motion.div>
+          </div>
+        </motion.div>
       </a>
     </motion.article>
   )
@@ -467,21 +484,12 @@ export default function BlogPage() {
                 </div>
               </RevealOnScroll>
 
-              {/* Vertical article cards */}
-              <div>
+              {/* Article cards — gold liquid glass */}
+              <div className="mt-8">
                 {ARTICLES.map((article, i) => (
                   <VerticalArticleCard key={article.title} article={article} index={i} />
                 ))}
               </div>
-
-              {/* Final divider */}
-              <div
-                className="w-full"
-                style={{
-                  height: '1px',
-                  background: 'linear-gradient(90deg, rgba(201,168,110,0.06), rgba(201,168,110,0.12), rgba(201,168,110,0.06))',
-                }}
-              />
 
               {/* Load more */}
               <RevealOnScroll delay={0.2} className="flex justify-center mt-16">
@@ -683,24 +691,37 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                 </div>
               </div>
 
-              {/* Read arrow — always visible, bigger */}
+              {/* Persistent read arrow — circular, always visible */}
               <motion.div
-                className="flex items-center gap-3"
+                className="flex items-center gap-4"
                 animate={{
-                  x: hovered ? 8 : 0,
-                  opacity: hovered ? 1 : 0.4,
+                  x: hovered ? 6 : 0,
                 }}
                 transition={{ duration: 0.5, ease: EASE_SMOOTH }}
               >
                 <span
                   className="hidden md:inline text-[11px] tracking-[0.15em] uppercase font-semibold"
-                  style={{ color: '#c9a86e' }}
+                  style={{ color: 'rgba(201,168,110,0.7)' }}
                 >
                   Read Article
                 </span>
-                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                  <path d="M8 28L28 8M28 8H14M28 8v14" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <div
+                  style={{
+                    width: '52px',
+                    height: '52px',
+                    borderRadius: '50%',
+                    background: hovered ? 'rgba(201,168,110,0.2)' : 'rgba(201,168,110,0.1)',
+                    border: '1px solid rgba(201,168,110,0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'background 0.4s ease',
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <path d="M5 17L17 5M17 5H9M17 5v8" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
               </motion.div>
             </motion.div>
           </div>
