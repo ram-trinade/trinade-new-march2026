@@ -9,9 +9,27 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 65 — Contact page Group 1 polish fixes (experimental)
-- Last completed: Prompt 65 — Character counter enforcement + send button arrow hover transform
+- Done: Prompt 65 — Contact page Group 1 + Group 2 fixes (experimental)
+- Last completed: Prompt 65 — Label tracking + scroll indicator fade + character counter + arrow hover
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 65: Contact Page — Group 2 Enhancement Fixes (Experimental)
+
+### What Was Done
+1. **Form label tracking** — Changed `letterSpacing` from `0.08em` to `0.2em` in `labelStyle` to match the design system eyebrow spec. All 5 labels (Name, Email, Phone, Subject, Message) now correctly spaced.
+2. **Scroll indicator fade-out** — Added scroll progress tracking via `scrollIndicatorOpacity` state + scroll event listener. Outer wrapper div applies CSS `opacity` with `transition: opacity 0.3s ease`, while inner `motion.div` handles entrance animation separately. Fade: 100% at 0% scroll → 0% at ~7% scroll.
+
+### Architecture Decision
+- Separated scroll-driven opacity (CSS transition on wrapper div) from entrance animation (motion.div animate). This avoids motion's `transition` config (1.8s delay) being reapplied on every scroll-driven state change.
+
+### Verification (Playwright MCP)
+- Label tracking: All 5 labels confirmed `letter-spacing: 0.2em` via computed styles
+- Scroll fade: Tested at 6 scroll positions — smooth gradient from opacity 1.0 (0%) → 0.92 (0.9%) → 0.66 (2.25%) → 0.39 (3.6%) → 0.12 (6.7%) → ~0 (13.5%)
+
+### Files Modified
+- `app/experimental/contact/page.tsx` — Both fixes (EXPERIMENTAL ONLY)
 
 ---
 

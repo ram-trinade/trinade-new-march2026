@@ -331,6 +331,7 @@ export default function SolutionsContactPage() {
 
   const [heroInView, setHeroInView] = useState(false)
   const [formInView, setFormInView] = useState(false)
+  const [scrollIndicatorOpacity, setScrollIndicatorOpacity] = useState(1)
   const heroRef = useRef<HTMLDivElement>(null)
   const formSectionRef = useRef<HTMLDivElement>(null)
 
@@ -338,6 +339,20 @@ export default function SolutionsContactPage() {
   useEffect(() => {
     const timer = setTimeout(() => setHeroInView(true), 100)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Fade scroll indicator after ~5% scroll progress
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      // Fade from 1 to 0 between 0% and 5% scroll
+      const opacity = Math.max(0, 1 - (scrollPercent / 5))
+      setScrollIndicatorOpacity(opacity)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   // Scroll-based trigger for form section (Lenis transform breaks IntersectionObserver)
@@ -386,7 +401,7 @@ export default function SolutionsContactPage() {
     fontSize: '12px',
     fontWeight: 600,
     textTransform: 'uppercase' as const,
-    letterSpacing: '0.08em',
+    letterSpacing: '0.2em',
     color: 'rgba(90,70,40,0.55)',
     marginBottom: '8px',
   }
@@ -616,17 +631,22 @@ export default function SolutionsContactPage() {
               </motion.p>
             </div>
 
-            {/* Scroll indicator */}
+            {/* Scroll indicator — entrance animation + scroll-driven fade */}
+            <div style={{
+              position: 'absolute',
+              bottom: '48px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 3,
+              opacity: scrollIndicatorOpacity,
+              transition: 'opacity 0.3s ease',
+              pointerEvents: scrollIndicatorOpacity < 0.1 ? 'none' : 'auto',
+            }}>
             <motion.div
               initial={{ opacity: 0 }}
               animate={heroInView ? { opacity: 1 } : {}}
               transition={{ duration: 1, delay: 1.8 }}
               style={{
-                position: 'absolute',
-                bottom: '48px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 3,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -652,6 +672,7 @@ export default function SolutionsContactPage() {
                 }}
               />
             </motion.div>
+            </div>
           </section>
 
           {/* ══════════════════════════════════════════════
