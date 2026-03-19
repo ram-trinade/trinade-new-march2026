@@ -9,9 +9,54 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 62 — Solutions page: replaced testimonials with Proven Impact metrics section
-- Last completed: Prompt 62 — Dramatic animated metrics section replacing "What our clients say"
+- Done: Prompt 63 — Full-page snapshots of all 8 pages + experimental website duplication
+- Last completed: Prompt 63 — Snapshots, experimental environment, webpack config fix
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-18 — Prompt 63: Full-Page Snapshots + Experimental Website Duplication
+
+### What Was Done
+1. **Full-page section snapshots** of all 8 pages stored in `Snapshots - wed - mar 18/`:
+   - Homepage (12 sections + full-page), Solutions (10+fp), Blog (7+fp), Company (11+fp)
+   - Contact (5+fp), Privacy-Policy (10+fp), Terms-of-Service (10+fp), 404-Page (2+fp)
+   - Each folder contains section-01.png through section-NN.png + full-page.png
+2. **Experimental website duplication** under `/experimental/*` routes:
+   - 7 duplicated pages: Homepage, Solutions, Blog, Company, Contact, Privacy Policy, Terms of Service
+   - Gold glass "EXP" pill badge (fixed top-right) to visually distinguish from originals
+   - Route-level duplication — imports same components from `components/`, no code duplication
+   - Self-contained pages (blog, company, contact, legal) copied as-is
+3. **Webpack config fix** — `next.config.ts` watchOptions.ignored was including empty strings from the default config, causing webpack validation errors after `playwright` dev dependency install. Fixed by filtering empty strings and hardcoding `**/node_modules/**` ignore.
+4. **Dev dependency added**: `playwright` for automated screenshot capture script (`take-screenshots.mjs`)
+
+### Files Created
+- `app/experimental/layout.tsx` — Client layout with "EXP" badge
+- `app/experimental/page.tsx` — Homepage duplicate
+- `app/experimental/solutions/page.tsx` — Solutions duplicate
+- `app/experimental/blog/page.tsx` — Blog duplicate (self-contained)
+- `app/experimental/company/page.tsx` — Company duplicate (self-contained)
+- `app/experimental/contact/page.tsx` — Contact duplicate (self-contained)
+- `app/experimental/privacy-policy/page.tsx` — Privacy Policy duplicate
+- `app/experimental/terms-of-service/page.tsx` — Terms of Service duplicate
+- `Snapshots - wed - mar 18/` — 8 folders with section screenshots
+- `take-screenshots.mjs` — Playwright screenshot automation script
+
+### Files Modified
+- `next.config.ts` — Fixed watchOptions.ignored empty string validation error
+
+### Experimental Routes
+- `/experimental` — Homepage
+- `/experimental/solutions` — Solutions
+- `/experimental/blog` — Blog
+- `/experimental/company` — Company
+- `/experimental/contact` — Contact
+- `/experimental/privacy-policy` — Privacy Policy
+- `/experimental/terms-of-service` — Terms of Service
+
+### Verification
+- Playwright: Experimental homepage renders with "EXP" badge, identical content to original
+- All 8 snapshot folders populated with section-by-section + full-page captures
 
 ---
 
