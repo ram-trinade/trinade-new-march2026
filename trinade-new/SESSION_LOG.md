@@ -9,9 +9,32 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 65 — Contact page Group 1 + Group 2 fixes (experimental)
-- Last completed: Prompt 65 — Label tracking + scroll indicator fade + character counter + arrow hover
+- Done: Prompt 65 — Contact page ALL groups (Group 1-3) complete (experimental)
+- Last completed: Prompt 65 — Form validation + error/success states + all polish fixes
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 65: Contact Page — Group 3 Critical Fix: Form Validation (Experimental)
+
+### What Was Done
+1. **FieldError component** — Animated inline error messages using `AnimatePresence` with `motion.p`. Fade+slide animation (opacity 0→1, y -4→0, height auto). Gold-toned error color `#a0814a` matching the design system.
+2. **Validation logic** — `validateField()` function validates name (required, min 2 chars), email (required, regex format), subject (required), message (required, min 10 chars). Phone is optional.
+3. **Blur-to-validate pattern** — Fields validate on blur (`handleBlur`), clear errors on subsequent typing if touched. Submit validates all fields at once.
+4. **Error border styling** — `getInputStyle(fieldName)` returns border `rgba(160,129,74,0.6)` when field has error + is touched, otherwise normal gold border.
+5. **Loading state** — Submit button shows spinning loader + "Sending..." text with AnimatePresence text swap. Button disabled during submission.
+6. **Success overlay** — Gold glassmorphic overlay on form card with animated checkmark (SVG path draw), "Message sent successfully" headline, description, and "Send another message" button.
+7. **Reset flow** — "Send another message" clears form data, errors, touched state, and dismisses success overlay.
+
+### Verification (Playwright MCP)
+- Empty submit → 4 error messages shown (Name, Email, Subject, Message) with animation
+- Filled form → errors cleared, validation passes
+- Submit → loading spinner appears, button disabled
+- After 1.8s → success overlay with checkmark, headline, description, reset button
+- Reset → form emptied, dropdown reset, counter at 0/300
+
+### Files Modified
+- `app/experimental/contact/page.tsx` — Full validation system (EXPERIMENTAL ONLY)
 
 ---
 

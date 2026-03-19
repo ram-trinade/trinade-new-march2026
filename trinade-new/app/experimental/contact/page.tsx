@@ -319,6 +319,31 @@ function SubjectDropdown({
 }
 
 // ─── Main Page ───
+// ─── Inline error message component ───
+function FieldError({ message }: { message: string | undefined }) {
+  return (
+    <AnimatePresence mode="wait">
+      {message && (
+        <motion.p
+          key={message}
+          initial={{ opacity: 0, y: -4, height: 0, marginTop: 0 }}
+          animate={{ opacity: 1, y: 0, height: 'auto', marginTop: 6 }}
+          exit={{ opacity: 0, y: -4, height: 0, marginTop: 0 }}
+          transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+          style={{
+            fontSize: '12px',
+            fontWeight: 500,
+            color: '#a0814a',
+            overflow: 'hidden',
+          }}
+        >
+          {message}
+        </motion.p>
+      )}
+    </AnimatePresence>
+  )
+}
+
 export default function SolutionsContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -328,6 +353,11 @@ export default function SolutionsContactPage() {
     subject: '',
     message: '',
   })
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const [heroInView, setHeroInView] = useState(false)
   const [formInView, setFormInView] = useState(false)
@@ -375,14 +405,88 @@ export default function SolutionsContactPage() {
     }
   }, [formInView])
 
+  // ─── Validation logic ───
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'name':
+        if (!value.trim()) return 'Name is required'
+        if (value.trim().length < 2) return 'Name must be at least 2 characters'
+        return ''
+      case 'email':
+        if (!value.trim()) return 'Email is required'
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Please enter a valid email'
+        return ''
+      case 'subject':
+        if (!value) return 'Please select a subject'
+        return ''
+      case 'message':
+        if (!value.trim()) return 'Message is required'
+        if (value.trim().length < 10) return 'Message must be at least 10 characters'
+        return ''
+      default:
+        return ''
+    }
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    // Clear error on change if field was touched
+    if (touched[name]) {
+      const error = validateField(name, value)
+      setErrors(prev => ({ ...prev, [name]: error }))
+    }
+  }
+
+  const handleBlur = (name: string, value: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }))
+    const error = validateField(name, value)
+    setErrors(prev => ({ ...prev, [name]: error }))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validate all required fields
+    const newErrors: Record<string, string> = {}
+    const fieldsToValidate = ['name', 'email', 'subject', 'message'] as const
+    const allTouched: Record<string, boolean> = {}
+
+    fieldsToValidate.forEach(field => {
+      allTouched[field] = true
+      const error = validateField(field, formData[field])
+      if (error) newErrors[field] = error
+    })
+
+    setTouched(prev => ({ ...prev, ...allTouched }))
+    setErrors(newErrors)
+
+    if (Object.keys(newErrors).length > 0) return
+
+    // Simulate submission
+    setIsSubmitting(true)
+    setTimeout(() => {
+      setIsSubmitting(false)
+      setIsSuccess(true)
+    }, 1800)
   }
 
+  const getInputStyle = (fieldName: string): React.CSSProperties => ({
+    background: 'rgba(255,255,255,0.45)',
+    border: errors[fieldName] && touched[fieldName]
+      ? '1px solid rgba(160,129,74,0.6)'
+      : '1px solid rgba(201,168,110,0.3)',
+    borderRadius: '14px',
+    padding: '14px 18px',
+    color: '#2a2218',
+    fontSize: '15px',
+    width: '100%',
+    outline: 'none',
+    transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+    fontFamily: 'inherit',
+  })
+
+  // Kept for backward compatibility with CountryCodeDropdown phone input
   const inputStyle: React.CSSProperties = {
     background: 'rgba(255,255,255,0.45)',
     border: '1px solid rgba(201,168,110,0.3)',
@@ -866,6 +970,8 @@ export default function SolutionsContactPage() {
                   border: '1px solid rgba(201,168,110,0.2)',
                   borderRadius: '28px',
                   padding: 'clamp(32px, 4vw, 56px)',
+                  position: 'relative',
+                  overflow: 'hidden',
                 }}
               >
                 {/* Form header */}
@@ -910,16 +1016,18 @@ export default function SolutionsContactPage() {
                         placeholder="Your full name"
                         value={formData.name}
                         onChange={handleChange}
-                        style={inputStyle}
+                        style={getInputStyle('name')}
                         onFocus={e => {
                           e.target.style.borderColor = 'rgba(201,168,110,0.6)'
                           e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
                         }}
                         onBlur={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                          handleBlur('name', formData.name)
+                          e.target.style.borderColor = errors.name ? 'rgba(160,129,74,0.6)' : 'rgba(201,168,110,0.3)'
                           e.target.style.boxShadow = 'none'
                         }}
                       />
+                      <FieldError message={touched.name ? errors.name : undefined} />
                     </div>
                     <div>
                       <label htmlFor="email" style={labelStyle}>Email</label>
@@ -930,16 +1038,18 @@ export default function SolutionsContactPage() {
                         placeholder="you@company.com"
                         value={formData.email}
                         onChange={handleChange}
-                        style={inputStyle}
+                        style={getInputStyle('email')}
                         onFocus={e => {
                           e.target.style.borderColor = 'rgba(201,168,110,0.6)'
                           e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
                         }}
                         onBlur={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                          handleBlur('email', formData.email)
+                          e.target.style.borderColor = errors.email ? 'rgba(160,129,74,0.6)' : 'rgba(201,168,110,0.3)'
                           e.target.style.boxShadow = 'none'
                         }}
                       />
+                      <FieldError message={touched.email ? errors.email : undefined} />
                     </div>
                   </div>
 
@@ -979,8 +1089,14 @@ export default function SolutionsContactPage() {
                       <label style={labelStyle}>Subject</label>
                       <SubjectDropdown
                         value={formData.subject}
-                        onChange={(val) => setFormData(prev => ({ ...prev, subject: val }))}
+                        onChange={(val) => {
+                          setFormData(prev => ({ ...prev, subject: val }))
+                          if (touched.subject) {
+                            setErrors(prev => ({ ...prev, subject: val ? '' : 'Please select a subject' }))
+                          }
+                        }}
                       />
+                      <FieldError message={touched.subject ? errors.subject : undefined} />
                     </div>
                   </div>
 
@@ -996,7 +1112,7 @@ export default function SolutionsContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       style={{
-                        ...inputStyle,
+                        ...getInputStyle('message'),
                         resize: 'vertical',
                         minHeight: '180px',
                       }}
@@ -1005,29 +1121,35 @@ export default function SolutionsContactPage() {
                         e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
                       }}
                       onBlur={e => {
-                        e.target.style.borderColor = 'rgba(201,168,110,0.3)'
+                        handleBlur('message', formData.message)
+                        e.target.style.borderColor = errors.message ? 'rgba(160,129,74,0.6)' : 'rgba(201,168,110,0.3)'
                         e.target.style.boxShadow = 'none'
                       }}
                     />
-                    {/* Character counter */}
-                    <p style={{
-                      fontSize: '12px',
-                      color: formData.message.length > 280
-                        ? 'rgba(180,100,60,0.7)'
-                        : 'rgba(90,70,40,0.35)',
-                      textAlign: 'right',
-                      marginTop: '6px',
-                      transition: 'color 0.2s ease',
-                    }}>
-                      {formData.message.length} / 300
-                    </p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <FieldError message={touched.message ? errors.message : undefined} />
+                      {/* Character counter */}
+                      <p style={{
+                        fontSize: '12px',
+                        color: formData.message.length > 280
+                          ? 'rgba(180,100,60,0.7)'
+                          : 'rgba(90,70,40,0.35)',
+                        textAlign: 'right',
+                        marginTop: '6px',
+                        transition: 'color 0.2s ease',
+                        flexShrink: 0,
+                      }}>
+                        {formData.message.length} / 300
+                      </p>
+                    </div>
                   </div>
 
                   {/* Submit */}
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     style={{
-                      background: '#1a1a1e',
+                      background: isSubmitting ? '#2a2a2e' : '#1a1a1e',
                       color: '#ffffff',
                       fontWeight: 600,
                       borderRadius: '9999px',
@@ -1042,8 +1164,10 @@ export default function SolutionsContactPage() {
                       marginTop: '8px',
                       position: 'relative',
                       overflow: 'hidden',
+                      opacity: isSubmitting ? 0.7 : 1,
                     }}
                     onMouseEnter={e => {
+                      if (isSubmitting) return
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#2a2a2e'
                       el.style.transform = 'translateY(-1px)'
@@ -1052,6 +1176,7 @@ export default function SolutionsContactPage() {
                       if (arrow) arrow.style.transform = 'translateX(5px)'
                     }}
                     onMouseLeave={e => {
+                      if (isSubmitting) return
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#1a1a1e'
                       el.style.transform = 'translateY(0)'
@@ -1060,19 +1185,170 @@ export default function SolutionsContactPage() {
                       if (arrow) arrow.style.transform = 'translateX(0)'
                     }}
                   >
-                    Send Message
-                    <span
-                      className="send-arrow"
-                      style={{
-                        display: 'inline-block',
-                        marginLeft: '10px',
-                        transition: 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)',
-                      }}
-                    >
-                      &rarr;
-                    </span>
+                    <AnimatePresence mode="wait">
+                      {isSubmitting ? (
+                        <motion.span
+                          key="sending"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}
+                        >
+                          <motion.span
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                            style={{ display: 'inline-block', width: '16px', height: '16px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%' }}
+                          />
+                          Sending...
+                        </motion.span>
+                      ) : (
+                        <motion.span
+                          key="send"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          Send Message
+                          <span
+                            className="send-arrow"
+                            style={{
+                              display: 'inline-block',
+                              marginLeft: '10px',
+                              transition: 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)',
+                            }}
+                          >
+                            &rarr;
+                          </span>
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </button>
                 </form>
+
+                {/* Success state overlay */}
+                <AnimatePresence>
+                  {isSuccess && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        borderRadius: '28px',
+                        background: 'linear-gradient(165deg, rgba(201,168,110,0.3) 0%, rgba(180,130,55,0.22) 40%, rgba(220,195,150,0.26) 100%)',
+                        backdropFilter: 'blur(24px) saturate(1.6)',
+                        WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '24px',
+                        zIndex: 10,
+                      }}
+                    >
+                      {/* Checkmark */}
+                      <motion.div
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        style={{
+                          width: '72px',
+                          height: '72px',
+                          borderRadius: '50%',
+                          border: '2px solid rgba(201,168,110,0.4)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <motion.svg
+                          width="32" height="32" viewBox="0 0 32 32" fill="none"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 0.5, delay: 0.5 }}
+                        >
+                          <motion.path
+                            d="M8 16l6 6 10-12"
+                            stroke="#c9a86e"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            initial={{ pathLength: 0 }}
+                            animate={{ pathLength: 1 }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                          />
+                        </motion.svg>
+                      </motion.div>
+
+                      <motion.h3
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        style={{
+                          fontSize: 'clamp(1.4rem, 2.2vw, 1.8rem)',
+                          fontWeight: 400,
+                          color: '#2a2218',
+                          letterSpacing: '-0.01em',
+                          textAlign: 'center',
+                        }}
+                      >
+                        Message sent successfully
+                      </motion.h3>
+                      <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                        style={{
+                          fontSize: '15px',
+                          color: 'rgba(42,34,24,0.55)',
+                          textAlign: 'center',
+                          maxWidth: '320px',
+                          lineHeight: 1.7,
+                        }}
+                      >
+                        We&apos;ll be in touch within 24 hours. Thank you for reaching out.
+                      </motion.p>
+                      <motion.button
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        onClick={() => {
+                          setIsSuccess(false)
+                          setFormData({ name: '', email: '', countryCode: '+91', phone: '', subject: '', message: '' })
+                          setErrors({})
+                          setTouched({})
+                        }}
+                        style={{
+                          marginTop: '8px',
+                          padding: '12px 32px',
+                          borderRadius: '9999px',
+                          border: '1px solid rgba(201,168,110,0.4)',
+                          background: 'transparent',
+                          color: '#a0814a',
+                          fontSize: '14px',
+                          fontWeight: 600,
+                          cursor: 'none',
+                          fontFamily: 'inherit',
+                          letterSpacing: '0.02em',
+                          transition: 'all 0.3s ease',
+                        }}
+                        onMouseEnter={e => {
+                          (e.target as HTMLButtonElement).style.background = 'rgba(201,168,110,0.1)'
+                          ;(e.target as HTMLButtonElement).style.borderColor = 'rgba(201,168,110,0.6)'
+                        }}
+                        onMouseLeave={e => {
+                          (e.target as HTMLButtonElement).style.background = 'transparent'
+                          ;(e.target as HTMLButtonElement).style.borderColor = 'rgba(201,168,110,0.4)'
+                        }}
+                      >
+                        Send another message
+                      </motion.button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             </div>
           </section>
