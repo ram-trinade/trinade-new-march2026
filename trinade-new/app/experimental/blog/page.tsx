@@ -93,7 +93,7 @@ const ARTICLES = [
     category: 'Healthcare AI',
     title: 'AI in Healthcare: From Diagnostics to Patient-Centric Care',
     excerpt: 'How intelligent systems are transforming clinical workflows, enhancing diagnostic accuracy, and creating patient experiences that feel personal — without compromising on compliance or data security.',
-    author: 'Trinade Team',
+    author: 'Dr. Priya Sharma',
     date: 'March 1, 2026',
     readTime: '8 min read',
     number: '02',
@@ -102,7 +102,7 @@ const ARTICLES = [
     category: 'Legal Tech',
     title: 'Intelligent Contract Analysis: How AI Is Reshaping Legal Operations',
     excerpt: 'Law firms and legal departments are adopting AI not to replace counsel, but to surface insights buried in thousands of documents — turning weeks of review into hours of strategic action.',
-    author: 'Trinade Team',
+    author: 'Arjun Mehta',
     date: 'February 22, 2026',
     readTime: '10 min read',
     number: '03',
@@ -111,7 +111,7 @@ const ARTICLES = [
     category: 'FinTech',
     title: 'Predictive Intelligence in Financial Services',
     excerpt: 'From fraud detection to portfolio optimization, AI-first financial solutions are redefining how institutions manage risk, serve customers, and stay ahead of regulatory complexity.',
-    author: 'Trinade Team',
+    author: 'Kavitha Rao',
     date: 'February 14, 2026',
     readTime: '7 min read',
     number: '04',
@@ -120,7 +120,7 @@ const ARTICLES = [
     category: 'Manufacturing',
     title: 'Smart Factories: Where AI Meets the Production Floor',
     excerpt: 'Predictive maintenance, quality control, and supply chain intelligence — the factory of tomorrow is already here, and it runs on adaptive AI that learns from every production cycle.',
-    author: 'Trinade Team',
+    author: 'Vikram Desai',
     date: 'February 6, 2026',
     readTime: '9 min read',
     number: '05',
@@ -129,7 +129,7 @@ const ARTICLES = [
     category: 'Cloud & Security',
     title: 'Building Secure AI Infrastructure at Scale',
     excerpt: 'Enterprise AI demands more than just powerful models. It requires zero-trust architectures, automated compliance, and infrastructure that scales without sacrificing security or governance.',
-    author: 'Trinade Team',
+    author: 'Neha Kapoor',
     date: 'January 28, 2026',
     readTime: '11 min read',
     number: '06',
@@ -138,7 +138,7 @@ const ARTICLES = [
     category: 'AI Strategy',
     title: 'From Pilot to Production: Scaling AI Across the Enterprise',
     excerpt: 'Most AI initiatives stall at proof-of-concept. We explore the organizational, technical, and strategic patterns that separate successful enterprise AI deployments from abandoned experiments.',
-    author: 'Trinade Team',
+    author: 'Rohan Iyer',
     date: 'January 19, 2026',
     readTime: '14 min read',
     number: '07',
@@ -196,8 +196,8 @@ function VerticalArticleCard({
       className="group relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ cursor: 'none' }}
     >
+      <a href="#" onClick={e => e.preventDefault()} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
       {/* Full-width horizontal divider */}
       <div
         className="w-full"
@@ -208,7 +208,7 @@ function VerticalArticleCard({
       />
 
       <div
-        className="relative py-10 md:py-14 px-0 md:px-6 transition-all duration-700 overflow-hidden"
+        className="relative py-8 md:py-10 px-0 md:px-6 transition-all duration-700 overflow-hidden"
         style={{
           background: hovered ? 'rgba(201,168,110,0.03)' : 'transparent',
           borderRadius: hovered ? '16px' : '0px',
@@ -253,7 +253,7 @@ function VerticalArticleCard({
           {/* Title — takes most space */}
           <div className="lg:flex-[2]">
             <motion.h3
-              className="text-[clamp(1.5rem,3.2vw,2.6rem)] font-semibold leading-[1.15] tracking-tight"
+              className="text-[clamp(1.5rem,3.2vw,2.6rem)] font-medium leading-[1.15] tracking-tight"
               animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
               transition={{ duration: 0.5 }}
             >
@@ -287,18 +287,18 @@ function VerticalArticleCard({
             </div>
           </div>
 
-          {/* Arrow indicator */}
+          {/* Arrow indicator — always visible, bigger */}
           <motion.div
-            className="hidden lg:flex items-center justify-center shrink-0"
+            className="flex items-center justify-center shrink-0"
             animate={{
-              x: hovered ? 6 : 0,
-              opacity: hovered ? 1 : 0.2,
-              scale: hovered ? 1.1 : 1,
+              x: hovered ? 8 : 0,
+              opacity: hovered ? 1 : 0.35,
+              scale: hovered ? 1.15 : 1,
             }}
             transition={{ duration: 0.4, ease: EASE_SMOOTH }}
           >
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M6 22L22 6M22 6H10M22 6v12" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <path d="M8 28L28 8M28 8H14M28 8v14" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.div>
         </div>
@@ -315,6 +315,7 @@ function VerticalArticleCard({
           }}
         />
       </div>
+      </a>
     </motion.article>
   )
 }
@@ -536,8 +537,8 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
       className="group relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ cursor: 'none' }}
     >
+      <a href="#" onClick={e => e.preventDefault()} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
       {/* Eyebrow label row */}
       <div className="flex items-center gap-5 mb-12">
         <span className="text-[11px] tracking-[0.25em] uppercase font-semibold" style={{ color: '#c9a86e' }}>
@@ -682,23 +683,23 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                 </div>
               </div>
 
-              {/* Read arrow */}
+              {/* Read arrow — always visible, bigger */}
               <motion.div
-                className="hidden md:flex items-center gap-3"
+                className="flex items-center gap-3"
                 animate={{
-                  x: hovered ? 6 : 0,
-                  opacity: hovered ? 1 : 0.3,
+                  x: hovered ? 8 : 0,
+                  opacity: hovered ? 1 : 0.4,
                 }}
                 transition={{ duration: 0.5, ease: EASE_SMOOTH }}
               >
                 <span
-                  className="text-[11px] tracking-[0.15em] uppercase font-semibold"
+                  className="hidden md:inline text-[11px] tracking-[0.15em] uppercase font-semibold"
                   style={{ color: '#c9a86e' }}
                 >
                   Read Article
                 </span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                  <path d="M8 28L28 8M28 8H14M28 8v14" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </motion.div>
             </motion.div>
@@ -719,6 +720,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
           transformOrigin: 'center',
         }}
       />
+      </a>
     </motion.div>
   )
 }

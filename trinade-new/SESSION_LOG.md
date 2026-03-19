@@ -9,9 +9,36 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 65 — Contact page ALL groups (Group 1-3) complete (experimental)
-- Last completed: Prompt 65 — Form validation + error/success states + all polish fixes
+- Done: Prompt 65 — Contact page ALL groups + Blog page Groups 1-2 (experimental)
+- Last completed: Prompt 65 — Blog: varied authors, title weight, tighter spacing, clickable cards, bigger arrows
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-19 — Prompt 65: Blog Page — Groups 1+2 Fixes (Experimental)
+
+### What Was Done
+**Group 1 (Polish):**
+1. **Article title weight** — Changed from `font-semibold` (600) to `font-medium` (500) on all VerticalArticleCards for better hierarchy
+2. **Varied authors** — 6 distinct names: Dr. Priya Sharma, Arjun Mehta, Kavitha Rao, Vikram Desai, Neha Kapoor, Rohan Iyer (with matching initials)
+3. **Removed redundant cursor:none** — Removed `style={{ cursor: 'none' }}` from FeaturedCard and VerticalArticleCard (global `.solutions-page` class already handles it)
+
+**Group 2 (Enhancements):**
+4. **Tighter card spacing** — Reduced `py-10 md:py-14` to `py-8 md:py-10` on article cards for better density
+5. **Bigger redirect arrows** — Upgraded SVG from 28x28 to 36x36 on article cards, 24x24 to 36x36 on featured card
+6. **Always-visible arrows** — Removed `hidden lg:flex` from article cards, now `flex` at all sizes; removed `hidden md:flex` from featured card
+7. **Clickable articles** — Wrapped both FeaturedCard and VerticalArticleCard content in `<a>` tags (href="#" with preventDefault)
+
+### Verification (Playwright MCP)
+- All 6 articles: `isClickable: true`, `titleWeight: "500"`, `arrowSize: {w: 36, h: 36}`
+- Authors confirmed: Dr. Priya Sharma, Arjun Mehta, Kavitha Rao, Vikram Desai, Neha Kapoor, Rohan Iyer
+- Featured card: clickable link, bigger arrow, "READ ARTICLE" label visible
+
+### Files Modified
+- `app/experimental/blog/page.tsx` — All fixes (EXPERIMENTAL ONLY)
+
+### Not Done (Group 3 — deferred per user request)
+- Newsletter CTA section (dark section with email input before footer)
 
 ---
 
