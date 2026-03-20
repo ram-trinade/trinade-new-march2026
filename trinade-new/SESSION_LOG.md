@@ -9,8 +9,8 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 85 — Sleep Alert Device product page (experimental)
-- Last completed: Prompt 85 — Full 8-section product page for Sleep Alert Device at `/experimental/products/sleep-alert`
+- Done: Prompt 86 — Stronger 404 watermark stroke
+- Last completed: Prompt 86 — Increased 404 watermark visibility (2px stroke at 12% opacity, was 1.5px at 6%)
 - Live URL: https://trinade-new.vercel.app
 
 ---

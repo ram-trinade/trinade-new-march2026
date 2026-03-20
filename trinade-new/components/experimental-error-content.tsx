@@ -105,7 +105,7 @@ export default function ExperimentalErrorContent() {
             letterSpacing: '-0.04em',
             lineHeight: 0.85,
             color: 'transparent',
-            WebkitTextStroke: '1.5px rgba(42,34,24,0.06)',
+            WebkitTextStroke: '2px rgba(42,34,24,0.12)',
           }}
         >
           404
