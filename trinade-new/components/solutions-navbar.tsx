@@ -17,7 +17,7 @@ const SCROLL_SEGMENTS = 5
 
 const productLinks = [
   { label: 'Fly High', href: '/experimental/products/flyhigh' },
-  { label: 'Sleep Alert', href: '/experimental/products/sleep-alert' },
+  { label: 'Sleep Alert Device', href: '/experimental/products/sleep-alert' },
 ]
 
 const menuLinks = [

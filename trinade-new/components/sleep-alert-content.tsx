@@ -1,16 +1,16 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'motion/react'
+import { useRef, useState, useEffect, useCallback } from 'react'
+import { motion, useInView, useMotionValue, useTransform, useSpring } from 'motion/react'
 
 // ═══════════════════════════════════════════════════════════════════════
 // SLEEP ALERT DEVICE — PRODUCT PAGE
-// Awwwards-quality showcase: nocturnal guardian aesthetic
-// Charcoal/cream/gold palette with night-driving atmosphere
+// Awwwards-quality showcase: "Nocturnal Intelligence" aesthetic
+// Cinematic, tech-forward, SaaS product page with meaningful motion
 // ═══════════════════════════════════════════════════════════════════════
 
 const EASE_CINE = [0.16, 1, 0.3, 1] as const
-const EASE_TEXT = [0.22, 1, 0.36, 1] as const
+const EASE_OUT = [0.22, 1, 0.36, 1] as const
 
 // ─── Grain Overlay ───
 function GrainOverlay({ opacity = 0.03 }: { opacity?: number }) {
@@ -34,15 +34,15 @@ function GoldPill({ children }: { children: React.ReactNode }) {
     <span
       className="inline-block"
       style={{
-        fontSize: '12px',
+        fontSize: '11px',
         fontWeight: 600,
-        letterSpacing: '0.2em',
+        letterSpacing: '0.22em',
         textTransform: 'uppercase' as const,
         color: '#c9a86e',
-        padding: '6px 18px',
+        padding: '7px 20px',
         borderRadius: '100px',
         background: 'rgba(201,168,110,0.08)',
-        border: '1px solid rgba(201,168,110,0.15)',
+        border: '1px solid rgba(201,168,110,0.18)',
       }}
     >
       {children}
@@ -122,7 +122,7 @@ function WordReveal({
           transition={{
             duration: 0.8,
             delay: delay + i * 0.06,
-            ease: EASE_TEXT,
+            ease: EASE_OUT,
           }}
           className="inline-block mr-[0.3em]"
         >
@@ -133,8 +133,94 @@ function WordReveal({
   )
 }
 
+// ─── Animated Counter ───
+function AnimatedCounter({ value, suffix = '' }: { value: string; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const [displayValue, setDisplayValue] = useState('0')
+
+  useEffect(() => {
+    if (!inView) return
+    // Extract numeric part
+    const numericMatch = value.match(/[\d.]+/)
+    if (!numericMatch) {
+      setDisplayValue(value)
+      return
+    }
+    const target = parseFloat(numericMatch[0])
+    const prefix = value.slice(0, numericMatch.index)
+    const rest = value.slice((numericMatch.index || 0) + numericMatch[0].length)
+    const isFloat = numericMatch[0].includes('.')
+    const duration = 2000
+    const startTime = Date.now()
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3)
+      const current = eased * target
+      const formatted = isFloat ? current.toFixed(1) : Math.floor(current).toLocaleString()
+      setDisplayValue(prefix + formatted + rest)
+      if (progress < 1) requestAnimationFrame(animate)
+    }
+    requestAnimationFrame(animate)
+  }, [inView, value])
+
+  return <span ref={ref}>{displayValue}{suffix}</span>
+}
+
+// ─── 3D Tilt Card ───
+function TiltCard({
+  children,
+  className = '',
+  style = {},
+}: {
+  children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
+}) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const rotateX = useTransform(y, [-0.5, 0.5], [4, -4])
+  const rotateY = useTransform(x, [-0.5, 0.5], [-4, 4])
+  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 })
+  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 })
+
+  const handleMouse = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    x.set((e.clientX - rect.left) / rect.width - 0.5)
+    y.set((e.clientY - rect.top) / rect.height - 0.5)
+  }, [x, y])
+
+  const handleLeave = useCallback(() => {
+    x.set(0)
+    y.set(0)
+  }, [x, y])
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouse}
+      onMouseLeave={handleLeave}
+      style={{
+        rotateX: springRotateX,
+        rotateY: springRotateY,
+        transformPerspective: 800,
+        ...style,
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 1 — HERO
+// SECTION 1 — HERO with radar scanning animation
 // ═══════════════════════════════════════════════════════════════════════
 function HeroSection() {
   return (
@@ -142,34 +228,114 @@ function HeroSection() {
       className="relative min-h-screen w-full overflow-hidden flex items-center justify-center"
       style={{ background: '#0a0a0a' }}
     >
-      {/* Atmospheric gradient orbs — nocturnal gold */}
+      {/* Animated radar rings — pulsing outward from center */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              width: `${200 + i * 180}px`,
+              height: `${200 + i * 180}px`,
+              border: '1px solid rgba(201,168,110,0.06)',
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: [0, 0.15, 0],
+              scale: [0.9, 1.1, 1.3],
+            }}
+            transition={{
+              duration: 4,
+              delay: i * 0.8,
+              repeat: Infinity,
+              ease: 'easeOut',
+            }}
+          />
+        ))}
+        {/* Static ring grid for depth */}
+        {[0, 1, 2, 3, 4, 5].map((i) => (
+          <div
+            key={`static-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: `${150 + i * 160}px`,
+              height: `${150 + i * 160}px`,
+              border: `1px solid rgba(201,168,110,${0.04 - i * 0.005})`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Scanning sweep line — rotates 360° */}
+      <motion.div
+        className="absolute pointer-events-none"
+        style={{
+          width: '500px',
+          height: '500px',
+          top: '50%',
+          left: '50%',
+          marginTop: '-250px',
+          marginLeft: '-250px',
+        }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '250px',
+            height: '2px',
+            transformOrigin: 'left center',
+            background: 'linear-gradient(90deg, rgba(201,168,110,0.3), transparent)',
+          }}
+        />
+      </motion.div>
+
+      {/* Central glow */}
       <div
         className="absolute"
         style={{
-          top: '20%',
-          left: '25%',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '300px',
+          height: '300px',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.12) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+        }}
+      />
+
+      {/* Atmospheric gradient orbs */}
+      <div
+        className="absolute"
+        style={{
+          top: '15%',
+          left: '20%',
           width: '600px',
           height: '600px',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.12) 0%, transparent 65%)',
-          filter: 'blur(100px)',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.08) 0%, transparent 65%)',
+          filter: 'blur(120px)',
         }}
       />
       <div
         className="absolute"
         style={{
           bottom: '10%',
-          right: '20%',
+          right: '15%',
           width: '500px',
           height: '500px',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 60%)',
-          filter: 'blur(80px)',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.05) 0%, transparent 60%)',
+          filter: 'blur(100px)',
         }}
       />
-      {/* Subtle radial vignette */}
+
+      {/* Radial vignette */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.4) 100%)',
+          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%)',
         }}
       />
       <GrainOverlay opacity={0.04} />
@@ -177,41 +343,47 @@ function HeroSection() {
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-[1200px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3, ease: EASE_CINE }}
         >
           <GoldPill>Sleep Alert Device</GoldPill>
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.6, ease: EASE_CINE }}
-          className="mt-10 tracking-[-0.04em] leading-[0.95]"
+          transition={{ duration: 1.4, delay: 0.6, ease: EASE_CINE }}
+          className="mt-10 tracking-[-0.04em] leading-[0.92]"
           style={{
-            fontSize: 'clamp(3.2rem, 7.5vw, 7rem)',
-            fontWeight: 300,
+            fontSize: 'clamp(3.2rem, 8vw, 7.5rem)',
+            fontWeight: 200,
             color: 'rgba(255,255,255,0.93)',
           }}
         >
           Your Smart Co‑Driver,{' '}
-          <span style={{ color: '#c9a86e' }}>
+          <br className="hidden md:block" />
+          <motion.span
+            style={{ color: '#c9a86e' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, delay: 1.2 }}
+          >
             to Keep You Safe
-          </span>
+          </motion.span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9, ease: EASE_CINE }}
+          transition={{ duration: 1, delay: 1.0, ease: EASE_CINE }}
           className="mt-8 mx-auto"
           style={{
             fontSize: 'clamp(16px, 1.3vw, 20px)',
             fontWeight: 400,
             lineHeight: 1.8,
-            color: 'rgba(255,255,255,0.45)',
-            maxWidth: '640px',
+            color: 'rgba(255,255,255,0.4)',
+            maxWidth: '600px',
           }}
         >
           An intelligent fatigue monitoring system that watches for drowsiness
@@ -221,38 +393,45 @@ function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.2, ease: EASE_CINE }}
+          transition={{ duration: 0.9, delay: 1.4, ease: EASE_CINE }}
           className="mt-12 flex items-center justify-center gap-5"
         >
           <a
             href="/contact"
-            className="group inline-flex items-center gap-3 transition-all duration-500"
+            className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500"
             style={{
               padding: '14px 36px',
               borderRadius: '100px',
               background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
               color: '#0a0a0a',
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: 600,
-              letterSpacing: '0.06em',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase' as const,
               textDecoration: 'none',
             }}
           >
-            Talk to Trinade
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-[3px]">
+            {/* Shine sweep */}
+            <span
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+              style={{
+                background: 'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)',
+              }}
+            />
+            <span className="relative">Talk to Trinade</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative transition-transform duration-300 group-hover:translate-x-[3px]">
               <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </a>
           <a
             href="#how-it-works"
-            className="inline-flex items-center transition-all duration-400"
+            className="inline-flex items-center transition-all duration-500 hover:border-[rgba(201,168,110,0.5)]"
             style={{
               padding: '14px 32px',
               borderRadius: '100px',
-              border: '1px solid rgba(201,168,110,0.25)',
-              color: 'rgba(255,255,255,0.7)',
-              fontSize: '14px',
+              border: '1px solid rgba(201,168,110,0.2)',
+              color: 'rgba(255,255,255,0.6)',
+              fontSize: '13px',
               fontWeight: 500,
               letterSpacing: '0.04em',
               textDecoration: 'none',
@@ -260,6 +439,25 @@ function HeroSection() {
           >
             How It Works
           </a>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            className="flex flex-col items-center gap-2"
+          >
+            <span style={{ fontSize: '10px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.2)', textTransform: 'uppercase' }}>
+              Scroll
+            </span>
+            <div style={{ width: '1px', height: '24px', background: 'linear-gradient(180deg, rgba(201,168,110,0.3), transparent)' }} />
+          </motion.div>
         </motion.div>
       </div>
 
@@ -279,18 +477,18 @@ function HeroSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 2 — THE SILENT DANGER (Problem/Insight)
+// SECTION 2 — THE SILENT DANGER (Problem/Insight) with counters
 // ═══════════════════════════════════════════════════════════════════════
 function ProblemSection() {
   const stats = [
     { value: '1 in 25', label: 'adults report falling asleep at the wheel in the past 30 days' },
-    { value: '100,000+', label: 'crashes annually are caused by drowsy driving' },
+    { value: '100,000', suffix: '+', label: 'crashes annually are caused by drowsy driving' },
     { value: '3 sec', label: 'of microsleep at 100km/h covers the length of a football field' },
   ]
 
   return (
     <section
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       <GrainOverlay opacity={0.02} />
@@ -319,7 +517,7 @@ function ProblemSection() {
             style={{
               fontSize: '16px',
               lineHeight: 1.8,
-              color: 'rgba(42,34,24,0.55)',
+              color: 'rgba(42,34,24,0.5)',
               maxWidth: '560px',
             }}
           >
@@ -329,40 +527,50 @@ function ProblemSection() {
           </motion.p>
         </RevealSection>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Stats grid with animated counters */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {stats.map((stat, i) => (
             <RevealSection key={i} delay={0.15 * i}>
-              <div
-                className="text-center p-10 rounded-2xl transition-all duration-500 hover:shadow-lg"
+              <TiltCard
+                className="text-center p-10 lg:p-12 rounded-2xl cursor-default group"
                 style={{
-                  background: 'rgba(255,255,255,0.55)',
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%)',
                   border: '1px solid rgba(42,34,24,0.06)',
+                  backdropFilter: 'blur(12px)',
+                  transition: 'box-shadow 0.5s ease, border-color 0.5s ease',
                 }}
               >
+                {/* Hover top glow */}
                 <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                   style={{
-                    fontSize: 'clamp(2.4rem, 4vw, 3.2rem)',
-                    fontWeight: 300,
+                    background: 'linear-gradient(180deg, rgba(201,168,110,0.08) 0%, transparent 50%)',
+                  }}
+                />
+                <div
+                  className="relative"
+                  style={{
+                    fontSize: 'clamp(2.4rem, 4vw, 3.4rem)',
+                    fontWeight: 200,
                     color: '#c9a86e',
                     letterSpacing: '-0.03em',
                     lineHeight: 1,
                   }}
                 >
-                  {stat.value}
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </div>
                 <div
-                  className="mt-4"
+                  className="mt-5"
                   style={{
                     fontSize: '14px',
                     lineHeight: 1.7,
-                    color: 'rgba(42,34,24,0.5)',
+                    color: 'rgba(42,34,24,0.45)',
                     fontWeight: 400,
                   }}
                 >
                   {stat.label}
                 </div>
-              </div>
+              </TiltCard>
             </RevealSection>
           ))}
         </div>
@@ -372,7 +580,7 @@ function ProblemSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 3 — HOW IT WORKS (Step Flow)
+// SECTION 3 — HOW IT WORKS (Horizontal timeline)
 // ═══════════════════════════════════════════════════════════════════════
 function HowItWorksSection() {
   const steps = [
@@ -380,57 +588,31 @@ function HowItWorksSection() {
       num: '01',
       title: 'Detect',
       desc: 'An in-cabin camera identifies the driver\'s face and locks onto eye position in real time.',
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <circle cx="16" cy="16" r="10" stroke="rgba(201,168,110,0.5)" strokeWidth="1" />
-          <circle cx="16" cy="16" r="4" fill="rgba(201,168,110,0.3)" />
-          <path d="M6 16c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="rgba(201,168,110,0.3)" strokeWidth="1" />
-        </svg>
-      ),
     },
     {
       num: '02',
       title: 'Track',
       desc: 'The system continuously monitors eye openness, measuring blink patterns and closure duration.',
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <path d="M4 16s5-8 12-8 12 8 12 8-5 8-12 8-12-8-12-8z" stroke="rgba(201,168,110,0.5)" strokeWidth="1" />
-          <circle cx="16" cy="16" r="4" stroke="rgba(201,168,110,0.5)" strokeWidth="1" />
-          <circle cx="16" cy="16" r="1.5" fill="rgba(201,168,110,0.4)" />
-        </svg>
-      ),
     },
     {
       num: '03',
       title: 'Alert',
       desc: 'When eye-closure crosses a configurable threshold, an audible alarm activates instantly.',
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <path d="M16 4v4M16 24v4M8 16H4M28 16h-4" stroke="rgba(201,168,110,0.5)" strokeWidth="1" />
-          <circle cx="16" cy="16" r="6" stroke="rgba(201,168,110,0.5)" strokeWidth="1" />
-          <circle cx="16" cy="16" r="2" fill="rgba(201,168,110,0.4)" />
-          <path d="M10 10l2 2M20 20l2 2M10 22l2-2M20 10l2 2" stroke="rgba(201,168,110,0.3)" strokeWidth="1" />
-        </svg>
-      ),
     },
     {
       num: '04',
       title: 'Resume',
       desc: 'Once eyes reopen, the alert stops and seamless background monitoring continues throughout the trip.',
-      icon: (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <path d="M8 16a8 8 0 1116 0" stroke="rgba(201,168,110,0.5)" strokeWidth="1" />
-          <path d="M24 16a8 8 0 01-16 0" stroke="rgba(201,168,110,0.3)" strokeWidth="1" strokeDasharray="3 3" />
-          <polygon points="20,12 26,16 20,20" fill="rgba(201,168,110,0.3)" />
-        </svg>
-      ),
     },
   ]
+
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const lineInView = useInView(sectionRef, { once: true, margin: '-100px' })
 
   return (
     <section
       id="how-it-works"
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#0a0a0a' }}
     >
       {/* Atmospheric glow */}
@@ -440,16 +622,16 @@ function HowItWorksSection() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '900px',
-          height: '900px',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.05) 0%, transparent 60%)',
+          width: '1000px',
+          height: '600px',
+          background: 'radial-gradient(ellipse, rgba(201,168,110,0.04) 0%, transparent 60%)',
           filter: 'blur(80px)',
         }}
       />
       <GrainOverlay opacity={0.04} />
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6">
-        <RevealSection className="text-center mb-20">
+      <div ref={sectionRef} className="relative z-10 max-w-[1200px] mx-auto px-6">
+        <RevealSection className="text-center mb-20 lg:mb-24">
           <GoldPill>How It Works</GoldPill>
           <WordReveal
             text="Intelligent monitoring, instant response"
@@ -465,73 +647,80 @@ function HowItWorksSection() {
           />
         </RevealSection>
 
-        {/* Steps — vertical flow with connecting line */}
-        <div className="relative max-w-[700px] mx-auto">
-          {/* Connecting line */}
+        {/* Horizontal timeline for desktop, vertical for mobile */}
+        <div className="relative">
+          {/* Connecting line — horizontal on desktop */}
           <motion.div
-            className="absolute left-[28px] top-0 bottom-0 w-[1px]"
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2, delay: 0.3, ease: EASE_CINE }}
+            className="hidden md:block absolute top-[28px] left-[8%] right-[8%] h-[1px]"
+            initial={{ scaleX: 0 }}
+            animate={lineInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 2, delay: 0.5, ease: EASE_CINE }}
             style={{
-              background: 'linear-gradient(180deg, rgba(201,168,110,0.3), rgba(201,168,110,0.05))',
-              transformOrigin: 'top',
+              background: 'linear-gradient(90deg, rgba(201,168,110,0.05), rgba(201,168,110,0.25), rgba(201,168,110,0.25), rgba(201,168,110,0.05))',
+              transformOrigin: 'left',
             }}
           />
 
-          {steps.map((step, i) => (
-            <RevealSection key={i} delay={0.15 * i} className="relative mb-16 last:mb-0">
-              <div className="flex items-start gap-8 pl-0">
-                {/* Number circle */}
-                <div
-                  className="relative flex-shrink-0 w-[56px] h-[56px] rounded-full flex items-center justify-center"
-                  style={{
-                    background: 'rgba(201,168,110,0.08)',
-                    border: '1px solid rgba(201,168,110,0.15)',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: '#c9a86e',
-                      letterSpacing: '0.05em',
-                    }}
-                  >
-                    {step.num}
-                  </span>
-                </div>
-
-                {/* Content */}
-                <div className="pt-2">
-                  <div className="flex items-center gap-4 mb-3">
-                    {step.icon}
-                    <h3
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6">
+            {steps.map((step, i) => (
+              <RevealSection key={i} delay={0.2 + i * 0.15}>
+                <div className="relative text-center md:text-left group">
+                  {/* Number circle with pulse */}
+                  <div className="relative inline-flex items-center justify-center mb-6">
+                    {/* Pulse ring on hover */}
+                    <div
+                      className="absolute w-[56px] h-[56px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                       style={{
-                        fontSize: '24px',
-                        fontWeight: 400,
-                        color: 'rgba(255,255,255,0.93)',
-                        letterSpacing: '-0.02em',
+                        border: '1px solid rgba(201,168,110,0.15)',
+                        transform: 'scale(1.4)',
+                      }}
+                    />
+                    <div
+                      className="relative w-[56px] h-[56px] rounded-full flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(201,168,110,0.15)]"
+                      style={{
+                        background: 'rgba(201,168,110,0.08)',
+                        border: '1px solid rgba(201,168,110,0.18)',
                       }}
                     >
-                      {step.title}
-                    </h3>
+                      <span
+                        style={{
+                          fontSize: '14px',
+                          fontWeight: 600,
+                          color: '#c9a86e',
+                          letterSpacing: '0.05em',
+                        }}
+                      >
+                        {step.num}
+                      </span>
+                    </div>
                   </div>
+
+                  <h3
+                    className="mb-3"
+                    style={{
+                      fontSize: '22px',
+                      fontWeight: 400,
+                      color: 'rgba(255,255,255,0.93)',
+                      letterSpacing: '-0.02em',
+                    }}
+                  >
+                    {step.title}
+                  </h3>
                   <p
                     style={{
-                      fontSize: '15px',
+                      fontSize: '14px',
                       lineHeight: 1.8,
-                      color: 'rgba(255,255,255,0.4)',
-                      maxWidth: '480px',
+                      color: 'rgba(255,255,255,0.35)',
+                      maxWidth: '260px',
+                      margin: '0 auto',
                     }}
                   >
                     {step.desc}
                   </p>
                 </div>
-              </div>
-            </RevealSection>
-          ))}
+              </RevealSection>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -539,7 +728,7 @@ function HowItWorksSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 4 — KEY FEATURES
+// SECTION 4 — KEY FEATURES (Bento-style with 3D tilt)
 // ═══════════════════════════════════════════════════════════════════════
 function FeaturesSection() {
   const features = [
@@ -547,38 +736,53 @@ function FeaturesSection() {
       title: 'Catches the Silent Drift',
       desc: 'Detects unusually prolonged eye-closure patterns that signal the onset of microsleep — before the driver is even aware.',
       icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M3 14s4.5-8 11-8 11 8 11 8-4.5 8-11 8-11-8-11-8z" stroke="#c9a86e" strokeWidth="1.2" />
-          <circle cx="14" cy="14" r="3.5" stroke="#c9a86e" strokeWidth="1.2" />
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M3 16s5.5-10 13-10 13 10 13 10-5.5 10-13 10S3 16 3 16z" stroke="#c9a86e" strokeWidth="1.2" />
+          <circle cx="16" cy="16" r="4" stroke="#c9a86e" strokeWidth="1.2" />
+          <circle cx="16" cy="16" r="1.5" fill="#c9a86e" opacity="0.4" />
         </svg>
       ),
+      span: 'md:col-span-2', // wide card
     },
     {
       title: 'Prompts a Quick Reset',
       desc: 'Triggers a clear, audible alert that cuts through fatigue and brings the driver\'s focus back to the road instantly.',
       icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M14 4v7l5 3" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" />
-          <circle cx="14" cy="14" r="10" stroke="#c9a86e" strokeWidth="1.2" />
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4v8l6 3.5" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx="16" cy="16" r="11" stroke="#c9a86e" strokeWidth="1.2" />
         </svg>
       ),
+      span: '',
     },
     {
       title: 'Stays in the Background',
       desc: 'Once activated, the system monitors continuously through the entire trip — no interaction needed, no distraction added.',
       icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <rect x="4" y="8" width="20" height="12" rx="2" stroke="#c9a86e" strokeWidth="1.2" />
-          <circle cx="14" cy="14" r="3" stroke="#c9a86e" strokeWidth="1.2" />
-          <path d="M4 14h3M21 14h3" stroke="#c9a86e" strokeWidth="1.2" />
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect x="4" y="8" width="24" height="16" rx="3" stroke="#c9a86e" strokeWidth="1.2" />
+          <circle cx="16" cy="16" r="4" stroke="#c9a86e" strokeWidth="1.2" />
+          <path d="M4 16h4M24 16h4" stroke="#c9a86e" strokeWidth="1.2" />
         </svg>
       ),
+      span: '',
+    },
+    {
+      title: 'Works Day and Night',
+      desc: 'Infrared-compatible camera module ensures reliable face detection and eye tracking in any lighting condition — from bright sun to pitch dark tunnels.',
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="6" stroke="#c9a86e" strokeWidth="1.2" />
+          <path d="M16 4v3M16 25v3M4 16h3M25 16h3M8.5 8.5l2 2M21.5 21.5l2 2M8.5 23.5l2-2M21.5 10.5l2-2" stroke="#c9a86e" strokeWidth="1" opacity="0.5" />
+        </svg>
+      ),
+      span: 'md:col-span-2', // wide card
     },
   ]
 
   return (
     <section
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       <GrainOverlay opacity={0.02} />
@@ -598,48 +802,34 @@ function FeaturesSection() {
             }}
             delay={0.2}
           />
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="mt-6 mx-auto"
-            style={{
-              fontSize: '16px',
-              lineHeight: 1.8,
-              color: 'rgba(42,34,24,0.55)',
-              maxWidth: '520px',
-            }}
-          >
-            Late-night drives, early mornings, and long routes can reduce alertness
-            without warning. Sleep Alert adds a practical layer of protection.
-          </motion.p>
         </RevealSection>
 
-        {/* Feature cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Bento grid — 2+1 / 1+2 layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {features.map((feature, i) => (
-            <RevealSection key={i} delay={0.12 * i}>
-              <div
-                className="group relative p-10 rounded-2xl transition-all duration-500 h-full"
+            <RevealSection key={i} delay={0.1 * i} className={feature.span}>
+              <TiltCard
+                className="group relative p-10 lg:p-12 rounded-2xl h-full cursor-default"
                 style={{
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.35) 100%)',
+                  background: 'linear-gradient(145deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.35) 100%)',
                   border: '1px solid rgba(42,34,24,0.06)',
-                  backdropFilter: 'blur(12px)',
+                  backdropFilter: 'blur(16px)',
+                  transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
                 }}
               >
-                {/* Hover inner glow */}
+                {/* Hover gradient glow */}
                 <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                   style={{
-                    background: 'linear-gradient(180deg, rgba(201,168,110,0.06) 0%, transparent 60%)',
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)',
                   }}
                 />
                 <div className="relative">
+                  {/* Icon box with animated border */}
                   <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-all duration-500 group-hover:shadow-md"
+                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-7 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(201,168,110,0.1)]"
                     style={{
-                      background: 'rgba(201,168,110,0.08)',
+                      background: 'rgba(201,168,110,0.06)',
                       border: '1px solid rgba(201,168,110,0.12)',
                     }}
                   >
@@ -660,13 +850,13 @@ function FeaturesSection() {
                     style={{
                       fontSize: '15px',
                       lineHeight: 1.8,
-                      color: 'rgba(42,34,24,0.5)',
+                      color: 'rgba(42,34,24,0.45)',
                     }}
                   >
                     {feature.desc}
                   </p>
                 </div>
-              </div>
+              </TiltCard>
             </RevealSection>
           ))}
         </div>
@@ -676,19 +866,22 @@ function FeaturesSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 5 — THOUGHTFUL TECHNOLOGY (Values)
+// SECTION 5 — THOUGHTFUL TECHNOLOGY (Values with glowing borders)
 // ═══════════════════════════════════════════════════════════════════════
 function TechnologySection() {
   const values = [
     {
+      num: '01',
       title: 'Purpose-First Design',
       desc: 'Built to reduce risk, not add distraction. Every design decision serves the driver\'s safety.',
     },
     {
+      num: '02',
       title: 'Human Control',
       desc: 'Drivers stay in charge. The device provides timely prompts, not decisions — augmenting awareness, never replacing it.',
     },
     {
+      num: '03',
       title: 'Clear Boundaries',
       desc: 'Simple behavior, predictable alerts, and responsible use of AI where it adds genuine value.',
     },
@@ -696,10 +889,10 @@ function TechnologySection() {
 
   return (
     <section
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#0a0a0a' }}
     >
-      {/* Wide atmospheric orb */}
+      {/* Atmospheric orb */}
       <div
         className="absolute"
         style={{
@@ -707,16 +900,16 @@ function TechnologySection() {
           right: '-10%',
           width: '700px',
           height: '700px',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 55%)',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.05) 0%, transparent 55%)',
           filter: 'blur(100px)',
         }}
       />
       <GrainOverlay opacity={0.04} />
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* Left — headline */}
-          <RevealSection>
+          <RevealSection className="lg:sticky lg:top-32">
             <GoldPill>Our Approach</GoldPill>
             <WordReveal
               text="Thoughtful technology, carefully introduced into daily life"
@@ -745,36 +938,59 @@ function TechnologySection() {
             />
           </RevealSection>
 
-          {/* Right — values list */}
-          <div className="space-y-10 pt-4">
+          {/* Right — values cards */}
+          <div className="space-y-6">
             {values.map((value, i) => (
               <RevealSection key={i} delay={0.15 * i}>
                 <div
-                  className="pl-8"
+                  className="group relative p-8 rounded-2xl transition-all duration-500 cursor-default"
                   style={{
-                    borderLeft: '1px solid rgba(201,168,110,0.2)',
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.06)',
                   }}
                 >
-                  <h3
-                    className="mb-3"
+                  {/* Hover border glow */}
+                  <div
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                     style={{
-                      fontSize: '18px',
-                      fontWeight: 500,
-                      color: 'rgba(255,255,255,0.85)',
-                      letterSpacing: '-0.01em',
+                      boxShadow: 'inset 0 0 0 1px rgba(201,168,110,0.15), 0 0 30px rgba(201,168,110,0.05)',
                     }}
-                  >
-                    {value.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: '15px',
-                      lineHeight: 1.8,
-                      color: 'rgba(255,255,255,0.4)',
-                    }}
-                  >
-                    {value.desc}
-                  </p>
+                  />
+                  <div className="relative flex items-start gap-6">
+                    <span
+                      className="flex-shrink-0 mt-1"
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        color: 'rgba(201,168,110,0.5)',
+                        letterSpacing: '0.1em',
+                      }}
+                    >
+                      {value.num}
+                    </span>
+                    <div>
+                      <h3
+                        className="mb-3 transition-colors duration-500 group-hover:text-[#c9a86e]"
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: 500,
+                          color: 'rgba(255,255,255,0.85)',
+                          letterSpacing: '-0.01em',
+                        }}
+                      >
+                        {value.title}
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '15px',
+                          lineHeight: 1.8,
+                          color: 'rgba(255,255,255,0.35)',
+                        }}
+                      >
+                        {value.desc}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </RevealSection>
             ))}
@@ -786,18 +1002,45 @@ function TechnologySection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 6 — BUILT FOR FLEETS
+// SECTION 6 — BUILT FOR FLEETS (with gradient border cards)
 // ═══════════════════════════════════════════════════════════════════════
 function FleetSection() {
   const capabilities = [
-    { label: 'Night Routes', desc: 'Optimized for low-light conditions with infrared-compatible monitoring' },
-    { label: 'Long Hauls', desc: 'Continuous monitoring through extended duty hours without driver intervention' },
-    { label: 'Fleet Scale', desc: 'Pilot-first rollout — validate in a small set of vehicles, then deploy across the fleet' },
+    {
+      label: 'Night Routes',
+      desc: 'Optimized for low-light conditions with infrared-compatible monitoring',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="#c9a86e" strokeWidth="1.2" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Long Hauls',
+      desc: 'Continuous monitoring through extended duty hours without driver intervention',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Fleet Scale',
+      desc: 'Pilot-first rollout — validate in a small set of vehicles, then deploy across the fleet',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="#c9a86e" strokeWidth="1.2" />
+          <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="#c9a86e" strokeWidth="1.2" />
+          <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="#c9a86e" strokeWidth="1.2" />
+          <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="#c9a86e" strokeWidth="1.2" />
+        </svg>
+      ),
+    },
   ]
 
   return (
     <section
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       <GrainOverlay opacity={0.02} />
@@ -826,7 +1069,7 @@ function FleetSection() {
             style={{
               fontSize: '16px',
               lineHeight: 1.8,
-              color: 'rgba(42,34,24,0.55)',
+              color: 'rgba(42,34,24,0.5)',
               maxWidth: '540px',
             }}
           >
@@ -835,59 +1078,77 @@ function FleetSection() {
           </motion.p>
         </RevealSection>
 
-        {/* Capability cards — horizontal */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Capability cards with gradient border */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {capabilities.map((cap, i) => (
             <RevealSection key={i} delay={0.12 * i}>
               <div
-                className="group relative p-8 rounded-2xl transition-all duration-500 text-center"
+                className="group relative p-[1px] rounded-2xl transition-all duration-700"
                 style={{
-                  background: '#0a0a0a',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  background: 'linear-gradient(135deg, rgba(201,168,110,0.15), rgba(10,10,10,1), rgba(201,168,110,0.1))',
                 }}
               >
-                {/* Hover glow */}
+                {/* Hover gradient shift */}
                 <div
                   className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                   style={{
-                    background: 'radial-gradient(circle at 50% 0%, rgba(201,168,110,0.08) 0%, transparent 60%)',
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.35), rgba(10,10,10,1), rgba(201,168,110,0.25))',
                   }}
                 />
-                <div className="relative">
+                <div
+                  className="relative p-8 lg:p-10 rounded-[15px] text-center h-full"
+                  style={{ background: '#0a0a0a' }}
+                >
+                  {/* Hover top glow inside card */}
                   <div
-                    className="inline-block mb-5"
+                    className="absolute inset-0 rounded-[15px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                     style={{
-                      fontSize: '12px',
-                      fontWeight: 600,
-                      letterSpacing: '0.15em',
-                      textTransform: 'uppercase' as const,
-                      color: '#c9a86e',
+                      background: 'radial-gradient(ellipse at 50% 0%, rgba(201,168,110,0.06) 0%, transparent 60%)',
                     }}
-                  >
-                    {cap.label}
+                  />
+                  <div className="relative">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-6"
+                      style={{
+                        background: 'rgba(201,168,110,0.06)',
+                        border: '1px solid rgba(201,168,110,0.12)',
+                      }}
+                    >
+                      {cap.icon}
+                    </div>
+                    <div
+                      className="mb-4"
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase' as const,
+                        color: '#c9a86e',
+                      }}
+                    >
+                      {cap.label}
+                    </div>
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: 1.7,
+                        color: 'rgba(255,255,255,0.4)',
+                      }}
+                    >
+                      {cap.desc}
+                    </p>
                   </div>
-                  <p
-                    style={{
-                      fontSize: '15px',
-                      lineHeight: 1.7,
-                      color: 'rgba(255,255,255,0.45)',
-                    }}
-                  >
-                    {cap.desc}
-                  </p>
                 </div>
               </div>
             </RevealSection>
           ))}
         </div>
-
       </div>
     </section>
   )
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 7 — SPECS
+// SECTION 7 — SPECS (with hover highlight rows)
 // ═══════════════════════════════════════════════════════════════════════
 function SpecsSection() {
   const specs = [
@@ -901,7 +1162,7 @@ function SpecsSection() {
 
   return (
     <section
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#0a0a0a' }}
     >
       <GrainOverlay opacity={0.04} />
@@ -912,7 +1173,7 @@ function SpecsSection() {
           <h2
             className="mt-8"
             style={{
-              fontSize: 'clamp(1.8rem, 3vw, 2.4rem)',
+              fontSize: 'clamp(1.8rem, 3vw, 2.6rem)',
               fontWeight: 300,
               letterSpacing: '-0.03em',
               color: 'rgba(255,255,255,0.93)',
@@ -926,27 +1187,36 @@ function SpecsSection() {
           {specs.map((spec, i) => (
             <RevealSection key={i} delay={0.08 * i}>
               <div
-                className="flex items-center justify-between py-5 transition-colors duration-300"
+                className="group flex items-center justify-between py-6 transition-all duration-400 cursor-default relative"
                 style={{
                   borderBottom: '1px solid rgba(255,255,255,0.06)',
                 }}
               >
-                <span
+                {/* Hover background highlight */}
+                <div
+                  className="absolute inset-0 -mx-4 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
-                    fontSize: '13px',
+                    background: 'rgba(201,168,110,0.03)',
+                  }}
+                />
+                <span
+                  className="relative transition-colors duration-500 group-hover:text-[rgba(201,168,110,0.7)]"
+                  style={{
+                    fontSize: '12px',
                     fontWeight: 500,
-                    letterSpacing: '0.1em',
+                    letterSpacing: '0.12em',
                     textTransform: 'uppercase' as const,
-                    color: 'rgba(255,255,255,0.35)',
+                    color: 'rgba(255,255,255,0.3)',
                   }}
                 >
                   {spec.label}
                 </span>
                 <span
+                  className="relative transition-colors duration-500 group-hover:text-[rgba(255,255,255,0.9)]"
                   style={{
                     fontSize: '15px',
                     fontWeight: 400,
-                    color: 'rgba(255,255,255,0.7)',
+                    color: 'rgba(255,255,255,0.6)',
                   }}
                 >
                   {spec.value}
@@ -961,12 +1231,12 @@ function SpecsSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// SECTION 8 — CTA
+// SECTION 8 — CTA (Dramatic scale)
 // ═══════════════════════════════════════════════════════════════════════
 function CTASection() {
   return (
     <section
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       {/* Atmospheric orb */}
@@ -976,23 +1246,23 @@ function CTASection() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '600px',
-          height: '600px',
+          width: '700px',
+          height: '700px',
           background: 'radial-gradient(circle, rgba(201,168,110,0.08) 0%, transparent 60%)',
-          filter: 'blur(80px)',
+          filter: 'blur(100px)',
         }}
       />
       <GrainOverlay opacity={0.02} />
 
-      <div className="relative z-10 max-w-[800px] mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-[900px] mx-auto px-6 text-center">
         <RevealSection>
           <GoldRule />
           <WordReveal
             text="Stay alert. Stay alive."
             className="mt-10"
             style={{
-              fontSize: 'clamp(2.6rem, 5.5vw, 4.5rem)',
-              fontWeight: 300,
+              fontSize: 'clamp(2.8rem, 6vw, 5rem)',
+              fontWeight: 200,
               letterSpacing: '-0.04em',
               lineHeight: 1.05,
               color: '#2a2218',
@@ -1008,7 +1278,7 @@ function CTASection() {
             style={{
               fontSize: '16px',
               lineHeight: 1.8,
-              color: 'rgba(42,34,24,0.55)',
+              color: 'rgba(42,34,24,0.5)',
               maxWidth: '480px',
             }}
           >
@@ -1024,21 +1294,28 @@ function CTASection() {
           >
             <a
               href="/contact"
-              className="group inline-flex items-center gap-3 transition-all duration-500 hover:shadow-lg"
+              className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.2)]"
               style={{
-                padding: '16px 40px',
+                padding: '16px 44px',
                 borderRadius: '100px',
                 background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
                 color: '#0a0a0a',
-                fontSize: '14px',
+                fontSize: '13px',
                 fontWeight: 600,
-                letterSpacing: '0.06em',
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase' as const,
                 textDecoration: 'none',
               }}
             >
-              Talk to Trinade
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transition-transform duration-300 group-hover:translate-x-[3px]">
+              {/* Shine sweep */}
+              <span
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                style={{
+                  background: 'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)',
+                }}
+              />
+              <span className="relative">Talk to Trinade</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative transition-transform duration-300 group-hover:translate-x-[3px]">
                 <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
