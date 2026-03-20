@@ -9,9 +9,21 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 77 — Products dropdown polish (animation, weight, dots)
-- Last completed: Prompt 77 — Refined dropdown animation timing, visual weight, and dot indicator styling for Awwwards-level quality
+- Done: Prompt 78 — Dropdown sub-item size reduction for clear hierarchy
+- Last completed: Prompt 78 — Sub-items scaled down (15px/medium) relative to parent nav items (22px/semibold)
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 78: Dropdown Sub-Item Size Reduction
+
+### What Was Done
+1. **Reduced sub-item size** — Font from 19px/semibold down to 15px/medium, creating clear hierarchy below 22px/semibold parent items
+2. **Proportional dots** — Dots reduced from 7px to 5px to match the smaller text scale
+3. **Tighter spacing** — Reduced padding and spacing for a compact, elegant sub-menu
+
+### Files Changed
+- `components/solutions-navbar.tsx` — Scaled down Products dropdown sub-items
 
 ---
 
