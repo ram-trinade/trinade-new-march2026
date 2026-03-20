@@ -2790,3 +2790,29 @@ Custom cursor was a single dot (20px white circle with mix-blend-mode difference
 - `components/solutions-footer.tsx` — Restored "Products" label
 
 ---
+
+## 2026-03-20 — Prompt 11: Sprint 1 Systemic Fixes + Logo Repositioning
+
+### Design-Gaps Sprint 1 — Systemic Fixes (Awwwards-critical)
+1. **Cookie popup localStorage persistence** — Added `localStorage.getItem(STORAGE_KEY)` check on mount in `solutions-cookie-popup.tsx`. Popup no longer shows on every page load. Close button also persists consent. Graceful fallback if localStorage unavailable.
+2. **All `<a>` tags → Next.js `<Link>`** — Converted internal links across 7 component files: solutions-navbar, solutions-footer, homepage-content, solutions-content, sleep-alert-content, blog/page, blog article page. External links (mailto, tel, https) correctly kept as `<a>`. SPA navigation now works — no full page reloads, no preloader re-triggers.
+3. **Missing favicon** — Created `app/icon.tsx` using Next.js App Router file convention with `ImageResponse`. Gold "T" (#c9a86e) on charcoal (#1a1a1e) background, 32x32 PNG. Eliminates 404 console error.
+4. **Company page whitespace** — Reduced QuoteSection internal padding from `clamp(80px, 14vh, 180px)` to `clamp(40px, 6vh, 80px)`, eliminated quote section bottom padding, reduced vision section top padding. Combined gap reduced from ~420px to ~160px.
+
+### Additional Fixes
+5. **Logo repositioned** — Moved Trinade logo from top-right to left of "TRINADE" text in navbar. Combined into single `<Link>` element with `gap-2.5` flex layout. Logo 32px, text 28px/800 weight.
+6. **motion() deprecation** — Updated `motion(Link)` to `motion.create(Link)` in solutions-navbar, solutions-footer, and blog article page to eliminate console warnings.
+
+### Files Changed
+- `components/solutions-cookie-popup.tsx` — localStorage persistence
+- `components/solutions-navbar.tsx` — Link tags, logo repositioned left of text, motion.create
+- `components/solutions-footer.tsx` — Link tags, motion.create
+- `components/homepage-content.tsx` — Link tags
+- `components/solutions-content.tsx` — Link tags
+- `components/sleep-alert-content.tsx` — Link tags
+- `app/blog/page.tsx` — Link tags
+- `app/blog/ai-in-healthcare-.../page.tsx` — Link tags, motion.create
+- `app/icon.tsx` — New favicon (gold T on charcoal)
+- `app/company/page.tsx` — Reduced whitespace below CEO quote
+
+---

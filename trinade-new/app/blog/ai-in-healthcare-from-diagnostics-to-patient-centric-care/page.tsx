@@ -3,6 +3,9 @@
 import dynamic from 'next/dynamic'
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, useScroll, useTransform } from 'motion/react'
+import Link from 'next/link'
+
+const MotionLink = motion.create(Link)
 
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
@@ -113,7 +116,7 @@ function FloatingBackArrow() {
   }, [])
 
   return (
-    <motion.a
+    <MotionLink
       href="/blog"
       className="fixed bottom-8 right-8 z-50 flex items-center justify-center"
       initial={{ opacity: 0, scale: 0.8 }}
@@ -135,7 +138,7 @@ function FloatingBackArrow() {
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
         <path d="M19 12H5M5 12l6-6M5 12l6 6" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-    </motion.a>
+    </MotionLink>
   )
 }
 
@@ -247,7 +250,7 @@ export default function ArticlePage() {
             <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32 pb-16 md:pb-24 pt-40">
               <div className="max-w-[1200px] mx-auto">
                 {/* Back link */}
-                <motion.a
+                <MotionLink
                   href="/blog"
                   className="inline-flex items-center gap-3 mb-12 group"
                   initial={{ opacity: 0, x: -10 }}
@@ -263,7 +266,7 @@ export default function ArticlePage() {
                   >
                     Back to Blog
                   </span>
-                </motion.a>
+                </MotionLink>
 
                 {/* Category + Read time */}
                 <motion.div

@@ -2,6 +2,9 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'motion/react'
+import Link from 'next/link'
+
+const MotionLink = motion.create(Link)
 
 const EASE = [0.25, 0.1, 0.25, 1] as const
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
@@ -82,7 +85,7 @@ export default function SolutionsFooter() {
             >
               Ready to transform your business? We&apos;d love to hear your vision.
             </p>
-            <motion.a
+            <MotionLink
               href="/contact"
               className="inline-flex items-center gap-2 rounded-full px-7 py-3 transition-all duration-300"
               style={{
@@ -102,14 +105,14 @@ export default function SolutionsFooter() {
             >
               Start a conversation
               <span style={{ fontSize: '16px', marginLeft: '2px' }}>&rarr;</span>
-            </motion.a>
+            </MotionLink>
           </motion.div>
 
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-0">
             {/* LEFT — Nav */}
             <div className="lg:w-[40%] flex flex-col gap-3">
               {navLinks.map((link, i) => (
-                <motion.a
+                <MotionLink
                   key={link.label}
                   href={link.href}
                   initial={{ opacity: 0, x: -12 }}
@@ -124,7 +127,7 @@ export default function SolutionsFooter() {
                   whileHover={{ color: 'rgba(201,168,110,0.9)' } as never}
                 >
                   {link.label}
-                </motion.a>
+                </MotionLink>
               ))}
             </div>
 
@@ -201,7 +204,7 @@ export default function SolutionsFooter() {
             { label: 'Privacy Policy', href: '/privacy-policy' },
             { label: 'Terms of Service', href: '/terms-of-service' },
           ].map(link => (
-            <a key={link.label} href={link.href} className="text-[12px] transition-opacity duration-200 hover:opacity-60" style={{ color: 'rgba(255,255,255,0.3)' }}>{link.label}</a>
+            <Link key={link.label} href={link.href} className="text-[12px] transition-opacity duration-200 hover:opacity-60" style={{ color: 'rgba(255,255,255,0.3)' }}>{link.label}</Link>
           ))}
         </div>
         <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>

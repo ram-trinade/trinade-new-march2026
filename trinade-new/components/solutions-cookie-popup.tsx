@@ -68,7 +68,11 @@ export default function SolutionsCookiePopup() {
   );
 
   useEffect(() => {
-    // Always show cookie popup on every page visit
+    try {
+      if (localStorage.getItem(STORAGE_KEY)) return;
+    } catch {
+      // localStorage unavailable — show popup as fallback
+    }
     const timer = setTimeout(() => setVisible(true), 600);
     return () => clearTimeout(timer);
   }, []);
@@ -91,8 +95,7 @@ export default function SolutionsCookiePopup() {
   const handleSaveChanges = () => persist(categories);
 
   const handleClose = () => {
-    setVisible(false);
-    setExpanded(false);
+    persist(categories);
   };
 
   const toggleCategory = (id: string) => {

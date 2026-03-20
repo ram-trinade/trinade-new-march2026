@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 // ═══════════════════════════════════════════════════════════
 // FOURMULA-STYLE NAVBAR — Logo left + Floating centered dark pill
@@ -147,13 +147,29 @@ export default function SolutionsNavbar() {
 
   return (
     <>
-      {/* ─── Trinade text on the left (inertia-style) ─── */}
+      {/* ─── Logo + Trinade text on the left ─── */}
       <Link
         href="/"
-        className="fixed left-8 z-[9999] flex items-center"
+        className="fixed left-8 z-[9999] flex items-center gap-2.5"
         data-navbar
-        style={{ pointerEvents: 'auto', textDecoration: 'none', top: '34px' }}
+        style={{ pointerEvents: 'auto', textDecoration: 'none', top: '30px' }}
       >
+        <Image
+          src="/logo-transparent.png"
+          alt="Trinade"
+          width={120}
+          height={120}
+          className="object-contain"
+          style={{
+            width: '32px',
+            height: '32px',
+            filter: isOnDark
+              ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
+              : 'brightness(0) contrast(3)',
+            opacity: 1,
+            transition: 'filter 0.5s ease',
+          }}
+        />
         <span
           style={{
             fontSize: '28px',
@@ -166,31 +182,6 @@ export default function SolutionsNavbar() {
         >
           TRINADE
         </span>
-      </Link>
-
-      {/* ─── Logo on the top right ─── */}
-      <Link
-        href="/"
-        className="fixed right-8 z-[9999] flex items-center"
-        data-navbar
-        style={{ pointerEvents: 'auto', top: '30px' }}
-      >
-        <Image
-          src="/logo-transparent.png"
-          alt="Trinade"
-          width={120}
-          height={120}
-          className="object-contain"
-          style={{
-            width: '36px',
-            height: '36px',
-            filter: isOnDark
-              ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
-              : 'brightness(0) contrast(3)',
-            opacity: 1,
-            transition: 'filter 0.5s ease',
-          }}
-        />
       </Link>
 
       {/* ─── Floating Navbar (centered pill) ─── */}

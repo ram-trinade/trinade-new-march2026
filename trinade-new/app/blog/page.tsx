@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
@@ -214,7 +215,7 @@ function ArticleCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href={`/blog/${article.slug}`} className="block flex-1 flex flex-col">
+      <Link href={`/blog/${article.slug}`} className="block flex-1 flex flex-col">
         <div
           className="relative overflow-hidden transition-all duration-700 flex-1 flex flex-col"
           style={{
@@ -320,7 +321,7 @@ function ArticleCard({
             </div>
           </div>
         </div>
-      </a>
+      </Link>
     </motion.article>
   )
 }
@@ -358,7 +359,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
         <span className="text-[11px] tracking-[0.15em] uppercase font-medium" style={{ color: 'rgba(42,34,24,0.3)' }}>01</span>
       </div>
 
-      <a href="/blog" className="block">
+      <Link href="/blog" className="block">
         <div
           className="relative overflow-hidden"
           style={{
@@ -469,7 +470,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             </div>
           </div>
         </div>
-      </a>
+      </Link>
     </motion.div>
   )
 }

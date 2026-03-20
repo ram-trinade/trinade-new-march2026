@@ -875,7 +875,7 @@ function QuoteSection() {
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <div ref={ref} style={{ position: 'relative', padding: 'clamp(80px, 14vh, 180px) 0' }}>
+    <div ref={ref} style={{ position: 'relative', padding: 'clamp(40px, 6vh, 80px) 0' }}>
       {/* Giant decorative quotation mark */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -1131,7 +1131,8 @@ export default function CompanyPage() {
               QUOTE — Before Vision
               ══════════════════════════════════════════════ */}
           <section style={{
-            padding: 'clamp(40px, 8vh, 100px) clamp(24px, 8vw, 120px)',
+            padding: 'clamp(24px, 4vh, 60px) clamp(24px, 8vw, 120px)',
+            paddingBottom: '0',
             backgroundColor: '#f2ede6',
             position: 'relative',
             overflow: 'hidden',
@@ -1146,7 +1147,7 @@ export default function CompanyPage() {
               ══════════════════════════════════════════════ */}
           <section
             style={{
-              padding: 'clamp(60px, 12vh, 140px) clamp(24px, 8vw, 120px)',
+              padding: 'clamp(40px, 6vh, 80px) clamp(24px, 8vw, 120px)',
               backgroundColor: '#f2ede6',
               position: 'relative',
               overflow: 'hidden',

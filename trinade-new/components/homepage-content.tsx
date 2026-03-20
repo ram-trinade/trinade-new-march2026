@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -157,7 +158,7 @@ function HomeHeroSection() {
             </p>
 
             <div className="flex items-center gap-6 mt-8">
-              <a
+              <Link
                 href="/contact"
                 className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
                 style={{ background: P.charcoal, color: P.textOnDark }}
@@ -166,8 +167,8 @@ function HomeHeroSection() {
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 text-[14px] font-medium transition-opacity duration-300 hover:opacity-60"
                 style={{ color: P.textMuted }}
@@ -176,7 +177,7 @@ function HomeHeroSection() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -812,14 +813,14 @@ function HomeCTASection() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
             >
-              <a href="/contact"
+              <Link href="/contact"
                 className="group inline-flex items-center gap-3 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(201,168,110,0.3)]"
                 style={{ background: P.gold, color: P.charcoal }}>
                 Start a conversation
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </a>
+              </Link>
             </motion.div>
           </div>
         </div>

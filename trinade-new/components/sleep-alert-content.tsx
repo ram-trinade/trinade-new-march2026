@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, useMotionValue, useTransform, useSpring } from 'motion/react'
+import Link from 'next/link'
 
 // ═══════════════════════════════════════════════════════════════════════
 // SLEEP ALERT DEVICE — PRODUCT PAGE
@@ -396,7 +397,7 @@ function HeroSection() {
           transition={{ duration: 0.9, delay: 1.4, ease: EASE_CINE }}
           className="mt-12 flex items-center justify-center gap-5"
         >
-          <a
+          <Link
             href="/contact"
             className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500"
             style={{
@@ -422,7 +423,7 @@ function HeroSection() {
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative transition-transform duration-300 group-hover:translate-x-[3px]">
               <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </Link>
           <a
             href="#how-it-works"
             className="inline-flex items-center transition-all duration-500 hover:border-[rgba(201,168,110,0.5)]"
@@ -1292,7 +1293,7 @@ function CTASection() {
             transition={{ duration: 0.9, delay: 0.8, ease: EASE_CINE }}
             className="mt-10"
           >
-            <a
+            <Link
               href="/contact"
               className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.2)]"
               style={{
@@ -1318,7 +1319,7 @@ function CTASection() {
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative transition-transform duration-300 group-hover:translate-x-[3px]">
                 <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-            </a>
+            </Link>
           </motion.div>
         </RevealSection>
       </div>
