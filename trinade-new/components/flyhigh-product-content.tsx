@@ -107,140 +107,182 @@ function AnimatedHeading({ children, className = '', light = true }: { children:
 }
 
 // ═══════════════════════════════════════════════════════════
-// HERO SECTION
+// HERO SECTION — Cinematic, center-staged, Awwwards-level
 // ═══════════════════════════════════════════════════════════
 function HeroSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true })
 
   return (
-    <Section dark className="min-h-screen flex flex-col justify-center relative">
-      {/* Atmospheric background */}
-      <div className="absolute inset-0">
-        {/* Top-right warm orb */}
-        <div
-          className="absolute"
-          style={{
-            top: '-10%', right: '-5%',
-            width: '60vw', height: '60vw',
-            background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.12) 0%, rgba(201,168,110,0.04) 40%, transparent 70%)',
-            filter: 'blur(60px)',
-          }}
-        />
-        {/* Bottom-left deep orb */}
-        <div
-          className="absolute"
-          style={{
-            bottom: '-15%', left: '-10%',
-            width: '50vw', height: '50vw',
-            background: 'radial-gradient(ellipse at center, rgba(160,129,74,0.08) 0%, transparent 60%)',
-            filter: 'blur(80px)',
-          }}
-        />
-        {/* Horizontal gold line accent */}
+    <Section dark className="min-h-screen flex flex-col justify-between relative">
+      {/* Atmospheric background — layered depth */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Central radial glow — warm golden atmosphere */}
         <motion.div
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={inView ? { scaleX: 1, opacity: 1 } : {}}
-          transition={{ duration: 2, delay: 0.8, ease: EASE_CINE }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 3, ease: EASE_CINE }}
           className="absolute"
           style={{
-            top: '50%', left: 0, right: 0,
-            height: '1px',
-            background: 'linear-gradient(90deg, transparent 5%, rgba(201,168,110,0.15) 30%, rgba(201,168,110,0.08) 70%, transparent 95%)',
-            transformOrigin: 'left',
+            top: '15%', left: '50%', transform: 'translateX(-50%)',
+            width: '90vw', height: '70vh',
+            background: 'radial-gradient(ellipse 60% 50% at 50% 40%, rgba(201,168,110,0.1) 0%, rgba(201,168,110,0.03) 50%, transparent 80%)',
+          }}
+        />
+        {/* Top atmospheric haze */}
+        <div
+          className="absolute"
+          style={{
+            top: 0, left: 0, right: 0, height: '40%',
+            background: 'linear-gradient(180deg, rgba(26,20,10,0.6) 0%, transparent 100%)',
+          }}
+        />
+        {/* Subtle grid lines — adds depth */}
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.03,
+            backgroundImage: `linear-gradient(rgba(201,168,110,0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(201,168,110,0.5) 1px, transparent 1px)`,
+            backgroundSize: '80px 80px',
+            maskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)',
+          }}
+        />
+        {/* Animated golden ring — cinematic focal element */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 2.5, delay: 0.5, ease: EASE_CINE }}
+          className="absolute"
+          style={{
+            top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+            width: 'min(500px, 40vw)', height: 'min(500px, 40vw)',
+            borderRadius: '50%',
+            border: '1px solid rgba(201,168,110,0.08)',
+            boxShadow: 'inset 0 0 80px rgba(201,168,110,0.03), 0 0 120px rgba(201,168,110,0.02)',
+          }}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.4 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 2.5, delay: 0.8, ease: EASE_CINE }}
+          className="absolute"
+          style={{
+            top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+            width: 'min(300px, 24vw)', height: 'min(300px, 24vw)',
+            borderRadius: '50%',
+            border: '1px solid rgba(201,168,110,0.05)',
           }}
         />
       </div>
 
-      <div ref={ref} className="relative z-10 px-8 md:px-16 lg:px-24 pt-32 pb-24">
+      {/* Main content — centered */}
+      <div ref={ref} className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 md:px-16 pt-32 pb-16">
         {/* Product badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2, ease: EASE_CINE }}
-          className="mb-8"
+          initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
+          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 1, delay: 0.2, ease: EASE_CINE }}
+          className="mb-10"
         >
           <span
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12px] font-semibold uppercase tracking-[0.15em]"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em]"
             style={{
-              background: 'rgba(201,168,110,0.08)',
-              border: '1px solid rgba(201,168,110,0.2)',
+              background: 'rgba(201,168,110,0.06)',
+              border: '1px solid rgba(201,168,110,0.15)',
               color: '#c9a86e',
+              backdropFilter: 'blur(12px)',
             }}
           >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#c9a86e', opacity: 0.7 }} />
+            <span style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: 'linear-gradient(165deg, #c9a86e, #a0814a)',
+              boxShadow: '0 0 8px rgba(201,168,110,0.6)',
+            }} />
             Trinade Product
           </span>
         </motion.div>
 
-        {/* Main headline */}
+        {/* Main headline — massive, editorial */}
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.4, ease: EASE_CINE }}
-          className="font-light tracking-[-0.04em] mb-6"
+          initial={{ opacity: 0, y: 50, filter: 'blur(10px)' }}
+          animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+          transition={{ duration: 1.2, delay: 0.5, ease: EASE_CINE }}
+          className="tracking-[-0.05em] mb-8"
           style={{
-            fontSize: 'clamp(3.5rem, 8vw, 8rem)',
-            lineHeight: 0.95,
+            fontSize: 'clamp(5rem, 14vw, 13rem)',
+            lineHeight: 0.88,
+            fontWeight: 200,
             color: 'rgba(255,255,255,0.95)',
           }}
         >
-          Fly<br />
-          <span style={{ color: '#c9a86e' }}>High</span>
+          Fly{' '}
+          <span
+            style={{
+              color: 'transparent',
+              backgroundImage: 'linear-gradient(165deg, #d4bb8a 0%, #c9a86e 40%, #a0814a 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+            }}
+          >
+            High
+          </span>
         </motion.h1>
 
-        {/* Tagline */}
+        {/* Tagline — elegant, wider */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.7, ease: EASE_CINE }}
-          className="max-w-xl mb-4"
+          transition={{ duration: 0.9, delay: 0.9, ease: EASE_CINE }}
+          className="max-w-2xl mb-5"
           style={{
-            fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+            fontSize: 'clamp(1.15rem, 2.2vw, 1.5rem)',
             lineHeight: 1.5,
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(255,255,255,0.5)',
             fontWeight: 300,
+            letterSpacing: '-0.01em',
           }}
         >
           Where intelligence is shared.
         </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.85, ease: EASE_CINE }}
-          className="max-w-lg mb-12"
+          transition={{ duration: 0.8, delay: 1.1, ease: EASE_CINE }}
+          className="max-w-lg mb-14"
           style={{
             fontSize: '15px',
-            lineHeight: 1.8,
-            color: 'rgba(255,255,255,0.4)',
+            lineHeight: 1.75,
+            color: 'rgba(255,255,255,0.3)',
           }}
         >
           A platform connecting people with verified experts for real-time guidance —
-          through chat, voice, or video. Clearer decisions. Faster progress.
+          through chat, voice, or video.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTAs — centered */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1, ease: EASE_CINE }}
-          className="flex items-center gap-5 flex-wrap"
+          transition={{ duration: 0.8, delay: 1.3, ease: EASE_CINE }}
+          className="flex items-center gap-4 flex-wrap justify-center"
         >
           <a
             href="#waitlist"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-[14px] font-semibold transition-all duration-300"
+            className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full text-[14px] font-semibold transition-all duration-500"
             style={{
-              background: 'linear-gradient(165deg, #c9a86e 0%, #a0814a 100%)',
+              background: 'linear-gradient(165deg, #d4bb8a 0%, #c9a86e 30%, #a0814a 100%)',
               color: '#0a0a0a',
-              boxShadow: '0 4px 24px rgba(201,168,110,0.3)',
+              boxShadow: '0 4px 32px rgba(201,168,110,0.25), 0 1px 0 rgba(255,255,255,0.15) inset',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 32px rgba(201,168,110,0.5)'
-              e.currentTarget.style.transform = 'translateY(-1px)'
+              e.currentTarget.style.boxShadow = '0 8px 48px rgba(201,168,110,0.45), 0 1px 0 rgba(255,255,255,0.15) inset'
+              e.currentTarget.style.transform = 'translateY(-2px)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 4px 24px rgba(201,168,110,0.3)'
+              e.currentTarget.style.boxShadow = '0 4px 32px rgba(201,168,110,0.25), 0 1px 0 rgba(255,255,255,0.15) inset'
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
@@ -251,63 +293,67 @@ function HeroSection() {
           </a>
           <a
             href="#experts"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-[14px] font-medium transition-all duration-300"
+            className="inline-flex items-center gap-2 px-7 py-4 rounded-full text-[14px] font-medium transition-all duration-500"
             style={{
-              border: '1px solid rgba(201,168,110,0.3)',
-              color: 'rgba(255,255,255,0.7)',
+              border: '1px solid rgba(201,168,110,0.2)',
+              color: 'rgba(255,255,255,0.55)',
+              backdropFilter: 'blur(8px)',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(201,168,110,0.6)'
+              e.currentTarget.style.borderColor = 'rgba(201,168,110,0.5)'
               e.currentTarget.style.color = '#c9a86e'
+              e.currentTarget.style.background = 'rgba(201,168,110,0.06)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(201,168,110,0.3)'
-              e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
+              e.currentTarget.style.borderColor = 'rgba(201,168,110,0.2)'
+              e.currentTarget.style.color = 'rgba(255,255,255,0.55)'
+              e.currentTarget.style.background = 'transparent'
             }}
           >
             Become an Expert
           </a>
         </motion.div>
-
-        {/* Quick stats bar */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 1.3, ease: EASE_CINE }}
-          className="flex items-center gap-10 mt-20 flex-wrap"
-        >
-          {[
-            { label: 'Status', value: 'In Development' },
-            { label: 'Modes', value: 'Chat · Voice · Video' },
-            { label: 'Fields', value: '8+ Categories' },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <div className="text-[11px] font-semibold uppercase tracking-[0.15em] mb-1" style={{ color: 'rgba(201,168,110,0.5)' }}>
-                {stat.label}
-              </div>
-              <div className="text-[14px] font-medium" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                {stat.value}
-              </div>
-            </div>
-          ))}
-        </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Bottom bar — stats + scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 1, delay: 1.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        transition={{ duration: 1, delay: 1.6, ease: EASE_CINE }}
+        className="relative z-10 px-8 md:px-16 lg:px-24 pb-10"
       >
-        <span className="text-[11px] uppercase tracking-[0.15em]" style={{ color: 'rgba(255,255,255,0.25)' }}>
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: 1, height: 24, background: 'linear-gradient(180deg, rgba(201,168,110,0.4), transparent)' }}
-        />
+        <div
+          className="flex items-center justify-between py-5"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+        >
+          <div className="flex items-center gap-10 flex-wrap">
+            {[
+              { label: 'Status', value: 'In Development' },
+              { label: 'Modes', value: 'Chat · Voice · Video' },
+              { label: 'Fields', value: '8+ Categories' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-[10px] font-semibold uppercase tracking-[0.18em] mb-1" style={{ color: 'rgba(201,168,110,0.4)' }}>
+                  {stat.label}
+                </div>
+                <div className="text-[13px] font-medium" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Scroll indicator — right aligned */}
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'rgba(255,255,255,0.2)' }}>
+              Scroll
+            </span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ width: 1, height: 20, background: 'linear-gradient(180deg, rgba(201,168,110,0.35), transparent)' }}
+            />
+          </div>
+        </div>
       </motion.div>
     </Section>
   )
