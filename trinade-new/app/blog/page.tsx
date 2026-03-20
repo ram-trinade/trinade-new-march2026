@@ -98,6 +98,7 @@ const ARTICLES = [
     readTime: '8 min read',
     number: '02',
     slug: 'ai-in-healthcare-from-diagnostics-to-patient-centric-care',
+    image: '/blog/article-1.png',
   },
   {
     category: 'Legal Tech',
@@ -108,6 +109,7 @@ const ARTICLES = [
     readTime: '10 min read',
     number: '03',
     slug: 'intelligent-contract-analysis-how-ai-is-reshaping-legal-operations',
+    image: '/blog/article-2.png',
   },
   {
     category: 'FinTech',
@@ -118,6 +120,7 @@ const ARTICLES = [
     readTime: '7 min read',
     number: '04',
     slug: 'predictive-intelligence-in-financial-services',
+    image: '/blog/article-3.png',
   },
   {
     category: 'Manufacturing',
@@ -128,6 +131,7 @@ const ARTICLES = [
     readTime: '9 min read',
     number: '05',
     slug: 'smart-factories-where-ai-meets-the-production-floor',
+    image: '/blog/article-4.png',
   },
   {
     category: 'Cloud & Security',
@@ -138,6 +142,7 @@ const ARTICLES = [
     readTime: '11 min read',
     number: '06',
     slug: 'building-secure-ai-infrastructure-at-scale',
+    image: '/blog/article-5.png',
   },
   {
     category: 'AI Strategy',
@@ -148,6 +153,7 @@ const ARTICLES = [
     readTime: '14 min read',
     number: '07',
     slug: 'from-pilot-to-production-scaling-ai-across-the-enterprise',
+    image: '/blog/article-2.png',
   },
 ]
 
@@ -219,7 +225,7 @@ function SpiralLines() {
   )
 }
 
-/* ─── Vertical Article Card (Editorial Long Card) ─── */
+/* ─── Vertical Article Card (Editorial Long Card with Image) ─── */
 function VerticalArticleCard({
   article,
   index,
@@ -252,7 +258,7 @@ function VerticalArticleCard({
 
       <a href={`/blog/${article.slug}`} className="block">
         <div
-          className="relative py-12 md:py-16 lg:py-20 px-4 md:px-8 transition-all duration-700 overflow-hidden"
+          className="relative py-10 md:py-14 lg:py-16 px-4 md:px-8 transition-all duration-700 overflow-hidden"
           style={{
             background: hovered ? 'rgba(201,168,110,0.03)' : 'transparent',
             borderRadius: hovered ? '20px' : '0px',
@@ -270,13 +276,13 @@ function VerticalArticleCard({
             }}
           />
 
-          {/* Main content: big number left, content center, arrow right */}
+          {/* Main content: number left, content center, image + arrow right */}
           <div className="flex items-start gap-6 lg:gap-10">
-            {/* Large editorial number — homepage style */}
+            {/* Large editorial number */}
             <motion.span
               className="hidden lg:block shrink-0 tabular-nums leading-none select-none"
               style={{
-                fontSize: 'clamp(4rem, 7vw, 6.5rem)',
+                fontSize: 'clamp(3.5rem, 6vw, 5.5rem)',
                 fontWeight: 200,
                 letterSpacing: '-0.04em',
               }}
@@ -290,9 +296,9 @@ function VerticalArticleCard({
 
             {/* Content block */}
             <div className="flex-1 min-w-0">
-              {/* Title — prominent, first */}
+              {/* Title */}
               <motion.h3
-                className="text-[clamp(1.6rem,3.5vw,2.8rem)] font-medium leading-[1.12] tracking-tight mb-5"
+                className="text-[clamp(1.4rem,3vw,2.4rem)] font-medium leading-[1.15] tracking-tight mb-4"
                 animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
                 transition={{ duration: 0.5 }}
               >
@@ -300,7 +306,7 @@ function VerticalArticleCard({
               </motion.h3>
 
               {/* Category + Read time + Date row */}
-              <div className="flex flex-wrap items-center gap-4 mb-6">
+              <div className="flex flex-wrap items-center gap-4 mb-5">
                 <GoldPill>{article.category}</GoldPill>
                 <span className="text-xs tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
                   {article.readTime}
@@ -313,7 +319,7 @@ function VerticalArticleCard({
 
               {/* Excerpt */}
               <p
-                className="text-[15px] leading-[1.8] max-w-3xl mb-6"
+                className="text-[15px] leading-[1.8] max-w-2xl mb-5"
                 style={{ color: 'rgba(42,34,24,0.45)' }}
               >
                 {article.excerpt}
@@ -337,7 +343,41 @@ function VerticalArticleCard({
               </div>
             </div>
 
-            {/* Arrow indicator — always visible, larger */}
+            {/* Article image thumbnail */}
+            <motion.div
+              className="hidden md:block shrink-0 self-center overflow-hidden"
+              style={{ borderRadius: '14px' }}
+              animate={{ scale: hovered ? 1.04 : 1 }}
+              transition={{ duration: 0.8, ease: EASE_SMOOTH }}
+            >
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  width: 'clamp(160px, 14vw, 220px)',
+                  height: 'clamp(120px, 10vw, 165px)',
+                  borderRadius: '14px',
+                  border: `1px solid ${hovered ? 'rgba(201,168,110,0.2)' : 'rgba(42,34,24,0.06)'}`,
+                  transition: 'border-color 0.5s ease',
+                }}
+              >
+                <img
+                  src={article.image}
+                  alt=""
+                  className="w-full h-full object-cover transition-transform duration-1000"
+                  style={{ transform: hovered ? 'scale(1.08)' : 'scale(1)' }}
+                />
+                {/* Subtle overlay for depth */}
+                <div
+                  className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 60%)',
+                    opacity: hovered ? 1 : 0,
+                  }}
+                />
+              </div>
+            </motion.div>
+
+            {/* Arrow indicator */}
             <motion.div
               className="hidden lg:flex items-center justify-center shrink-0 self-center"
               animate={{
@@ -347,13 +387,13 @@ function VerticalArticleCard({
               transition={{ duration: 0.4, ease: EASE_SMOOTH }}
             >
               <div
-                className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500"
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500"
                 style={{
                   background: hovered ? 'rgba(201,168,110,0.12)' : 'rgba(201,168,110,0.04)',
                   border: `1px solid ${hovered ? 'rgba(201,168,110,0.3)' : 'rgba(201,168,110,0.1)'}`,
                 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
@@ -632,40 +672,25 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
       >
         {/* Image Canvas — Full width, tall, editorial */}
         <div className="relative w-full overflow-hidden" style={{ height: 'clamp(420px, 55vh, 640px)' }}>
-          <motion.div
-            className="absolute inset-0"
-            animate={{ scale: hovered ? 1.035 : 1 }}
-            transition={{ duration: 1.2, ease: EASE_SMOOTH }}
+          {/* Real featured image */}
+          <motion.img
+            src="/blog/featured.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            animate={{ scale: hovered ? 1.04 : 1 }}
+            transition={{ duration: 1.4, ease: EASE_SMOOTH }}
+          />
+          {/* Warm color overlay for cohesion */}
+          <div
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background: `
-                linear-gradient(155deg, #1a1510 0%, #2a1f14 20%, #1f1a12 40%, #2d2218 60%, #1a1510 80%, #0f0d09 100%)
-              `,
+              background: 'linear-gradient(155deg, rgba(26,21,16,0.25) 0%, rgba(42,31,20,0.15) 50%, rgba(15,13,9,0.3) 100%)',
+              mixBlendMode: 'multiply',
             }}
           />
-          {/* Warm mesh gradient orbs */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div
-              className="absolute"
-              style={{
-                width: '60%', height: '80%',
-                top: '10%', left: '25%',
-                background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.1) 0%, transparent 65%)',
-                filter: 'blur(60px)',
-              }}
-            />
-            <div
-              className="absolute"
-              style={{
-                width: '40%', height: '50%',
-                bottom: '0%', right: '10%',
-                background: 'radial-gradient(ellipse at center, rgba(160,129,74,0.08) 0%, transparent 60%)',
-                filter: 'blur(50px)',
-              }}
-            />
-          </div>
           {/* Grain */}
           <div
-            className="absolute inset-0 opacity-20"
+            className="absolute inset-0 opacity-15"
             style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
           />
 
