@@ -261,10 +261,10 @@ function ArticleCard({
                 fontSize: 'clamp(3rem, 5vw, 5rem)',
                 fontWeight: 200,
                 letterSpacing: '-0.04em',
-                color: 'rgba(255,255,255,0.12)',
-                textShadow: '0 2px 16px rgba(0,0,0,0.2)',
+                color: 'rgba(255,255,255,0.35)',
+                textShadow: '0 2px 16px rgba(0,0,0,0.3)',
               }}
-              animate={{ opacity: hovered ? 0.3 : 0.12 }}
+              animate={{ opacity: hovered ? 0.6 : 0.35 }}
               transition={{ duration: 0.5 }}
             >
               {article.number}
@@ -408,10 +408,10 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                   fontSize: 'clamp(5rem, 10vw, 9rem)',
                   fontWeight: 200,
                   letterSpacing: '-0.04em',
-                  color: 'rgba(255,255,255,0.1)',
-                  textShadow: '0 2px 24px rgba(0,0,0,0.15)',
+                  color: 'rgba(255,255,255,0.3)',
+                  textShadow: '0 2px 24px rgba(0,0,0,0.25)',
                 }}
-                animate={{ opacity: hovered ? 0.25 : 0.1 }}
+                animate={{ opacity: hovered ? 0.55 : 0.3 }}
                 transition={{ duration: 0.5 }}
               >
                 01
