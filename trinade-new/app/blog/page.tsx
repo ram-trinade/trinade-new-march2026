@@ -185,7 +185,7 @@ const ARTICLES = [
     readTime: '14 min read',
     number: '07',
     slug: 'from-pilot-to-production-scaling-ai-across-the-enterprise',
-    image: '/blog/article-2.png',
+    image: '/blog/article-6.png',
   },
 ]
 
