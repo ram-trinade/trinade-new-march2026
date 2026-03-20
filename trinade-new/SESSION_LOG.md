@@ -9,9 +9,23 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 69 — Blog V2 card refinements (image-right, longer excerpts, bare arrow)
-- Last completed: Prompt 69 — Blog-v2: all images right, 4+ line descriptions, no arrow circle, bigger arrow
+- Done: Prompt 70 — Blog V2 major layout restructure (3-col grid, vertical cards, featured split)
+- Last completed: Prompt 70 — Blog-v2: 3 cards per row, image-top vertical cards, featured split layout
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 70: Blog V2 Major Layout Restructure
+
+### What Was Done
+1. **3-column article grid** — Changed from single-column split cards to `grid-cols-3` layout (3 articles per row, 2 rows of 3)
+2. **Vertical card layout** — Image on TOP, article info below (category pill, title, 4-line clamped excerpt, author row)
+3. **"Read Article" + arrow on all cards** — Matched the featured story's arrow style: "READ ARTICLE" text + diagonal arrow, opacity animates on hover
+4. **Featured story split layout** — Image LEFT (48%) + article info RIGHT (52%), replacing the full-width overlay. Big "01" number on image, gold border-top separator on author row
+5. **Responsive** — 1-col mobile, 2-col tablet, 3-col desktop
+
+### Files Changed
+- `app/experimental/blog-v2/page.tsx` — Complete card component rewrite + featured card restructure
 
 ---
 

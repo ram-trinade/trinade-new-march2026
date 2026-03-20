@@ -191,9 +191,9 @@ const ARTICLES = [
 
 
 /* ═══════════════════════════════════════════════════════════════
-   PHOTO + INFO SPLIT CARD — Awwwards editorial
+   VERTICAL ARTICLE CARD — Image top, info bottom, 3-col grid
    ═══════════════════════════════════════════════════════════════ */
-function SplitArticleCard({
+function ArticleCard({
   article,
   index,
 }: {
@@ -209,163 +209,139 @@ function SplitArticleCard({
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1, delay: index * 0.1, ease: EASE }}
-      className="group relative"
+      transition={{ duration: 1, delay: (index % 3) * 0.12, ease: EASE }}
+      className="group relative flex flex-col"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href={`/experimental/blog/${article.slug}`} className="block">
+      <a href={`/experimental/blog/${article.slug}`} className="block flex-1 flex flex-col">
         <div
-          className="relative overflow-hidden transition-all duration-700"
+          className="relative overflow-hidden transition-all duration-700 flex-1 flex flex-col"
           style={{
-            borderRadius: '24px',
+            borderRadius: '20px',
             border: '1px solid rgba(201,168,110,0.1)',
             boxShadow: hovered
-              ? '0 32px 80px rgba(42,34,24,0.12), 0 12px 32px rgba(42,34,24,0.06)'
-              : '0 4px 24px rgba(42,34,24,0.04)',
+              ? '0 24px 64px rgba(42,34,24,0.1), 0 8px 24px rgba(42,34,24,0.05)'
+              : '0 2px 16px rgba(42,34,24,0.03)',
             background: 'rgba(255,255,255,0.35)',
           }}
         >
-          {/* Always: info LEFT, image RIGHT */}
-          <div className="flex flex-col lg:flex-row">
-            {/* ── LEFT: Article Info Column ── */}
-            <div className="lg:w-[55%] flex flex-col justify-between p-8 md:p-10 lg:p-12 relative order-2 lg:order-1">
-              {/* Top: Category + Read time */}
-              <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <GoldPill>{article.category}</GoldPill>
-                  <span className="text-xs tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
-                    {article.readTime}
-                  </span>
-                </div>
+          {/* ── TOP: Image ── */}
+          <div className="relative overflow-hidden" style={{ height: 'clamp(200px, 22vw, 320px)' }}>
+            <motion.div
+              className="absolute inset-0"
+              animate={{ scale: hovered ? 1.06 : 1 }}
+              transition={{ duration: 1.4, ease: EASE_SMOOTH }}
+            >
+              <Image
+                src={article.image}
+                alt={article.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+            </motion.div>
 
-                {/* Title */}
-                <motion.h3
-                  className="text-[clamp(1.5rem,3vw,2.4rem)] font-medium leading-[1.12] tracking-tight mb-5"
-                  animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {article.title}
-                </motion.h3>
+            {/* Grain on image */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.12]"
+              style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
+            />
 
-                {/* Excerpt — expanded for 4+ lines */}
-                <p
-                  className="text-[15px] leading-[1.8] mb-8"
-                  style={{ color: 'rgba(42,34,24,0.45)' }}
-                >
-                  {article.excerpt}
-                </p>
+            {/* Bottom fade for smooth transition to info */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: 'linear-gradient(to top, rgba(255,255,255,0.15) 0%, transparent 40%)' }}
+            />
+
+            {/* Big number — overlaid on image */}
+            <motion.span
+              className="absolute bottom-3 right-4 tabular-nums leading-none select-none pointer-events-none"
+              style={{
+                fontSize: 'clamp(3rem, 5vw, 5rem)',
+                fontWeight: 200,
+                letterSpacing: '-0.04em',
+                color: 'rgba(255,255,255,0.12)',
+                textShadow: '0 2px 16px rgba(0,0,0,0.2)',
+              }}
+              animate={{ opacity: hovered ? 0.3 : 0.12 }}
+              transition={{ duration: 0.5 }}
+            >
+              {article.number}
+            </motion.span>
+          </div>
+
+          {/* ── BOTTOM: Article Info ── */}
+          <div className="flex flex-col flex-1 justify-between p-6 md:p-7 relative">
+            <div>
+              {/* Category + Read time */}
+              <div className="flex items-center gap-3 mb-4">
+                <GoldPill>{article.category}</GoldPill>
+                <span className="text-[10px] tracking-wide" style={{ color: 'rgba(42,34,24,0.3)' }}>
+                  {article.readTime}
+                </span>
               </div>
 
-              {/* Bottom: Author + Date + Arrow */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  {/* Author avatar */}
-                  <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-[10px] font-bold"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
-                      color: '#c9a86e',
-                      border: '1px solid rgba(201,168,110,0.15)',
-                    }}
-                  >
-                    {article.author.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium" style={{ color: 'rgba(42,34,24,0.65)' }}>
-                      {article.author}
-                    </p>
-                    <p className="text-xs" style={{ color: 'rgba(42,34,24,0.35)' }}>
-                      {article.date}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Read More — bare arrow, no circle, bigger for minimal aesthetic */}
-                <motion.div
-                  className="flex items-center gap-3"
-                  animate={{ x: hovered ? 6 : 0 }}
-                  transition={{ duration: 0.4, ease: EASE_SMOOTH }}
-                >
-                  <motion.span
-                    className="text-xs tracking-[0.12em] uppercase font-semibold hidden md:block"
-                    animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : 8 }}
-                    transition={{ duration: 0.3 }}
-                    style={{ color: '#c9a86e' }}
-                  >
-                    Read
-                  </motion.span>
-                  <motion.svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    animate={{ rotate: hovered ? 0 : 0 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </motion.svg>
-                </motion.div>
-              </div>
-
-              {/* Hover: gold accent line at bottom */}
-              <motion.div
-                className="absolute bottom-0 left-[10%] right-[10%] h-[1.5px]"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: hovered ? 1 : 0 }}
-                transition={{ duration: 0.6, ease: EASE }}
-                style={{
-                  background: 'linear-gradient(90deg, transparent, #c9a86e, transparent)',
-                  transformOrigin: 'center',
-                }}
-              />
-            </div>
-
-            {/* ── RIGHT: Photo Column (always) ── */}
-            <div className="relative lg:w-[45%] overflow-hidden order-1 lg:order-2" style={{ minHeight: 'clamp(280px, 40vw, 480px)' }}>
-              <motion.div
-                className="absolute inset-0"
-                animate={{ scale: hovered ? 1.06 : 1 }}
-                transition={{ duration: 1.4, ease: EASE_SMOOTH }}
-              >
-                <Image
-                  src={article.image}
-                  alt={article.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-              </motion.div>
-
-              {/* Dark gradient overlay for depth — fades toward left (info side) */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(270deg, transparent 30%, rgba(15,12,8,0.15) 100%)',
-                }}
-              />
-
-              {/* Grain on image */}
-              <div
-                className="absolute inset-0 pointer-events-none opacity-[0.12]"
-                style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
-              />
-
-              {/* Big number — overlaid on image, bottom-right */}
-              <motion.span
-                className="absolute bottom-4 right-5 tabular-nums leading-none select-none pointer-events-none"
-                style={{
-                  fontSize: 'clamp(4rem, 8vw, 7rem)',
-                  fontWeight: 200,
-                  letterSpacing: '-0.04em',
-                  color: 'rgba(255,255,255,0.15)',
-                  textShadow: '0 2px 20px rgba(0,0,0,0.2)',
-                }}
-                animate={{ opacity: hovered ? 0.35 : 0.15 }}
+              {/* Title */}
+              <motion.h3
+                className="text-[clamp(1.1rem,1.8vw,1.45rem)] font-medium leading-[1.2] tracking-tight mb-3"
+                animate={{ color: hovered ? '#2a2218' : 'rgba(42,34,24,0.75)' }}
                 transition={{ duration: 0.5 }}
               >
-                {article.number}
-              </motion.span>
+                {article.title}
+              </motion.h3>
+
+              {/* Excerpt */}
+              <p
+                className="text-[13px] leading-[1.75] mb-6"
+                style={{
+                  color: 'rgba(42,34,24,0.4)',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}
+              >
+                {article.excerpt}
+              </p>
+            </div>
+
+            {/* Bottom: Author + "Read Article" arrow (matches featured card style) */}
+            <div className="flex items-center justify-between mt-auto pt-4" style={{ borderTop: '1px solid rgba(201,168,110,0.08)' }}>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-bold"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
+                    color: '#c9a86e',
+                    border: '1px solid rgba(201,168,110,0.12)',
+                  }}
+                >
+                  {article.author.split(' ').map(n => n[0]).join('')}
+                </div>
+                <div>
+                  <p className="text-xs font-medium" style={{ color: 'rgba(42,34,24,0.6)' }}>
+                    {article.author}
+                  </p>
+                  <p className="text-[10px]" style={{ color: 'rgba(42,34,24,0.3)' }}>
+                    {article.date}
+                  </p>
+                </div>
+              </div>
+
+              {/* "Read Article" + arrow — same style as featured card */}
+              <motion.div
+                className="flex items-center gap-2"
+                animate={{ x: hovered ? 4 : 0, opacity: hovered ? 1 : 0.3 }}
+                transition={{ duration: 0.5, ease: EASE_SMOOTH }}
+              >
+                <span className="text-[10px] tracking-[0.15em] uppercase font-semibold" style={{ color: '#c9a86e' }}>
+                  Read Article
+                </span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -376,7 +352,7 @@ function SplitArticleCard({
 
 
 /* ═══════════════════════════════════════════════════════════════
-   FEATURED CARD — Full-width cinematic hero card
+   FEATURED CARD — Split layout: image LEFT + info RIGHT
    ═══════════════════════════════════════════════════════════════ */
 function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -416,74 +392,96 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             boxShadow: hovered
               ? '0 48px 100px rgba(42,34,24,0.12), 0 24px 48px rgba(42,34,24,0.06)'
               : '0 8px 40px rgba(42,34,24,0.04)',
+            background: 'rgba(255,255,255,0.35)',
+            border: '1px solid rgba(201,168,110,0.1)',
           }}
         >
-          <div className="relative w-full overflow-hidden" style={{ height: 'clamp(420px, 55vh, 640px)' }}>
-            <motion.div
-              className="absolute inset-0"
-              animate={{ scale: hovered ? 1.035 : 1 }}
-              transition={{ duration: 1.2, ease: EASE_SMOOTH }}
-            >
-              <Image
-                src={article.image}
-                alt={article.title}
-                fill
-                className="object-cover"
-                sizes="100vw"
-                priority
-              />
-            </motion.div>
-
-            {/* Dark overlay for text readability */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: 'linear-gradient(to top, rgba(15,13,9,0.85) 0%, rgba(15,13,9,0.4) 40%, rgba(15,13,9,0.15) 100%)',
-              }}
-            />
-
-            {/* Grain */}
-            <div
-              className="absolute inset-0 opacity-20 pointer-events-none"
-              style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
-            />
-
-            {/* Content overlay */}
-            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 lg:p-16">
+          <div className="flex flex-col lg:flex-row" style={{ minHeight: 'clamp(400px, 50vh, 580px)' }}>
+            {/* ── LEFT: Image Column ── */}
+            <div className="relative lg:w-[48%] overflow-hidden" style={{ minHeight: 'clamp(280px, 35vw, 420px)' }}>
               <motion.div
-                className="flex items-center gap-4 mb-6"
-                initial={{ opacity: 0, y: 12 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
+                className="absolute inset-0"
+                animate={{ scale: hovered ? 1.04 : 1 }}
+                transition={{ duration: 1.2, ease: EASE_SMOOTH }}
               >
-                <GoldPill>{article.category}</GoldPill>
-                <span className="text-[11px] tracking-[0.12em] uppercase font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                  {article.readTime}
-                </span>
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 48vw"
+                  priority
+                />
               </motion.div>
 
-              <motion.h2
-                className="text-[clamp(2rem,4.5vw,3.8rem)] font-light tracking-tight leading-[1.1] mb-5 max-w-4xl"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 1, delay: 0.5, ease: EASE }}
-                style={{ color: 'rgba(255,255,255,0.95)' }}
-              >
-                {article.title}
-              </motion.h2>
+              {/* Grain */}
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none"
+                style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
+              />
 
-              <motion.p
-                className="text-[15px] md:text-base leading-[1.8] max-w-2xl mb-8"
-                initial={{ opacity: 0, y: 14 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.65, ease: EASE }}
-                style={{ color: 'rgba(255,255,255,0.45)' }}
+              {/* Edge fade toward info side */}
+              <div
+                className="absolute inset-0 pointer-events-none hidden lg:block"
+                style={{ background: 'linear-gradient(90deg, transparent 60%, rgba(255,255,255,0.08) 100%)' }}
+              />
+
+              {/* Big 01 number */}
+              <motion.span
+                className="absolute bottom-6 left-6 tabular-nums leading-none select-none pointer-events-none"
+                style={{
+                  fontSize: 'clamp(5rem, 10vw, 9rem)',
+                  fontWeight: 200,
+                  letterSpacing: '-0.04em',
+                  color: 'rgba(255,255,255,0.1)',
+                  textShadow: '0 2px 24px rgba(0,0,0,0.15)',
+                }}
+                animate={{ opacity: hovered ? 0.25 : 0.1 }}
+                transition={{ duration: 0.5 }}
               >
-                {article.excerpt}
-              </motion.p>
+                01
+              </motion.span>
+            </div>
+
+            {/* ── RIGHT: Article Info Column ── */}
+            <div className="lg:w-[52%] flex flex-col justify-between p-8 md:p-10 lg:p-14">
+              <div>
+                <motion.div
+                  className="flex items-center gap-4 mb-7"
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
+                >
+                  <GoldPill>{article.category}</GoldPill>
+                  <span className="text-[11px] tracking-[0.12em] uppercase font-medium" style={{ color: 'rgba(42,34,24,0.3)' }}>
+                    {article.readTime}
+                  </span>
+                </motion.div>
+
+                <motion.h2
+                  className="text-[clamp(1.8rem,3.5vw,3rem)] font-light tracking-tight leading-[1.1] mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 1, delay: 0.5, ease: EASE }}
+                  style={{ color: '#2a2218' }}
+                >
+                  {article.title}
+                </motion.h2>
+
+                <motion.p
+                  className="text-[15px] leading-[1.8] mb-8"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.65, ease: EASE }}
+                  style={{ color: 'rgba(42,34,24,0.45)' }}
+                >
+                  {article.excerpt}
+                </motion.p>
+              </div>
 
               <motion.div
-                className="flex items-center justify-between"
+                className="flex items-center justify-between pt-6"
+                style={{ borderTop: '1px solid rgba(201,168,110,0.1)' }}
                 initial={{ opacity: 0, y: 10 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.8, ease: EASE }}
@@ -500,8 +498,8 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                     {article.author.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>{article.author}</p>
-                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{article.role} · {article.date}</p>
+                    <p className="text-sm font-semibold" style={{ color: 'rgba(42,34,24,0.75)' }}>{article.author}</p>
+                    <p className="text-xs" style={{ color: 'rgba(42,34,24,0.35)' }}>{article.role} · {article.date}</p>
                   </div>
                 </div>
 
@@ -658,10 +656,10 @@ export default function BlogV2Page() {
                 </div>
               </RevealOnScroll>
 
-              {/* Split cards — alternating left/right photo */}
-              <div className="flex flex-col gap-10 md:gap-14">
+              {/* 3-column grid — vertical cards with image on top */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 md:gap-8">
                 {ARTICLES.map((article, i) => (
-                  <SplitArticleCard
+                  <ArticleCard
                     key={article.title}
                     article={article}
                     index={i}
