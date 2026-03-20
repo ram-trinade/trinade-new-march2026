@@ -162,6 +162,22 @@ Read the product docs to understand what each product does before designing thei
 
 ---
 
+## Experimental Site
+
+An `/experimental/` route mirrors the main site for design iteration without touching production pages. Changes happen here first, then get promoted to the main routes once approved.
+
+### Experimental Pages
+| Route | Status |
+|---|---|
+| `/experimental/blog` | Blog V1 — editorial cards, article detail page |
+| `/experimental/blog-v2` | Blog V2 (ACTIVE) — 3-col vertical cards, featured split card, cleaner editorial |
+| `/experimental/contact` | Contact with inline form validation |
+| `/experimental/` + others | Mirrors of main pages for testing |
+
+**Rule**: All design work happens on `/experimental/` routes. Never modify main routes during iteration.
+
+---
+
 ## Known Issues & Session Notes
 
 1. **Homepage is at `/`, NOT `/home`** — Do NOT create `/home`. All nav links point to `/` for Home and `/solutions` for Solutions.

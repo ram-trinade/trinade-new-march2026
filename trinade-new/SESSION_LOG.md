@@ -9,9 +9,22 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 73 — Blog V2: fixed featured card image (was invisible warm gradient, now dark spiral)
-- Last completed: Prompt 73 — Featured story now shows visible spiral-gold.jpg image
+- Done: Prompt 74 — Handoff prompt + .md files reviewed and updated for new session
+- Last completed: Prompt 74 — Session handoff preparation, HANDOFF_PROMPT.md updated with experimental site context
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 74: Session Handoff Preparation
+
+### What Was Done
+1. **Reviewed all .md files** — CLAUDE.md, HANDOFF_PROMPT.md, about-me.md, brand-voice.md, working-preferences.md
+2. **Updated HANDOFF_PROMPT.md** — Added "Experimental Site" section documenting `/experimental/` routes and the rule that all design work happens there
+3. **Crafted new session prompt** — Concise handoff prompt that points to .md files without over-specifying, letting the new session be creative
+
+### Files Changed
+- `HANDOFF_PROMPT.md` — Added experimental site section
+- `SESSION_LOG.md` — Updated status
 
 ---
 
