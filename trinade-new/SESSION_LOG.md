@@ -9,9 +9,39 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 84 — Experimental 404 design polish (giant watermark, bolder text, clean link)
-- Last completed: Prompt 84 — 404 page redesign: massive "404" watermark, bolder headline weight, editorial "Back to home" link, removed magnetic animation
+- Done: Prompt 85 — Sleep Alert Device product page (experimental)
+- Last completed: Prompt 85 — Full 8-section product page for Sleep Alert Device at `/experimental/products/sleep-alert`
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 85: Sleep Alert Device Product Page
+
+### What Was Done
+1. **Content extraction** — Read all 5 files in `Products/Sleeping_Alert_Device_Details/`: curated HAVILAH content doc (primary source), FSD technical doc, User Manual, Rules of Use. Synthesized and elevated copy for premium marketing tone.
+2. **New product page** — Created `/experimental/products/sleep-alert` with 8 sections:
+   - **Hero**: Dark nocturnal (#0a0a0a), atmospheric gold gradient orbs, "Your Smart Co-Driver, to Keep You Safe" headline (weight 300), dual CTAs (gold filled "Talk to Trinade" + outline "How It Works")
+   - **The Silent Danger**: Cream bg, 3 statistics cards (1 in 25, 100,000+, 3 sec) with glassmorphic white cards, emotional problem framing
+   - **How It Works**: Dark bg, 4-step vertical flow (Detect → Track → Alert → Resume) with numbered gold circles, connecting line animation, SVG icons
+   - **Key Features**: Cream bg, 3 glassmorphic feature cards (Catches the Silent Drift, Prompts a Quick Reset, Stays in the Background) with gold icon boxes and hover inner glow
+   - **Thoughtful Technology**: Dark bg, split layout — left headline with gold accent rule, right values list with gold left-border (Purpose-First Design, Human Control, Clear Boundaries)
+   - **Built for Fleets**: Cream bg, 3 dark enterprise cards (Night Routes, Long Hauls, Fleet Scale) + pilot outcome callout
+   - **Under the Hood**: Dark bg, specs table (Raspberry Pi 5, Camera Module 3, Buzzer, 5.1V USB, 1-1.5m range, 24h support)
+   - **CTA**: Cream bg, "Stay alert. Stay alive." headline with gold rule, contact CTA button
+3. **Design system compliance** — All sections follow charcoal/cream/gold palette, Manrope typography, grain overlays, atmospheric orbs, GoldPill eyebrows, GoldRule dividers, scroll-triggered reveals via useInView
+
+### Design Direction
+- **"Guardian" aesthetic** — nocturnal, protective, safety-focused
+- Dark sections represent night driving context, gold represents alertness/safety beacon
+- Editorial typographic hierarchy: weight 300 headlines, 55% body opacity, uppercase eyebrows
+- No magnetic animations or complex hover effects — intentionally calm and purposeful, matching the device's "non-distracting" ethos
+
+### Files Created
+- `app/experimental/products/sleep-alert/page.tsx` — Route page with full page wrapper (PremiumCursor, SolutionsNavbar, SmoothScroll, Footer, CookiePopup)
+- `components/sleep-alert-content.tsx` — Full product page component (~700 lines, 8 sections)
+
+### Git
+- Committed this prompt
 
 ---
 
