@@ -117,7 +117,7 @@ const FEATURED_ARTICLE = {
   role: 'AI Solutions',
   date: 'March 8, 2026',
   readTime: '12 min read',
-  image: '/gradient-orbs-warm.jpg',
+  image: '/spiral-gold.jpg',
 }
 
 const ARTICLES = [

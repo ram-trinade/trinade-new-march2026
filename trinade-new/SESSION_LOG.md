@@ -9,9 +9,19 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 72 — Blog V2: taller card images, featured card cleaned (no category/author)
-- Last completed: Prompt 72 — Blog-v2: taller images + featured card stripped to essentials
+- Done: Prompt 73 — Blog V2: fixed featured card image (was invisible warm gradient, now dark spiral)
+- Last completed: Prompt 73 — Featured story now shows visible spiral-gold.jpg image
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 73: Featured Card Image Fix
+
+### What Was Done
+1. **Fixed featured card image** — Was using `/gradient-orbs-warm.jpg` (nearly invisible light gradient that blended into cream card background). Swapped to `/spiral-gold.jpg` (dark spiral matching article card visual style). Image was always in the code but invisible due to blending.
+
+### Files Changed
+- `app/experimental/blog-v2/page.tsx` — Featured article image path change
 
 ---
 
