@@ -46,7 +46,7 @@
 - **Blog** (`/blog`): Editorial magazine — hero, featured article, 6-card grid, newsletter, topics
 - **Company** (`/company`): "Est 2020" bold gold hero, quote, vision, mission, values accordion, milestones carousel, team accordion with expanding cards
 - **Contact** (`/contact`): Atmospheric CSS bg, bold "Get in touch" hero, form with custom dropdown
-- **Products** (`/products`): Redirects to 404 (not yet built)
+- **Products**: Pages removed — will be redesigned from scratch later
 - **Privacy Policy** (`/privacy-policy`): Alternating cream sections
 - **Terms of Service** (`/terms-of-service`): Numbered sections
 - **404**: Giant "404" watermark, atmospheric dark, gold border "Return to Home" button
@@ -58,8 +58,8 @@
 - Both need dedicated product pages on the website
 
 ## What's Next
-- **Immediate**: Clear design gaps page-by-page (see `design-gaps-report.md`) — Homepage first, then each page
-- **New pages**: Dedicated product pages for Fly High and Sleep Alert Device
+- **Immediate**: Clear design gaps page-by-page (see `design-gaps-report.md`)
+- **New pages**: Product pages (to be redesigned from scratch), case studies, careers
 - Mobile responsiveness pass (currently desktop-first)
 - Content finalization with real copy
 - Design exploration — open to bold new directions

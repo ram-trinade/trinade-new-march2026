@@ -30,19 +30,19 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ## What Exists Today
 
-### 8 Pages — All Functional
+### 7 Pages + 404 — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | **Homepage** (landing page): cinematic preloader (frontend-w.com inspired — dark gradient bg, lens flare, "You Envision — We Build" tagline, per-digit staggered milestone counter 0→25→50→75→100%) on EVERY visit, content hidden until preloader completes, hero ("Technology that works for you."), AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges grid, CTA | Premium scroll + editorial |
-| `/solutions` | Solutions: hero, mission, industries, Our Approach scroll cards (CSS Grid + absolute dark bg panel, sticky heading), testimonial challenges carousel, accordion services, CTA | Solid — full design system |
-| `/blog` | Editorial magazine: staggered hero, featured article card, 6-card grid, newsletter CTA, topic tags | Strong editorial feel |
-| `/company` | "Est 2020" bold gold gradient hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members with bios) | Rich, editorial |
-| `/contact` | Dark hero with spiral bg + "Have a project in mind?", split info card + gold glass form | Redesigned — premium |
+| `/` | **Homepage**: cinematic preloader (every visit), hero, AROX-inspired accordion (V/01–V/04), challenges grid, CTA | Premium scroll + editorial |
+| `/solutions` | Solutions: hero, mission, industries, Our Approach scroll cards (GSAP pinned), testimonial carousel, accordion, CTA | Solid — full design system |
+| `/blog` | Editorial magazine: staggered hero, featured article, 6-card grid, newsletter CTA | Strong editorial feel |
+| `/company` | "Est 2020" gold hero, quote, vision, mission pillars, values accordion, milestones, team | Rich, editorial |
+| `/contact` | Dark hero with spiral bg, split info card + gold glass form | Redesigned — premium |
 | `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
-| 404 | Giant "404" watermark, "Page not found", gold border "Return to Home" button | Atmospheric dark |
+| 404 | Giant "404" watermark, gold border button, atmospheric dark | Atmospheric dark |
 
-> **CRITICAL ROUTING**: Homepage is at `/` (app/page.tsx uses HomepageContent). Solutions is at `/solutions` (app/solutions/page.tsx uses SolutionsContent). There is NO `/home` route — it was deleted. Do NOT create `/home` or move Homepage away from `/`. All nav links must point to `/` for Home and `/solutions` for Solutions.
+> **CRITICAL ROUTING**: Homepage is at `/` (app/page.tsx). Solutions is at `/solutions`. No `/home` route. Product pages were removed — do NOT create `/products`. Nav links: `/` (Home), `/solutions`, `/blog`, `/company`, `/contact`.
 
 ### Design System
 - **Palette**: Charcoal (#1a1a1e, #0a0a0a) / Cream (#f2ede6, #ebe5db) / Gold (#c9a86e, #d4bb8a, #a0814a)
@@ -63,9 +63,9 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **That's it.** No R3F, no ShadCN, no MagicUI.
 
 ### Shared Components
-- `solutions-navbar.tsx` — "TRINADE" wordmark (left, links to `/`) + Menu pill with scroll % (center) + Logo (right, links to `/`) + gold active page dot via `usePathname`. Menu links: Products→`/products` (404), Solutions→`/solutions`, Blog→`/blog`, Company→`/company`, Contact→`/contact`
+- `solutions-navbar.tsx` — "TRINADE" wordmark (left) + Menu pill with scroll % (center) + Logo (right) + gold active page dot. Menu links: Solutions, Blog, Company, Contact
 - `solutions-content.tsx` — Solutions page (`/solutions`): hero, mission, industries grid, Our Approach scroll cards (CSS Grid layout), testimonial carousel, accordion, CTA
-- `solutions-footer.tsx` — Gold glass card with CTA section, nav links (Home→`/`, Solutions→`/solutions`, etc.), smooth TRINADE marquee, social icons
+- `solutions-footer.tsx` — Gold glass card with CTA, nav links (Home, Solutions, Blog, Company, Contact), TRINADE marquee, social icons
 - `homepage-content.tsx` — Homepage sections: hero (viewport-contained), AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges grid, CTA
 - `preloader-animation.tsx` — Frontend-w.com inspired preloader: dark gradient bg, lens flare, "You Envision — We Build" tagline, per-digit staggered milestone counter (0→25→50→75→100%), SSR dark initial-screen in layout.tsx prevents cream flash (plays EVERY homepage visit)
 - `solutions-cookie-popup.tsx` — Gold glass cookie consent
@@ -100,7 +100,7 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ### Design Opportunities
 - **Mobile responsiveness** — currently desktop-only, needs full responsive pass
-- **New pages** — products/services, case studies, careers, individual blog posts
+- **New pages** — case studies, careers, individual blog posts, product pages (to be redesigned from scratch)
 - **Hero redesigns** — the current hero works but could be more distinctive
 - **Interactive elements** — scroll-driven animations, parallax, micro-interactions
 - **Background experiments** — atmospheric orbs work, but bolder approaches welcome
@@ -152,13 +152,13 @@ A comprehensive Awwwards design audit was completed. Two key files:
 
 Read `design-gaps-report.md` for the full priority matrix. The top critical issues are there.
 
-## Products (for new pages)
+## Products (future — not yet built)
 
-Two real products need dedicated pages:
+Two real products will need dedicated pages eventually:
 - **Fly High** — Enterprise travel management platform. Docs in `Products/FlyHigh_Details/`
 - **Sleep Alert Device** — IoT drowsiness detection device. Docs in `Products/Sleeping_Alert_Device_Details/`
 
-Read the product docs to understand what each product does before designing their pages.
+Previous product pages were removed — they will be redesigned from scratch when the time comes.
 
 ---
 
@@ -180,7 +180,7 @@ An `/experimental/` route mirrors the main site for design iteration without tou
 
 ## Known Issues & Session Notes
 
-1. **Homepage is at `/`, NOT `/home`** — Do NOT create `/home`. All nav links point to `/` for Home and `/solutions` for Solutions.
+1. **Homepage is at `/`, NOT `/home`** — No `/home` route, no `/products` route. Nav: Home (`/`), Solutions, Blog, Company, Contact.
 
 2. **Dev server**: port 3006, no Turbopack, kill node + delete `.next/` if HMR breaks.
 

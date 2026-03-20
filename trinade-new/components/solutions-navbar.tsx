@@ -16,7 +16,6 @@ const PANEL_WIDTH = 340
 const SCROLL_SEGMENTS = 5
 
 const menuLinks = [
-  { label: 'Products', href: '/products' },
   { label: 'Solutions', href: '/solutions' },
   { label: 'Blog', href: '/blog' },
   { label: 'Company', href: '/company' },

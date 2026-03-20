@@ -84,7 +84,7 @@ public/
 
 ### Footer (solutions-footer.tsx)
 - Brown gold liquid glass card on #0a0a0a background
-- Contact CTA, navigation links (Home, Company, Blog, Contact, Privacy, Terms)
+- Contact CTA, navigation links (Solutions, Blog, Company, Contact)
 - SVG social icons (LinkedIn, Instagram, X)
 - Copyright bar with gold accents
 
