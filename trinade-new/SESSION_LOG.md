@@ -9,9 +9,42 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 94 — Updated blog images (replaced removed, added new unique images)
-- Last completed: Prompt 94 — All 6 article cards now have unique abstract images
+- Done: Prompt 96 — Removed Pilot outcome CTA from Sleep Alert product page
+- Last completed: Prompt 96 — Sleep Alert fleet section cleaned up
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 96: Remove Pilot Outcome from Sleep Alert
+
+### What Was Done
+- Removed the "Pilot outcome" CTA block from the Fleet Deployment section (Section 6) of the Sleep Alert Device product page
+- The block was a gold-bordered card with "Pilot outcome: A clear go/no-go recommendation..." text
+- Section now ends cleanly after the three capability cards (Night Routes, Long Hauls, Fleet Scale)
+- Verified via Playwright MCP — no orphaned space, clean transition to Specs section
+
+### Commits
+- `a049214` — Remove Pilot outcome CTA from Sleep Alert product page
+
+### Files Changed
+- `components/sleep-alert-content.tsx` — Removed lines 884-904 (Pilot CTA RevealSection block)
+
+---
+
+## 2026-03-20 — Prompt 95: Remove Gemini Watermarks from Blog Images
+
+### What Was Done
+- Created `scripts/remove-watermark.mjs` using Sharp to remove Gemini sparkle watermarks from bottom-right corners of all 7 blog images
+- Strategy: sample clean patch from adjacent area, flip horizontally, composite over watermark region (~6% of image width)
+- Processed: featured.png, article-1.png through article-6.png
+- Verified via Playwright MCP — all images clean, no visible artifacts
+
+### Commits
+- `7603fd8` — Remove Gemini watermarks from all blog images
+
+### Files Changed
+- `public/blog/*.png` — All 7 images reprocessed
+- `scripts/remove-watermark.mjs` — New watermark removal script
 
 ---
 
