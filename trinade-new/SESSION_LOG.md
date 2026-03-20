@@ -9,8 +9,8 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 86 — Stronger 404 watermark stroke
-- Last completed: Prompt 86 — Increased 404 watermark visibility (2px stroke at 12% opacity, was 1.5px at 6%)
+- Done: Prompt 87 — Featured blog post image replacement
+- Last completed: Prompt 87 — Replaced gradient placeholder with real image on experimental blog featured article
 - Live URL: https://trinade-new.vercel.app
 
 ---

@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'motion/react'
 
@@ -636,33 +637,16 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             className="absolute inset-0"
             animate={{ scale: hovered ? 1.035 : 1 }}
             transition={{ duration: 1.2, ease: EASE_SMOOTH }}
-            style={{
-              background: `
-                linear-gradient(155deg, #1a1510 0%, #2a1f14 20%, #1f1a12 40%, #2d2218 60%, #1a1510 80%, #0f0d09 100%)
-              `,
-            }}
-          />
-          {/* Warm mesh gradient orbs */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div
-              className="absolute"
-              style={{
-                width: '60%', height: '80%',
-                top: '10%', left: '25%',
-                background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.1) 0%, transparent 65%)',
-                filter: 'blur(60px)',
-              }}
+          >
+            <Image
+              src="/blog-featured.png"
+              alt="Featured article"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              priority
             />
-            <div
-              className="absolute"
-              style={{
-                width: '40%', height: '50%',
-                bottom: '0%', right: '10%',
-                background: 'radial-gradient(ellipse at center, rgba(160,129,74,0.08) 0%, transparent 60%)',
-                filter: 'blur(50px)',
-              }}
-            />
-          </div>
+          </motion.div>
           {/* Grain */}
           <div
             className="absolute inset-0 opacity-20"
