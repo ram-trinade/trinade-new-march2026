@@ -9,9 +9,21 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 71 — Blog V2 refinements (narrower featured image, 2-line excerpts, no category/author, shorter images)
-- Last completed: Prompt 71 — Blog-v2: cleaner card layout with date-only footer, compact proportions
+- Done: Prompt 72 — Blog V2: taller card images, featured card cleaned (no category/author)
+- Last completed: Prompt 72 — Blog-v2: taller images + featured card stripped to essentials
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 72: Blog V2 Featured Card Cleanup + Taller Images
+
+### What Was Done
+1. **Taller article card images** — `clamp(160px,16vw,220px)` → `clamp(220px,22vw,300px)`
+2. **Featured card: removed category pill + author** — Now shows only: title, excerpt, date, "Read Article" arrow
+3. **Featured card image confirmed** — Image on left (38%) already present from prompt 70
+
+### Files Changed
+- `app/experimental/blog-v2/page.tsx` — Featured card simplification + image height increase
 
 ---
 

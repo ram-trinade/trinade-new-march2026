@@ -227,7 +227,7 @@ function ArticleCard({
           }}
         >
           {/* ── TOP: Image ── */}
-          <div className="relative overflow-hidden" style={{ height: 'clamp(160px, 16vw, 220px)' }}>
+          <div className="relative overflow-hidden" style={{ height: 'clamp(220px, 22vw, 300px)' }}>
             <motion.div
               className="absolute inset-0"
               animate={{ scale: hovered ? 1.06 : 1 }}
@@ -421,18 +421,6 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             {/* ── RIGHT: Article Info Column ── */}
             <div className="lg:w-[62%] flex flex-col justify-between p-8 md:p-10 lg:p-14">
               <div>
-                <motion.div
-                  className="flex items-center gap-4 mb-7"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
-                >
-                  <GoldPill>{article.category}</GoldPill>
-                  <span className="text-[11px] tracking-[0.12em] uppercase font-medium" style={{ color: 'rgba(42,34,24,0.3)' }}>
-                    {article.readTime}
-                  </span>
-                </motion.div>
-
                 <motion.h2
                   className="text-[clamp(1.8rem,3.5vw,3rem)] font-light tracking-tight leading-[1.1] mb-6"
                   initial={{ opacity: 0, y: 20 }}
@@ -461,22 +449,9 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: 0.8, ease: EASE }}
               >
-                <div className="flex items-center gap-4">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-[11px] font-bold tracking-wide"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(201,168,110,0.25), rgba(201,168,110,0.1))',
-                      color: '#c9a86e',
-                      border: '1px solid rgba(201,168,110,0.2)',
-                    }}
-                  >
-                    {article.author.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: 'rgba(42,34,24,0.75)' }}>{article.author}</p>
-                    <p className="text-xs" style={{ color: 'rgba(42,34,24,0.35)' }}>{article.role} · {article.date}</p>
-                  </div>
-                </div>
+                <span className="text-[11px] tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
+                  {article.date}
+                </span>
 
                 <motion.div
                   className="hidden md:flex items-center gap-3"
