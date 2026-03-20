@@ -9,9 +9,48 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 97 — Made blog article numbers darker for visibility
-- Last completed: Prompt 97 — Numbers now readable on light abstract images
+- Done: Prompt 98 — Full Sleep Alert Device page redesign + navbar label rename
+- Last completed: Prompt 98 — Awwwards-quality product page with cinematic animations
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 98: Sleep Alert Device Page Redesign
+
+### What Was Done
+
+**Task 1: Navbar rename**
+- Changed "Sleep Alert" → "Sleep Alert Device" in `solutions-navbar.tsx` Products dropdown
+
+**Task 2: Full page redesign — "Nocturnal Intelligence" aesthetic**
+Complete rewrite of `sleep-alert-content.tsx` with Awwwards-quality SaaS/tech product page feel:
+
+**New animations & interactions added:**
+- Hero: Pulsing radar rings (5 animated concentric circles), rotating scan line (8s infinite rotation), central glow, scroll indicator with bounce
+- Stats: AnimatedCounter component — numbers count up on scroll with easeOutCubic
+- Stats cards: 3D TiltCard component — perspective-based mouse-following tilt with spring physics
+- How It Works: Horizontal 4-column timeline (was vertical) with animated connecting line that draws on scroll
+- Step circles: Pulse ring on hover with gold glow shadow
+- Features: Bento grid layout (2+1 / 1+2 asymmetric) with 3D tilt, new 4th card "Works Day and Night"
+- Tech Values: Glassmorphic numbered cards with hover border glow + title color transition to gold
+- Fleet: Gradient border cards (gold→dark→gold) that intensify on hover, with icons and inner radial glow
+- Specs: Hover-highlighted rows with gold label color transition + background highlight
+- CTA: Weight 200 dramatic typography, button shine-sweep effect on hover
+- Global: Enhanced typography (weight 200 hero), scroll indicator, button shine sweeps
+
+**Design direction:**
+- Tech-forward, futuristic, SaaS product page feel
+- Meaningful motion reinforcing product story (radar = detection, timeline = process)
+- Glassmorphism, depth layers, gradient borders, micro-interactions
+- Cinematic hero with scanning animation as visual metaphor
+- Bento grid breaks conventional 3-column monotony
+
+### Commits
+- `615a257` — Redesign Sleep Alert Device page + rename navbar label
+
+### Files Changed
+- `components/solutions-navbar.tsx` — Renamed "Sleep Alert" → "Sleep Alert Device"
+- `components/sleep-alert-content.tsx` — Complete rewrite (1069→850 lines, net reduction with more features)
 
 ---
 
