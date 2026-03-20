@@ -462,40 +462,6 @@ export default function SolutionsNavbar() {
                     style={{ background: 'rgba(160,120,50,0.2)' }}
                   />
 
-                  {/* Other Section */}
-                  <p
-                    className="text-[11px] font-semibold uppercase tracking-[0.08em] mb-3"
-                    style={{ color: 'rgba(90,70,40,0.6)' }}
-                  >
-                    Other
-                  </p>
-                  <div className="space-y-0.5">
-                    {otherLinks.map((link, i) => (
-                      <motion.a
-                        key={link.label}
-                        href={link.href}
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: 0.35,
-                          delay: 0.25 + i * 0.04,
-                          ease: EASE,
-                        }}
-                        className="block text-[15px] font-medium py-0.5 transition-colors hover:text-[#999]"
-                        style={{ color: '#2a2218' }}
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {link.label}
-                      </motion.a>
-                    ))}
-                  </div>
-
-                  {/* Separator */}
-                  <div
-                    className="h-[1px] my-5"
-                    style={{ background: 'rgba(160,120,50,0.2)' }}
-                  />
-
                   {/* Social Media Section */}
                   <p
                     className="text-[11px] font-semibold uppercase tracking-[0.08em] mb-3"

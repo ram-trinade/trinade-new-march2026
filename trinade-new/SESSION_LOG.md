@@ -9,8 +9,8 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 79 — Subtle weight bump on dropdown sub-items
-- Last completed: Prompt 79 — Sub-items bumped from medium to semibold weight, slightly darker text
+- Done: Prompt 80 — Removed "Other" section from navbar panel
+- Last completed: Prompt 80 — Removed Privacy Policy/Terms of Service from nav panel (still in footer)
 - Live URL: https://trinade-new.vercel.app
 
 ---
