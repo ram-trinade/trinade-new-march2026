@@ -9,9 +9,23 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 93 — Promoted Blog V2 design to main /blog route
-- Last completed: Prompt 93 — Replaced old editorial list with V2 split-card + 3-col grid design
+- Done: Prompt 94 — Updated blog images (replaced removed, added new unique images)
+- Last completed: Prompt 94 — All 6 article cards now have unique abstract images
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 94: Update Blog Images
+
+### What Was Done
+1. **Detected image changes** — Source folder had 2 images removed (`p6v16t`, `ve0dfs`) and 3 new ones added (`qmwb6w`, `rvvk54`, `txgdip`)
+2. **Replaced article-4 and article-5** with new abstract images (flowing waves, warm gold stripes)
+3. **Added article-6** — new sweeping gold arcs image, so the last article ("AI Strategy") no longer reuses article-2
+4. **All 7 images now unique** — featured + 6 articles, no duplicates
+5. **Verified via Playwright MCP** — both grid rows render correctly with new images
+
+### Commits
+- `bebaf6f` — Update blog images: replace removed, add new unique images
 
 ---
 
