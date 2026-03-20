@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 92 — Blog page real images integrated (featured card + 6 article thumbnails)
-- Last completed: Prompt 92 — Replaced CSS gradient placeholders with real abstract gold/charcoal images
+- Done: Prompt 93 — Promoted Blog V2 design to main /blog route
+- Last completed: Prompt 93 — Replaced old editorial list with V2 split-card + 3-col grid design
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 93: Promote Blog V2 to Main Route
+
+### What Was Done
+1. **Diagnosed the issue** — Main `/blog` route still had the old editorial list layout (V1). The V2 design (split featured card + 3-col image grid) was only at `/experimental/blog`
+2. **Promoted V2 to main** — Replaced `app/blog/page.tsx` with the V2 design:
+   - Featured card: split layout (image LEFT 38% + info RIGHT 62%) instead of full-width overlay
+   - Article cards: 3-column grid with image on top + info below instead of horizontal list rows
+   - Uses `next/image` with `fill` + `object-cover` for proper image handling
+3. **Updated image paths** — All articles now reference `/blog/article-*.png` images
+4. **Fixed internal links** — Changed `/experimental/blog/` links to `/blog/`
+5. **Verified via Playwright MCP** — Featured split card and 3-col grid both render correctly
+
+### Commits
+- `607e67a` — Promote Blog V2 design to main /blog route
 
 ---
 
