@@ -9,9 +9,26 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 91 — Blog V2 confirmed working, image dimensions documented
-- Last completed: Prompt 91 — Verified blog V2 renders at /experimental/blog, provided image dimension specs
+- Done: Prompt 92 — Blog page real images integrated (featured card + 6 article thumbnails)
+- Last completed: Prompt 92 — Replaced CSS gradient placeholders with real abstract gold/charcoal images
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 92: Blog Real Images Integration
+
+### What Was Done
+1. **Copied 6 blog images** from `Images/Blog Images/` to `public/blog/`:
+   - `featured.png` — curved layered gold/charcoal arcs (featured card hero)
+   - `article-1.png` through `article-5.png` — abstract radiating lines, concentric arcs, striped patterns
+   - Article 6 reuses `article-2.png` (concentric gold/black arcs)
+2. **Updated FeaturedCard** — replaced CSS gradient placeholder with real `featured.png` as background image with `object-cover`, warm color overlay for cohesion, hover zoom effect
+3. **Added image thumbnails to all 6 VerticalArticleCards** — rounded 14px thumbnails on the right side (clamp 160-220px wide), hover scale + gold overlay effects, border color transition on hover
+4. **Verified via Playwright MCP** — all images render correctly across featured card and all article rows
+
+### Commits
+- `1762aad` — Add real blog images: featured hero + 6 article card thumbnails
+- `e5de8e5` — Add blog image assets (featured + 5 article thumbnails)
 
 ---
 
