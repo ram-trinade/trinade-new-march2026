@@ -9,9 +9,20 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 89 — Replaced main 404 with experimental typewriter design
-- Last completed: Prompt 89 — Main not-found.tsx now uses ExperimentalErrorContent (typewriter cycling + giant watermark)
+- Done: Prompt 91 — Blog V2 confirmed working, image dimensions documented
+- Last completed: Prompt 91 — Verified blog V2 renders at /experimental/blog, provided image dimension specs
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 91: Blog Image Dimensions
+
+### What Was Done
+1. **Fixed blog V2 rendering** — Dev server needed clean restart (kill node, delete `.next/`, restart). Blog V2 now renders correctly at `/experimental/blog` with split hero, 3-col vertical cards.
+2. **Documented image dimensions** (rendered at ~1536px viewport):
+   - **Featured Story image container**: 531px × 473px (left side of split card, `lg:w-[38%]`, `minHeight: clamp(280px, 35vw, 420px)`). Recommended source: 1200×900px+
+   - **Article card image containers**: 443px × 300px each (top of vertical cards, `height: clamp(220px, 22vw, 300px)`). Recommended source: 900×600px+
+   - All images use `next/image` with `fill` + `object-cover`
 
 ---
 
