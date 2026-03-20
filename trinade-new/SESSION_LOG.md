@@ -9,9 +9,23 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 68 — Blog V2 photo+info split cards (experimental duplicate)
-- Last completed: Prompt 68 — Blog-v2: split card layout with alternating photo/info columns
+- Done: Prompt 69 — Blog V2 card refinements (image-right, longer excerpts, bare arrow)
+- Last completed: Prompt 69 — Blog-v2: all images right, 4+ line descriptions, no arrow circle, bigger arrow
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 69: Blog V2 Card Refinements
+
+### What Was Done
+1. **Image always on right** — Removed alternating zigzag layout. All 6 article cards now consistently have info LEFT (55%) + photo RIGHT (45%)
+2. **Longer descriptions** — Expanded all 6 article excerpts to 4+ lines (~280-320 chars each) with substantive content matching each topic
+3. **Removed arrow circle** — Stripped the `w-12 h-12 rounded-full` circle container around the read arrow for a cleaner look
+4. **Bigger arrow** — Increased arrow SVG from 20px to 32px with thinner stroke (1.2) for a bold, minimal aesthetic
+5. **Big number repositioned** — Moved from bottom-left to bottom-right on image column since image is now always right
+
+### Files Changed
+- `app/experimental/blog-v2/page.tsx` — All card layout + content changes
 
 ---
 

@@ -124,7 +124,7 @@ const ARTICLES = [
   {
     category: 'Healthcare AI',
     title: 'AI in Healthcare: From Diagnostics to Patient-Centric Care',
-    excerpt: 'How intelligent systems are transforming clinical workflows, enhancing diagnostic accuracy, and creating patient experiences that feel personal — without compromising on compliance or data security.',
+    excerpt: 'How intelligent systems are transforming clinical workflows, enhancing diagnostic accuracy, and creating patient experiences that feel personal — without compromising on compliance or data security. From radiology imaging analysis to predictive patient monitoring, AI is becoming the silent partner in every clinician\'s toolkit, enabling earlier interventions and reducing the cognitive burden on overworked medical teams across the globe.',
     author: 'Priya Sharma',
     date: 'March 1, 2026',
     readTime: '8 min read',
@@ -135,7 +135,7 @@ const ARTICLES = [
   {
     category: 'Legal Tech',
     title: 'Intelligent Contract Analysis: How AI Is Reshaping Legal Operations',
-    excerpt: 'Law firms and legal departments are adopting AI not to replace counsel, but to surface insights buried in thousands of documents — turning weeks of review into hours of strategic action.',
+    excerpt: 'Law firms and legal departments are adopting AI not to replace counsel, but to surface insights buried in thousands of documents — turning weeks of review into hours of strategic action. Natural language models trained on legal corpora can now identify risk clauses, flag inconsistencies across contract versions, and generate compliance summaries that would take a junior associate days to produce manually.',
     author: 'Arjun Mehta',
     date: 'February 22, 2026',
     readTime: '10 min read',
@@ -146,7 +146,7 @@ const ARTICLES = [
   {
     category: 'FinTech',
     title: 'Predictive Intelligence in Financial Services',
-    excerpt: 'From fraud detection to portfolio optimization, AI-first financial solutions are redefining how institutions manage risk, serve customers, and stay ahead of regulatory complexity.',
+    excerpt: 'From fraud detection to portfolio optimization, AI-first financial solutions are redefining how institutions manage risk, serve customers, and stay ahead of regulatory complexity. Machine learning models now process millions of transactions in real time, identifying anomalous patterns that human analysts would miss entirely — while adaptive algorithms continuously refine their accuracy with every new data point that flows through the system.',
     author: 'Kavitha Rao',
     date: 'February 14, 2026',
     readTime: '7 min read',
@@ -157,7 +157,7 @@ const ARTICLES = [
   {
     category: 'Manufacturing',
     title: 'Smart Factories: Where AI Meets the Production Floor',
-    excerpt: 'Predictive maintenance, quality control, and supply chain intelligence — the factory of tomorrow is already here, and it runs on adaptive AI that learns from every production cycle.',
+    excerpt: 'Predictive maintenance, quality control, and supply chain intelligence — the factory of tomorrow is already here, and it runs on adaptive AI that learns from every production cycle. Sensor-driven analytics detect equipment degradation weeks before failure, while computer vision systems inspect products at speeds no human eye can match — reducing waste, minimizing downtime, and transforming manufacturing from reactive to proactive.',
     author: 'Vikram Desai',
     date: 'February 6, 2026',
     readTime: '9 min read',
@@ -168,7 +168,7 @@ const ARTICLES = [
   {
     category: 'Cloud & Security',
     title: 'Building Secure AI Infrastructure at Scale',
-    excerpt: 'Enterprise AI demands more than just powerful models. It requires zero-trust architectures, automated compliance, and infrastructure that scales without sacrificing security or governance.',
+    excerpt: 'Enterprise AI demands more than just powerful models. It requires zero-trust architectures, automated compliance, and infrastructure that scales without sacrificing security or governance. As organizations push sensitive workloads to the cloud, the intersection of AI and cybersecurity becomes critical — with intelligent threat detection, automated incident response, and continuous compliance monitoring forming the backbone of modern enterprise defense.',
     author: 'Neha Kapoor',
     date: 'January 28, 2026',
     readTime: '11 min read',
@@ -179,7 +179,7 @@ const ARTICLES = [
   {
     category: 'AI Strategy',
     title: 'From Pilot to Production: Scaling AI Across the Enterprise',
-    excerpt: 'Most AI initiatives stall at proof-of-concept. We explore the organizational, technical, and strategic patterns that separate successful enterprise AI deployments from abandoned experiments.',
+    excerpt: 'Most AI initiatives stall at proof-of-concept. We explore the organizational, technical, and strategic patterns that separate successful enterprise AI deployments from abandoned experiments. The gap between a working prototype and a production system isn\'t just technical — it demands executive alignment, data governance maturity, cross-functional teams, and a culture willing to iterate on imperfect solutions rather than waiting for theoretical perfection.',
     author: 'Rohan Iyer',
     date: 'January 19, 2026',
     readTime: '14 min read',
@@ -196,11 +196,9 @@ const ARTICLES = [
 function SplitArticleCard({
   article,
   index,
-  reversed = false,
 }: {
   article: typeof ARTICLES[number]
   index: number
-  reversed?: boolean
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
@@ -228,56 +226,10 @@ function SplitArticleCard({
             background: 'rgba(255,255,255,0.35)',
           }}
         >
-          <div className={`flex flex-col ${reversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-            {/* ── LEFT: Photo Column ── */}
-            <div className="relative lg:w-[45%] overflow-hidden" style={{ minHeight: 'clamp(280px, 40vw, 480px)' }}>
-              <motion.div
-                className="absolute inset-0"
-                animate={{ scale: hovered ? 1.06 : 1 }}
-                transition={{ duration: 1.4, ease: EASE_SMOOTH }}
-              >
-                <Image
-                  src={article.image}
-                  alt={article.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-              </motion.div>
-
-              {/* Dark gradient overlay for depth */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: `linear-gradient(${reversed ? '270deg' : '90deg'}, transparent 30%, rgba(15,12,8,0.15) 100%)`,
-                }}
-              />
-
-              {/* Grain on image */}
-              <div
-                className="absolute inset-0 pointer-events-none opacity-[0.12]"
-                style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
-              />
-
-              {/* Big number — overlaid on image, bottom-left */}
-              <motion.span
-                className="absolute bottom-4 left-5 tabular-nums leading-none select-none pointer-events-none"
-                style={{
-                  fontSize: 'clamp(4rem, 8vw, 7rem)',
-                  fontWeight: 200,
-                  letterSpacing: '-0.04em',
-                  color: 'rgba(255,255,255,0.15)',
-                  textShadow: '0 2px 20px rgba(0,0,0,0.2)',
-                }}
-                animate={{ opacity: hovered ? 0.35 : 0.15 }}
-                transition={{ duration: 0.5 }}
-              >
-                {article.number}
-              </motion.span>
-            </div>
-
-            {/* ── RIGHT: Article Info Column ── */}
-            <div className="lg:w-[55%] flex flex-col justify-between p-8 md:p-10 lg:p-12 relative">
+          {/* Always: info LEFT, image RIGHT */}
+          <div className="flex flex-col lg:flex-row">
+            {/* ── LEFT: Article Info Column ── */}
+            <div className="lg:w-[55%] flex flex-col justify-between p-8 md:p-10 lg:p-12 relative order-2 lg:order-1">
               {/* Top: Category + Read time */}
               <div>
                 <div className="flex items-center gap-4 mb-6">
@@ -296,7 +248,7 @@ function SplitArticleCard({
                   {article.title}
                 </motion.h3>
 
-                {/* Excerpt */}
+                {/* Excerpt — expanded for 4+ lines */}
                 <p
                   className="text-[15px] leading-[1.8] mb-8"
                   style={{ color: 'rgba(42,34,24,0.45)' }}
@@ -329,12 +281,10 @@ function SplitArticleCard({
                   </div>
                 </div>
 
-                {/* Read More arrow */}
+                {/* Read More — bare arrow, no circle, bigger for minimal aesthetic */}
                 <motion.div
                   className="flex items-center gap-3"
-                  animate={{
-                    x: hovered ? 6 : 0,
-                  }}
+                  animate={{ x: hovered ? 6 : 0 }}
                   transition={{ duration: 0.4, ease: EASE_SMOOTH }}
                 >
                   <motion.span
@@ -345,17 +295,16 @@ function SplitArticleCard({
                   >
                     Read
                   </motion.span>
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500"
-                    style={{
-                      background: hovered ? 'rgba(201,168,110,0.12)' : 'rgba(201,168,110,0.04)',
-                      border: `1px solid ${hovered ? 'rgba(201,168,110,0.3)' : 'rgba(201,168,110,0.1)'}`,
-                    }}
+                  <motion.svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    animate={{ rotate: hovered ? 0 : 0 }}
+                    transition={{ duration: 0.4 }}
                   >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
+                    <path d="M5 19L19 5M19 5H9M19 5v10" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </motion.svg>
                 </motion.div>
               </div>
 
@@ -370,6 +319,53 @@ function SplitArticleCard({
                   transformOrigin: 'center',
                 }}
               />
+            </div>
+
+            {/* ── RIGHT: Photo Column (always) ── */}
+            <div className="relative lg:w-[45%] overflow-hidden order-1 lg:order-2" style={{ minHeight: 'clamp(280px, 40vw, 480px)' }}>
+              <motion.div
+                className="absolute inset-0"
+                animate={{ scale: hovered ? 1.06 : 1 }}
+                transition={{ duration: 1.4, ease: EASE_SMOOTH }}
+              >
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+              </motion.div>
+
+              {/* Dark gradient overlay for depth — fades toward left (info side) */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'linear-gradient(270deg, transparent 30%, rgba(15,12,8,0.15) 100%)',
+                }}
+              />
+
+              {/* Grain on image */}
+              <div
+                className="absolute inset-0 pointer-events-none opacity-[0.12]"
+                style={{ backgroundImage: GRAIN_BG, backgroundSize: '128px 128px', mixBlendMode: 'overlay' }}
+              />
+
+              {/* Big number — overlaid on image, bottom-right */}
+              <motion.span
+                className="absolute bottom-4 right-5 tabular-nums leading-none select-none pointer-events-none"
+                style={{
+                  fontSize: 'clamp(4rem, 8vw, 7rem)',
+                  fontWeight: 200,
+                  letterSpacing: '-0.04em',
+                  color: 'rgba(255,255,255,0.15)',
+                  textShadow: '0 2px 20px rgba(0,0,0,0.2)',
+                }}
+                animate={{ opacity: hovered ? 0.35 : 0.15 }}
+                transition={{ duration: 0.5 }}
+              >
+                {article.number}
+              </motion.span>
             </div>
           </div>
         </div>
@@ -669,7 +665,6 @@ export default function BlogV2Page() {
                     key={article.title}
                     article={article}
                     index={i}
-                    reversed={i % 2 === 1}
                   />
                 ))}
               </div>
