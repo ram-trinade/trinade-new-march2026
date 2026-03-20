@@ -1,21 +1,20 @@
 'use client'
 
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'motion/react'
-import Image from 'next/image'
 
 // ═══════════════════════════════════════════════════════════════════════
-// FLY HIGH — GOD MODE PRODUCT PAGE
+// GOD MODE — EXPERIMENTAL PRODUCT PAGE
 // Award-winning techniques: aurora gradients, split-text 3D reveals,
-// magnetic buttons, volumetric light, morphing blobs, glassmorphic depth,
-// multi-step hover choreography, animated grain, gradient text animations
+// magnetic buttons, volumetric light, morphing blobs, bento grid,
+// multi-step hover choreography, glassmorphic depth, scroll-driven motion
 // ═══════════════════════════════════════════════════════════════════════
 
 const EASE_CINE = [0.16, 1, 0.3, 1] as const
 const EASE_UI = [0.32, 0.72, 0, 1] as const
 
-// ─── Animated grain overlay ───
-function GrainOverlay({ opacity = 0.04 }: { opacity?: number }) {
+// ─── Animated grain overlay with shift ───
+function AnimatedGrain({ opacity = 0.035 }: { opacity?: number }) {
   return (
     <div
       className="pointer-events-none absolute inset-0"
@@ -60,7 +59,7 @@ function Section({ children, dark = true, className = '', id }: { children: Reac
       style={{ background: dark ? '#0a0a0a' : '#f2ede6' }}
       data-dark-section={dark ? '' : undefined}
     >
-      <GrainOverlay opacity={dark ? 0.035 : 0.025} />
+      <AnimatedGrain opacity={dark ? 0.035 : 0.02} />
       {children}
     </section>
   )
@@ -173,7 +172,7 @@ function MagneticButton({
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// HERO SECTION — GOD MODE: Aurora + volumetric light + morphing blob
+// HERO SECTION — Aurora gradients, split-text 3D, morphing blobs
 // ═══════════════════════════════════════════════════════════════════════
 function HeroSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -181,17 +180,17 @@ function HeroSection() {
 
   return (
     <Section dark className="min-h-screen flex flex-col justify-between relative">
-      {/* ── Aurora gradient background system ── */}
+      {/* ── Aurora gradient background ── */}
       <div className="absolute inset-0 overflow-hidden">
-        {/* Aurora blob 1 — warm gold, drifting */}
+        {/* Aurora blob 1 — warm gold */}
         <motion.div
           initial={{ opacity: 0, scale: 0.6 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 3, ease: EASE_CINE }}
           className="absolute"
           style={{
-            top: '10%', left: '15%',
-            width: '65vw', height: '60vh',
+            top: '10%', left: '20%',
+            width: '60vw', height: '60vh',
             background: 'radial-gradient(ellipse 80% 50% at 30% 40%, rgba(201,168,110,0.12) 0%, transparent 70%)',
             filter: 'blur(80px)',
             animation: 'aurora-drift-1 18s ease-in-out infinite alternate',
@@ -204,14 +203,14 @@ function HeroSection() {
           transition={{ duration: 3.5, delay: 0.3, ease: EASE_CINE }}
           className="absolute"
           style={{
-            top: '20%', right: '10%',
+            top: '20%', right: '15%',
             width: '50vw', height: '50vh',
-            background: 'radial-gradient(ellipse 60% 40% at 60% 50%, rgba(180,130,55,0.08) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse 60% 40% at 60% 50%, rgba(180,130,55,0.09) 0%, transparent 70%)',
             filter: 'blur(100px)',
             animation: 'aurora-drift-2 22s ease-in-out infinite alternate',
           }}
         />
-        {/* Morphing blob — organic center element */}
+        {/* Morphing blob — organic, alive */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -219,14 +218,14 @@ function HeroSection() {
           className="absolute"
           style={{
             top: '30%', left: '50%', transform: 'translateX(-50%)',
-            width: 'min(550px, 42vw)', height: 'min(550px, 42vw)',
+            width: 'min(600px, 45vw)', height: 'min(600px, 45vw)',
             background: 'radial-gradient(circle, rgba(201,168,110,0.1) 0%, transparent 60%)',
             borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
             filter: 'blur(60px)',
             animation: 'morph-blob 12s ease-in-out infinite',
           }}
         />
-        {/* Volumetric light cone — cinematic top-down */}
+        {/* Volumetric light cone — top center */}
         <div
           className="absolute"
           style={{
@@ -235,14 +234,6 @@ function HeroSection() {
             background: 'conic-gradient(from 170deg at 50% 0%, transparent 35%, rgba(201,168,110,0.06) 45%, rgba(201,168,110,0.12) 50%, rgba(201,168,110,0.06) 55%, transparent 65%)',
             filter: 'blur(40px)',
             mixBlendMode: 'screen',
-          }}
-        />
-        {/* Top atmospheric haze */}
-        <div
-          className="absolute"
-          style={{
-            top: 0, left: 0, right: 0, height: '40%',
-            background: 'linear-gradient(180deg, rgba(26,20,10,0.6) 0%, transparent 100%)',
           }}
         />
         {/* Subtle golden grid lines */}
@@ -257,7 +248,7 @@ function HeroSection() {
             WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%)',
           }}
         />
-        {/* Concentric rings */}
+        {/* Concentric rings — cinematic depth */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -265,10 +256,10 @@ function HeroSection() {
           className="absolute"
           style={{
             top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-            width: 'min(500px, 40vw)', height: 'min(500px, 40vw)',
+            width: 'min(550px, 42vw)', height: 'min(550px, 42vw)',
             borderRadius: '50%',
             border: '1px solid rgba(201,168,110,0.06)',
-            boxShadow: 'inset 0 0 100px rgba(201,168,110,0.03)',
+            boxShadow: 'inset 0 0 120px rgba(201,168,110,0.03)',
           }}
         />
         <motion.div
@@ -278,7 +269,7 @@ function HeroSection() {
           className="absolute"
           style={{
             top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-            width: 'min(300px, 24vw)', height: 'min(300px, 24vw)',
+            width: 'min(350px, 27vw)', height: 'min(350px, 27vw)',
             borderRadius: '50%',
             border: '1px solid rgba(201,168,110,0.04)',
           }}
@@ -290,16 +281,16 @@ function HeroSection() {
           className="absolute"
           style={{
             top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-            width: 'min(150px, 12vw)', height: 'min(150px, 12vw)',
+            width: 'min(180px, 14vw)', height: 'min(180px, 14vw)',
             borderRadius: '50%',
             border: '1px solid rgba(201,168,110,0.03)',
           }}
         />
       </div>
 
-      {/* Main content — centered */}
+      {/* Main content */}
       <div ref={ref} className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 md:px-16 pt-32 pb-16">
-        {/* Product badge */}
+        {/* Product badge — glass pill */}
         <motion.div
           initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
           animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
@@ -321,48 +312,32 @@ function HeroSection() {
               boxShadow: '0 0 10px rgba(201,168,110,0.7)',
               animation: 'pulse-glow 2s ease-in-out infinite',
             }} />
-            Trinade Product
+            Experimental Product
           </span>
         </motion.div>
 
-        {/* Main headline — split-text 3D reveal with gradient accent */}
-        <div className="mb-8" style={{ perspective: '1200px' }}>
-          <motion.h1
-            initial={{ opacity: 0, y: '110%', rotateX: -80 }}
-            animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-            transition={{ duration: 1.4, delay: 0.5, ease: EASE_CINE }}
-            className="tracking-[-0.05em]"
-            style={{
-              fontSize: 'clamp(5rem, 14vw, 13rem)',
-              lineHeight: 0.88,
-              fontWeight: 200,
-              color: 'rgba(255,255,255,0.95)',
-              transformOrigin: 'center bottom',
-            }}
-          >
-            Fly{' '}
-            <span
-              style={{
-                color: 'transparent',
-                backgroundImage: 'linear-gradient(165deg, #d4bb8a 0%, #c9a86e 40%, #a0814a 100%)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-              }}
-            >
-              High
-            </span>
-          </motion.h1>
-        </div>
+        {/* Hero headline — split-text 3D reveal */}
+        <SplitTextReveal
+          text="Intelligence Reimagined"
+          delay={0.5}
+          className="tracking-[-0.05em] mb-8"
+          style={{
+            fontSize: 'clamp(4.5rem, 13vw, 12rem)',
+            lineHeight: 0.9,
+            fontWeight: 200,
+            color: 'rgba(255,255,255,0.95)',
+          }}
+        />
 
-        {/* Animated gradient tagline */}
+        {/* Animated gradient subline */}
         <motion.p
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
-          transition={{ duration: 1, delay: 1, ease: EASE_CINE }}
+          transition={{ duration: 1, delay: 1.2, ease: EASE_CINE }}
           className="max-w-2xl mb-5"
           style={{
-            fontSize: 'clamp(1.15rem, 2.2vw, 1.5rem)',
-            lineHeight: 1.5,
+            fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+            lineHeight: 1.6,
             fontWeight: 300,
             letterSpacing: '-0.01em',
             background: 'linear-gradient(90deg, rgba(255,255,255,0.55), rgba(201,168,110,0.7), rgba(255,255,255,0.55))',
@@ -373,44 +348,44 @@ function HeroSection() {
             animation: 'gradient-text-shift 6s ease infinite',
           }}
         >
-          Where intelligence is shared.
+          Where human expertise meets artificial precision.
         </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.3, ease: EASE_CINE }}
+          transition={{ duration: 0.8, delay: 1.5, ease: EASE_CINE }}
           className="max-w-lg mb-14"
           style={{ fontSize: '15px', lineHeight: 1.75, color: 'rgba(255,255,255,0.3)' }}
         >
-          A platform connecting people with verified experts for real-time guidance —
-          through chat, voice, or video.
+          A next-generation platform blending AI with verified human wisdom —
+          delivering guidance that adapts, learns, and truly understands.
         </motion.p>
 
         {/* Magnetic CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.5, ease: EASE_CINE }}
+          transition={{ duration: 0.8, delay: 1.7, ease: EASE_CINE }}
           className="flex items-center gap-4 flex-wrap justify-center"
         >
           <MagneticButton href="#waitlist" variant="primary">
-            Join the Waitlist
+            Request Early Access
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </MagneticButton>
-          <MagneticButton href="#experts" variant="secondary">
-            Become an Expert
+          <MagneticButton href="#features" variant="secondary">
+            Explore Features
           </MagneticButton>
         </motion.div>
       </div>
 
-      {/* Bottom bar — stats */}
+      {/* Bottom stats bar */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 1, delay: 1.8, ease: EASE_CINE }}
+        transition={{ duration: 1, delay: 2, ease: EASE_CINE }}
         className="relative z-10 px-8 md:px-16 lg:px-24 pb-10"
       >
         <div
@@ -420,8 +395,8 @@ function HeroSection() {
           <div className="flex items-center gap-10 flex-wrap">
             {[
               { label: 'Status', value: 'In Development' },
-              { label: 'Modes', value: 'Chat · Voice · Video' },
-              { label: 'Fields', value: '8+ Categories' },
+              { label: 'Architecture', value: 'AI + Human Hybrid' },
+              { label: 'Coverage', value: '8+ Domains' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="text-[10px] font-semibold uppercase tracking-[0.18em] mb-1" style={{ color: 'rgba(201,168,110,0.4)' }}>
@@ -444,7 +419,7 @@ function HeroSection() {
         </div>
       </motion.div>
 
-      {/* CSS Keyframes */}
+      {/* CSS Keyframes injected */}
       <style jsx global>{`
         @keyframes aurora-drift-1 {
           0% { transform: rotate(0deg) scale(1) translateX(0); }
@@ -476,7 +451,7 @@ function HeroSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// NARRATIVE SECTION — Volumetric light + editorial split
+// NARRATIVE SECTION — Editorial split with volumetric light
 // ═══════════════════════════════════════════════════════════════════════
 function NarrativeSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -484,7 +459,7 @@ function NarrativeSection() {
 
   return (
     <Section dark>
-      {/* Volumetric light cone */}
+      {/* Volumetric light cone — atmospheric depth */}
       <div
         className="absolute"
         style={{
@@ -505,15 +480,15 @@ function NarrativeSection() {
             transition={{ duration: 0.8, ease: EASE_CINE }}
             className="mb-6"
           >
-            <Eyebrow>The Vision</Eyebrow>
+            <Eyebrow>The Philosophy</Eyebrow>
           </motion.div>
           <GoldRule />
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-20 mt-14">
-            {/* Left — editorial statement */}
+            {/* Left — massive editorial statement */}
             <div>
               <SplitTextReveal
-                text="Search gives answers. You need your answer."
+                text="Beyond search. Beyond AI. Into understanding."
                 delay={0.2}
                 className="tracking-[-0.03em]"
                 style={{
@@ -525,28 +500,34 @@ function NarrativeSection() {
               />
             </div>
 
-            {/* Right — story paragraphs */}
+            {/* Right — story with staggered reveals */}
             <div className="flex flex-col justify-center gap-8">
               {[
-                'Everyday challenges — work, finances, health, legal, tech — deserve more than generic search results. One focused conversation with the right expert can save you hours, money, and stress.',
-                'FlyHigh is built to bridge the gap between the question you have and the expert who has lived it. Human-led guidance. AI-enhanced matching. Real outcomes.',
+                'The age of generic answers is over. Every question deserves context — your context. Not an algorithm\'s best guess, but a human mind that has walked your path.',
+                'We are building the bridge between what AI can process and what only human experience can understand. The result is guidance that adapts, resonates, and transforms.',
               ].map((text, i) => (
                 <motion.p
                   key={i}
                   initial={{ opacity: 0, y: 24 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.9, delay: 0.5 + i * 0.2, ease: EASE_CINE }}
-                  style={{ fontSize: '16px', lineHeight: 1.9, color: 'rgba(255,255,255,0.5)' }}
+                  style={{
+                    fontSize: '16px',
+                    lineHeight: 1.9,
+                    color: 'rgba(255,255,255,0.5)',
+                  }}
                 >
                   {text}
                 </motion.p>
               ))}
+              {/* Gold accent line */}
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={inView ? { scaleX: 1 } : {}}
                 transition={{ duration: 1.4, delay: 1, ease: EASE_CINE }}
                 style={{
-                  width: '80px', height: '2px',
+                  width: '80px',
+                  height: '2px',
                   background: 'linear-gradient(90deg, #c9a86e, transparent)',
                   transformOrigin: 'left',
                 }}
@@ -560,23 +541,88 @@ function NarrativeSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// HOW IT WORKS — Process steps with connecting line
+// BENTO GRID — Feature showcase with glassmorphic depth + hover choreography
 // ═══════════════════════════════════════════════════════════════════════
-function HowItWorksSection() {
+function BentoSection() {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-60px' })
 
-  const steps = [
-    { num: '01', title: 'Describe', desc: 'Tell us what you need in a few lines. No forms, no friction — just your situation.' },
-    { num: '02', title: 'Match', desc: 'Our system matches you with a verified expert in the relevant field. Credentials checked, quality assured.' },
-    { num: '03', title: 'Connect', desc: 'Start a session — chat, voice, or video. Whatever feels right for the conversation.' },
-    { num: '04', title: 'Act', desc: 'Walk away with clear next steps you can act on immediately. Rate and improve future matches.' },
+  const features = [
+    {
+      span: 'col-span-1 md:col-span-2 row-span-2',
+      title: 'Intelligent Matching',
+      desc: 'Our AI analyzes your query context, past interactions, and expert specializations to find the perfect match — in under 3 seconds.',
+      accent: true,
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="12" cy="12" r="8" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <circle cx="20" cy="20" r="8" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <path d="M16 12a8 8 0 010 8" stroke="#c9a86e" strokeWidth="1.5" />
+        </svg>
+      ),
+    },
+    {
+      span: 'col-span-1',
+      title: 'Voice & Video',
+      desc: 'Crystal-clear real-time sessions. Choose the format that fits your question.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="6" y="4" width="16" height="20" rx="3" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <circle cx="14" cy="17" r="2" stroke="#c9a86e" strokeWidth="1.2" />
+        </svg>
+      ),
+    },
+    {
+      span: 'col-span-1',
+      title: 'Verified Experts',
+      desc: 'Every professional goes through rigorous credential checks and ongoing quality monitoring.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 3l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+        </svg>
+      ),
+    },
+    {
+      span: 'col-span-1',
+      title: 'Multi-Domain',
+      desc: 'Finance, health, legal, tech, agriculture — 8+ specialized categories.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="4" y="4" width="9" height="9" rx="2" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <rect x="15" y="4" width="9" height="9" rx="2" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <rect x="4" y="15" width="9" height="9" rx="2" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <rect x="15" y="15" width="9" height="9" rx="2" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+        </svg>
+      ),
+    },
+    {
+      span: 'col-span-1 md:col-span-2',
+      title: 'Actionable Outcomes',
+      desc: 'Every session ends with concrete, documented next steps. Not just advice — a plan you can execute immediately. Follow-up support ensures nothing falls through the cracks.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M8 14l4 4 8-8" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="14" cy="14" r="11" stroke="#c9a86e" strokeWidth="1" opacity="0.4" />
+        </svg>
+      ),
+    },
+    {
+      span: 'col-span-1',
+      title: 'Privacy-First',
+      desc: 'End-to-end encryption. Your data stays yours. Always.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="7" y="12" width="14" height="12" rx="2" stroke="#c9a86e" strokeWidth="1.2" opacity="0.6" />
+          <path d="M10 12V9a4 4 0 018 0v3" stroke="#c9a86e" strokeWidth="1.2" />
+        </svg>
+      ),
+    },
   ]
 
   return (
-    <Section dark={false}>
+    <Section dark={false} id="features">
       <div ref={ref} className="px-8 md:px-16 lg:px-24 py-28 md:py-40">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -584,12 +630,12 @@ function HowItWorksSection() {
               transition={{ duration: 0.8, ease: EASE_CINE }}
               className="mb-6"
             >
-              <Eyebrow light={false}>How It Works</Eyebrow>
+              <Eyebrow light={false}>Core Capabilities</Eyebrow>
             </motion.div>
             <SplitTextReveal
-              text="From question to clarity in four steps."
+              text="Built different. By design."
               delay={0.2}
-              className="tracking-[-0.03em]"
+              className="max-w-3xl mx-auto tracking-[-0.03em]"
               style={{
                 fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)',
                 lineHeight: 1.1,
@@ -599,22 +645,138 @@ function HowItWorksSection() {
             />
           </div>
 
-          {/* Steps with connecting line */}
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {features.map((feat, i) => (
+              <motion.div
+                key={feat.title}
+                initial={{ opacity: 0, y: 35 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.15 + i * 0.08, ease: EASE_CINE }}
+                className={`${feat.span} group relative rounded-2xl overflow-hidden transition-all duration-500`}
+                style={{
+                  background: feat.accent
+                    ? 'linear-gradient(165deg, rgba(201,168,110,0.08) 0%, rgba(201,168,110,0.02) 100%)'
+                    : 'rgba(255,255,255,0.65)',
+                  border: `1px solid ${feat.accent ? 'rgba(201,168,110,0.15)' : 'rgba(42,34,24,0.06)'}`,
+                  padding: feat.accent ? '48px 40px' : '32px 28px',
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget
+                  el.style.borderColor = 'rgba(201,168,110,0.35)'
+                  el.style.boxShadow = '0 8px 40px rgba(201,168,110,0.12)'
+                  el.style.transform = 'translateY(-4px)'
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget
+                  el.style.borderColor = feat.accent ? 'rgba(201,168,110,0.15)' : 'rgba(42,34,24,0.06)'
+                  el.style.boxShadow = 'none'
+                  el.style.transform = 'translateY(0)'
+                }}
+              >
+                {/* Inner glow — glass highlight */}
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(201,168,110,0.08) 0%, transparent 50%)',
+                  }}
+                />
+                <div className="relative z-10">
+                  <div className="mb-5 opacity-70 group-hover:opacity-100 transition-opacity duration-500">
+                    {feat.icon}
+                  </div>
+                  <h3
+                    className="text-[18px] font-semibold tracking-[-0.02em] mb-3"
+                    style={{ color: '#2a2218' }}
+                  >
+                    {feat.title}
+                  </h3>
+                  <p
+                    className="text-[14px] leading-[1.8]"
+                    style={{ color: 'rgba(42,34,24,0.55)' }}
+                  >
+                    {feat.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Section>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// PROCESS SECTION — Horizontal numbered steps with connecting lines
+// ═══════════════════════════════════════════════════════════════════════
+function ProcessSection() {
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+
+  const steps = [
+    { num: '01', title: 'Describe', desc: 'Tell us your challenge in a few lines. No forms, no friction.' },
+    { num: '02', title: 'Match', desc: 'AI matches you with a verified expert. Credentials checked, quality assured.' },
+    { num: '03', title: 'Connect', desc: 'Start a live session — chat, voice, or video. Your choice.' },
+    { num: '04', title: 'Act', desc: 'Walk away with documented next steps you can execute immediately.' },
+  ]
+
+  return (
+    <Section dark>
+      {/* Atmospheric background orb */}
+      <div
+        className="absolute"
+        style={{
+          bottom: '-20%', left: '50%', transform: 'translateX(-50%)',
+          width: '80vw', height: '50vh',
+          background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.06) 0%, transparent 60%)',
+          filter: 'blur(80px)',
+        }}
+      />
+
+      <div ref={ref} className="relative z-10 px-8 md:px-16 lg:px-24 py-28 md:py-40">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, ease: EASE_CINE }}
+              className="mb-6"
+            >
+              <Eyebrow>The Process</Eyebrow>
+            </motion.div>
+            <SplitTextReveal
+              text="From question to clarity."
+              delay={0.2}
+              className="tracking-[-0.03em]"
+              style={{
+                fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)',
+                lineHeight: 1.1,
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.93)',
+              }}
+            />
+          </div>
+
+          {/* Steps — horizontal layout with connecting line */}
           <div className="relative">
+            {/* Connecting line */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={inView ? { scaleX: 1 } : {}}
               transition={{ duration: 1.8, delay: 0.5, ease: EASE_CINE }}
               className="hidden md:block absolute"
               style={{
-                top: '36px', left: '12.5%', right: '12.5%',
+                top: '36px',
+                left: '12.5%',
+                right: '12.5%',
                 height: '1px',
-                background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.25), rgba(201,168,110,0.25), transparent)',
+                background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.2), rgba(201,168,110,0.2), transparent)',
                 transformOrigin: 'left',
               }}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
               {steps.map((step, i) => (
                 <motion.div
                   key={step.num}
@@ -625,23 +787,34 @@ function HowItWorksSection() {
                 >
                   {/* Step number circle */}
                   <div
-                    className="w-[72px] h-[72px] rounded-full mx-auto mb-6 flex items-center justify-center transition-shadow duration-500 hover:shadow-[0_0_30px_rgba(201,168,110,0.15)]"
+                    className="w-[72px] h-[72px] rounded-full mx-auto mb-6 flex items-center justify-center relative"
                     style={{
                       background: 'rgba(201,168,110,0.06)',
                       border: '1px solid rgba(201,168,110,0.15)',
                     }}
                   >
-                    <span className="text-[22px] font-extralight" style={{ color: '#c9a86e' }}>
+                    <span
+                      className="text-[22px] font-extralight"
+                      style={{ color: '#c9a86e' }}
+                    >
                       {step.num}
                     </span>
+                    {/* Subtle glow on hover */}
+                    <div
+                      className="absolute inset-0 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-500"
+                      style={{ boxShadow: '0 0 30px rgba(201,168,110,0.15)' }}
+                    />
                   </div>
                   <h3
-                    className="text-[20px] font-semibold tracking-[-0.02em] mb-3"
-                    style={{ color: '#2a2218' }}
+                    className="text-[18px] font-semibold tracking-[-0.02em] mb-3"
+                    style={{ color: 'rgba(255,255,255,0.9)' }}
                   >
                     {step.title}
                   </h3>
-                  <p className="text-[14px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.55)' }}>
+                  <p
+                    className="text-[14px] leading-[1.8]"
+                    style={{ color: 'rgba(255,255,255,0.4)' }}
+                  >
                     {step.desc}
                   </p>
                 </motion.div>
@@ -655,65 +828,39 @@ function HowItWorksSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// VALUE PILLARS — Glassmorphic cards with hover choreography
+// TESTIMONIAL / SOCIAL PROOF — Glassmorphic quote cards
 // ═══════════════════════════════════════════════════════════════════════
-function ValuePillarsSection() {
+function TestimonialSection() {
   const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const inView = useInView(ref, { once: true, margin: '-60px' })
 
-  const pillars = [
+  const quotes = [
     {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <circle cx="14" cy="14" r="12" stroke="#c9a86e" strokeWidth="1" opacity="0.4" />
-          <path d="M10 14l3 3 5-6" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      ),
-      title: 'Verified Expertise',
-      desc: 'Every expert is verified with category-specific checks, credentials, and ongoing ratings. No guesswork.',
+      text: 'One 20-minute session saved me weeks of research. The expert didn\'t just answer my question — they reframed how I thought about the problem.',
+      author: 'Arjun M.',
+      role: 'Product Manager, Bangalore',
     },
     {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <rect x="4" y="4" width="20" height="20" rx="4" stroke="#c9a86e" strokeWidth="1" opacity="0.4" />
-          <path d="M10 14h8M14 10v8" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      ),
-      title: 'Flexible Sessions',
-      desc: 'Chat when you have a quick question. Call when you need depth. Video when it requires demonstration.',
+      text: 'I\'ve been consulting for 15 years. FlyHigh gave me a way to share that experience on my own terms, with people who genuinely need it.',
+      author: 'Priya S.',
+      role: 'Financial Advisor, Mumbai',
     },
     {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M14 4v20M4 14h20" stroke="#c9a86e" strokeWidth="1" opacity="0.4" />
-          <circle cx="14" cy="14" r="4" stroke="#c9a86e" strokeWidth="1.5" />
-        </svg>
-      ),
-      title: 'AI-Enhanced Matching',
-      desc: 'Smart matching learns from every interaction. The more you use FlyHigh, the better your matches become.',
-    },
-    {
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M6 22V10l8-6 8 6v12a2 2 0 01-2 2H8a2 2 0 01-2-2z" stroke="#c9a86e" strokeWidth="1" opacity="0.4" />
-          <path d="M11 24v-7h6v7" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      ),
-      title: 'Actionable Outcomes',
-      desc: 'Not just advice — clear, concrete next steps you can act on immediately after every session.',
+      text: 'The matching was eerily accurate. Within minutes I was talking to someone who had dealt with exactly my situation. Game-changing.',
+      author: 'Karthik R.',
+      role: 'Startup Founder, Hyderabad',
     },
   ]
 
   return (
-    <Section dark>
-      {/* Atmospheric orb */}
+    <Section dark={false}>
+      {/* Subtle warm radial glow */}
       <div
         className="absolute"
         style={{
           top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-          width: '60vw', height: '40vh',
-          background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.05) 0%, transparent 60%)',
-          filter: 'blur(80px)',
+          width: '80vw', height: '60vh',
+          background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.05) 0%, transparent 70%)',
         }}
       />
 
@@ -726,270 +873,66 @@ function ValuePillarsSection() {
               transition={{ duration: 0.8, ease: EASE_CINE }}
               className="mb-6"
             >
-              <Eyebrow>Why FlyHigh</Eyebrow>
+              <Eyebrow light={false}>Voices</Eyebrow>
             </motion.div>
             <SplitTextReveal
-              text="One conversation can change everything."
-              className="max-w-3xl mx-auto tracking-[-0.03em]"
+              text="What early users are saying."
+              delay={0.2}
+              className="tracking-[-0.03em]"
               style={{
                 fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)',
                 lineHeight: 1.1,
                 fontWeight: 300,
-                color: 'rgba(255,255,255,0.93)',
+                color: '#2a2218',
               }}
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {pillars.map((pillar, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {quotes.map((q, i) => (
               <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 30 }}
+                key={i}
+                initial={{ opacity: 0, y: 35 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: EASE_CINE }}
-                className="relative p-8 rounded-2xl transition-all duration-500 group overflow-hidden"
+                transition={{ duration: 0.7, delay: 0.2 + i * 0.12, ease: EASE_CINE }}
+                className="relative p-8 rounded-2xl group transition-all duration-500"
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  background: 'linear-gradient(165deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
+                  border: '1px solid rgba(42,34,24,0.06)',
+                  backdropFilter: 'blur(12px)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(201,168,110,0.06)'
-                  e.currentTarget.style.borderColor = 'rgba(201,168,110,0.15)'
-                  e.currentTarget.style.transform = 'translateY(-4px)'
-                  e.currentTarget.style.boxShadow = '0 8px 40px rgba(201,168,110,0.08)'
+                  e.currentTarget.style.borderColor = 'rgba(201,168,110,0.25)'
+                  e.currentTarget.style.boxShadow = '0 12px 48px rgba(201,168,110,0.1)'
+                  e.currentTarget.style.transform = 'translateY(-6px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
-                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.borderColor = 'rgba(42,34,24,0.06)'
                   e.currentTarget.style.boxShadow = 'none'
+                  e.currentTarget.style.transform = 'translateY(0)'
                 }}
               >
-                {/* Inner glow on hover */}
+                {/* Opening quote mark */}
                 <div
-                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)' }}
-                />
-                <div className="relative z-10">
-                  <div className="mb-5 opacity-70 group-hover:opacity-100 transition-opacity duration-500">{pillar.icon}</div>
-                  <h3
-                    className="text-[20px] font-semibold tracking-[-0.02em] mb-3"
-                    style={{ color: 'rgba(255,255,255,0.9)' }}
-                  >
-                    {pillar.title}
-                  </h3>
-                  <p className="text-[14px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                    {pillar.desc}
-                  </p>
+                  className="text-[48px] font-light leading-none mb-4"
+                  style={{ color: 'rgba(201,168,110,0.3)' }}
+                >
+                  &ldquo;
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// FIELDS SECTION — Categories with glassmorphic cards
-// ═══════════════════════════════════════════════════════════════════════
-function FieldsSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
-  const fields = [
-    { name: 'Business & Finance', desc: 'Investments, financial planning, strategy, HR' },
-    { name: 'Health & Wellness', desc: 'Medical guidance, mental health, fitness coaching' },
-    { name: 'Legal & Compliance', desc: 'Legal matters, regulations, dispute resolution' },
-    { name: 'Marketing & PR', desc: 'Growth strategy, branding, public relations' },
-    { name: 'IT & Digital', desc: 'Technology systems, software, digital productivity' },
-    { name: 'Career & Education', desc: 'Career paths, skill development, mentorship' },
-    { name: 'Agriculture', desc: 'Farming productivity, cultivation, horticulture' },
-    { name: 'Operations & Growth', desc: 'Process optimization, sustainability, scaling' },
-  ]
-
-  return (
-    <Section dark={false}>
-      <div ref={ref} className="px-8 md:px-16 lg:px-24 py-28 md:py-40">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16">
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, ease: EASE_CINE }}
-                className="mb-6"
-              >
-                <Eyebrow light={false}>Fields We Support</Eyebrow>
-              </motion.div>
-              <SplitTextReveal
-                text="Expertise across every field that matters."
-                className="tracking-[-0.03em]"
-                style={{
-                  fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)',
-                  lineHeight: 1.1,
-                  fontWeight: 300,
-                  color: '#2a2218',
-                }}
-              />
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: 0.6, ease: EASE_CINE }}
-                className="mt-6"
-                style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(42,34,24,0.55)' }}
-              >
-                From healthcare to agriculture, from legal to tech — FlyHigh connects you
-                with professionals who have lived your challenge and can guide you through it.
-              </motion.p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {fields.map((field, i) => (
-                <motion.div
-                  key={field.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.1 + i * 0.06, ease: EASE_CINE }}
-                  className="p-5 rounded-xl transition-all duration-500 group relative overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 100%)',
-                    border: '1px solid rgba(42,34,24,0.06)',
-                    backdropFilter: 'blur(8px)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(201,168,110,0.3)'
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(201,168,110,0.1)'
-                    e.currentTarget.style.transform = 'translateY(-3px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(42,34,24,0.06)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
+                <p
+                  className="text-[15px] leading-[1.8] mb-8"
+                  style={{ color: 'rgba(42,34,24,0.65)' }}
                 >
-                  {/* Inner glow */}
-                  <div
-                    className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)' }}
-                  />
-                  <div className="relative z-10">
-                    <h4
-                      className="text-[15px] font-semibold tracking-[-0.01em] mb-1.5"
-                      style={{ color: '#2a2218' }}
-                    >
-                      {field.name}
-                    </h4>
-                    <p className="text-[13px] leading-[1.6]" style={{ color: 'rgba(42,34,24,0.45)' }}>
-                      {field.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// FOR EXPERTS SECTION — With background image + atmospheric depth
-// ═══════════════════════════════════════════════════════════════════════
-function ExpertsSection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
-
-  const benefits = [
-    { title: 'Get Verified', desc: 'Build your professional profile with verified credentials in your field.' },
-    { title: 'Help Real People', desc: 'Support individuals facing real problems with real deadlines.' },
-    { title: 'Earn On Your Terms', desc: 'Monetize your expertise professionally — set your own availability.' },
-  ]
-
-  return (
-    <Section dark id="experts">
-      {/* Background image + atmospheric overlays */}
-      <div className="absolute inset-0 opacity-20">
-        <Image src="/spiral-bg-dark.jpg" alt="" fill className="object-cover" style={{ filter: 'blur(1px)' }} />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, #0a0a0a 0%, transparent 30%, transparent 70%, #0a0a0a 100%)' }} />
-      </div>
-
-      {/* Volumetric light */}
-      <div
-        className="absolute"
-        style={{
-          top: '-15%', left: '50%', transform: 'translateX(-50%)',
-          width: '400px', height: '500px',
-          background: 'conic-gradient(from 170deg at 50% 0%, transparent 38%, rgba(201,168,110,0.04) 46%, rgba(201,168,110,0.08) 50%, rgba(201,168,110,0.04) 54%, transparent 62%)',
-          filter: 'blur(35px)',
-          mixBlendMode: 'screen',
-        }}
-      />
-
-      <div ref={ref} className="relative z-10 px-8 md:px-16 lg:px-24 py-28 md:py-40">
-        <div className="max-w-5xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: EASE_CINE }}
-            className="mb-6"
-          >
-            <Eyebrow>For Experts</Eyebrow>
-          </motion.div>
-
-          <SplitTextReveal
-            text="Let your skill pay you back."
-            className="max-w-3xl mx-auto mb-6 tracking-[-0.03em]"
-            style={{
-              fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)',
-              lineHeight: 1.1,
-              fontWeight: 300,
-              color: 'rgba(255,255,255,0.93)',
-            }}
-          />
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.5, ease: EASE_CINE }}
-            className="max-w-xl mx-auto mb-16"
-            style={{ fontSize: '16px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)' }}
-          >
-            Share what you already know — professionally, on your schedule,
-            with people who genuinely need your guidance.
-          </motion.p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((b, i) => (
-              <motion.div
-                key={b.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, delay: 0.3 + i * 0.12, ease: EASE_CINE }}
-                className="text-center group"
-              >
-                <div
-                  className="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(201,168,110,0.2)]"
-                  style={{
-                    background: 'rgba(201,168,110,0.1)',
-                    border: '1px solid rgba(201,168,110,0.2)',
-                  }}
-                >
-                  <span className="text-[18px] font-light" style={{ color: '#c9a86e' }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <h3
-                  className="text-[18px] font-semibold tracking-[-0.02em] mb-2"
-                  style={{ color: 'rgba(255,255,255,0.9)' }}
-                >
-                  {b.title}
-                </h3>
-                <p className="text-[14px] leading-[1.7]" style={{ color: 'rgba(255,255,255,0.4)' }}>
-                  {b.desc}
+                  {q.text}
                 </p>
+                <div style={{ borderTop: '1px solid rgba(42,34,24,0.06)', paddingTop: '16px' }}>
+                  <div className="text-[14px] font-semibold" style={{ color: '#2a2218' }}>
+                    {q.author}
+                  </div>
+                  <div className="text-[12px]" style={{ color: 'rgba(42,34,24,0.4)' }}>
+                    {q.role}
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -1000,7 +943,7 @@ function ExpertsSection() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// FAQ SECTION — Premium accordion with gold active states
+// FAQ SECTION — Accordion with premium transitions
 // ═══════════════════════════════════════════════════════════════════════
 function FAQSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -1008,16 +951,16 @@ function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const faqs = [
-    { q: 'When will FlyHigh launch?', a: 'We are iterating with early users and experts. Join the waitlist to receive launch updates and be among the first to experience FlyHigh.' },
-    { q: 'How are experts selected and verified?', a: 'Profiles include verification signals and category-specific checks, plus ongoing ratings and feedback from users. We prioritize quality and accountability.' },
-    { q: 'Is FlyHigh powered entirely by AI?', a: 'FlyHigh uses AI to improve matching speed and accuracy, but expert guidance remains human-led and accountable. Real people, real expertise.' },
-    { q: 'What does a session look like?', a: 'You choose the format — chat, voice, or video. Sessions are focused, time-bounded, and end with clear next steps you can act on.' },
-    { q: 'How much does it cost?', a: 'Pricing varies by field and session type. We are designing a model that keeps guidance accessible while fairly compensating experts.' },
+    { q: 'When will the platform launch?', a: 'We are iterating with early users and experts. Join the waitlist to get launch updates and early access.' },
+    { q: 'How are experts verified?', a: 'Every expert undergoes category-specific credential checks, background verification, and ongoing quality monitoring through user ratings.' },
+    { q: 'Is this powered entirely by AI?', a: 'AI handles matching and optimization. Expert guidance is always human-led, accountable, and personal.' },
+    { q: 'What does a session look like?', a: 'You choose the format — chat, voice, or video. Sessions are focused, time-bounded, and conclude with documented next steps.' },
+    { q: 'How much will it cost?', a: 'Pricing varies by field and session type. We are designing a model that keeps guidance accessible while fairly compensating experts.' },
   ]
 
   return (
-    <Section dark={false}>
-      <div ref={ref} className="px-8 md:px-16 lg:px-24 py-28 md:py-40">
+    <Section dark>
+      <div ref={ref} className="relative z-10 px-8 md:px-16 lg:px-24 py-28 md:py-40">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <motion.div
@@ -1026,16 +969,17 @@ function FAQSection() {
               transition={{ duration: 0.8, ease: EASE_CINE }}
               className="mb-6"
             >
-              <Eyebrow light={false}>FAQ</Eyebrow>
+              <Eyebrow>FAQ</Eyebrow>
             </motion.div>
             <SplitTextReveal
               text="Common questions, clear answers."
+              delay={0.2}
               className="tracking-[-0.03em]"
               style={{
                 fontSize: 'clamp(2.4rem, 4.8vw, 4.2rem)',
                 lineHeight: 1.1,
                 fontWeight: 300,
-                color: '#2a2218',
+                color: 'rgba(255,255,255,0.93)',
               }}
             />
           </div>
@@ -1051,33 +995,29 @@ function FAQSection() {
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06, ease: EASE_CINE }}
                   className="rounded-2xl overflow-hidden transition-all duration-500"
                   style={{
-                    background: isOpen
-                      ? 'linear-gradient(165deg, rgba(201,168,110,0.08) 0%, rgba(255,255,255,0.7) 100%)'
-                      : 'rgba(255,255,255,0.65)',
-                    border: `1px solid ${isOpen ? 'rgba(201,168,110,0.2)' : 'rgba(42,34,24,0.06)'}`,
+                    background: isOpen ? 'rgba(201,168,110,0.06)' : 'rgba(255,255,255,0.03)',
+                    border: `1px solid ${isOpen ? 'rgba(201,168,110,0.15)' : 'rgba(255,255,255,0.06)'}`,
                   }}
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between px-7 py-6 text-left"
+                    className="w-full flex items-center justify-between px-7 py-6 text-left transition-colors duration-300"
                   >
                     <span
-                      className="text-[16px] font-semibold tracking-[-0.01em] pr-4 transition-colors duration-300"
-                      style={{ color: isOpen ? '#a0814a' : '#2a2218' }}
+                      className="text-[16px] font-semibold tracking-[-0.01em] pr-4"
+                      style={{ color: isOpen ? '#c9a86e' : 'rgba(255,255,255,0.8)' }}
                     >
                       {faq.q}
                     </span>
-                    <motion.svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
+                    <motion.div
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.4, ease: EASE_UI }}
-                      style={{ flexShrink: 0 }}
+                      className="flex-shrink-0"
                     >
-                      <path d="M9 4v10M4 9h10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" />
-                    </motion.svg>
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M9 4v10M4 9h10" stroke="#c9a86e" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    </motion.div>
                   </button>
                   <AnimatePresence>
                     {isOpen && (
@@ -1089,7 +1029,7 @@ function FAQSection() {
                         className="overflow-hidden"
                       >
                         <div className="px-7 pb-6">
-                          <p className="text-[14px] leading-[1.9]" style={{ color: 'rgba(42,34,24,0.55)' }}>
+                          <p className="text-[14px] leading-[1.9]" style={{ color: 'rgba(255,255,255,0.45)' }}>
                             {faq.a}
                           </p>
                         </div>
@@ -1114,28 +1054,16 @@ function CTASection() {
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <Section dark id="waitlist">
-      {/* Atmospheric orbs */}
+    <Section dark={false} id="waitlist">
+      {/* Atmospheric golden orb */}
       <div className="absolute inset-0 overflow-hidden">
         <div
           className="absolute"
           style={{
-            top: '20%', left: '50%', transform: 'translateX(-50%)',
-            width: '80vw', height: '60vh',
-            background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.1) 0%, transparent 60%)',
-            filter: 'blur(80px)',
-          }}
-        />
-        {/* Morphing blob */}
-        <div
-          className="absolute"
-          style={{
-            top: '40%', left: '50%', transform: 'translateX(-50%)',
-            width: '400px', height: '400px',
-            background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, transparent 60%)',
-            borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
-            filter: 'blur(50px)',
-            animation: 'morph-blob 12s ease-in-out infinite',
+            top: '30%', left: '50%', transform: 'translateX(-50%)',
+            width: '70vw', height: '50vh',
+            background: 'radial-gradient(ellipse at center, rgba(201,168,110,0.08) 0%, transparent 60%)',
+            filter: 'blur(60px)',
           }}
         />
       </div>
@@ -1147,44 +1075,53 @@ function CTASection() {
           transition={{ duration: 0.8, ease: EASE_CINE }}
           className="mb-6"
         >
-          <Eyebrow>Early Access</Eyebrow>
+          <Eyebrow light={false}>Early Access</Eyebrow>
         </motion.div>
 
         <SplitTextReveal
-          text="This product is in the making."
-          className="max-w-3xl mx-auto mb-6 tracking-[-0.03em]"
+          text="The future of guidance starts here."
+          delay={0.2}
+          className="max-w-4xl mx-auto tracking-[-0.03em] mb-8"
           style={{
             fontSize: 'clamp(2.8rem, 5.5vw, 5rem)',
             lineHeight: 1.05,
             fontWeight: 250,
-            color: 'rgba(255,255,255,0.93)',
+            color: '#2a2218',
           }}
         />
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5, ease: EASE_CINE }}
+          transition={{ duration: 0.8, delay: 0.6, ease: EASE_CINE }}
           className="max-w-lg mx-auto mb-14"
-          style={{ fontSize: '16px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)' }}
+          style={{ fontSize: '16px', lineHeight: 1.8, color: 'rgba(42,34,24,0.5)' }}
         >
-          FlyHigh is currently being built. Early access is open for founding users
-          and founding experts who want to shape the experience.
+          We are building something that has never existed before.
+          Join the founding community of users and experts.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.7, ease: EASE_CINE }}
+          transition={{ duration: 0.8, delay: 0.8, ease: EASE_CINE }}
           className="flex items-center justify-center gap-5 flex-wrap"
         >
-          <MagneticButton href="mailto:info@trinade.com?subject=FlyHigh%20Waitlist" variant="primary">
+          <MagneticButton
+            href="mailto:info@trinade.com?subject=Early%20Access"
+            variant="primary"
+            className="!bg-[#2a2218] !text-[#f2ede6]"
+          >
             Join the Waitlist
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </MagneticButton>
-          <MagneticButton href="mailto:info@trinade.com?subject=FlyHigh%20Expert%20Application" variant="secondary">
+          <MagneticButton
+            href="mailto:info@trinade.com?subject=Expert%20Application"
+            variant="secondary"
+            className="!border-[rgba(42,34,24,0.15)] !text-[rgba(42,34,24,0.6)]"
+          >
             Apply as Expert
           </MagneticButton>
         </motion.div>
@@ -1192,12 +1129,12 @@ function CTASection() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1, ease: EASE_CINE }}
+          transition={{ duration: 0.8, delay: 1.2, ease: EASE_CINE }}
           className="mt-12"
-          style={{ fontSize: '13px', color: 'rgba(255,255,255,0.25)' }}
+          style={{ fontSize: '13px', color: 'rgba(42,34,24,0.3)' }}
         >
           Or reach us directly at{' '}
-          <a href="mailto:info@trinade.com" style={{ color: 'rgba(201,168,110,0.5)', textDecoration: 'none' }}>
+          <a href="mailto:info@trinade.com" style={{ color: '#c9a86e', textDecoration: 'none' }}>
             info@trinade.com
           </a>
         </motion.p>
@@ -1209,15 +1146,14 @@ function CTASection() {
 // ═══════════════════════════════════════════════════════════════════════
 // MAIN EXPORT
 // ═══════════════════════════════════════════════════════════════════════
-export default function FlyHighProductContent() {
+export default function NewProductExperimentContent() {
   return (
     <div data-dark-section>
       <HeroSection />
       <NarrativeSection />
-      <HowItWorksSection />
-      <ValuePillarsSection />
-      <FieldsSection />
-      <ExpertsSection />
+      <BentoSection />
+      <ProcessSection />
+      <TestimonialSection />
       <FAQSection />
       <CTASection />
     </div>
