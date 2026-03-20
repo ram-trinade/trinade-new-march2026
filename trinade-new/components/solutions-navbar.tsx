@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
+import Link from 'next/link'
+
+const MotionLink = motion(Link)
 
 // ═══════════════════════════════════════════════════════════
 // FOURMULA-STYLE NAVBAR — Logo left + Floating centered dark pill
@@ -145,7 +148,7 @@ export default function SolutionsNavbar() {
   return (
     <>
       {/* ─── Trinade text on the left (inertia-style) ─── */}
-      <a
+      <Link
         href="/"
         className="fixed left-8 z-[9999] flex items-center"
         data-navbar
@@ -163,10 +166,10 @@ export default function SolutionsNavbar() {
         >
           TRINADE
         </span>
-      </a>
+      </Link>
 
       {/* ─── Logo on the top right ─── */}
-      <a
+      <Link
         href="/"
         className="fixed right-8 z-[9999] flex items-center"
         data-navbar
@@ -188,7 +191,7 @@ export default function SolutionsNavbar() {
             transition: 'filter 0.5s ease',
           }}
         />
-      </a>
+      </Link>
 
       {/* ─── Floating Navbar (centered pill) ─── */}
       <div
@@ -372,7 +375,7 @@ export default function SolutionsNavbar() {
                                     {productLinks.map((pLink, pi) => {
                                       const isProductActive = pathname === pLink.href
                                       return (
-                                        <motion.a
+                                        <MotionLink
                                           key={pLink.label}
                                           href={pLink.href}
                                           initial={{ opacity: 0, x: -10, filter: 'blur(4px)' }}
@@ -406,7 +409,7 @@ export default function SolutionsNavbar() {
                                             }}
                                           />
                                           {pLink.label}
-                                        </motion.a>
+                                        </MotionLink>
                                       )
                                     })}
                                   </div>
@@ -418,7 +421,7 @@ export default function SolutionsNavbar() {
                       }
 
                       return (
-                        <motion.a
+                        <MotionLink
                           key={link.label}
                           href={link.href}
                           initial={{ opacity: 0, x: -12 }}
@@ -451,7 +454,7 @@ export default function SolutionsNavbar() {
                               }}
                             />
                           )}
-                        </motion.a>
+                        </MotionLink>
                       )
                     })}
                   </div>
