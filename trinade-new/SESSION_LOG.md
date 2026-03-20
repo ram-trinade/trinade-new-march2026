@@ -9,8 +9,8 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 87 — Featured blog post image replacement
-- Last completed: Prompt 87 — Replaced gradient placeholder with real image on experimental blog featured article
+- Done: Prompt 88 — Swapped blog-v2 into /experimental/blog route
+- Last completed: Prompt 88 — Blog V2 (3-col vertical cards, split hero) now serves at /experimental/blog, V1 archived to blog-old
 - Live URL: https://trinade-new.vercel.app
 
 ---
