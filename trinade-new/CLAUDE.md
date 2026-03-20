@@ -30,6 +30,8 @@ app/
   blog/page.tsx        # Blog — editorial magazine with hero, featured article, 6-card grid, newsletter CTA
   company/page.tsx     # Company — "Est 2020" hero, quote, vision, mission (3 pillars), values accordion (5), milestones carousel (6), team accordion (6 members)
   contact/page.tsx     # Contact — dark hero with spiral bg, split layout (info card left + gold glass form right), CountryCodeDropdown (20 countries), scrollable SubjectDropdown
+  products/flyhigh/page.tsx      # Fly High — GOD MODE design: aurora gradients, split-text 3D, magnetic buttons
+  products/sleep-alert/page.tsx  # Sleep Alert Device — cinematic SaaS: radar animations, 3D tilt cards, bento grid
   privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/

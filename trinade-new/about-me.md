@@ -46,7 +46,8 @@
 - **Blog** (`/blog`): Editorial magazine — hero, featured article, 6-card grid, newsletter, topics
 - **Company** (`/company`): "Est 2020" bold gold hero, quote, vision, mission, values accordion, milestones carousel, team accordion with expanding cards
 - **Contact** (`/contact`): Atmospheric CSS bg, bold "Get in touch" hero, form with custom dropdown
-- **Products**: Pages removed — will be redesigned from scratch later
+- **Fly High** (`/products/flyhigh`): GOD MODE design — aurora gradients, split-text 3D, magnetic buttons
+- **Sleep Alert Device** (`/products/sleep-alert`): Cinematic SaaS — radar animations, 3D tilt cards, bento grid
 - **Privacy Policy** (`/privacy-policy`): Alternating cream sections
 - **Terms of Service** (`/terms-of-service`): Numbered sections
 - **404**: Typewriter cycling "Something [broke/went wrong/...]" + giant "404" watermark, cream bg, "Back to home" link
@@ -59,7 +60,7 @@
 
 ## What's Next
 - **Immediate**: Clear design gaps page-by-page (see `design-gaps-report.md`)
-- **New pages**: Product pages (to be redesigned from scratch), case studies, careers
+- **New pages**: Case studies, careers, individual blog articles
 - Mobile responsiveness pass (currently desktop-first)
 - Content finalization with real copy
 - Design exploration — open to bold new directions

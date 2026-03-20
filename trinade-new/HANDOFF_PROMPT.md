@@ -30,19 +30,21 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ## What Exists Today
 
-### 7 Pages + 404 — All Functional
+### 9 Pages + 404 — All Functional
 | Route | What It Is | Design Quality |
 |---|---|---|
-| `/` | **Homepage**: cinematic preloader (every visit), hero, AROX-inspired accordion (V/01–V/04), challenges grid, CTA | Premium scroll + editorial |
+| `/` | **Homepage**: cinematic preloader (every visit), hero, AROX-inspired accordion, challenges grid, CTA | Premium scroll + editorial |
 | `/solutions` | Solutions: hero, mission, industries, Our Approach scroll cards (GSAP pinned), testimonial carousel, accordion, CTA | Solid — full design system |
 | `/blog` | Editorial magazine: staggered hero, featured article, 6-card grid, newsletter CTA | Strong editorial feel |
 | `/company` | "Est 2020" gold hero, quote, vision, mission pillars, values accordion, milestones, team | Rich, editorial |
 | `/contact` | Dark hero with spiral bg, split info card + gold glass form | Redesigned — premium |
+| `/products/flyhigh` | **Fly High**: GOD MODE design — aurora gradients, split-text 3D, magnetic buttons, volumetric light | Cinematic — Awwwards-ready |
+| `/products/sleep-alert` | **Sleep Alert Device**: radar animations, 3D tilt cards, bento grid, animated counters | Cinematic SaaS showcase |
 | `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
 | 404 | Typewriter cycling "Something [broke/went wrong/...]" + giant "404" watermark, cream bg | Editorial, memorable |
 
-> **CRITICAL ROUTING**: Homepage is at `/` (app/page.tsx). Solutions is at `/solutions`. No `/home` route. Product pages were removed — do NOT create `/products`. Nav links: `/` (Home), `/solutions`, `/blog`, `/company`, `/contact`.
+> **ROUTING**: Homepage at `/`. Solutions at `/solutions`. Products at `/products/flyhigh` and `/products/sleep-alert`. Nav links: Home (`/`), Products (dropdown: Fly High, Sleep Alert Device), Solutions, Blog, Company, Contact.
 
 ### Design System
 - **Palette**: Charcoal (#1a1a1e, #0a0a0a) / Cream (#f2ede6, #ebe5db) / Gold (#c9a86e, #d4bb8a, #a0814a)
@@ -100,7 +102,7 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 
 ### Design Opportunities
 - **Mobile responsiveness** — currently desktop-only, needs full responsive pass
-- **New pages** — case studies, careers, individual blog posts, product pages (to be redesigned from scratch)
+- **New pages** — case studies, careers, individual blog posts
 - **Hero redesigns** — the current hero works but could be more distinctive
 - **Interactive elements** — scroll-driven animations, parallax, micro-interactions
 - **Background experiments** — atmospheric orbs work, but bolder approaches welcome
@@ -173,7 +175,7 @@ These premium techniques are now implemented and can be reused:
 
 ## Known Issues & Session Notes
 
-1. **Homepage is at `/`, NOT `/home`** — No `/home` route, no `/products` route. Nav: Home (`/`), Solutions, Blog, Company, Contact.
+1. **Homepage is at `/`, NOT `/home`** — No `/home` route. Product pages at `/products/flyhigh` and `/products/sleep-alert`. Nav: Home (`/`), Products (dropdown), Solutions, Blog, Company, Contact.
 
 2. **Dev server**: port 3006, no Turbopack, kill node + delete `.next/` if HMR breaks.
 
