@@ -40,7 +40,7 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 | `/contact` | Dark hero with spiral bg, split info card + gold glass form | Redesigned — premium |
 | `/privacy-policy` | Alternating cream sections, gold accents | Clean legal page |
 | `/terms-of-service` | Numbered sections, alternating backgrounds | Clean legal page |
-| 404 | Giant "404" watermark, gold border button, atmospheric dark | Atmospheric dark |
+| 404 | Typewriter cycling "Something [broke/went wrong/...]" + giant "404" watermark, cream bg | Editorial, memorable |
 
 > **CRITICAL ROUTING**: Homepage is at `/` (app/page.tsx). Solutions is at `/solutions`. No `/home` route. Product pages were removed — do NOT create `/products`. Nav links: `/` (Home), `/solutions`, `/blog`, `/company`, `/contact`.
 
@@ -152,34 +152,14 @@ A comprehensive Awwwards design audit was completed. Two key files:
 
 Read `design-gaps-report.md` for the full priority matrix. The top critical issues are there.
 
-## Products (Built — Experimental)
+## Products (Production)
 
-Two products have dedicated pages on the experimental site:
-- **Fly High** (`/experimental/products/flyhigh`) — Expert consultation platform. GOD MODE design: aurora gradients, split-text 3D reveals, magnetic buttons, volumetric light, morphing blobs. Content docs in `Products/FlyHigh_Details/`
-- **Sleep Alert Device** — IoT drowsiness detection. Page pending. Docs in `Products/Sleeping_Alert_Device_Details/`
-- **New Product Experiment** (`/experimental/products/new-product-experiment`) — Design showcase with bento grid, glassmorphic testimonials, all award-winning techniques
+Two products have dedicated production pages:
+- **Fly High** (`/products/flyhigh`) — Expert consultation platform. GOD MODE design: aurora gradients, split-text 3D reveals, magnetic buttons, volumetric light, morphing blobs. Content docs in `Products/FlyHigh_Details/`
+- **Sleep Alert Device** (`/products/sleep-alert`) — IoT drowsiness detection. Cinematic SaaS product page with radar animations, 3D tilt cards, bento grid, animated counters. Docs in `Products/Sleeping_Alert_Device_Details/`
 
 ### Navbar Products Dropdown
-The navbar now has a collapsible Products dropdown with sub-items (Fly High, Sleep Alert). Sub-items: 15px/semibold, gold gradient dot indicators, 0.55s animation with blur-in entry.
-
----
-
-## Experimental Site
-
-`/experimental/` routes for design iteration. Changes here first, promoted to main routes once approved.
-
-### Experimental Pages
-| Route | Status |
-|---|---|
-| `/experimental/products/flyhigh` | **Fly High product page** — GOD MODE design, 8 sections |
-| `/experimental/products/new-product-experiment` | Design showcase — all award techniques |
-| `/experimental/404` | **Typewriter error page** — cycling phrases, magnetic button |
-| `/experimental/blog` | Blog V1 — editorial cards, article detail |
-| `/experimental/blog-v2` | Blog V2 (ACTIVE) — 3-col vertical cards, featured split |
-| `/experimental/contact` | Contact with inline form validation |
-| `/experimental/` + others | Mirrors of main pages for testing |
-
-**Rule**: All design work happens on `/experimental/` routes. Never modify main routes during iteration.
+The navbar has a collapsible Products dropdown with sub-items (Fly High, Sleep Alert Device). Sub-items: 15px/semibold, gold gradient dot indicators, 0.55s animation with blur-in entry.
 
 ### GOD MODE Techniques (Available)
 These premium techniques are now implemented and can be reused:

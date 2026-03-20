@@ -49,13 +49,13 @@
 - **Products**: Pages removed — will be redesigned from scratch later
 - **Privacy Policy** (`/privacy-policy`): Alternating cream sections
 - **Terms of Service** (`/terms-of-service`): Numbered sections
-- **404**: Giant "404" watermark, atmospheric dark, gold border "Return to Home" button
+- **404**: Typewriter cycling "Something [broke/went wrong/...]" + giant "404" watermark, cream bg, "Back to home" link
 - **Live URL**: https://trinade-new.vercel.app
 
 ## Products
 - **Fly High** — Enterprise travel management platform. Product docs in `Products/FlyHigh_Details/` (FSD, roadmap, pricing, T&C)
 - **Sleep Alert Device** — IoT drowsiness detection device. Product docs in `Products/Sleeping_Alert_Device_Details/` (FSD, user manual, troubleshoot guide, usage rules)
-- Both need dedicated product pages on the website
+- Both have production product pages (Fly High at `/products/flyhigh`, Sleep Alert Device at `/products/sleep-alert`)
 
 ## What's Next
 - **Immediate**: Clear design gaps page-by-page (see `design-gaps-report.md`)

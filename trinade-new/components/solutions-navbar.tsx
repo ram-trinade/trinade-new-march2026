@@ -16,8 +16,8 @@ const PANEL_WIDTH = 340
 const SCROLL_SEGMENTS = 5
 
 const productLinks = [
-  { label: 'Fly High', href: '/experimental/products/flyhigh' },
-  { label: 'Sleep Alert Device', href: '/experimental/products/sleep-alert' },
+  { label: 'Fly High', href: '/products/flyhigh' },
+  { label: 'Sleep Alert Device', href: '/products/sleep-alert' },
 ]
 
 const menuLinks = [
@@ -313,7 +313,7 @@ export default function SolutionsNavbar() {
                       const isActive = link.href === '/'
                           ? pathname === '/' || pathname === '/home'
                           : link.hasDropdown
-                          ? pathname.startsWith('/experimental/products') || pathname.startsWith('/products')
+                          ? pathname.startsWith('/products')
                           : pathname === link.href
 
                       if (link.hasDropdown) {
