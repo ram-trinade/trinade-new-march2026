@@ -382,8 +382,8 @@ export default function SolutionsNavbar() {
                                             delay: 0.08 + pi * 0.07,
                                             ease: [0.16, 1, 0.3, 1],
                                           }}
-                                          className="flex items-center text-[15px] font-medium tracking-[-0.01em] py-1 transition-colors hover:text-[#6b5530]"
-                                          style={{ color: isProductActive ? '#2a2218' : 'rgba(42,34,24,0.7)' }}
+                                          className="flex items-center text-[15px] font-semibold tracking-[-0.01em] py-1 transition-colors hover:text-[#6b5530]"
+                                          style={{ color: isProductActive ? '#2a2218' : 'rgba(42,34,24,0.78)' }}
                                           onClick={() => { setIsOpen(false); setProductsOpen(false) }}
                                         >
                                           <span

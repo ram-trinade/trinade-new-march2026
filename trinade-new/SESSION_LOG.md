@@ -9,8 +9,8 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 78 — Dropdown sub-item size reduction for clear hierarchy
-- Last completed: Prompt 78 — Sub-items scaled down (15px/medium) relative to parent nav items (22px/semibold)
+- Done: Prompt 79 — Subtle weight bump on dropdown sub-items
+- Last completed: Prompt 79 — Sub-items bumped from medium to semibold weight, slightly darker text
 - Live URL: https://trinade-new.vercel.app
 
 ---
