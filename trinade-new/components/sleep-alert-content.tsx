@@ -881,27 +881,6 @@ function FleetSection() {
           ))}
         </div>
 
-        {/* Pilot CTA */}
-        <RevealSection className="text-center mt-16" delay={0.3}>
-          <div
-            className="inline-block p-8 rounded-2xl"
-            style={{
-              background: 'rgba(201,168,110,0.06)',
-              border: '1px solid rgba(201,168,110,0.12)',
-            }}
-          >
-            <p
-              style={{
-                fontSize: '15px',
-                color: 'rgba(42,34,24,0.6)',
-                lineHeight: 1.7,
-              }}
-            >
-              <span style={{ fontWeight: 500, color: '#2a2218' }}>Pilot outcome:</span>{' '}
-              A clear go/no-go recommendation for broader deployment, with improvement notes.
-            </p>
-          </div>
-        </RevealSection>
       </div>
     </section>
   )
