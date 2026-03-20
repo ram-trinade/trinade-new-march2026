@@ -9,9 +9,24 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 96 — Removed Pilot outcome CTA from Sleep Alert product page
-- Last completed: Prompt 96 — Sleep Alert fleet section cleaned up
+- Done: Prompt 97 — Made blog article numbers darker for visibility
+- Last completed: Prompt 97 — Numbers now readable on light abstract images
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 97: Blog Article Numbers Visibility
+
+### What Was Done
+- Increased article card number opacity from 0.12 → 0.35 (default) and 0.3 → 0.6 (hover)
+- Increased featured card "01" number opacity from 0.1 → 0.3 (default) and 0.25 → 0.55 (hover)
+- Enhanced text-shadow for better contrast against light abstract gradient images
+
+### Commits
+- `e121e9a` — Make blog article numbers darker for visibility
+
+### Files Changed
+- `app/blog/page.tsx` — Updated opacity values for ArticleCard and FeaturedCard number overlays
 
 ---
 
