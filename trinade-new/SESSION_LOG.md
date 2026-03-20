@@ -9,8 +9,8 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 88 — Swapped blog-v2 into /experimental/blog route
-- Last completed: Prompt 88 — Blog V2 (3-col vertical cards, split hero) now serves at /experimental/blog, V1 archived to blog-old
+- Done: Prompt 89 — Replaced main 404 with experimental typewriter design
+- Last completed: Prompt 89 — Main not-found.tsx now uses ExperimentalErrorContent (typewriter cycling + giant watermark)
 - Live URL: https://trinade-new.vercel.app
 
 ---
