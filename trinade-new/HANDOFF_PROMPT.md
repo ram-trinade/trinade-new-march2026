@@ -63,7 +63,7 @@ These files contain hard-won lessons and design decisions. Respect them, but don
 - **That's it.** No R3F, no ShadCN, no MagicUI.
 
 ### Shared Components
-- `solutions-navbar.tsx` — "TRINADE" wordmark (left) + Menu pill with scroll % (center) + Logo (right) + gold active page dot. Menu links: Solutions, Blog, Company, Contact
+- `solutions-navbar.tsx` — "TRINADE" wordmark (left) + Menu pill with scroll % (center) + Logo (right) + gold active page dot. Menu links: Products (dropdown: Fly High, Sleep Alert), Solutions, Blog, Company, Contact
 - `solutions-content.tsx` — Solutions page (`/solutions`): hero, mission, industries grid, Our Approach scroll cards (CSS Grid layout), testimonial carousel, accordion, CTA
 - `solutions-footer.tsx` — Gold glass card with CTA, nav links (Home, Solutions, Blog, Company, Contact), TRINADE marquee, social icons
 - `homepage-content.tsx` — Homepage sections: hero (viewport-contained), AROX-inspired Why Choose Us accordion (V/01–V/04, scroll-triggered), challenges grid, CTA
@@ -152,29 +152,42 @@ A comprehensive Awwwards design audit was completed. Two key files:
 
 Read `design-gaps-report.md` for the full priority matrix. The top critical issues are there.
 
-## Products (future — not yet built)
+## Products (Built — Experimental)
 
-Two real products will need dedicated pages eventually:
-- **Fly High** — Enterprise travel management platform. Docs in `Products/FlyHigh_Details/`
-- **Sleep Alert Device** — IoT drowsiness detection device. Docs in `Products/Sleeping_Alert_Device_Details/`
+Two products have dedicated pages on the experimental site:
+- **Fly High** (`/experimental/products/flyhigh`) — Expert consultation platform. GOD MODE design: aurora gradients, split-text 3D reveals, magnetic buttons, volumetric light, morphing blobs. Content docs in `Products/FlyHigh_Details/`
+- **Sleep Alert Device** — IoT drowsiness detection. Page pending. Docs in `Products/Sleeping_Alert_Device_Details/`
+- **New Product Experiment** (`/experimental/products/new-product-experiment`) — Design showcase with bento grid, glassmorphic testimonials, all award-winning techniques
 
-Previous product pages were removed — they will be redesigned from scratch when the time comes.
+### Navbar Products Dropdown
+The navbar now has a collapsible Products dropdown with sub-items (Fly High, Sleep Alert). Sub-items: 15px/semibold, gold gradient dot indicators, 0.55s animation with blur-in entry.
 
 ---
 
 ## Experimental Site
 
-An `/experimental/` route mirrors the main site for design iteration without touching production pages. Changes happen here first, then get promoted to the main routes once approved.
+`/experimental/` routes for design iteration. Changes here first, promoted to main routes once approved.
 
 ### Experimental Pages
 | Route | Status |
 |---|---|
-| `/experimental/blog` | Blog V1 — editorial cards, article detail page |
-| `/experimental/blog-v2` | Blog V2 (ACTIVE) — 3-col vertical cards, featured split card, cleaner editorial |
+| `/experimental/products/flyhigh` | **Fly High product page** — GOD MODE design, 8 sections |
+| `/experimental/products/new-product-experiment` | Design showcase — all award techniques |
+| `/experimental/404` | **Typewriter error page** — cycling phrases, magnetic button |
+| `/experimental/blog` | Blog V1 — editorial cards, article detail |
+| `/experimental/blog-v2` | Blog V2 (ACTIVE) — 3-col vertical cards, featured split |
 | `/experimental/contact` | Contact with inline form validation |
 | `/experimental/` + others | Mirrors of main pages for testing |
 
 **Rule**: All design work happens on `/experimental/` routes. Never modify main routes during iteration.
+
+### GOD MODE Techniques (Available)
+These premium techniques are now implemented and can be reused:
+- Aurora drifting gradients, morphing blobs, volumetric light cones
+- Split-text 3D word reveals (`rotateX`), animated gradient text
+- Magnetic spring-physics buttons, inner glow hover choreography
+- Typewriter cycling text animation
+- Glassmorphic depth layer system, bento grids
 
 ---
 

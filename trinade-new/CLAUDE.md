@@ -33,7 +33,10 @@ app/
   privacy-policy/page.tsx   # Privacy Policy — alternating cream sections, gold accents
   terms-of-service/page.tsx # Terms of Service — numbered sections, alternating backgrounds
 components/
-  solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname)
+  solutions-navbar.tsx    # Fixed navbar with gold glass active page dot indicator (usePathname) + Products dropdown (Fly High, Sleep Alert)
+  flyhigh-product-content.tsx  # GOD MODE Fly High product page — aurora gradients, split-text 3D, magnetic buttons, volumetric light
+  new-product-experiment-content.tsx # Design showcase — bento grid, glassmorphic testimonials, all award techniques
+  experimental-error-content.tsx # Typewriter 404 page — cycling phrases ("Something broke/went wrong/is off/...")
   solutions-content.tsx   # Solutions: hero, mission, industries, Our Approach scroll cards (GSAP pinned), testimonial challenges carousel, accordion, CTA
   solutions-footer.tsx    # Brown gold liquid glass footer: CTA section + nav links + smooth marquee + social icons
   solutions-cookie-popup.tsx # Gold glass cookie consent popup (data-lenis-prevent for 125%+ zoom scroll fix)

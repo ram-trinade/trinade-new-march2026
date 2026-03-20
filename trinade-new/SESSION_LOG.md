@@ -9,9 +9,71 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 81 — Redesigned Fly High hero section for Awwwards quality
-- Last completed: Prompt 81 — Center-staged cinematic hero with massive typography, atmospheric rings, grid lines, blur-in animations
+- Done: Prompt 83 — Experimental 404 typewriter page + HANDOFF_PROMPT + CLAUDE.md updates
+- Last completed: Prompt 83 — Typewriter cycling error page ("Something broke/went wrong/is off/is missing/got lost"), docs updated for new sessions
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 83: Experimental 404 + Handoff Prompt
+
+### What Was Done
+1. **Frame extraction** — Extracted 71 frames from `Inspirations/Error Page/screen-capture.webm` using ffmpeg at 2fps
+2. **Frame analysis** — Studied the animation pattern: typewriter cycling text ("Something broke/went wrong/is off/is missing"), blinking cursor, cream bg, serif font, "Back to home" with dark arrow icon
+3. **Experimental 404 page** — Created `/experimental/404` with:
+   - `useTypewriter` custom hook cycling 5 phrases with realistic typing/deleting speeds
+   - "Something" in charcoal (#2a2218), cycling text in gold (#c9a86e), blinking cursor
+   - Cream background (#f2ede6), subtle gold atmospheric glow, grain overlay
+   - Magnetic spring-physics "Back to home" link with dark rounded arrow icon
+   - Bottom decorative gold rule with animated scaleX reveal
+4. **HANDOFF_PROMPT.md updated** — Added Products section (Fly High built, navbar dropdown), experimental pages table, GOD MODE techniques reference, navbar Products dropdown note
+5. **CLAUDE.md updated** — Added new experimental components to architecture section
+
+### Files Changed
+- `app/experimental/404/page.tsx` — New route page
+- `components/experimental-error-content.tsx` — Typewriter 404 content (~200 lines)
+- `HANDOFF_PROMPT.md` — Updated Products, experimental pages, GOD MODE techniques
+- `CLAUDE.md` — Added new components to architecture
+- `Inspirations/Error Page/frames_screen_capture/` — 71 extracted frames
+
+### Git
+- Pending commit for this prompt
+
+---
+
+## 2026-03-20 — Prompt 82: GOD MODE Design Overhaul (3-Phase)
+
+### What Was Done
+1. **Phase 1 — Research**: Deep analysis of Awwwards-winning design patterns (2025-2026): aurora gradients, split-text 3D reveals, magnetic buttons, volumetric light cones, morphing blobs, glassmorphic depth layers, multi-step hover choreography, animated grain, gradient text animations, bento grids
+2. **Phase 2 — New Experimental Page**: Created `/experimental/products/new-product-experiment` with all award-winning techniques:
+   - Hero: Aurora drifting gradients, morphing blob, volumetric light cone, split-text 3D word reveals (rotateX), animated gradient text, magnetic spring-physics CTAs, pulse-glow badge
+   - Narrative: Volumetric light, editorial split layout with gold accent line
+   - Bento Grid: 6 feature cards with varied spans, glassmorphic hover choreography with inner glow
+   - Process: Horizontal steps with animated connecting line, numbered circles with hover glow
+   - Testimonials: Glassmorphic quote cards with elevation hover, opening quote marks
+   - FAQ: Dark glassmorphic accordion with gold active states
+   - CTA: Atmospheric golden orbs, magnetic buttons on cream background
+3. **Phase 3 — Fly High GOD MODE Upgrade**: Applied all techniques to existing Fly High page:
+   - Hero upgraded: Aurora drifting gradients (2 blobs with CSS animation), morphing blob, volumetric light cone (conic-gradient), split-text 3D reveal on headline, animated gradient tagline (shifting gold/white), magnetic spring-physics CTAs, pulse-glow badge dot, three concentric rings
+   - All sections upgraded: Volumetric light in narrative, connecting line in How It Works, inner glow hover choreography on cards, glassmorphic field cards, FAQ with gold active state gradient
+
+### Key Techniques Implemented
+- **Aurora gradients**: `radial-gradient` + `filter: blur(80px)` + CSS `@keyframes` drift animations
+- **Split-text 3D reveals**: Per-word `rotateX: -80` → `0` with staggered delays and perspective
+- **Magnetic buttons**: Spring physics (`stiffness: 150, damping: 15, mass: 0.1`) tracking cursor offset
+- **Volumetric light**: `conic-gradient` with `mix-blend-mode: screen` and blur
+- **Morphing blob**: Animated `border-radius` transitions between organic shapes
+- **Gradient text animation**: `background-size: 200%` with `background-position` keyframe shift
+- **Inner glow choreography**: `::before` pseudo with gradient from gold to transparent on hover
+- **Glassmorphic depth**: Consistent 4-layer system (base → surface → elevated → float)
+
+### Files Changed
+- `app/experimental/products/new-product-experiment/page.tsx` — New route page
+- `components/new-product-experiment-content.tsx` — New GOD MODE experimental component (~700 lines)
+- `components/flyhigh-product-content.tsx` — Full GOD MODE upgrade (~1030 lines)
+
+### Git
+- `e50a18b` — GOD MODE: Aurora gradients, split-text 3D reveals, magnetic buttons, volumetric light
 
 ---
 
