@@ -9,9 +9,42 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 75 — Removed product pages, updated .md files, prepared handoff prompt
-- Last completed: Prompt 75 — Product pages removed (FlyHigh, Sleep Alert, products-content), nav/footer cleaned, .md files updated
+- Done: Prompt 76 — Navbar Products dropdown + cinematic Fly High product page
+- Last completed: Prompt 76 — Products dropdown in navbar (Fly High, Sleep Alert), full Fly High product page at /experimental/products/flyhigh with 8 sections
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 76: Navbar Products Dropdown + Fly High Product Page
+
+### What Was Done
+1. **Products dropdown in navbar** — Added collapsible Products sub-menu to solutions-navbar.tsx with "Fly High" and "Sleep Alert" items. AnimatePresence animation, chevron rotation, gold active dot indicator when on a product page. Products is a button (not link) since there's no dedicated /products page.
+2. **Cinematic Fly High product page** — Built full Awwwards-level product page at `/experimental/products/flyhigh` with 8 sections:
+   - **Hero** — Dark, atmospheric with "Fly High" (gold on "High"), tagline, two CTAs, stats bar (Status, Modes, Fields)
+   - **Narrative** — "Search gives answers. You need your answer." with scroll-triggered word reveals
+   - **How It Works** — 4-step numbered process on cream background
+   - **Value Pillars** — 4 cards (Verified Expertise, Flexible Sessions, AI-Enhanced Matching, Actionable Outcomes) on dark
+   - **Fields** — 8 category cards (Business, Health, Legal, Marketing, IT, Career, Agriculture, Operations) on cream
+   - **For Experts** — "Let your skill pay you back" with 3-step process, spiral background image
+   - **FAQ** — 5-item accordion with AnimatePresence expand/collapse, +/× icon toggle
+   - **CTA** — "This product is in the making" early access section with mailto CTAs
+3. **Content sourced from HAVILAH doc** — Extracted via unzip + Node.js XML parsing (no pandoc/Python on system). All copy rewritten for clarity, emotion, and brevity.
+4. **Fixed duplicate EXP badge** — Removed page-level EXP badge (experimental layout already provides one)
+5. **Removed deprecated transpilePackages** from next.config.ts
+
+### Files Changed
+- `components/solutions-navbar.tsx` — Added Products dropdown with sub-items
+- `components/flyhigh-product-content.tsx` — New (~600 lines), full product page content
+- `app/experimental/products/flyhigh/page.tsx` — New route page with dynamic imports
+- `next.config.ts` — Removed deprecated transpilePackages config
+
+### Design Decisions
+- Dark-dominant page matching existing charcoal/cream/gold design system
+- Alternating dark (#0a0a0a) and cream (#f2ede6) sections for visual rhythm
+- Grain overlays, atmospheric gradient orbs for depth
+- useInView scroll-triggered reveals with staggered word animations for headings
+- Gold glass pills for eyebrow labels, gold horizontal rules between sections
+- SVG icons (shield, video, brain, target) for value pillar cards
 
 ---
 

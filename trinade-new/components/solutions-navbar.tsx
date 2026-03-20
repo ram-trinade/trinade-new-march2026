@@ -15,7 +15,13 @@ const EASE = [0.32, 0.72, 0, 1] as const
 const PANEL_WIDTH = 340
 const SCROLL_SEGMENTS = 5
 
+const productLinks = [
+  { label: 'Fly High', href: '/experimental/products/flyhigh' },
+  { label: 'Sleep Alert', href: '/experimental/products/sleep-alert' },
+]
+
 const menuLinks = [
+  { label: 'Products', href: '#', hasDropdown: true },
   { label: 'Solutions', href: '/solutions' },
   { label: 'Blog', href: '/blog' },
   { label: 'Company', href: '/company' },
@@ -37,6 +43,7 @@ export default function SolutionsNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrollPercent, setScrollPercent] = useState(0)
   const [isOnDark, setIsOnDark] = useState(false)
+  const [productsOpen, setProductsOpen] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
 
@@ -305,7 +312,99 @@ export default function SolutionsNavbar() {
                     {menuLinks.map((link, i) => {
                       const isActive = link.href === '/'
                           ? pathname === '/' || pathname === '/home'
+                          : link.hasDropdown
+                          ? pathname.startsWith('/experimental/products') || pathname.startsWith('/products')
                           : pathname === link.href
+
+                      if (link.hasDropdown) {
+                        return (
+                          <div key={link.label}>
+                            <motion.button
+                              initial={{ opacity: 0, x: -12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                duration: 0.4,
+                                delay: 0.1 + i * 0.05,
+                                ease: EASE,
+                              }}
+                              className="flex items-center text-[22px] font-semibold tracking-[-0.02em] py-1 transition-colors hover:text-[#999] w-full"
+                              style={{ color: '#2a2218' }}
+                              onClick={() => setProductsOpen(!productsOpen)}
+                            >
+                              {link.label}
+                              {isActive && (
+                                <span
+                                  style={{
+                                    display: 'inline-block',
+                                    width: 9,
+                                    height: 9,
+                                    marginLeft: 8,
+                                    borderRadius: '50%',
+                                    background: 'linear-gradient(165deg, #8b6914 0%, #6b4f0e 40%, #a07820 100%)',
+                                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(60,40,10,0.3), 0 2px 8px rgba(100,70,15,0.5), 0 0 3px rgba(160,120,30,0.3)',
+                                    border: '1px solid rgba(120,85,20,0.6)',
+                                    flexShrink: 0,
+                                  }}
+                                />
+                              )}
+                              <motion.svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 14 14"
+                                fill="none"
+                                style={{ marginLeft: 'auto', flexShrink: 0 }}
+                                animate={{ rotate: productsOpen ? 180 : 0 }}
+                                transition={{ duration: 0.3, ease: EASE }}
+                              >
+                                <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </motion.svg>
+                            </motion.button>
+                            <AnimatePresence>
+                              {productsOpen && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: 'auto', opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.35, ease: EASE }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="pl-4 pt-1 pb-1 space-y-0.5">
+                                    {productLinks.map((pLink, pi) => (
+                                      <motion.a
+                                        key={pLink.label}
+                                        href={pLink.href}
+                                        initial={{ opacity: 0, x: -8 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{
+                                          duration: 0.3,
+                                          delay: pi * 0.05,
+                                          ease: EASE,
+                                        }}
+                                        className="flex items-center text-[17px] font-medium tracking-[-0.01em] py-1 transition-colors hover:text-[#999]"
+                                        style={{ color: 'rgba(42,34,24,0.75)' }}
+                                        onClick={() => { setIsOpen(false); setProductsOpen(false) }}
+                                      >
+                                        <span
+                                          style={{
+                                            width: 5,
+                                            height: 5,
+                                            borderRadius: '50%',
+                                            background: pathname === pLink.href ? '#c9a86e' : 'rgba(42,34,24,0.25)',
+                                            marginRight: 10,
+                                            flexShrink: 0,
+                                          }}
+                                        />
+                                        {pLink.label}
+                                      </motion.a>
+                                    ))}
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        )
+                      }
+
                       return (
                         <motion.a
                           key={link.label}
