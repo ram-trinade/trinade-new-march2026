@@ -9,9 +9,25 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 83 — Experimental 404 typewriter page + HANDOFF_PROMPT + CLAUDE.md updates
-- Last completed: Prompt 83 — Typewriter cycling error page ("Something broke/went wrong/is off/is missing/got lost"), docs updated for new sessions
+- Done: Prompt 84 — Experimental 404 design polish (giant watermark, bolder text, clean link)
+- Last completed: Prompt 84 — 404 page redesign: massive "404" watermark, bolder headline weight, editorial "Back to home" link, removed magnetic animation
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 84: Experimental 404 Design Polish
+
+### What Was Done
+1. **Giant "404" watermark** — Replaced the small 1.8rem label with a massive outlined watermark (`clamp(16rem, 30vw, 34rem)`, weight 800, `WebkitTextStroke` at 6% opacity). Centered behind content using flexbox for perfect alignment.
+2. **Editorial "Back to home" link** — Replaced the dark-square-arrow MagneticLink with a clean uppercase link (14px, tracking 0.08em, underline + arrow). Matches the site's editorial design language with gold hover transition.
+3. **Removed magnetic animation** — Deleted the MagneticLink component entirely (spring-physics cursor tracking). Link is now a clean static element with subtle hover color shift.
+4. **Bolder headline** — Increased "Something" text weight from 250 to 400 for more presence. Cursor weight adjusted from 200 to 300.
+
+### Files Changed
+- `components/experimental-error-content.tsx` — All 4 visual refinements
+
+### Git
+- Committed this prompt
 
 ---
 

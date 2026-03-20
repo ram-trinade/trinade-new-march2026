@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 
@@ -40,12 +40,10 @@ function useTypewriter(phrases: string[]) {
 
     const tick = () => {
       if (!isDeleting) {
-        // Typing forward
         if (displayText.length < currentPhrase.length) {
           setDisplayText(currentPhrase.slice(0, displayText.length + 1))
           timeoutRef.current = setTimeout(tick, TYPE_SPEED + Math.random() * 30)
         } else {
-          // Finished typing — pause, then start deleting
           timeoutRef.current = setTimeout(() => {
             setIsDeleting(true)
             tick()
@@ -53,12 +51,10 @@ function useTypewriter(phrases: string[]) {
           return
         }
       } else {
-        // Deleting backward
         if (displayText.length > 0) {
           setDisplayText(displayText.slice(0, -1))
           timeoutRef.current = setTimeout(tick, DELETE_SPEED)
         } else {
-          // Finished deleting — move to next phrase
           setIsDeleting(false)
           setPhraseIndex((prev) => (prev + 1) % phrases.length)
           timeoutRef.current = setTimeout(tick, PAUSE_AFTER_DELETE)
@@ -74,7 +70,6 @@ function useTypewriter(phrases: string[]) {
     }
   }, [displayText, isDeleting, phraseIndex, phrases])
 
-  // Cursor blink
   useEffect(() => {
     const interval = setInterval(() => {
       setShowCursor((prev) => !prev)
@@ -83,68 +78,6 @@ function useTypewriter(phrases: string[]) {
   }, [])
 
   return { displayText, showCursor }
-}
-
-// ─── Magnetic button ───
-function MagneticLink({ children, href }: { children: React.ReactNode; href: string }) {
-  const ref = useRef<HTMLAnchorElement>(null)
-  const [pos, setPos] = useState({ x: 0, y: 0 })
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    const x = e.clientX - rect.left - rect.width / 2
-    const y = e.clientY - rect.top - rect.height / 2
-    setPos({ x: x * 0.3, y: y * 0.3 })
-  }, [])
-
-  return (
-    <motion.div
-      animate={{ x: pos.x, y: pos.y }}
-      transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setPos({ x: 0, y: 0 })}
-    >
-      <Link
-        ref={ref}
-        href={href}
-        className="inline-flex items-center gap-3 group"
-        style={{ textDecoration: 'none' }}
-      >
-        <span
-          className="text-[15px] font-medium tracking-[-0.01em] transition-colors duration-300 group-hover:text-[#a0814a]"
-          style={{
-            color: '#2a2218',
-            borderBottom: '1.5px solid #2a2218',
-            paddingBottom: '4px',
-          }}
-        >
-          Back to home
-        </span>
-        {/* Arrow icon in dark square — adapted from inspiration */}
-        <span
-          className="w-[34px] h-[34px] rounded-[8px] flex items-center justify-center transition-all duration-400 group-hover:bg-[#a0814a]"
-          style={{ background: '#2a2218' }}
-        >
-          <motion.svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            className="transition-transform duration-300 group-hover:translate-x-[2px]"
-          >
-            <path
-              d="M2 7h10M8 3l4 4-4 4"
-              stroke="#f2ede6"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </motion.svg>
-        </span>
-      </Link>
-    </motion.div>
-  )
 }
 
 // ─── Main error page content ───
@@ -158,6 +91,27 @@ export default function ExperimentalErrorContent() {
       className="relative min-h-screen w-full overflow-hidden flex items-center justify-center"
       style={{ background: '#f2ede6' }}
     >
+      {/* Giant "404" watermark — massive, layered behind content */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.8, delay: 0.1, ease: EASE_CINE }}
+        className="absolute inset-0 select-none pointer-events-none flex items-center justify-center"
+      >
+        <span
+          style={{
+            fontSize: 'clamp(16rem, 30vw, 34rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.04em',
+            lineHeight: 0.85,
+            color: 'transparent',
+            WebkitTextStroke: '1.5px rgba(42,34,24,0.06)',
+          }}
+        >
+          404
+        </span>
+      </motion.div>
+
       {/* Subtle atmospheric gold glow */}
       <div
         className="absolute"
@@ -167,7 +121,7 @@ export default function ExperimentalErrorContent() {
           transform: 'translate(-50%, -50%)',
           width: 'clamp(400px, 50vw, 800px)',
           height: 'clamp(400px, 50vw, 800px)',
-          background: 'radial-gradient(circle, rgba(201,168,110,0.06) 0%, rgba(201,168,110,0.02) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(201,168,110,0.08) 0%, rgba(201,168,110,0.03) 40%, transparent 70%)',
           filter: 'blur(60px)',
         }}
       />
@@ -186,23 +140,7 @@ export default function ExperimentalErrorContent() {
 
       {/* Content — centered */}
       <div className="relative z-10 flex flex-col items-center text-center px-6">
-        {/* 404 label */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: EASE_CINE }}
-          className="mb-8"
-          style={{
-            fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)',
-            fontWeight: 300,
-            color: 'rgba(42,34,24,0.35)',
-            letterSpacing: '0.05em',
-          }}
-        >
-          404
-        </motion.div>
-
-        {/* Main headline with typewriter */}
+        {/* Main headline with typewriter — TASK 4: bolder weight */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -210,7 +148,7 @@ export default function ExperimentalErrorContent() {
           className="tracking-[-0.04em] leading-[1.05]"
           style={{
             fontSize: 'clamp(3rem, 8vw, 7.5rem)',
-            fontWeight: 250,
+            fontWeight: 400,
           }}
         >
           {/* "Something" — constant, dark */}
@@ -225,7 +163,7 @@ export default function ExperimentalErrorContent() {
               color: '#c9a86e',
               opacity: showCursor ? 0.7 : 0,
               transition: 'opacity 0.1s ease',
-              fontWeight: 200,
+              fontWeight: 300,
               marginLeft: '2px',
             }}
           >
@@ -233,16 +171,56 @@ export default function ExperimentalErrorContent() {
           </span>
         </motion.h1>
 
-        {/* Back to home link */}
+        {/* Back to home — TASK 2 & 3: clean design-aligned link, no magnetic animation */}
         <motion.div
-          className="mt-14"
+          className="mt-16"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 1, ease: EASE_CINE }}
         >
-          <MagneticLink href="/">
-            Back to home
-          </MagneticLink>
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-3"
+            style={{ textDecoration: 'none' }}
+          >
+            <span
+              style={{
+                fontSize: '14px',
+                fontWeight: 500,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase' as const,
+                color: '#2a2218',
+                paddingBottom: '3px',
+                borderBottom: '1px solid rgba(42,34,24,0.3)',
+                transition: 'border-color 0.4s ease, color 0.4s ease',
+              }}
+              className="group-hover:!border-[#c9a86e] group-hover:!text-[#a0814a]"
+            >
+              Back to home
+            </span>
+            <span
+              className="flex items-center justify-center transition-all duration-400 group-hover:translate-x-[3px]"
+              style={{
+                color: '#2a2218',
+                transition: 'color 0.4s ease, transform 0.4s ease',
+              }}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+              >
+                <path
+                  d="M4 9h10M10 5l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
+          </Link>
         </motion.div>
       </div>
 
