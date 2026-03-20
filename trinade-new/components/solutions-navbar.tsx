@@ -354,7 +354,7 @@ export default function SolutionsNavbar() {
                                 fill="none"
                                 style={{ marginLeft: 'auto', flexShrink: 0 }}
                                 animate={{ rotate: productsOpen ? 180 : 0 }}
-                                transition={{ duration: 0.3, ease: EASE }}
+                                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                               >
                                 <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                               </motion.svg>
@@ -365,38 +365,50 @@ export default function SolutionsNavbar() {
                                   initial={{ height: 0, opacity: 0 }}
                                   animate={{ height: 'auto', opacity: 1 }}
                                   exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.35, ease: EASE }}
+                                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                                   className="overflow-hidden"
                                 >
-                                  <div className="pl-4 pt-1 pb-1 space-y-0.5">
-                                    {productLinks.map((pLink, pi) => (
-                                      <motion.a
-                                        key={pLink.label}
-                                        href={pLink.href}
-                                        initial={{ opacity: 0, x: -8 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{
-                                          duration: 0.3,
-                                          delay: pi * 0.05,
-                                          ease: EASE,
-                                        }}
-                                        className="flex items-center text-[17px] font-medium tracking-[-0.01em] py-1 transition-colors hover:text-[#999]"
-                                        style={{ color: 'rgba(42,34,24,0.75)' }}
-                                        onClick={() => { setIsOpen(false); setProductsOpen(false) }}
-                                      >
-                                        <span
-                                          style={{
-                                            width: 5,
-                                            height: 5,
-                                            borderRadius: '50%',
-                                            background: pathname === pLink.href ? '#c9a86e' : 'rgba(42,34,24,0.25)',
-                                            marginRight: 10,
-                                            flexShrink: 0,
+                                  <div className="pl-5 pt-2 pb-2 space-y-0.5">
+                                    {productLinks.map((pLink, pi) => {
+                                      const isProductActive = pathname === pLink.href
+                                      return (
+                                        <motion.a
+                                          key={pLink.label}
+                                          href={pLink.href}
+                                          initial={{ opacity: 0, x: -10, filter: 'blur(4px)' }}
+                                          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                                          transition={{
+                                            duration: 0.45,
+                                            delay: 0.08 + pi * 0.07,
+                                            ease: [0.16, 1, 0.3, 1],
                                           }}
-                                        />
-                                        {pLink.label}
-                                      </motion.a>
-                                    ))}
+                                          className="flex items-center text-[19px] font-semibold tracking-[-0.015em] py-1.5 transition-colors hover:text-[#6b5530]"
+                                          style={{ color: isProductActive ? '#2a2218' : 'rgba(42,34,24,0.85)' }}
+                                          onClick={() => { setIsOpen(false); setProductsOpen(false) }}
+                                        >
+                                          <span
+                                            style={{
+                                              width: 7,
+                                              height: 7,
+                                              borderRadius: '50%',
+                                              background: isProductActive
+                                                ? 'linear-gradient(165deg, #8b6914 0%, #6b4f0e 40%, #a07820 100%)'
+                                                : 'linear-gradient(165deg, rgba(160,120,50,0.5) 0%, rgba(120,85,30,0.4) 100%)',
+                                              boxShadow: isProductActive
+                                                ? 'inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(60,40,10,0.3), 0 2px 8px rgba(100,70,15,0.5), 0 0 3px rgba(160,120,30,0.3)'
+                                                : 'inset 0 1px 0 rgba(255,255,255,0.25), 0 1px 4px rgba(100,70,15,0.15)',
+                                              border: isProductActive
+                                                ? '1px solid rgba(120,85,20,0.6)'
+                                                : '1px solid rgba(120,85,20,0.25)',
+                                              marginRight: 12,
+                                              flexShrink: 0,
+                                              transition: 'all 0.3s ease',
+                                            }}
+                                          />
+                                          {pLink.label}
+                                        </motion.a>
+                                      )
+                                    })}
                                   </div>
                                 </motion.div>
                               )}

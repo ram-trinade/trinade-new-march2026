@@ -9,9 +9,21 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 76 — Navbar Products dropdown + cinematic Fly High product page
-- Last completed: Prompt 76 — Products dropdown in navbar (Fly High, Sleep Alert), full Fly High product page at /experimental/products/flyhigh with 8 sections
+- Done: Prompt 77 — Products dropdown polish (animation, weight, dots)
+- Last completed: Prompt 77 — Refined dropdown animation timing, visual weight, and dot indicator styling for Awwwards-level quality
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 77: Products Dropdown Polish
+
+### What Was Done
+1. **Animation timing** — Slowed dropdown reveal from 0.35s to 0.55s with cinematic ease `[0.16, 1, 0.3, 1]`. Added blur-in entry effect on sub-items. Chevron rotation slowed to 0.5s to match.
+2. **Visual weight** — Increased sub-item font size from 17px to 19px, weight from medium to semibold. Darkened text from 75% to 85% opacity. Added more padding and spacing for breathing room.
+3. **Dot indicators** — Replaced flat circles with rich gradient dots matching parent nav items. Active state uses full gold gradient with glow/shadow. Inactive state uses subtle gold gradient with border. Both have smooth transition on hover.
+
+### Files Changed
+- `components/solutions-navbar.tsx` — Refined Products dropdown sub-items (animation, weight, dots)
 
 ---
 
