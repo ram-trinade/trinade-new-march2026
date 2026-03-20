@@ -1,9 +1,11 @@
 # Trinade AI Technologies — Design Gaps & Issues Report
 
-> **Audit Date:** March 19, 2026
+> **Audit Date:** March 19, 2026 (Updated: March 20, 2026)
 > **Goal:** Awwwards submission quality — every pixel matters
-> **Method:** Visual snapshot analysis + source code review of all 8 pages + shared components
+> **Method:** Visual snapshot analysis + source code review of all 10 pages + shared components
 > **Severity Legend:** 🔴 Critical (blocks Awwwards) | 🟡 Medium (noticeable quality gap) | 🟢 Minor (polish detail)
+>
+> **March 20 Update:** Experimental pages migrated to production routes. Product pages now live at `/products/flyhigh` and `/products/sleep-alert`. Entire `/experimental/` directory removed. Sleep Alert Device page fully redesigned with cinematic SaaS product page aesthetic.
 
 ---
 
@@ -18,8 +20,9 @@
 7. [Privacy Policy (/privacy-policy)](#7-privacy-policy)
 8. [Terms of Service (/terms-of-service)](#8-terms-of-service)
 9. [404 Page](#9-404-page)
-10. [Shared Components](#10-shared-components)
-11. [Priority Fix Matrix](#11-priority-fix-matrix)
+10. [Product Pages](#10-product-pages)
+11. [Shared Components](#11-shared-components)
+12. [Priority Fix Matrix](#12-priority-fix-matrix)
 
 ---
 
@@ -269,7 +272,36 @@
 
 ---
 
-## 10. Shared Components
+## 10. Product Pages
+
+### Fly High (/products/flyhigh) — ✅ MIGRATED from /experimental/products/flyhigh
+- ✅ **GOD MODE design** — aurora gradients, split-text 3D reveals, magnetic buttons, volumetric light
+- ✅ **8 cinematic sections** with morphing blobs and gradient text
+- 🟡 **Dark page with no SSR** — same ssr:false pattern, affects LCP
+- 🟢 **Content is placeholder** — needs real copy from FlyHigh product docs
+
+### Sleep Alert Device (/products/sleep-alert) — ✅ MIGRATED + REDESIGNED
+- ✅ **Full Awwwards-quality SaaS redesign** (Prompt 98) — cinematic product page
+- ✅ **Hero radar animation** — 5 pulsing concentric rings, rotating scan line (8s infinite)
+- ✅ **AnimatedCounter** — scroll-triggered number count-up with easeOutCubic
+- ✅ **3D TiltCard** — perspective mouse-following with spring physics
+- ✅ **Bento grid features** — asymmetric 2+1/1+2 card arrangement
+- ✅ **Technology section** — glassmorphic numbered cards with hover border glow
+- ✅ **Specs section** — hover-highlighted rows with gold accent transitions
+- ✅ **CTA** — weight 200 dramatic typography with shine-sweep button effect
+- 🟡 **Dark page with no SSR** — same ssr:false pattern
+- 🟢 **Content is placeholder** — needs real specs from Sleep Alert product docs
+
+### Migration Notes (March 20, 2026)
+- ✅ All experimental pages migrated to production routes
+- ✅ Entire `/experimental/` directory deleted (14 pages removed)
+- ✅ Navbar product links updated from `/experimental/products/` to `/products/`
+- ✅ HANDOFF_PROMPT.md and about-me.md references updated
+- ✅ No remaining `/experimental/` references in codebase
+
+---
+
+## 11. Shared Components
 
 ### Navbar (solutions-navbar.tsx)
 - 🟡 **All links use raw `<a>` instead of `<Link>`** — full page reloads
@@ -293,7 +325,7 @@
 
 ---
 
-## 11. Priority Fix Matrix
+## 12. Priority Fix Matrix
 
 ### 🔴 Critical Fixes (Must-do for Awwwards)
 
@@ -368,7 +400,7 @@
 | 57 | Cookie close button has cursor:pointer | Cookie |
 | 58 | Dead lime color in palette | Homepage |
 | 59 | Navbar logo filter is fragile | Navbar |
-| 60 | Products nav link likely 404s | Navbar |
+| 60 | ~~Products nav link likely 404s~~ | ~~Navbar~~ | ✅ FIXED — Product pages migrated to `/products/` |
 
 ---
 
@@ -386,6 +418,8 @@ These elements are Awwwards-ready and should be preserved:
 - **Grain overlays** — correctly subtle at 2-5% across most sections
 - **Color palette discipline** — charcoal/cream/gold maintained across pages (no teal, no green)
 - **Section rhythm** — alternating dark/light creates strong visual pacing (when followed)
+- **Fly High product page** — GOD MODE design with aurora gradients, morphing blobs, volumetric light
+- **Sleep Alert Device product page** — cinematic SaaS showcase with radar animations, 3D tilt cards, bento grid, animated counters
 
 ---
 
