@@ -227,7 +227,7 @@ function ArticleCard({
           }}
         >
           {/* ── TOP: Image ── */}
-          <div className="relative overflow-hidden" style={{ height: 'clamp(200px, 22vw, 320px)' }}>
+          <div className="relative overflow-hidden" style={{ height: 'clamp(160px, 16vw, 220px)' }}>
             <motion.div
               className="absolute inset-0"
               animate={{ scale: hovered ? 1.06 : 1 }}
@@ -274,14 +274,6 @@ function ArticleCard({
           {/* ── BOTTOM: Article Info ── */}
           <div className="flex flex-col flex-1 justify-between p-6 md:p-7 relative">
             <div>
-              {/* Category + Read time */}
-              <div className="flex items-center gap-3 mb-4">
-                <GoldPill>{article.category}</GoldPill>
-                <span className="text-[10px] tracking-wide" style={{ color: 'rgba(42,34,24,0.3)' }}>
-                  {article.readTime}
-                </span>
-              </div>
-
               {/* Title */}
               <motion.h3
                 className="text-[clamp(1.1rem,1.8vw,1.45rem)] font-medium leading-[1.2] tracking-tight mb-3"
@@ -291,13 +283,13 @@ function ArticleCard({
                 {article.title}
               </motion.h3>
 
-              {/* Excerpt */}
+              {/* Excerpt — 2 lines max */}
               <p
-                className="text-[13px] leading-[1.75] mb-6"
+                className="text-[13px] leading-[1.75] mb-5"
                 style={{
                   color: 'rgba(42,34,24,0.4)',
                   display: '-webkit-box',
-                  WebkitLineClamp: 4,
+                  WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
                   overflow: 'hidden',
                 }}
@@ -306,28 +298,11 @@ function ArticleCard({
               </p>
             </div>
 
-            {/* Bottom: Author + "Read Article" arrow (matches featured card style) */}
+            {/* Bottom: Date + "Read Article" arrow */}
             <div className="flex items-center justify-between mt-auto pt-4" style={{ borderTop: '1px solid rgba(201,168,110,0.08)' }}>
-              <div className="flex items-center gap-3">
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-[9px] font-bold"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(201,168,110,0.2), rgba(201,168,110,0.08))',
-                    color: '#c9a86e',
-                    border: '1px solid rgba(201,168,110,0.12)',
-                  }}
-                >
-                  {article.author.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div>
-                  <p className="text-xs font-medium" style={{ color: 'rgba(42,34,24,0.6)' }}>
-                    {article.author}
-                  </p>
-                  <p className="text-[10px]" style={{ color: 'rgba(42,34,24,0.3)' }}>
-                    {article.date}
-                  </p>
-                </div>
-              </div>
+              <span className="text-[11px] tracking-wide" style={{ color: 'rgba(42,34,24,0.35)' }}>
+                {article.date}
+              </span>
 
               {/* "Read Article" + arrow — same style as featured card */}
               <motion.div
@@ -398,7 +373,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
         >
           <div className="flex flex-col lg:flex-row" style={{ minHeight: 'clamp(400px, 50vh, 580px)' }}>
             {/* ── LEFT: Image Column ── */}
-            <div className="relative lg:w-[48%] overflow-hidden" style={{ minHeight: 'clamp(280px, 35vw, 420px)' }}>
+            <div className="relative lg:w-[38%] overflow-hidden" style={{ minHeight: 'clamp(280px, 35vw, 420px)' }}>
               <motion.div
                 className="absolute inset-0"
                 animate={{ scale: hovered ? 1.04 : 1 }}
@@ -409,7 +384,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
                   alt={article.title}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 48vw"
+                  sizes="(max-width: 1024px) 100vw, 38vw"
                   priority
                 />
               </motion.div>
@@ -444,7 +419,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             </div>
 
             {/* ── RIGHT: Article Info Column ── */}
-            <div className="lg:w-[52%] flex flex-col justify-between p-8 md:p-10 lg:p-14">
+            <div className="lg:w-[62%] flex flex-col justify-between p-8 md:p-10 lg:p-14">
               <div>
                 <motion.div
                   className="flex items-center gap-4 mb-7"

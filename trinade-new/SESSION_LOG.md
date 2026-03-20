@@ -9,9 +9,22 @@
 - Key references: IntegratedBio, Datawizz, Qatalog, slothui, NextNet, Joby Aviation
 
 ## Current Status (TL;DR)
-- Done: Prompt 70 — Blog V2 major layout restructure (3-col grid, vertical cards, featured split)
-- Last completed: Prompt 70 — Blog-v2: 3 cards per row, image-top vertical cards, featured split layout
+- Done: Prompt 71 — Blog V2 refinements (narrower featured image, 2-line excerpts, no category/author, shorter images)
+- Last completed: Prompt 71 — Blog-v2: cleaner card layout with date-only footer, compact proportions
 - Live URL: https://trinade-new.vercel.app
+
+---
+
+## 2026-03-20 — Prompt 71: Blog V2 Card Refinements
+
+### What Was Done
+1. **Featured image narrower** — Reduced from `lg:w-[48%]` to `lg:w-[38%]`, right info column expanded to 62%
+2. **2-line descriptions** — Article card excerpts clamped from 4 lines to 2 lines
+3. **Removed category pill + author** — Cards now show only: title, 2-line excerpt, date + "Read Article" arrow
+4. **Shorter card images** — Reduced from `clamp(200px, 22vw, 320px)` to `clamp(160px, 16vw, 220px)`
+
+### Files Changed
+- `app/experimental/blog-v2/page.tsx` — Card simplification + proportion adjustments
 
 ---
 
