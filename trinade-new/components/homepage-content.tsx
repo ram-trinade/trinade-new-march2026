@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGeolocation } from '@/components/geolocation-context'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
@@ -831,12 +832,229 @@ function HomeCTASection() {
 
 
 // ═══════════════════════════════════════════════════════════
+// LOCATION-AWARE REGIONAL HIGHLIGHTS
+// ═══════════════════════════════════════════════════════════
+function RegionalHighlightsSection() {
+  const { location, requestLocation, isLoading } = useGeolocation()
+  const sectionRef = useRef<HTMLElement>(null)
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' })
+
+  // Regional content based on location
+  const getRegionalContent = () => {
+    if (!location?.country) {
+      return {
+        title: 'Global AI Innovation',
+        subtitle: 'Serving businesses worldwide with cutting-edge AI solutions',
+        highlights: [
+          '🌍 International deployment expertise',
+          '⚡ 24/7 global support',
+          '🔄 Multi-region compliance',
+        ],
+        cta: 'Discover Our Global Reach',
+      }
+    }
+
+    // Location-specific content
+    const indiaContent = {
+      title: 'Leading AI Innovation in India',
+      subtitle: 'Empowering Indian businesses with world-class AI technology',
+      highlights: [
+        '🇮🇳 Deep understanding of Indian market dynamics',
+        '💼 Compliance with Indian data regulations',
+        '🚀 Supporting Digital India initiatives',
+      ],
+      cta: 'Explore Indian Market Solutions',
+    }
+
+    const usContent = {
+      title: 'AI Excellence in North America',
+      subtitle: 'Driving innovation across US and Canadian enterprises',
+      highlights: [
+        '🇺🇸 SOC 2 and HIPAA compliant solutions',
+        '💼 Fortune 500 company experience',
+        '🚀 Silicon Valley innovation partnership',
+      ],
+      cta: 'See North American Success Stories',
+    }
+
+    const uaeContent = {
+      title: 'Transforming Middle Eastern Business',
+      subtitle: 'Accelerating digital transformation across the UAE and GCC',
+      highlights: [
+        '🇦🇪 UAE Vision 2030 alignment',
+        '🏢 Smart city technology integration',
+        '💼 Regional compliance expertise',
+      ],
+      cta: 'Discover UAE Market Solutions',
+    }
+
+    const defaultContent = {
+      title: `${location.country} AI Solutions`,
+      subtitle: `Tailored AI innovation for ${location.country} businesses`,
+      highlights: [
+        '🎯 Localized market understanding',
+        '⚡ Region-specific optimizations',
+        '🔄 Local compliance and regulations',
+      ],
+      cta: `Explore ${location.country} Solutions`,
+    }
+
+    const countryMap: { [key: string]: any } = {
+      'India': indiaContent,
+      'United States': usContent,
+      'United Arab Emirates': uaeContent,
+      'UAE': uaeContent,
+    }
+
+    return countryMap[location.country] || defaultContent
+  }
+
+  const content = getRegionalContent()
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative py-20 md:py-32 overflow-hidden"
+      style={{ background: P.cream }}
+    >
+      {/* Background Pattern */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, ${P.gold} 2px, transparent 2px),
+                           radial-gradient(circle at 75% 75%, ${P.gold} 2px, transparent 2px)`,
+          backgroundSize: '50px 50px',
+        }}
+      />
+
+      <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 1, ease: EASE_OUT }}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 1, delay: 0.2, ease: EASE_OUT }}
+              className="text-4xl md:text-5xl lg:text-6xl font-light mb-6"
+              style={{ color: P.textDark }}
+            >
+              {content.title}
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 1, delay: 0.4, ease: EASE_OUT }}
+              className="text-xl md:text-2xl font-light leading-relaxed max-w-3xl mx-auto mb-8"
+              style={{ color: P.textMuted }}
+            >
+              {content.subtitle}
+            </motion.p>
+
+            {/* Location Detection */}
+            {!location?.country && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.6, delay: 0.6, ease: EASE_OUT }}
+                className="mb-8"
+              >
+                <button
+                  onClick={requestLocation}
+                  disabled={isLoading}
+                  className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-medium transition-all duration-300 disabled:opacity-50"
+                  style={{
+                    background: `linear-gradient(135deg, ${P.gold}, ${P.goldLight})`,
+                    color: P.white,
+                    boxShadow: `0 4px 20px rgba(201, 168, 110, 0.3)`,
+                  }}
+                >
+                  {isLoading ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Detecting location...
+                    </>
+                  ) : (
+                    <>
+                      📍 Personalize for my location
+                    </>
+                  )}
+                </button>
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Highlights Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 1, delay: 0.8, ease: EASE_OUT }}
+            className="grid md:grid-cols-3 gap-8 mb-16"
+          >
+            {content.highlights.map((highlight: string, index: number) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 1 + index * 0.1, ease: EASE_OUT }}
+                className="text-center p-8 rounded-2xl"
+                style={{
+                  background: P.white,
+                  boxShadow: `0 8px 32px rgba(42, 34, 24, 0.08)`,
+                }}
+              >
+                <div className="text-4xl mb-4">{highlight.split(' ')[0]}</div>
+                <p className="text-lg font-medium" style={{ color: P.textDark }}>
+                  {highlight.substring(highlight.indexOf(' ') + 1)}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 1.4, ease: EASE_OUT }}
+            className="text-center"
+          >
+            <Link href="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-medium text-lg transition-all duration-300"
+                style={{
+                  background: `linear-gradient(135deg, ${P.charcoal}, ${P.textDark})`,
+                  color: P.white,
+                  boxShadow: `0 8px 32px rgba(26, 26, 30, 0.3)`,
+                }}
+              >
+                {content.cta}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+// ═══════════════════════════════════════════════════════════
 // MAIN EXPORT
 // ═══════════════════════════════════════════════════════════
 export default function HomepageContent() {
   return (
     <main>
       <HomeHeroSection />
+      <RegionalHighlightsSection />
       <FloatingCardsSection />
       <HomeScrollCardsSection />
       <WhyChooseUsSection />

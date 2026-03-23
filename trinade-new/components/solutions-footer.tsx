@@ -3,6 +3,9 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'motion/react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const LocationIndicator = dynamic(() => import('@/components/location-indicator'), { ssr: false })
 
 const MotionLink = motion.create(Link)
 
@@ -207,7 +210,10 @@ export default function SolutionsFooter() {
             <Link key={link.label} href={link.href} className="text-[12px] transition-opacity duration-200 hover:opacity-60" style={{ color: 'rgba(255,255,255,0.3)' }}>{link.label}</Link>
           ))}
         </div>
-        <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>
+        <div className="flex items-center gap-4">
+          <LocationIndicator className="text-[11px]" />
+          <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>
+        </div>
       </div>
 
       {/* Scrolling TRINADE marquee — seamless infinite loop */}
