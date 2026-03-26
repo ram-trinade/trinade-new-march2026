@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Terms of Service',
     description: 'Terms of service and usage agreement for Trinade Solutions.',
-    url: 'https://trinade.com/terms-of-service',
+    url: '/terms-of-service',
     siteName: 'Trinade Solutions',
     locale: 'en_US',
     type: 'website',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: 'Terms of service for Trinade Solutions.',
   },
   alternates: {
-    canonical: 'https://trinade.com/terms-of-service',
+    canonical: '/terms-of-service',
   },
 }
 

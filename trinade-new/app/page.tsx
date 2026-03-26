@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import HomePageClient from '@/components/homepage-client'
 
 export const metadata: Metadata = {
@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Trinade Solutions - Innovative AI Technology',
     description: 'Leading AI solutions for healthcare, legal, finance, and enterprise sectors.',
-    url: 'https://trinade.com',
+    url: '/',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-home.png',
+        url: '/og-home.png',
         width: 1200,
         height: 630,
         alt: 'Trinade Solutions - AI Innovation',
@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Trinade Solutions - Innovative AI Technology',
     description: 'Leading AI solutions for multiple sectors.',
-    images: ['https://trinade.com/og-home.png'],
+    images: ['/og-home.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com',
+    canonical: '/',
   },
 }
 

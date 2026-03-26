@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import BlogPageClient from '@/components/blog-page-client'
 
 export const metadata: Metadata = {
@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Blog - AI Insights & Technology Updates',
     description: 'Latest insights on AI technology and industry innovations from Trinade Solutions.',
-    url: 'https://trinade.com/blog',
+    url: '/blog',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-blog.png',
+        url: '/og-blog.png',
         width: 1200,
         height: 630,
         alt: 'Trinade Blog - AI Insights',
@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Blog - AI Insights & Technology Updates',
     description: 'Latest AI technology insights and industry updates.',
-    images: ['https://trinade.com/og-blog.png'],
+    images: ['/og-blog.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com/blog',
+    canonical: '/blog',
   },
 }
 

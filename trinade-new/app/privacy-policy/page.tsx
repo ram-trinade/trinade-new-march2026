@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Privacy Policy',
     description: 'Privacy policy and data protection information for Trinade Solutions.',
-    url: 'https://trinade.com/privacy-policy',
+    url: '/privacy-policy',
     siteName: 'Trinade Solutions',
     locale: 'en_US',
     type: 'website',
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: 'Privacy policy for Trinade Solutions.',
   },
   alternates: {
-    canonical: 'https://trinade.com/privacy-policy',
+    canonical: '/privacy-policy',
   },
 }
 

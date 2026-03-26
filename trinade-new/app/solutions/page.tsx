@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import SolutionsPageClient from '@/components/solutions-page-client'
 
 export const metadata: Metadata = {
@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'AI Solutions & Technology Services',
     description: 'Comprehensive AI-powered solutions for healthcare, legal, finance, and enterprise sectors.',
-    url: 'https://trinade.com/solutions',
+    url: '/solutions',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-solutions.png',
+        url: '/og-solutions.png',
         width: 1200,
         height: 630,
         alt: 'Trinade AI Solutions',
@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'AI Solutions & Technology Services',
     description: 'Comprehensive AI-powered solutions across multiple sectors.',
-    images: ['https://trinade.com/og-solutions.png'],
+    images: ['/og-solutions.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com/solutions',
+    canonical: '/solutions',
   },
 }
 

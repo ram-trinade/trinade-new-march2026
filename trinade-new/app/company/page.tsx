@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'About Us - Leading AI Innovation Company',
     description: 'Pioneering AI technology company transforming industries with intelligent solutions.',
-    url: 'https://trinade.com/company',
+    url: '/company',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-company.png',
+        url: '/og-company.png',
         width: 1200,
         height: 630,
         alt: 'Trinade Solutions - About Us',
@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'About Us - Leading AI Innovation Company',
     description: 'Pioneering AI technology company transforming industries.',
-    images: ['https://trinade.com/og-company.png'],
+    images: ['/og-company.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com/company',
+    canonical: '/company',
   },
 }
 

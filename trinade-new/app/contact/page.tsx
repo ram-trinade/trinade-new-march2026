@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Us - Get in Touch with Trinade Solutions',
     description: 'Ready to transform your business with AI? Contact our expert team for innovative technology solutions.',
-    url: 'https://trinade.com/contact',
+    url: '/contact',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-contact.png',
+        url: '/og-contact.png',
         width: 1200,
         height: 630,
         alt: 'Contact Trinade Solutions',
@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Contact Us - Get in Touch with Trinade Solutions',
     description: 'Ready to transform your business with AI? Contact our expert team.',
-    images: ['https://trinade.com/og-contact.png'],
+    images: ['/og-contact.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com/contact',
+    canonical: '/contact',
   },
 }
 

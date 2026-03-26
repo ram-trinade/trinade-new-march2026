@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
 const FlyHighContent = dynamic(() => import('@/components/flyhigh-product-content'))
@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'FlyHigh - AI-Powered Drone Technology',
     description: 'Advanced AI-powered drone system for autonomous aerial surveillance and analytics.',
-    url: 'https://trinade.com/products/flyhigh',
+    url: '/products/flyhigh',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-flyhigh.png',
+        url: '/og-flyhigh.png',
         width: 1200,
         height: 630,
         alt: 'FlyHigh Drone Technology',
@@ -32,10 +32,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'FlyHigh - AI-Powered Drone Technology',
     description: 'Advanced AI-powered drone system for autonomous aerial surveillance.',
-    images: ['https://trinade.com/og-flyhigh.png'],
+    images: ['/og-flyhigh.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com/products/flyhigh',
+    canonical: '/products/flyhigh',
   },
 }
 

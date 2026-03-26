@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
 const SleepAlertContent = dynamic(() => import('@/components/sleep-alert-content'))
@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Sleep Alert Device - Smart Sleep Monitoring',
     description: 'Intelligent sleep monitoring device with real-time alerts and health tracking.',
-    url: 'https://trinade.com/products/sleep-alert',
+    url: '/products/sleep-alert',
     siteName: 'Trinade Solutions',
     images: [
       {
-        url: 'https://trinade.com/og-sleep-alert.png',
+        url: '/og-sleep-alert.png',
         width: 1200,
         height: 630,
         alt: 'Sleep Alert Device',
@@ -32,10 +32,10 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Sleep Alert Device - Smart Sleep Monitoring',
     description: 'Intelligent sleep monitoring device with real-time alerts.',
-    images: ['https://trinade.com/og-sleep-alert.png'],
+    images: ['/og-sleep-alert.png'],
   },
   alternates: {
-    canonical: 'https://trinade.com/products/sleep-alert',
+    canonical: '/products/sleep-alert',
   },
 }
 
