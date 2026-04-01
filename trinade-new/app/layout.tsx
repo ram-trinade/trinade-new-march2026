@@ -1,14 +1,21 @@
 import type { Metadata } from 'next'
-import { Manrope } from 'next/font/google'
 import './globals.css'
 import ClientLayout from '@/components/client-layout'
 
-const manrope = Manrope({
-  subsets: ['latin'],
-  display: 'swap',
+// Using local/system fonts avoids network access during build (no Google API fetch)
+const manrope = {
   variable: '--font-manrope',
-  weight: ['200', '300', '400', '500', '600', '700', '800'],
-})
+}
+
+// Optionally, if you have local font files, use next/font/local:
+// import localFont from 'next/font/local'
+// const manrope = localFont({
+//   src: [
+//     { path: './fonts/Manrope-Regular.woff2', weight: '400', style: 'normal' },
+//     ...
+//   ],
+//   variable: '--font-manrope',
+// })
 
 export const metadata: Metadata = {
   title: 'Trinade AI Technologies | Intelligent Solutions, Delivered Confidently',

@@ -1,5 +1,10 @@
 import { ImageResponse } from 'next/og'
 
+// For `output: 'export'`, route must be static.
+// This tells Next.js to treat this route as static and avoid dynamic fetch behavior.
+export const dynamic = 'force-static'
+export const revalidate = 0
+
 export const size = {
   width: 32,
   height: 32,

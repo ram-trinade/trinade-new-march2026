@@ -1,0 +1,133 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/app/_not-found/page-4ef801f5f21054c2.js"
+    ],
+    "/not-found": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/app/not-found-58af149e7c2d08b1.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/css/01d3788f83ea9175.css",
+      "static/chunks/app/layout-0a86987ffb10e52e.js"
+    ],
+    "/icon/route": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/app/icon/route-4ef801f5f21054c2.js"
+    ],
+    "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/3221-49df2567e77c97bc.js",
+      "static/chunks/9831-61c360d7e3aadfa3.js",
+      "static/chunks/app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page-210e02319de8c2ab.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/app/page-d5d78db16072ba23.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/2085-5de92f9387fcb94c.js",
+      "static/chunks/app/contact/page-0f32bae6282872be.js"
+    ],
+    "/blog/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/5239-4c39720443de629f.js",
+      "static/chunks/app/blog/page-15e2f9c4d2470b2b.js"
+    ],
+    "/solutions/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/app/solutions/page-f4381dd2b8a08201.js"
+    ],
+    "/privacy-policy/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/app/privacy-policy/page-44620086e74fae2b.js"
+    ],
+    "/company/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/3430-bbd2add707b7a613.js",
+      "static/chunks/app/company/page-0fd1038de16c2a81.js"
+    ],
+    "/terms-of-service/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/app/terms-of-service/page-641073f4a9bba5bd.js"
+    ],
+    "/products/flyhigh/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/5239-4c39720443de629f.js",
+      "static/chunks/2691-5a0d6171f1ed0f5b.js",
+      "static/chunks/7801-3f0db6f8f63f2547.js",
+      "static/chunks/3473-20f009bb9137d50d.js",
+      "static/chunks/6354-908d8c3fcbac0161.js",
+      "static/chunks/48-131fa4361476c5c0.js",
+      "static/chunks/app/products/flyhigh/page-3f4db7e861a1798d.js"
+    ],
+    "/products/sleep-alert/page": [
+      "static/chunks/webpack-b04829da38fe136e.js",
+      "static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "static/chunks/1255-29325acccda77703.js",
+      "static/chunks/main-app-ef6a7489a5fb8d12.js",
+      "static/chunks/858-7198954d7a2cbc50.js",
+      "static/chunks/2619-3c9e02e22d10480a.js",
+      "static/chunks/5239-4c39720443de629f.js",
+      "static/chunks/2691-5a0d6171f1ed0f5b.js",
+      "static/chunks/3221-49df2567e77c97bc.js",
+      "static/chunks/9405-791c1ef41cee4b86.js",
+      "static/chunks/3473-20f009bb9137d50d.js",
+      "static/chunks/6354-908d8c3fcbac0161.js",
+      "static/chunks/48-131fa4361476c5c0.js",
+      "static/chunks/app/products/sleep-alert/page-c2941382c4209955.js"
+    ]
+  }
+}
