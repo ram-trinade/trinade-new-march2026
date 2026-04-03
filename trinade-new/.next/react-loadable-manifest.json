@@ -1,343 +1,68 @@
 {
   "app\\not-found.tsx -> @/components/experimental-error-content": {
-    "id": 9669,
+    "id": "app\\not-found.tsx -> @/components/experimental-error-content",
     "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/9669.bda2d273bc75ea6e.js"
+      "static/chunks/_app-pages-browser_components_experimental-error-content_tsx.js"
     ]
   },
   "app\\not-found.tsx -> @/components/premium-cursor": {
-    "id": 1260,
+    "id": "app\\not-found.tsx -> @/components/premium-cursor",
     "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\blog-article-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
-    "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\blog-article-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\blog-article-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/48-131fa4361476c5c0.js",
-      "static/chunks/6497.98e662a3e35d72c6.js"
-    ]
-  },
-  "components\\blog-article-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
-    "files": [
-      "static/chunks/6354-908d8c3fcbac0161.js"
-    ]
-  },
-  "components\\blog-article-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/7603.5e10f68cf9c37839.js"
-    ]
-  },
-  "components\\blog-page-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
-    "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\blog-page-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\blog-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/48-131fa4361476c5c0.js",
-      "static/chunks/6497.98e662a3e35d72c6.js"
-    ]
-  },
-  "components\\blog-page-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
-    "files": [
-      "static/chunks/6354-908d8c3fcbac0161.js"
-    ]
-  },
-  "components\\blog-page-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/9984.5e10f68cf9c37839.js"
-    ]
-  },
-  "components\\company-page-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
-    "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\company-page-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\company-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/48-131fa4361476c5c0.js"
-    ]
-  },
-  "components\\company-page-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/6354-908d8c3fcbac0161.js"
-    ]
-  },
-  "components\\company-page-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/2444.0726b87c4536e4c5.js"
-    ]
-  },
-  "components\\contact-page-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
-    "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\contact-page-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\contact-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/48-131fa4361476c5c0.js"
-    ]
-  },
-  "components\\contact-page-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/6354-908d8c3fcbac0161.js",
-      "static/chunks/4570.da55f8d03cd7e184.js"
-    ]
-  },
-  "components\\contact-page-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/2444.0726b87c4536e4c5.js"
+      "static/chunks/_app-pages-browser_components_premium-cursor_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/homepage-content": {
-    "id": 2638,
+    "id": "components\\homepage-client.tsx -> @/components/homepage-content",
     "files": [
-      "static/chunks/c15bf2b0.c59ed6c02f757fc5.js",
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/7045.1147ae4d9b32f75d.js",
-      "static/chunks/2638.9161a5babaf49624.js"
+      "static/chunks/_app-pages-browser_components_homepage-content_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/preloader-animation": {
-    "id": 5329,
+    "id": "components\\homepage-client.tsx -> @/components/preloader-animation",
     "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/5329.479bfbeea3bccfa0.js"
+      "static/chunks/_app-pages-browser_components_preloader-animation_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
+    "id": "components\\homepage-client.tsx -> @/components/premium-cursor",
     "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
+      "static/chunks/_app-pages-browser_components_premium-cursor_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
+    "id": "components\\homepage-client.tsx -> @/components/smooth-scroll",
     "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
+      "static/chunks/_app-pages-browser_components_smooth-scroll_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
+    "id": "components\\homepage-client.tsx -> @/components/solutions-cookie-popup",
     "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/48-131fa4361476c5c0.js",
-      "static/chunks/8878.98e662a3e35d72c6.js"
+      "static/chunks/_app-pages-browser_components_solutions-cookie-popup_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
+    "id": "components\\homepage-client.tsx -> @/components/solutions-footer",
     "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/6354-908d8c3fcbac0161.js",
-      "static/chunks/2189.da55f8d03cd7e184.js"
+      "static/chunks/_app-pages-browser_components_solutions-footer_tsx.js"
     ]
   },
   "components\\homepage-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
+    "id": "components\\homepage-client.tsx -> @/components/solutions-navbar",
     "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/2841.5e10f68cf9c37839.js"
-    ]
-  },
-  "components\\privacy-policy-page-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
-    "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\privacy-policy-page-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\privacy-policy-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/48-131fa4361476c5c0.js",
-      "static/chunks/6497.98e662a3e35d72c6.js"
-    ]
-  },
-  "components\\privacy-policy-page-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/6354-908d8c3fcbac0161.js"
-    ]
-  },
-  "components\\privacy-policy-page-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/5222.5e10f68cf9c37839.js"
+      "static/chunks/_app-pages-browser_components_solutions-navbar_tsx.js"
     ]
   },
   "components\\solutions-footer.tsx -> @/components/location-indicator": {
-    "id": 7255,
+    "id": "components\\solutions-footer.tsx -> @/components/location-indicator",
     "files": [
-      "static/chunks/7255.4eeb704fef96cf2d.js"
+      "static/chunks/_app-pages-browser_components_location-indicator_tsx.js"
     ]
   },
-  "components\\solutions-page-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
+  "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
+    "id": "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
     "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/solutions-content": {
-    "id": 2518,
-    "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/6354-908d8c3fcbac0161.js",
-      "static/chunks/2518.0ece1c84548101dc.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/48-131fa4361476c5c0.js",
-      "static/chunks/8878.98e662a3e35d72c6.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/858-7198954d7a2cbc50.js",
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/2841.5e10f68cf9c37839.js"
-    ]
-  },
-  "components\\terms-of-service-page-client.tsx -> @/components/premium-cursor": {
-    "id": 1260,
-    "files": [
-      "static/chunks/1260.3d25f9e59f2bb20f.js"
-    ]
-  },
-  "components\\terms-of-service-page-client.tsx -> @/components/smooth-scroll": {
-    "id": 3522,
-    "files": [
-      "static/chunks/2691-5a0d6171f1ed0f5b.js",
-      "static/chunks/3522.46b96c2f9fff204c.js"
-    ]
-  },
-  "components\\terms-of-service-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": 48,
-    "files": [
-      "static/chunks/48-131fa4361476c5c0.js",
-      "static/chunks/6497.98e662a3e35d72c6.js"
-    ]
-  },
-  "components\\terms-of-service-page-client.tsx -> @/components/solutions-footer": {
-    "id": 6354,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/6354-908d8c3fcbac0161.js"
-    ]
-  },
-  "components\\terms-of-service-page-client.tsx -> @/components/solutions-navbar": {
-    "id": 3473,
-    "files": [
-      "static/chunks/2619-3c9e02e22d10480a.js",
-      "static/chunks/5239-4c39720443de629f.js",
-      "static/chunks/3473-20f009bb9137d50d.js",
-      "static/chunks/5222.5e10f68cf9c37839.js"
-    ]
-  },
-  "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": 5139,
-    "files": [
-      "static/chunks/5139.c5e46d26064a85db.js"
-    ]
-  },
-  "node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": 1646,
-    "files": [
-      "static/chunks/1646.9123ee47220ed70b.js"
+      "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
     ]
   }
 }

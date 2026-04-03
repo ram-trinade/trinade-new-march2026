@@ -1,14 +1,3 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/icon/route": "app/icon/route.js",
-  "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page": "app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page.js",
-  "/page": "app/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/blog/page": "app/blog/page.js",
-  "/solutions/page": "app/solutions/page.js",
-  "/privacy-policy/page": "app/privacy-policy/page.js",
-  "/company/page": "app/company/page.js",
-  "/terms-of-service/page": "app/terms-of-service/page.js",
-  "/products/flyhigh/page": "app/products/flyhigh/page.js",
-  "/products/sleep-alert/page": "app/products/sleep-alert/page.js"
+  "/page": "app/page.js"
 }
