@@ -36,10 +36,10 @@ type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
 }
 
 
-// Validate ../../app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page.tsx
+// Validate ../../app/blog/[slug]/page.tsx
 {
-  type __IsExpected<Specific extends AppPageConfig<"/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care">> = Specific
-  const handler = {} as typeof import("../../app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page.js")
+  type __IsExpected<Specific extends AppPageConfig<"/blog/[slug]">> = Specific
+  const handler = {} as typeof import("../../app/blog/[slug]/page.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

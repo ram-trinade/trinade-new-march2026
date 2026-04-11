@@ -150,9 +150,9 @@ export default function SolutionsNavbar() {
       {/* ─── Logo + Trinade text on the left ─── */}
       <Link
         href="/"
-        className="fixed left-8 z-[9999] flex items-center gap-2.5"
+        className="fixed left-[clamp(1rem,3vw,2rem)] z-[9999] flex items-center gap-2"
         data-navbar
-        style={{ pointerEvents: 'auto', textDecoration: 'none', top: '30px' }}
+        style={{ pointerEvents: 'auto', textDecoration: 'none', top: 'clamp(16px,2.5vh,30px)' }}
       >
         <Image
           src="/logo-transparent.png"
@@ -161,8 +161,8 @@ export default function SolutionsNavbar() {
           height={120}
           className="object-contain"
           style={{
-            width: '32px',
-            height: '32px',
+            width: 'clamp(20px,2vw,32px)',
+            height: 'clamp(20px,2vw,32px)',
             filter: isOnDark
               ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
               : 'brightness(0) contrast(3)',
@@ -172,7 +172,7 @@ export default function SolutionsNavbar() {
         />
         <span
           style={{
-            fontSize: '28px',
+            fontSize: 'clamp(16px,1.8vw,28px)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
             color: isOnDark ? '#d4bb8a' : '#2a2218',
@@ -492,7 +492,7 @@ export default function SolutionsNavbar() {
       </div>
 
       {/* ─── Scroll Indicator (5 segments) — adaptive glassmorphism ─── */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[9998]">
+      <div className="fixed right-[clamp(8px,1.5vw,24px)] top-1/2 -translate-y-1/2 z-[9998]">
         <div
           className="flex flex-col items-center gap-[6px] px-[10px] py-3"
           style={{

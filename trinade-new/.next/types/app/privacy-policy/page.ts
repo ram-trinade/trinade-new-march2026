@@ -1,4 +1,4 @@
-// File: C:\Users\aksha\trinade-new-march2026\trinade-new\app\privacy-policy\page.tsx
+// File: C:\Users\aksha\OneDrive\Desktop\george\trinade-new-march2026\trinade-new\app\privacy-policy\page.tsx
 import * as entry from '../../../../app/privacy-policy/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

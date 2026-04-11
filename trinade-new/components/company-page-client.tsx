@@ -80,7 +80,7 @@ const TIMELINE = [
   { year: '2023', title: 'Expansion Roadmap', desc: 'Defined plans to expand into multiple sectors guided by trust, reliability, and measurable outcomes.' },
   { year: '2024', title: 'Sleep Alert Device', desc: 'Initiated development of a safety-focused concept for automotive applications designed for real-world impact.' },
   { year: '2025', title: 'Fly High', desc: 'Began building Fly High as part of Trinade\'s product roadmap and platform direction.' },
-  { year: '2026', title: 'Website + Offerings Launch', desc: 'Launch of the website and structured offerings — opening collaborations with businesses, startups, and community initiatives.' },
+  { year: '2026', title: 'Website + Offerings Launch', desc: 'Re-launch of the website and structured offerings — opening collaborations with businesses, startups, and community initiatives.' },
 ]
 
 const TEAM = [
@@ -234,7 +234,7 @@ function Reveal({
 function HeroLetterReveal() {
   const letters = 'TRINADE'.split('')
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(4px, 1vw, 16px)', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(2px, 0.5vw, 12px)', overflow: 'hidden', flexWrap: 'nowrap' }}>
       {letters.map((letter, i) => (
         <motion.span
           key={i}
@@ -247,7 +247,7 @@ function HeroLetterReveal() {
           }}
           style={{
             display: 'inline-block',
-            fontSize: 'clamp(72px, 15vw, 220px)',
+            fontSize: 'clamp(40px, 10vw, 160px)',
             fontWeight: 400,
             letterSpacing: '-0.03em',
             lineHeight: 0.85,
@@ -312,7 +312,7 @@ function AnimatedCounter({ target, isActive }: { target: number; isActive: boole
     }
 
     return () => cancelAnimationFrame(frameRef.current)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive, target])
 
   return <>{String(count).padStart(2, '0')}</>
@@ -349,8 +349,8 @@ function ValuesAccordion() {
                 display: 'grid',
                 gridTemplateColumns: '1fr auto auto',
                 alignItems: 'center',
-                gap: '24px',
-                padding: '36px 0',
+                gap: 'clamp(12px, 2vw, 24px)',
+                padding: 'clamp(20px, 3vh, 36px) 0',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
@@ -362,7 +362,7 @@ function ValuesAccordion() {
             >
               {/* Title — bold, prominent */}
               <span style={{
-                fontSize: 'clamp(24px, 3vw, 40px)',
+                fontSize: 'clamp(18px, 2.5vw, 40px)',
                 fontWeight: 500,
                 color: isExpanded ? '#2a2218' : 'rgba(42,34,24,0.7)',
                 letterSpacing: '-0.025em',
@@ -374,17 +374,17 @@ function ValuesAccordion() {
 
               {/* Big animated number on right */}
               <span style={{
-                fontSize: 'clamp(48px, 5vw, 72px)',
+                fontSize: 'clamp(36px, 4vw, 72px)',
                 fontWeight: 200,
                 color: isExpanded ? 'rgba(201,168,110,0.35)' : 'rgba(42,34,24,0.12)',
                 letterSpacing: '-0.04em',
                 lineHeight: 1,
                 transition: 'color 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
                 fontVariantNumeric: 'tabular-nums',
-                minWidth: '80px',
+                minWidth: '60px',
                 textAlign: 'right',
               }}>
-{String(i + 1).padStart(2, '0')}
+                {String(i + 1).padStart(2, '0')}
               </span>
 
               {/* Toggle icon */}
@@ -653,8 +653,8 @@ function TeamGrid() {
         transition={{ duration: 1, ease: EASE_CINEMATIC }}
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '32px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: 'clamp(16px, 2vw, 32px)',
         }}
       >
         {TEAM.map((member, i) => (
@@ -779,7 +779,7 @@ export default function CompanyPageClient() {
             <Grain id="hero-grain" opacity={0.15} />
 
             {/* Content */}
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32 text-center">
+            <div className="relative z-10 px-[clamp(1.5rem,4vw,8rem)] text-center">
               <div className="max-w-[1400px] mx-auto">
                 {/* Eyebrow */}
                 <Reveal>
@@ -843,7 +843,7 @@ export default function CompanyPageClient() {
           <section className="relative py-20 md:py-32" style={{ background: '#f2ede6' }}>
             <Grain id="values-grain" />
 
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32">
+            <div className="relative z-10 px-[clamp(1.5rem,4vw,8rem)]">
               <div className="max-w-[1200px] mx-auto">
                 <Reveal>
                   <SectionEyebrow>
@@ -869,7 +869,7 @@ export default function CompanyPageClient() {
           <section className="relative py-20 md:py-32" style={{ background: '#ebe5db' }}>
             <Grain id="milestones-grain" />
 
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32">
+            <div className="relative z-10 px-[clamp(1.5rem,4vw,8rem)]">
               <div className="max-w-[1400px] mx-auto">
                 <Reveal>
                   <SectionEyebrow>
@@ -895,7 +895,7 @@ export default function CompanyPageClient() {
           <section className="relative py-20 md:py-32" style={{ background: '#f2ede6' }}>
             <Grain id="team-grain" />
 
-            <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32">
+            <div className="relative z-10 px-[clamp(1.5rem,4vw,8rem)]">
               <div className="max-w-[1400px] mx-auto">
                 <Reveal>
                   <SectionEyebrow>

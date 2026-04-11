@@ -50,7 +50,7 @@ export default function SolutionsFooter() {
           initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="relative rounded-[28px] p-12"
+          className="relative rounded-[28px] p-[clamp(1.5rem,3vw,3rem)]"
           style={{
             background: 'linear-gradient(165deg, rgba(185,155,100,0.22) 0%, rgba(165,125,60,0.16) 40%, rgba(200,175,125,0.19) 100%)',
             backdropFilter: 'blur(24px) saturate(1.5)',
@@ -221,7 +221,7 @@ export default function SolutionsFooter() {
         <div
           className="footer-marquee whitespace-nowrap leading-none"
           style={{
-            fontSize: 'clamp(200px, 28vw, 400px)',
+            fontSize: 'clamp(80px, 18vw, 300px)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
           }}
