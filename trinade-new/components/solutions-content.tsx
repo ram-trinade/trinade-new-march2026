@@ -142,14 +142,14 @@ function HeroSection() {
   const isInView = useInView(ref, { once: true, margin: '-30px' })
 
   return (
-    <section ref={ref} className="relative min-h-[100vh] flex items-center overflow-hidden" style={{ background: P.cream }}>
+    <section ref={ref} className="relative min-h-[100vh] flex flex-col justify-center pt-[140px] pb-20 md:py-0 overflow-hidden" style={{ background: P.cream }}>
       {/* Subtle gradient mesh bg */}
       <div className="absolute inset-0 opacity-[0.5] pointer-events-none">
         <Image src="/gradient-orbs-warm.jpg" alt="" fill className="object-cover" priority />
       </div>
       <Grain id="heroGrain" opacity={0.02} />
 
-      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] py-[clamp(5rem,10vh,10rem)]">
+      <div className="relative z-10 px-[clamp(1.5rem,8vw,8rem)] md:py-[clamp(5rem,10vh,10rem)]">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -231,14 +231,13 @@ function MissionSection() {
 // INDUSTRIES — CSS Grid: 3 large + 2x2 smaller cards
 // Clean cream backgrounds, gold accent hover
 // ═══════════════════════════════════════════════════════════
-function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; isLarge: boolean; gridStyle?: React.CSSProperties }) {
+function IndustryCard({ ind, isLarge, className = '' }: { ind: typeof industries[0]; isLarge: boolean; className?: string }) {
   return (
     <div
-      className="group rounded-2xl p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
+      className={`group rounded-2xl p-6 md:p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] ${className}`}
       style={{
         background: P.creamMid,
         border: `1px solid ${P.creamDark}`,
-        ...gridStyle,
       }}
     >
       {/* Grainy gold glow from bottom-right corner */}
@@ -336,24 +335,19 @@ function IndustriesSection() {
         {/* Separator line */}
         <div className="h-[1px] mb-10" style={{ background: P.creamDark }} />
 
-        {/* Responsive Grid — collapses at narrower viewports (150% scale) */}
+        {/* Responsive Grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          className="grid gap-4"
-          style={{
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
-            minHeight: '480px',
-          }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
         >
-          {/* All cards use natural grid flow at this point */}
-          <IndustryCard ind={industries[0]} isLarge gridStyle={{ gridRow: 'span 2' }} />
-          <IndustryCard ind={industries[1]} isLarge gridStyle={{ gridRow: 'span 2' }} />
-          <IndustryCard ind={industries[2]} isLarge gridStyle={{ gridRow: 'span 2' }} />
+          <IndustryCard ind={industries[0]} isLarge className="md:row-span-2" />
+          <IndustryCard ind={industries[1]} isLarge className="md:row-span-2" />
+          <IndustryCard ind={industries[2]} isLarge className="md:row-span-2" />
           <IndustryCard ind={industries[3]} isLarge={false} />
           <IndustryCard ind={industries[4]} isLarge={false} />
-          <IndustryCard ind={industries[5]} isLarge={false} gridStyle={{ gridColumn: 'span 2' }} />
+          <IndustryCard ind={industries[5]} isLarge={false} className="md:col-span-2 lg:col-span-2" />
         </motion.div>
 
       </div>
@@ -724,66 +718,6 @@ function DifferentiatorsSection() {
 // ═══════════════════════════════════════════════════════════
 // CTA — spiral-lines-gold.jpg background
 // ═══════════════════════════════════════════════════════════
-function CTASection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
-  return (
-    <section ref={ref} className="relative py-32" style={{ background: P.cream }}>
-      <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="relative rounded-[28px] overflow-hidden py-[clamp(4rem,6vw,7rem)] px-[clamp(1.5rem,4vw,6rem)]" data-dark-section>
-          {/* spiral-lines-gold background */}
-          <div className="absolute inset-0">
-            <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.55), rgba(10,10,12,0.25))' }} />
-          </div>
-          <Grain id="ctaGrain" opacity={0.04} />
-
-          <div className="relative z-10 text-center max-w-[640px] mx-auto">
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.08] tracking-[-0.03em] mb-8"
-              style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
-            >
-              The right conversation<br />starts here.
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="text-[16px] leading-[1.9] mb-12"
-              style={{ color: P.textOnDarkMuted }}
-            >
-              Tell us what&apos;s keeping you up at night. We&apos;ll tell you exactly how we&apos;d fix it — no pitch deck, no discovery phase, just a direct technical conversation.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="flex items-center justify-center gap-4 flex-wrap"
-            >
-              <Link href="/contact"
-                className="group inline-flex items-center gap-3 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(201,168,110,0.3)]"
-                style={{ background: P.gold, color: P.charcoal }}>
-                Start a conversation
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-              <Link href="/contact"
-                className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:bg-white/[0.1]"
-                style={{ color: P.textOnDarkMuted, border: '1px solid rgba(255,255,255,0.15)' }}>
-                See case studies
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 
 
@@ -798,7 +732,7 @@ export default function SolutionsContent() {
       <IndustriesSection />
       <ChallengesSection />
       <AccordionSection />
-      <CTASection />
+
       <SolutionsFooter />
     </main>
   )
