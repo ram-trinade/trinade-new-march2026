@@ -19,14 +19,7 @@ const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const
 const GRAIN_BG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E")`
 
 /* ─── Article Data ─── */
-const ARTICLE = {
-  category: 'Healthcare AI',
-  title: 'AI in Healthcare: From Diagnostics to Patient-Centric Care',
-  author: 'Priya Sharma',
-  role: 'Healthcare AI Lead',
-  date: 'March 1, 2026',
-  readTime: '8 min read',
-}
+
 
 /* ─── Reveal Wrapper ─── */
 function RevealOnScroll({
@@ -143,24 +136,7 @@ function FloatingBackArrow() {
 }
 
 /* ─── Article Content Sections ─── */
-const SECTIONS = [
-  {
-    heading: 'The Diagnostic Revolution',
-    content: `Medical diagnostics has entered a new era. Machine learning models trained on millions of medical images can now detect early-stage cancers, retinal diseases, and cardiac anomalies with accuracy that matches — and sometimes exceeds — seasoned specialists.\n\nAt Trinade, we approach diagnostic AI not as a replacement for clinical judgment, but as an augmentation layer. Our systems surface patterns that human eyes might miss during high-volume screening sessions, flagging anomalies for expert review while maintaining transparent confidence scores.\n\nThe key insight is that diagnostic AI works best when it respects the clinical workflow rather than disrupting it. Integration into existing PACS systems, DICOM-compatible pipelines, and EMR platforms means radiologists and pathologists can leverage AI without changing how they work.`,
-  },
-  {
-    heading: 'Patient-Centric Intelligence',
-    content: `Healthcare is fundamentally personal. Every patient brings a unique combination of genetics, lifestyle, medical history, and preferences. AI-first healthcare acknowledges this complexity and uses it as a design principle.\n\nOur patient-centric AI systems analyze longitudinal health data to create personalized care pathways. Rather than one-size-fits-all treatment protocols, these systems help clinicians tailor interventions based on predicted outcomes for specific patient profiles.\n\nThis extends beyond treatment into communication. Natural language processing enables more accessible health information, automated appointment scheduling that respects patient preferences, and proactive outreach based on predictive models that identify patients at risk of missing critical follow-ups.`,
-  },
-  {
-    heading: 'Compliance Without Compromise',
-    content: `Healthcare AI operates in one of the most regulated environments in technology. HIPAA, GDPR, and regional health data regulations create a complex compliance landscape that many AI initiatives fail to navigate.\n\nTrinade's approach embeds compliance into the architecture from day one. Our systems use federated learning approaches that keep patient data within institutional boundaries while still benefiting from collective intelligence. Differential privacy techniques ensure that individual patient information can never be reverse-engineered from model outputs.\n\nAudit trails, explainable AI interfaces for regulatory review, and automated compliance reporting are not afterthoughts — they are core features that enable healthcare organizations to adopt AI with confidence.`,
-  },
-  {
-    heading: 'The Future of Clinical Workflows',
-    content: `The next wave of healthcare AI moves beyond isolated use cases toward integrated clinical intelligence. Imagine a system that connects diagnostic imaging, lab results, patient history, and real-time vital signs into a unified decision support layer.\n\nThis is where multi-modal AI architectures become essential. By combining computer vision for imaging, NLP for clinical notes, and time-series analysis for monitoring data, we can build systems that understand patient health holistically rather than through narrow diagnostic windows.\n\nThe result is not just better diagnoses, but better care coordination, reduced administrative burden, and clinical teams that can focus their expertise where it matters most — at the patient's bedside.`,
-  },
-]
+
 
 /* ─── Pull Quote ─── */
 function PullQuote({ text }: { text: string }) {
@@ -188,7 +164,7 @@ function PullQuote({ text }: { text: string }) {
    ARTICLE PAGE
    ══════════════════════════════════════════════════════════════ */
 
-export default function ArticlePageClient() {
+export default function ArticlePageClient({ article }: { article: any }) {
   return (
     <>
       <style>{`
@@ -275,9 +251,9 @@ export default function ArticlePageClient() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
                 >
-                  <GoldPill>{ARTICLE.category}</GoldPill>
+                  <GoldPill>{article.category}</GoldPill>
                   <span className="text-xs tracking-[0.12em] uppercase font-medium" style={{ color: 'rgba(255,255,255,0.3)' }}>
-                    {ARTICLE.readTime}
+                    {article.readTime}
                   </span>
                 </motion.div>
 
@@ -289,7 +265,7 @@ export default function ArticlePageClient() {
                   transition={{ duration: 1, delay: 0.35, ease: EASE }}
                   style={{ color: 'rgba(255,255,255,0.95)' }}
                 >
-                  {ARTICLE.title}
+                  {article.title}
                 </motion.h1>
 
                 {/* Author + Date row */}
@@ -311,10 +287,10 @@ export default function ArticlePageClient() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                      {ARTICLE.author}
+                      {article.author}
                     </p>
                     <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
-                      {ARTICLE.role} · {ARTICLE.date}
+                      {article.role} · {article.date}
                     </p>
                   </div>
                 </motion.div>
@@ -359,7 +335,7 @@ export default function ArticlePageClient() {
                 <GoldRule className="mb-16" />
 
                 {/* Article sections */}
-                {SECTIONS.map((section, i) => (
+                {(article.contentSections || []).map((section: any, i: number) => (
                   <div key={section.heading}>
                     <RevealOnScroll delay={0.1}>
                       <h2
@@ -370,7 +346,7 @@ export default function ArticlePageClient() {
                       </h2>
                     </RevealOnScroll>
 
-                    {section.content.split('\n\n').map((para, j) => (
+                    {(section.content || '').split('\n\n').map((para: string, j: number) => (
                       <RevealOnScroll key={j} delay={0.05 * j}>
                         <p
                           className="text-[16px] leading-[1.9] mb-6"
@@ -391,7 +367,7 @@ export default function ArticlePageClient() {
                       <PullQuote text="Compliance is not an afterthought — it is a core feature that enables healthcare organizations to adopt AI with confidence." />
                     )}
 
-                    {i < SECTIONS.length - 1 && (
+                    {i < (article.contentSections?.length || 0) - 1 && (
                       <div className="my-14 md:my-20">
                         <GoldRule />
                       </div>
@@ -443,8 +419,8 @@ export default function ArticlePageClient() {
                       PS
                     </div>
                     <div>
-                      <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{ARTICLE.author}</p>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role} at Trinade AI Technologies</p>
+                      <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{article.author}</p>
+                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{article.role} at Trinade AI Technologies</p>
                       <p className="text-[15px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.5)' }}>
                         Priya leads our Healthcare AI practice, bringing over a decade of experience in clinical informatics and machine learning to every engagement. She is passionate about creating AI systems that respect clinical workflows while pushing the boundaries of what is possible in patient care.
                       </p>

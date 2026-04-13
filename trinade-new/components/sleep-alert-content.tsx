@@ -391,56 +391,7 @@ function HeroSection() {
           and triggers a clear alert — so you stay focused on the road.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.4, ease: EASE_CINE }}
-          className="mt-12 flex items-center justify-center gap-5"
-        >
-          <Link
-            href="/contact"
-            className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500"
-            style={{
-              padding: '14px 36px',
-              borderRadius: '100px',
-              background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
-              color: '#0a0a0a',
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase' as const,
-              textDecoration: 'none',
-            }}
-          >
-            {/* Shine sweep */}
-            <span
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-              style={{
-                background: 'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)',
-              }}
-            />
-            <span className="relative">Talk to Trinade</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative transition-transform duration-300 group-hover:translate-x-[3px]">
-              <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-          <a
-            href="#how-it-works"
-            className="inline-flex items-center transition-all duration-500 hover:border-[rgba(201,168,110,0.5)]"
-            style={{
-              padding: '14px 32px',
-              borderRadius: '100px',
-              border: '1px solid rgba(201,168,110,0.2)',
-              color: 'rgba(255,255,255,0.6)',
-              fontSize: '13px',
-              fontWeight: 500,
-              letterSpacing: '0.04em',
-              textDecoration: 'none',
-            }}
-          >
-            How It Works
-          </a>
-        </motion.div>
+
 
         {/* Scroll indicator */}
         <motion.div
@@ -778,6 +729,17 @@ function FeaturesSection() {
         </svg>
       ),
       span: 'md:col-span-2', // wide card
+    },
+    {
+      title: 'Easy to Install',
+      desc: 'It can easily be fitted in vehicles externally. Later, it can easily be incorporated to automobiles while production.',
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 6v20M6 16h20" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="16" cy="16" r="4" stroke="#c9a86e" strokeWidth="1.2" />
+        </svg>
+      ),
+      span: 'md:col-span-3', // full width card for symmetry
     },
   ]
 
@@ -1148,88 +1110,6 @@ function FleetSection() {
   )
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// SECTION 7 — SPECS (with hover highlight rows)
-// ═══════════════════════════════════════════════════════════════════════
-function SpecsSection() {
-  const specs = [
-    { label: 'Processor', value: 'Raspberry Pi 5' },
-    { label: 'Camera', value: 'Camera Module 3' },
-    { label: 'Alert', value: 'Buzzer Alarm System' },
-    { label: 'Power', value: '5.1V 5A via USB' },
-    { label: 'Range', value: '1 – 1.5m face detection' },
-    { label: 'Support', value: '24h response + 14-day replacement' },
-  ]
-
-  return (
-    <section
-      className="relative py-32 lg:py-40 overflow-hidden"
-      style={{ background: '#0a0a0a' }}
-    >
-      <GrainOverlay opacity={0.04} />
-
-      <div className="relative z-10 max-w-[900px] mx-auto px-6">
-        <RevealSection className="text-center mb-16">
-          <GoldPill>Technical</GoldPill>
-          <h2
-            className="mt-8"
-            style={{
-              fontSize: 'clamp(1.8rem, 3vw, 2.6rem)',
-              fontWeight: 300,
-              letterSpacing: '-0.03em',
-              color: 'rgba(255,255,255,0.93)',
-            }}
-          >
-            Under the Hood
-          </h2>
-        </RevealSection>
-
-        <div className="space-y-0">
-          {specs.map((spec, i) => (
-            <RevealSection key={i} delay={0.08 * i}>
-              <div
-                className="group flex items-center justify-between py-6 transition-all duration-400 cursor-default relative"
-                style={{
-                  borderBottom: '1px solid rgba(255,255,255,0.06)',
-                }}
-              >
-                {/* Hover background highlight */}
-                <div
-                  className="absolute inset-0 -mx-4 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: 'rgba(201,168,110,0.03)',
-                  }}
-                />
-                <span
-                  className="relative transition-colors duration-500 group-hover:text-[rgba(201,168,110,0.7)]"
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase' as const,
-                    color: 'rgba(255,255,255,0.3)',
-                  }}
-                >
-                  {spec.label}
-                </span>
-                <span
-                  className="relative transition-colors duration-500 group-hover:text-[rgba(255,255,255,0.9)]"
-                  style={{
-                    fontSize: '15px',
-                    fontWeight: 400,
-                    color: 'rgba(255,255,255,0.6)',
-                  }}
-                >
-                  {spec.value}
-                </span>
-              </div>
-            </RevealSection>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 // ═══════════════════════════════════════════════════════════════════════
 // SECTION 8 — CTA (Dramatic scale)
@@ -1339,7 +1219,6 @@ export default function SleepAlertContent() {
       <FeaturesSection />
       <TechnologySection />
       <FleetSection />
-      <SpecsSection />
       <CTASection />
     </main>
   )

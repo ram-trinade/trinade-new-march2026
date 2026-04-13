@@ -186,6 +186,7 @@ export default function ContactPageClient() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
 
   // Map country names to country codes
   const getCountryCodeFromCountry = (countryName: string): string => {
@@ -225,6 +226,35 @@ export default function ContactPageClient() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    const newErrors: { [key: string]: string } = {}
+
+    if (!/^[A-Za-z]{3,}$/.test(formData.firstName.trim())) {
+      newErrors.firstName = 'First name must contain at least 3 letters and only alphabets.'
+    }
+
+    if (!/^[A-Za-z]{3,}$/.test(formData.lastName.trim())) {
+      newErrors.lastName = 'Last name must contain at least 3 letters and only alphabets.'
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = 'Please enter a valid email address.'
+    }
+
+    if (!/^\d{10}$/.test(formData.phone.trim())) {
+      newErrors.phone = 'Phone number must be exactly 10 digits.'
+    }
+
+    if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must contain at least 10 characters.'
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    setErrors({})
     setIsSubmitting(true)
 
     // Simulate form submission
@@ -239,6 +269,10 @@ export default function ContactPageClient() {
   }
 
   const handleChange = (field: string, value: string) => {
+    // Clear the error for this field when the user types
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }))
+    }
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
@@ -296,7 +330,7 @@ export default function ContactPageClient() {
                   transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                   viewport={{ once: true }}
                 >
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                     {/* Name Fields */}
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
@@ -311,10 +345,11 @@ export default function ContactPageClient() {
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2"
                           style={{
                             background: 'rgba(255,255,255,0.8)',
-                            border: '1px solid rgba(201,168,110,0.3)',
+                            border: errors.firstName ? '1px solid #ef4444' : '1px solid rgba(201,168,110,0.3)',
                             color: '#2a2218',
                           }}
                         />
+                        {errors.firstName && <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>}
                       </div>
                       <div>
                         <label className="block text-sm font-medium mb-2" style={{ color: '#2a2218' }}>
@@ -328,10 +363,11 @@ export default function ContactPageClient() {
                           className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2"
                           style={{
                             background: 'rgba(255,255,255,0.8)',
-                            border: '1px solid rgba(201,168,110,0.3)',
+                            border: errors.lastName ? '1px solid #ef4444' : '1px solid rgba(201,168,110,0.3)',
                             color: '#2a2218',
                           }}
                         />
+                        {errors.lastName && <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>}
                       </div>
                     </div>
 
@@ -348,10 +384,11 @@ export default function ContactPageClient() {
                         className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2"
                         style={{
                           background: 'rgba(255,255,255,0.8)',
-                          border: '1px solid rgba(201,168,110,0.3)',
+                          border: errors.email ? '1px solid #ef4444' : '1px solid rgba(201,168,110,0.3)',
                           color: '#2a2218',
                         }}
                       />
+                      {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
 
                     {/* Company */}
@@ -404,11 +441,12 @@ export default function ContactPageClient() {
                           className="flex-1 px-4 py-3 rounded-lg border focus:outline-none focus:ring-2"
                           style={{
                             background: 'rgba(255,255,255,0.8)',
-                            border: '1px solid rgba(201,168,110,0.3)',
+                            border: errors.phone ? '1px solid #ef4444' : '1px solid rgba(201,168,110,0.3)',
                             color: '#2a2218',
                           }}
                         />
                       </div>
+                      {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                     </div>
 
                     {/* Message */}
@@ -424,11 +462,12 @@ export default function ContactPageClient() {
                         className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 resize-none"
                         style={{
                           background: 'rgba(255,255,255,0.8)',
-                          border: '1px solid rgba(201,168,110,0.3)',
+                          border: errors.message ? '1px solid #ef4444' : '1px solid rgba(201,168,110,0.3)',
                           color: '#2a2218',
                         }}
                         placeholder="Tell us about your project..."
                       />
+                      {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                     </div>
 
                     {/* Submit Button */}

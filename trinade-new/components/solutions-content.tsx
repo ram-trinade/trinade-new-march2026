@@ -149,7 +149,7 @@ function HeroSection() {
       </div>
       <Grain id="heroGrain" opacity={0.02} />
 
-      <div className="relative z-10 w-full px-[clamp(2rem,8vw,8rem)] py-40">
+      <div className="relative z-10 px-[clamp(2rem,8vw,8rem)] py-[clamp(5rem,10vh,10rem)]">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -336,27 +336,24 @@ function IndustriesSection() {
         {/* Separator line */}
         <div className="h-[1px] mb-10" style={{ background: P.creamDark }} />
 
-        {/* CSS Grid — 3 large + small cards on right (IT Solutions layout) */}
+        {/* Responsive Grid — collapses at narrower viewports (150% scale) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
           className="grid gap-4"
           style={{
-            gridTemplateColumns: 'repeat(5, 1fr)',
-            gridTemplateRows: '1fr 1fr',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
             minHeight: '480px',
           }}
         >
-          {/* 3 large cards spanning 2 rows */}
-          <IndustryCard ind={industries[0]} isLarge gridStyle={{ gridColumn: '1', gridRow: '1 / 3' }} />
-          <IndustryCard ind={industries[1]} isLarge gridStyle={{ gridColumn: '2', gridRow: '1 / 3' }} />
-          <IndustryCard ind={industries[2]} isLarge gridStyle={{ gridColumn: '3', gridRow: '1 / 3' }} />
-
-          {/* 3 smaller cards on the right */}
-          <IndustryCard ind={industries[3]} isLarge={false} gridStyle={{ gridColumn: '4', gridRow: '1' }} />
-          <IndustryCard ind={industries[4]} isLarge={false} gridStyle={{ gridColumn: '5', gridRow: '1' }} />
-          <IndustryCard ind={industries[5]} isLarge={false} gridStyle={{ gridColumn: '4 / 6', gridRow: '2' }} />
+          {/* All cards use natural grid flow at this point */}
+          <IndustryCard ind={industries[0]} isLarge gridStyle={{ gridRow: 'span 2' }} />
+          <IndustryCard ind={industries[1]} isLarge gridStyle={{ gridRow: 'span 2' }} />
+          <IndustryCard ind={industries[2]} isLarge gridStyle={{ gridRow: 'span 2' }} />
+          <IndustryCard ind={industries[3]} isLarge={false} />
+          <IndustryCard ind={industries[4]} isLarge={false} />
+          <IndustryCard ind={industries[5]} isLarge={false} gridStyle={{ gridColumn: 'span 2' }} />
         </motion.div>
 
       </div>
@@ -734,7 +731,7 @@ function CTASection() {
   return (
     <section ref={ref} className="relative py-32" style={{ background: P.cream }}>
       <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="relative rounded-[28px] overflow-hidden py-28 px-12 lg:px-24" data-dark-section>
+        <div className="relative rounded-[28px] overflow-hidden py-[clamp(4rem,6vw,7rem)] px-[clamp(1.5rem,4vw,6rem)]" data-dark-section>
           {/* spiral-lines-gold background */}
           <div className="absolute inset-0">
             <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />

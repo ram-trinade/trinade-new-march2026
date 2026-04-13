@@ -49,7 +49,7 @@ const challenges = [
   },
   {
     title: 'Security Posture Falling Behind Threats',
-    tags: ['Zero-Trust Design', 'Incident Response', 'Compliance Automation'],
+    tags: ['Full-Trust Design', 'Incident Response', 'Compliance Automation'],
   },
   {
     title: 'Vendor Sprawl Draining Budgets',
@@ -125,13 +125,13 @@ function HomeHeroSection() {
       </div>
       <Grain id="homeHeroGrain" opacity={0.02} />
 
-      <div className="relative z-10 w-full px-[clamp(2rem,8vw,8rem)] pt-32 pb-6 shrink-0">
+      <div className="relative z-10 w-full px-[clamp(2rem,8vw,8rem)] pt-[clamp(5rem,10vh,8rem)] pb-6 shrink-0">
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, ease: EASE_OUT }}
           className="leading-[1.05] tracking-[-0.04em]"
-          style={{ fontSize: 'clamp(2.6rem, 6vw, 5.2rem)', fontWeight: 400, color: P.textDark }}
+          style={{ fontSize: 'clamp(2rem, 5.5vw, 5.2rem)', fontWeight: 400, color: P.textDark }}
         >
           Precision-built<br />technology, at scale.
         </motion.h1>
@@ -150,10 +150,10 @@ function HomeHeroSection() {
           </div>
           <Grain id="heroCardGrain" opacity={0.03} />
 
-          <div className="relative z-10 p-[clamp(1.5rem,4vw,4rem)] flex flex-col justify-end h-full">
+          <div className="relative z-10 p-[clamp(1.2rem,3vw,4rem)] flex flex-col justify-end h-full">
             <p
               className="leading-[1.25] tracking-[-0.02em] max-w-[900px]"
-              style={{ fontSize: 'clamp(1.4rem, 3vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
+              style={{ fontSize: 'clamp(1.1rem, 2.5vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
             >
               We design, build, and manage the systems that enterprises depend on — cloud infrastructure, cybersecurity, custom platforms, data intelligence, and the strategic consulting that ties it all together.
             </p>
@@ -169,16 +169,7 @@ function HomeHeroSection() {
                   <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 text-[14px] font-medium transition-opacity duration-300 hover:opacity-60"
-                style={{ color: P.textMuted }}
-              >
-                Talk to us
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
+
             </div>
           </div>
         </div>
@@ -252,10 +243,10 @@ function FloatingCardsSection() {
 
       <div className="relative z-10 px-[clamp(2rem,8vw,8rem)]">
         {/* Split layout: headline left, cards right */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-20 items-start">
+        <div className="flex flex-col lg:flex-row lg:gap-[clamp(2rem,4vw,5rem)] justify-between items-start">
 
           {/* Left: headline + description */}
-          <div className="lg:w-[38%] lg:sticky lg:top-32 shrink-0">
+          <div className="lg:w-[35%] lg:sticky lg:top-32 shrink-0 mb-12 lg:mb-0">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -272,7 +263,7 @@ function FloatingCardsSection() {
               transition={{ duration: 0.9, ease: EASE_OUT }}
               className="leading-[1.08] tracking-[-0.03em] mb-8"
               style={{
-                fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)',
+                fontSize: 'clamp(1.8rem, 3.5vw, 3.6rem)',
                 fontWeight: 300,
                 color: P.textOnDark,
               }}
@@ -306,63 +297,63 @@ function FloatingCardsSection() {
           </div>
 
           {/* Right: card grid (3 cols x 2 rows) */}
-          <div className="lg:w-[62%]">
+          <div className="lg:flex-1 w-full relative">
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
               {capabilityCards.map((card, i) => (
-                  <motion.div
-                    key={card.title}
-                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                    transition={{
-                      duration: 0.8,
-                      delay: cardDelays[i],
-                      ease: EASE_OUT,
-                    }}
-                    whileHover={{
-                      y: -6,
-                      scale: 1.02,
-                      transition: { duration: 0.35, ease: EASE },
-                    }}
-                    className="group relative rounded-2xl overflow-hidden cursor-pointer"
-                    style={{
-                      aspectRatio: '4/5',
-                      border: '1px solid rgba(255,255,255,0.06)',
-                    }}
-                  >
-                    {/* Background image */}
-                    <div className="absolute inset-0">
-                      <Image src={card.image} alt="" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                      <div className="absolute inset-0" style={{
-                        background: `linear-gradient(180deg, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.6) 50%, rgba(10,10,12,0.85) 100%)`,
-                      }} />
-                    </div>
+                <motion.div
+                  key={card.title}
+                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{
+                    duration: 0.8,
+                    delay: cardDelays[i],
+                    ease: EASE_OUT,
+                  }}
+                  whileHover={{
+                    y: -6,
+                    scale: 1.02,
+                    transition: { duration: 0.35, ease: EASE },
+                  }}
+                  className="group relative rounded-2xl overflow-hidden cursor-pointer"
+                  style={{
+                    aspectRatio: '4/5',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  {/* Background image */}
+                  <div className="absolute inset-0">
+                    <Image src={card.image} alt="" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0" style={{
+                      background: `linear-gradient(180deg, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.6) 50%, rgba(10,10,12,0.85) 100%)`,
+                    }} />
+                  </div>
 
-                    {/* Gold glass accent edge */}
-                    <div className="absolute bottom-0 left-0 right-0 h-[3px] transition-opacity duration-500 opacity-40 group-hover:opacity-100"
-                      style={{ background: `linear-gradient(90deg, transparent, ${P.gold}88, transparent)` }} />
+                  {/* Gold glass accent edge */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] transition-opacity duration-500 opacity-40 group-hover:opacity-100"
+                    style={{ background: `linear-gradient(90deg, transparent, ${P.gold}88, transparent)` }} />
 
-                    {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6 z-10">
-                      <h3
-                        className="text-[16px] lg:text-[18px] font-medium tracking-[-0.01em] mb-1.5 transition-colors duration-300"
-                        style={{ color: 'rgba(240,237,232,0.93)' }}
-                      >
-                        {card.title}
-                      </h3>
-                      <p
-                        className="text-[12px] lg:text-[13px] leading-[1.5] transition-all duration-500 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
-                        style={{ color: 'rgba(240,237,232,0.5)' }}
-                      >
-                        {card.subtitle}
-                      </p>
-                    </div>
+                  {/* Content */}
+                  <div className="absolute inset-0 flex flex-col justify-end p-5 lg:p-6 z-10">
+                    <h3
+                      className="text-[16px] lg:text-[18px] font-medium tracking-[-0.01em] mb-1.5 transition-colors duration-300"
+                      style={{ color: 'rgba(240,237,232,0.93)' }}
+                    >
+                      {card.title}
+                    </h3>
+                    <p
+                      className="text-[12px] lg:text-[13px] leading-[1.5] transition-all duration-500 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
+                      style={{ color: 'rgba(240,237,232,0.5)' }}
+                    >
+                      {card.subtitle}
+                    </p>
+                  </div>
 
-                    {/* Hover glow */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{ background: `radial-gradient(ellipse at 50% 100%, ${card.accent}, transparent 70%)` }}
-                    />
-                  </motion.div>
+                  {/* Hover glow */}
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ background: `radial-gradient(ellipse at 50% 100%, ${card.accent}, transparent 70%)` }}
+                  />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -414,6 +405,7 @@ function HomeScrollCardsSection() {
       className="relative w-full overflow-hidden"
       style={{
         height: '100vh',
+        minHeight: '600px',
         background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
       }}
     >
@@ -461,7 +453,7 @@ function HomeScrollCardsSection() {
       {/* Left: Headline pinned at bottom-left — outside max-width container for proper page alignment */}
       <div
         className="absolute z-20 px-[clamp(2rem,8vw,8rem)]"
-        style={{ bottom: '10vh', left: 0, width: '50%' }}
+        style={{ bottom: 'clamp(4vh,8vh,10vh)', left: 0, width: '50%' }}
       >
         <p
           className="text-[12px] uppercase tracking-[0.2em] font-semibold mb-5"
@@ -472,7 +464,7 @@ function HomeScrollCardsSection() {
         <h2
           className="leading-[1.02] tracking-[-0.04em]"
           style={{
-            fontSize: 'clamp(2.4rem, 5vw, 5rem)',
+            fontSize: 'clamp(1.8rem, 4vw, 5rem)',
             fontWeight: 500,
             color: P.textDark,
           }}
@@ -781,9 +773,9 @@ function HomeCTASection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section ref={ref} className="relative py-32" style={{ background: P.cream }}>
+    <section ref={ref} className="relative py-[clamp(5rem,8vw,8rem)]" style={{ background: P.cream }}>
       <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="relative rounded-[28px] overflow-hidden py-28 px-12 lg:px-24">
+        <div className="relative rounded-[28px] overflow-hidden py-[clamp(4rem,6vw,7rem)] px-[clamp(1.5rem,4vw,6rem)]">
           <div className="absolute inset-0">
             <Image src="/spiral-gold.jpg" alt="" fill className="object-cover" />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.55), rgba(10,10,12,0.25))' }} />
@@ -927,7 +919,7 @@ function RegionalHighlightsSection() {
         }}
       />
 
-      <div className="relative z-10 px-6 md:px-12 lg:px-20 xl:px-32">
+      <div className="relative z-10 px-[clamp(1.5rem,5vw,8rem)]">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -939,8 +931,8 @@ function RegionalHighlightsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 1, delay: 0.2, ease: EASE_OUT }}
-              className="text-4xl md:text-5xl lg:text-6xl font-light mb-6"
-              style={{ color: P.textDark }}
+              className="leading-tight mb-6"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 3.8rem)', fontWeight: 300, color: P.textDark }}
             >
               {content.title}
             </motion.h2>
@@ -949,8 +941,8 @@ function RegionalHighlightsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 1, delay: 0.4, ease: EASE_OUT }}
-              className="text-xl md:text-2xl font-light leading-relaxed max-w-3xl mx-auto mb-8"
-              style={{ color: P.textMuted }}
+              className="leading-relaxed max-w-3xl mx-auto mb-8"
+              style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)', fontWeight: 300, color: P.textMuted }}
             >
               {content.subtitle}
             </motion.p>
