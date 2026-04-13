@@ -485,16 +485,12 @@ function MilestonesCarousel() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1, ease: EASE_CINEMATIC }}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '24px',
-          marginBottom: '48px',
-        }}
+        className="relative flex flex-col md:flex-row items-center justify-center w-full gap-8"
       >
-        {/* Left arrow */}
+        {/* Left arrow — Hidden on Side for Mobile, Flex on Desktop */}
         <button
           onClick={() => scroll('left')}
+          className="hidden md:flex items-center justify-center transition-all duration-300"
           style={{
             width: '48px',
             height: '48px',
@@ -504,12 +500,9 @@ function MilestonesCarousel() {
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
             color: '#c9a86e',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             cursor: 'pointer',
-            transition: 'all 0.3s ease',
             flexShrink: 0,
+            marginRight: '12px',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = 'rgba(201,168,110,0.6)'
@@ -525,17 +518,13 @@ function MilestonesCarousel() {
           </svg>
         </button>
 
-        {/* Scrollable container */}
+        {/* Scrollable container with snap */}
         <div
           ref={scrollRef}
+          className="flex flex-row gap-6 md:gap-8 overflow-x-auto no-scrollbar w-full snap-x snap-mandatory"
           style={{
             flex: 1,
-            display: 'flex',
-            gap: '24px',
-            overflowX: 'auto',
             scrollBehavior: 'smooth',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
           }}
         >
           <style>{`
@@ -547,10 +536,9 @@ function MilestonesCarousel() {
           {TIMELINE.map((milestone, i) => (
             <div
               key={milestone.year}
+              className="w-[85vw] md:w-[320px] shrink-0 snap-center"
               style={{
-                flexShrink: 0,
-                width: '320px',
-                padding: '32px',
+                padding: 'clamp(24px, 6vw, 40px)',
                 borderRadius: '16px',
                 background: 'rgba(255,255,255,0.03)',
                 border: '1px solid rgba(201,168,110,0.1)',
@@ -601,9 +589,10 @@ function MilestonesCarousel() {
           ))}
         </div>
 
-        {/* Right arrow */}
+        {/* Right arrow — Hidden on Side for Mobile, Flex on Desktop */}
         <button
           onClick={() => scroll('right')}
+          className="hidden md:flex items-center justify-center transition-all duration-300"
           style={{
             width: '48px',
             height: '48px',
@@ -613,12 +602,9 @@ function MilestonesCarousel() {
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
             color: '#c9a86e',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             cursor: 'pointer',
-            transition: 'all 0.3s ease',
             flexShrink: 0,
+            marginLeft: '12px',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = 'rgba(201,168,110,0.6)'
@@ -633,6 +619,45 @@ function MilestonesCarousel() {
             <path d="M9 18l6-6-6-6" />
           </svg>
         </button>
+        {/* Mobile-only Arrow Row (Below content) */}
+        <div className="flex md:hidden items-center gap-6 mt-8">
+          <button
+            onClick={() => scroll('left')}
+            className="flex items-center justify-center transition-all duration-300"
+            style={{
+              width: '52px',
+              height: '52px',
+              borderRadius: '50%',
+              border: '1px solid rgba(201,168,110,0.4)',
+              background: 'rgba(10,10,11,0.6)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              color: '#c9a86e',
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            onClick={() => scroll('right')}
+            className="flex items-center justify-center transition-all duration-300"
+            style={{
+              width: '52px',
+              height: '52px',
+              borderRadius: '50%',
+              border: '1px solid rgba(201,168,110,0.4)',
+              background: 'rgba(10,10,11,0.6)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              color: '#c9a86e',
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
       </motion.div>
     </div>
   )
@@ -794,8 +819,8 @@ export default function CompanyPageClient() {
                 {/* Subtitle */}
                 <Reveal delay={1.2}>
                   <p
-                    className="text-[clamp(1.1rem,2.2vw,1.4rem)] leading-[1.8] font-light mt-8 max-w-[600px] mx-auto"
-                    style={{ color: 'rgba(255,255,255,0.7)' }}
+                    className="text-[clamp(1.1rem,2.2vw,1.35rem)] leading-[1.8] font-light mt-8 max-w-[650px] mx-auto px-4"
+                    style={{ color: 'rgba(255,255,255,0.85)', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}
                   >
                     Pioneering AI technology company transforming industries with intelligent solutions that create lasting value for our clients.
                   </p>
@@ -865,22 +890,22 @@ export default function CompanyPageClient() {
             </div>
           </section>
 
-          {/* ═══════════════ MILESTONES ═══════════════ */}
-          <section className="relative py-20 md:py-32" style={{ background: '#ebe5db' }}>
-            <Grain id="milestones-grain" />
+          {/* ═══════════════ OUR STORY (MILESTONES) ═══════════════ */}
+          <section className="relative py-20 md:py-32" style={{ background: '#0a0a0b' }}>
+            <Grain id="milestones-grain" opacity={0.06} />
 
             <div className="relative z-10 px-[clamp(1.5rem,4vw,8rem)]">
               <div className="max-w-[1400px] mx-auto">
                 <Reveal>
-                  <SectionEyebrow>
-                    Our Journey
+                  <SectionEyebrow dark>
+                    Our Story
                   </SectionEyebrow>
                 </Reveal>
 
                 <Reveal delay={0.2}>
                   <h2
                     className="text-[clamp(2.4rem,5vw,4rem)] font-light tracking-tight leading-[1.1] mb-16 max-w-[800px]"
-                    style={{ color: '#2a2218' }}
+                    style={{ color: '#f0ede8' }}
                   >
                     From foundation to innovation
                   </h2>

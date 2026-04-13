@@ -119,13 +119,13 @@ function HomeHeroSection() {
   const isInView = useInView(ref, { once: true, margin: '-30px' })
 
   return (
-    <section ref={ref} className="relative h-[100vh] h-[100dvh] flex flex-col overflow-hidden" style={{ background: P.cream }}>
+    <section ref={ref} className="relative md:h-[100vh] md:h-[100dvh] h-auto pt-[6rem] md:pt-0 flex flex-col overflow-hidden" style={{ background: P.cream }}>
       <div className="absolute inset-0 opacity-[0.4] pointer-events-none">
         <Image src="/gradient-orbs-warm.jpg" alt="" fill className="object-cover" priority />
       </div>
       <Grain id="homeHeroGrain" opacity={0.02} />
 
-      <div className="relative z-10 w-full px-[clamp(1.2rem,8vw,8rem)] pt-[clamp(5rem,10vh,8rem)] pb-6 shrink-0">
+      <div className="relative z-10 w-full px-[clamp(1.2rem,8vw,8rem)] md:pt-[clamp(5rem,10vh,8rem)] pb-6 shrink-0">
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -142,7 +142,7 @@ function HomeHeroSection() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.0, delay: 0.3, ease: EASE_OUT }}
-        className="relative z-10 mx-[clamp(1.2rem,8vw,8rem)] mb-6 flex-1 min-h-0"
+        className="relative z-10 mx-[clamp(1.2rem,8vw,8rem)] mb-10 md:mb-6 flex-1 min-h-[420px] md:min-h-0"
       >
         <div className="relative rounded-[20px] overflow-hidden h-full" style={{ minHeight: 220 }}>
           <div className="absolute inset-0">
@@ -373,25 +373,16 @@ function HomeScrollCardsSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const cardsWrapperRef = useRef<HTMLDivElement>(null)
   const rightColRef = useRef<HTMLDivElement>(null)
-  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
-  }, [])
-
-  useEffect(() => {
-    // Only run GSAP pin on desktop
-    if (isMobile) return
     if (!sectionRef.current || !cardsWrapperRef.current || !rightColRef.current) return
 
     const cardsWrapper = cardsWrapperRef.current
-
     const getScrollDistance = () => cardsWrapper.offsetHeight + window.innerHeight * 0.1
 
-    const ctx = gsap.context(() => {
+    let mm = gsap.matchMedia()
+
+    mm.add("(min-width: 768px)", () => {
       gsap.to(rightColRef.current, {
         y: () => -getScrollDistance(),
         ease: 'none',
@@ -404,70 +395,54 @@ function HomeScrollCardsSection() {
           invalidateOnRefresh: true,
         },
       })
-    }, sectionRef)
+    })
 
-    return () => ctx.revert()
-  }, [isMobile])
-
-  // Mobile: simple stacked layout (no GSAP pinning)
-  if (isMobile) {
-    return (
-      <section
-        ref={sectionRef}
-        className="relative w-full py-16 px-5"
-        style={{
-          background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
-        }}
-      >
-        <Grain id="homeScrollGrain" opacity={0.025} />
-        <div className="relative z-10">
-          <p className="text-[11px] uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: P.gold }}>Our approach</p>
-          <h2
-            className="leading-[1.1] tracking-[-0.03em] mb-10"
-            style={{ fontSize: 'clamp(1.8rem, 7vw, 2.8rem)', fontWeight: 500, color: P.textDark }}
-          >
-            Built to perform,<br />engineered<br />to endure
-          </h2>
-          <div className="flex flex-col gap-5">
-            {scrollCards.map((card, i) => (
-              <div
-                key={card.title}
-                className="relative rounded-2xl overflow-hidden"
-                style={{
-                  background: 'linear-gradient(135deg, #1a1a1e 0%, #0f0f12 60%, #131318 100%)',
-                  padding: 'clamp(1.5rem,4vw,2.5rem)',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                }}
-              >
-                <div className="absolute top-[15%] bottom-[15%] left-0 w-[2px]"
-                  style={{ background: `linear-gradient(180deg, transparent, ${P.gold}55, transparent)` }} />
-                <h3 className="relative z-10 tracking-[-0.015em] mb-3"
-                  style={{ fontSize: 'clamp(1.05rem, 4vw, 1.3rem)', fontWeight: 500, color: 'rgba(240,237,232,0.93)' }}>
-                  {card.title}
-                </h3>
-                <p className="relative z-10 leading-[1.7]"
-                  style={{ fontSize: '0.9rem', color: 'rgba(240,237,232,0.45)' }}>
-                  {card.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    )
-  }
+    return () => mm.revert()
+  }, [])
 
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-hidden h-auto md:h-[100vh] md:min-h-[600px]"
       style={{
-        height: '100vh',
-        minHeight: '600px',
         background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
       }}
     >
+      {/* ─── MOBILE VIEW (hidden on md+) ─── */}
+      <div className="relative z-20 md:hidden w-full py-16 px-5">
+        <p className="text-[11px] uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: P.gold }}>Our approach</p>
+        <h2
+          className="leading-[1.1] tracking-[-0.03em] mb-10"
+          style={{ fontSize: 'clamp(1.8rem, 7vw, 2.8rem)', fontWeight: 500, color: P.textDark }}
+        >
+          Built to perform,<br />engineered<br />to endure
+        </h2>
+        <div className="flex flex-col gap-5">
+          {scrollCards.map((card, i) => (
+            <div
+              key={card.title}
+              className="relative rounded-2xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, #1a1a1e 0%, #0f0f12 60%, #131318 100%)',
+                padding: 'clamp(1.5rem,4vw,2.5rem)',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+                border: '1px solid rgba(255,255,255,0.06)',
+              }}
+            >
+              <div className="absolute top-[15%] bottom-[15%] left-0 w-[2px]"
+                style={{ background: `linear-gradient(180deg, transparent, ${P.gold}55, transparent)` }} />
+              <h3 className="relative z-10 tracking-[-0.015em] mb-3"
+                style={{ fontSize: 'clamp(1.05rem, 4vw, 1.3rem)', fontWeight: 500, color: 'rgba(240,237,232,0.93)' }}>
+                {card.title}
+              </h3>
+              <p className="relative z-10 leading-[1.7]"
+                style={{ fontSize: '0.95rem', color: 'rgba(240,237,232,0.55)' }}>
+                {card.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
       {/* Spiral lines background image — subtle warm texture */}
       <div className="absolute inset-0 pointer-events-none">
         <Image src="/spiral-light.jpg" alt="" fill className="object-cover" style={{ opacity: 0.09 }} />
@@ -509,9 +484,9 @@ function HomeScrollCardsSection() {
 
       <Grain id="homeScrollGrain" opacity={0.025} />
 
-      {/* Left: Headline pinned at bottom-left — outside max-width container for proper page alignment */}
+      {/* Left: Headline pinned at bottom-left (hidden on mobile) */}
       <div
-        className="absolute z-20 px-[clamp(2rem,8vw,8rem)]"
+        className="hidden md:block absolute z-20 px-[clamp(2rem,8vw,8rem)]"
         style={{ bottom: 'clamp(4vh,8vh,10vh)', left: 0, width: '50%' }}
       >
         <p
@@ -535,7 +510,7 @@ function HomeScrollCardsSection() {
       </div>
 
       <div
-        className="relative flex"
+        className="hidden md:flex relative"
         style={{ zIndex: 10, maxWidth: 1600, height: '100%', margin: '0 auto', alignItems: 'flex-start' }}
       >
         {/* Right: Cards that scroll up via GSAP */}
@@ -824,62 +799,6 @@ function ChallengesSection() {
 
 
 
-// ═══════════════════════════════════════════════════════════
-// CTA — Reusing the gold spiral CTA pattern
-// ═══════════════════════════════════════════════════════════
-function HomeCTASection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
-  return (
-    <section ref={ref} className="relative py-[clamp(5rem,8vw,8rem)]" style={{ background: P.cream }}>
-      <div className="px-[clamp(2rem,8vw,8rem)]">
-        <div className="relative rounded-[28px] overflow-hidden py-[clamp(4rem,6vw,7rem)] px-[clamp(1.5rem,4vw,6rem)]">
-          <div className="absolute inset-0">
-            <Image src="/spiral-gold.jpg" alt="" fill className="object-cover" />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.55), rgba(10,10,12,0.25))' }} />
-          </div>
-          <Grain id="homeCtaGrain" opacity={0.04} />
-
-          <div className="relative z-10 text-center max-w-[640px] mx-auto">
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.08] tracking-[-0.03em] mb-8"
-              style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.5rem)', fontWeight: 300, color: P.textOnDark }}
-            >
-              Let&apos;s build what<br />comes next.
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="text-[15px] leading-[1.9] mb-12"
-              style={{ color: P.textOnDarkMuted }}
-            >
-              A 30-minute conversation is where most of our best work begins. No pitch deck, no pressure — just a clear look at where your technology stands and where it could go.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-            >
-              <Link href="/contact"
-                className="group inline-flex items-center gap-3 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(201,168,110,0.3)]"
-                style={{ background: P.gold, color: P.charcoal }}>
-                Start a conversation
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 
 // ═══════════════════════════════════════════════════════════
@@ -1110,7 +1029,7 @@ export default function HomepageContent() {
       <HomeScrollCardsSection />
       <WhyChooseUsSection />
       <ChallengesSection />
-      <HomeCTASection />
+
     </main>
   )
 }
