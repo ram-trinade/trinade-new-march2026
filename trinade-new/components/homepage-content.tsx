@@ -125,13 +125,13 @@ function HomeHeroSection() {
       </div>
       <Grain id="homeHeroGrain" opacity={0.02} />
 
-      <div className="relative z-10 w-full px-[clamp(2rem,8vw,8rem)] pt-[clamp(5rem,10vh,8rem)] pb-6 shrink-0">
+      <div className="relative z-10 w-full px-[clamp(1.2rem,8vw,8rem)] pt-[clamp(5rem,10vh,8rem)] pb-6 shrink-0">
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1.2, ease: EASE_OUT }}
           className="leading-[1.05] tracking-[-0.04em]"
-          style={{ fontSize: 'clamp(2rem, 5.5vw, 5.2rem)', fontWeight: 400, color: P.textDark }}
+          style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5.2rem)', fontWeight: 400, color: P.textDark }}
         >
           Precision-built<br />technology, at scale.
         </motion.h1>
@@ -142,9 +142,9 @@ function HomeHeroSection() {
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1.0, delay: 0.3, ease: EASE_OUT }}
-        className="relative z-10 mx-[clamp(2rem,8vw,8rem)] mb-6 flex-1 min-h-0"
+        className="relative z-10 mx-[clamp(1.2rem,8vw,8rem)] mb-6 flex-1 min-h-0"
       >
-        <div className="relative rounded-[24px] overflow-hidden h-full">
+        <div className="relative rounded-[20px] overflow-hidden h-full" style={{ minHeight: 220 }}>
           <div className="absolute inset-0">
             <Image src="/gradient-mesh-warm.jpg" alt="" fill className="object-cover" />
           </div>
@@ -153,15 +153,15 @@ function HomeHeroSection() {
           <div className="relative z-10 p-[clamp(1.2rem,3vw,4rem)] flex flex-col justify-end h-full">
             <p
               className="leading-[1.25] tracking-[-0.02em] max-w-[900px]"
-              style={{ fontSize: 'clamp(1.1rem, 2.5vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
+              style={{ fontSize: 'clamp(0.95rem, 2.5vw, 2.4rem)', fontWeight: 400, color: P.textDark }}
             >
               We design, build, and manage the systems that enterprises depend on — cloud infrastructure, cybersecurity, custom platforms, data intelligence, and the strategic consulting that ties it all together.
             </p>
 
-            <div className="flex items-center gap-6 mt-8">
+            <div className="flex items-center gap-4 mt-6">
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-3 px-8 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02]"
+                className="group inline-flex items-center gap-3 px-6 py-3 rounded-full text-[13px] font-medium transition-all duration-300 hover:scale-[1.02]"
                 style={{ background: P.charcoal, color: P.textOnDark }}
               >
                 Get started
@@ -373,8 +373,18 @@ function HomeScrollCardsSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const cardsWrapperRef = useRef<HTMLDivElement>(null)
   const rightColRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  useEffect(() => {
+    // Only run GSAP pin on desktop
+    if (isMobile) return
     if (!sectionRef.current || !cardsWrapperRef.current || !rightColRef.current) return
 
     const cardsWrapper = cardsWrapperRef.current
@@ -397,7 +407,56 @@ function HomeScrollCardsSection() {
     }, sectionRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [isMobile])
+
+  // Mobile: simple stacked layout (no GSAP pinning)
+  if (isMobile) {
+    return (
+      <section
+        ref={sectionRef}
+        className="relative w-full py-16 px-5"
+        style={{
+          background: `linear-gradient(135deg, ${P.cream} 0%, ${P.creamDark} 40%, ${P.creamMid} 100%)`,
+        }}
+      >
+        <Grain id="homeScrollGrain" opacity={0.025} />
+        <div className="relative z-10">
+          <p className="text-[11px] uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: P.gold }}>Our approach</p>
+          <h2
+            className="leading-[1.1] tracking-[-0.03em] mb-10"
+            style={{ fontSize: 'clamp(1.8rem, 7vw, 2.8rem)', fontWeight: 500, color: P.textDark }}
+          >
+            Built to perform,<br />engineered<br />to endure
+          </h2>
+          <div className="flex flex-col gap-5">
+            {scrollCards.map((card, i) => (
+              <div
+                key={card.title}
+                className="relative rounded-2xl overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, #1a1a1e 0%, #0f0f12 60%, #131318 100%)',
+                  padding: 'clamp(1.5rem,4vw,2.5rem)',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+              >
+                <div className="absolute top-[15%] bottom-[15%] left-0 w-[2px]"
+                  style={{ background: `linear-gradient(180deg, transparent, ${P.gold}55, transparent)` }} />
+                <h3 className="relative z-10 tracking-[-0.015em] mb-3"
+                  style={{ fontSize: 'clamp(1.05rem, 4vw, 1.3rem)', fontWeight: 500, color: 'rgba(240,237,232,0.93)' }}>
+                  {card.title}
+                </h3>
+                <p className="relative z-10 leading-[1.7]"
+                  style={{ fontSize: '0.9rem', color: 'rgba(240,237,232,0.45)' }}>
+                  {card.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section
