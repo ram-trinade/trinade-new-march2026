@@ -15,7 +15,6 @@ const MotionLink = motion.create(Link)
 // ═══════════════════════════════════════════════════════════
 
 const EASE = [0.32, 0.72, 0, 1] as const
-const PANEL_WIDTH = 340
 const SCROLL_SEGMENTS = 5
 
 const productLinks = [
@@ -161,8 +160,8 @@ export default function SolutionsNavbar() {
           height={120}
           className="object-contain"
           style={{
-            width: 'clamp(20px,2vw,32px)',
-            height: 'clamp(20px,2vw,32px)',
+            width: 'clamp(22px,2vw,32px)',
+            height: 'clamp(22px,2vw,32px)',
             filter: isOnDark
               ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
               : 'brightness(0) contrast(3)',
@@ -172,7 +171,7 @@ export default function SolutionsNavbar() {
         />
         <span
           style={{
-            fontSize: 'clamp(16px,1.8vw,28px)',
+            fontSize: 'clamp(15px,1.8vw,28px)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
             color: isOnDark ? '#d4bb8a' : '#2a2218',
@@ -184,16 +183,19 @@ export default function SolutionsNavbar() {
         </span>
       </Link>
 
-      {/* ─── Floating Navbar (centered pill) ─── */}
+      {/* ─── Floating Navbar — right-anchored on mobile, centered on desktop ───
+           On mobile (<768px): pill sits top-right so it never collides with the logo.
+           On desktop (≥768px): pill is re-centered via left-1/2 + -translate-x-1/2.
+      */}
       <div
-        className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] flex justify-center"
+        className="fixed z-[9999] top-2.5 right-3 md:right-auto md:left-1/2 md:-translate-x-1/2 md:top-5"
         style={{ pointerEvents: 'none' }}
       >
         <div
           ref={navRef}
           style={{
             pointerEvents: isOpen ? 'auto' : 'none',
-            width: PANEL_WIDTH,
+            width: 'min(340px, calc(100vw - 130px))',
             borderRadius: 28,
             background: isOpen
               ? 'linear-gradient(165deg, rgba(210,192,158,0.95) 0%, rgba(195,172,132,0.93) 40%, rgba(215,198,165,0.94) 100%)'
@@ -222,7 +224,7 @@ export default function SolutionsNavbar() {
                 background: '#1a1a1e',
                 borderRadius: 26,
                 pointerEvents: 'auto',
-                minWidth: 200,
+                minWidth: 'min(200px, calc(100vw - 160px))',
               }}
             >
               {/* Hamburger / X button — left side */}
@@ -492,7 +494,7 @@ export default function SolutionsNavbar() {
       </div>
 
       {/* ─── Scroll Indicator (5 segments) — adaptive glassmorphism ─── */}
-      <div className="fixed right-[clamp(8px,1.5vw,24px)] top-1/2 -translate-y-1/2 z-[9998]">
+      <div className="hidden md:block fixed right-[clamp(8px,1.5vw,24px)] top-1/2 -translate-y-1/2 z-[9998]">
         <div
           className="flex flex-col items-center gap-[6px] px-[10px] py-3"
           style={{

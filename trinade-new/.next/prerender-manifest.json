@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/blog/why-ai-first-thinking-changes-everything":{},"/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care":{},"/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations":{},"/blog/predictive-intelligence-in-financial-services":{},"/blog/smart-factories-where-ai-meets-the-production-floor":{},"/blog/building-secure-ai-infrastructure-at-scale":{},"/blog/from-pilot-to-production-scaling-ai-across-the-enterprise":{}},"dynamicRoutes":{"/blog/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/blog/[slug]","routeRegex":"^\\/blog\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"605dc6637ec2a68b87664f7eb7904d91","previewModeSigningKey":"7c8fe94aab3ef641f626626ac14677d7834445824968e85d62d07ce575a060cc","previewModeEncryptionKey":"b5203229fdd649a2b2a17e752a652a0810fdfcb45a9897ec8d6d160c031f0903"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "4ed68580d3dee99001361738980fe795",
+    "previewModeSigningKey": "b737956468ea3a862c7a714c4eef0ff568cbb7d720a3801ef1eb641197d5756b",
+    "previewModeEncryptionKey": "f94eb139febe74606de811e1b6af5d3ec9e3ea7fd85396258a434e747d6068f6"
+  }
+}

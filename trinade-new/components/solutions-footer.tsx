@@ -45,7 +45,7 @@ export default function SolutionsFooter() {
       `}</style>
 
       {/* Main content */}
-      <div className="px-[clamp(2rem,8vw,8rem)] py-14">
+      <div className="px-[clamp(1.2rem,8vw,8rem)] py-14">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -201,7 +201,7 @@ export default function SolutionsFooter() {
       <div className="mx-[clamp(2rem,8vw,8rem)]" style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.3), transparent)' }} />
 
       {/* Bottom bar */}
-      <div className="px-[clamp(2rem,8vw,8rem)] py-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="px-[clamp(1.2rem,8vw,8rem)] py-6 flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-3">
         <div className="flex gap-6">
           {[
             { label: 'Privacy Policy', href: '/privacy-policy' },
