@@ -1,7 +1,14 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/icon/route": "app/icon/route.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
+  "/company/page": "app/company/page.js",
   "/page": "app/page.js",
-  "/products/sleep-alert/page": "app/products/sleep-alert/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/privacy-policy/page": "app/privacy-policy/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/products/flyhigh/page": "app/products/flyhigh/page.js",
   "/solutions/page": "app/solutions/page.js",
-  "/company/page": "app/company/page.js"
+  "/products/sleep-alert/page": "app/products/sleep-alert/page.js",
+  "/terms-of-service/page": "app/terms-of-service/page.js"
 }
