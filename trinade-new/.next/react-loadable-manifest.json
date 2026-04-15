@@ -11,32 +11,32 @@
       "static/chunks/_app-pages-browser_components_premium-cursor_tsx.js"
     ]
   },
-  "components\\company-page-client.tsx -> @/components/premium-cursor": {
-    "id": "components\\company-page-client.tsx -> @/components/premium-cursor",
+  "components\\contact-page-client.tsx -> @/components/premium-cursor": {
+    "id": "components\\contact-page-client.tsx -> @/components/premium-cursor",
     "files": [
       "static/chunks/_app-pages-browser_components_premium-cursor_tsx.js"
     ]
   },
-  "components\\company-page-client.tsx -> @/components/smooth-scroll": {
-    "id": "components\\company-page-client.tsx -> @/components/smooth-scroll",
+  "components\\contact-page-client.tsx -> @/components/smooth-scroll": {
+    "id": "components\\contact-page-client.tsx -> @/components/smooth-scroll",
     "files": [
       "static/chunks/_app-pages-browser_components_smooth-scroll_tsx.js"
     ]
   },
-  "components\\company-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": "components\\company-page-client.tsx -> @/components/solutions-cookie-popup",
+  "components\\contact-page-client.tsx -> @/components/solutions-cookie-popup": {
+    "id": "components\\contact-page-client.tsx -> @/components/solutions-cookie-popup",
     "files": [
       "static/chunks/_app-pages-browser_components_solutions-cookie-popup_tsx-_f1e60.js"
     ]
   },
-  "components\\company-page-client.tsx -> @/components/solutions-footer": {
-    "id": "components\\company-page-client.tsx -> @/components/solutions-footer",
+  "components\\contact-page-client.tsx -> @/components/solutions-footer": {
+    "id": "components\\contact-page-client.tsx -> @/components/solutions-footer",
     "files": [
       "static/chunks/_app-pages-browser_components_solutions-footer_tsx-_7a661.js"
     ]
   },
-  "components\\company-page-client.tsx -> @/components/solutions-navbar": {
-    "id": "components\\company-page-client.tsx -> @/components/solutions-navbar",
+  "components\\contact-page-client.tsx -> @/components/solutions-navbar": {
+    "id": "components\\contact-page-client.tsx -> @/components/solutions-navbar",
     "files": [
       "static/chunks/_app-pages-browser_components_solutions-navbar_tsx-_c9ab1.js"
     ]
@@ -89,52 +89,10 @@
       "static/chunks/_app-pages-browser_components_location-indicator_tsx.js"
     ]
   },
-  "components\\solutions-page-client.tsx -> @/components/premium-cursor": {
-    "id": "components\\solutions-page-client.tsx -> @/components/premium-cursor",
-    "files": [
-      "static/chunks/_app-pages-browser_components_premium-cursor_tsx.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/smooth-scroll": {
-    "id": "components\\solutions-page-client.tsx -> @/components/smooth-scroll",
-    "files": [
-      "static/chunks/_app-pages-browser_components_smooth-scroll_tsx.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/solutions-content": {
-    "id": "components\\solutions-page-client.tsx -> @/components/solutions-content",
-    "files": [
-      "static/chunks/_app-pages-browser_components_solutions-content_tsx.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/solutions-cookie-popup": {
-    "id": "components\\solutions-page-client.tsx -> @/components/solutions-cookie-popup",
-    "files": [
-      "static/chunks/_app-pages-browser_components_solutions-cookie-popup_tsx-_f1e61.js"
-    ]
-  },
-  "components\\solutions-page-client.tsx -> @/components/solutions-navbar": {
-    "id": "components\\solutions-page-client.tsx -> @/components/solutions-navbar",
-    "files": [
-      "static/chunks/_app-pages-browser_components_solutions-navbar_tsx-_c9ab0.js"
-    ]
-  },
   "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
     "id": "node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
     "files": [
       "static/chunks/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
-    ]
-  },
-  "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": "node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
-    "files": [
-      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__app_js.js"
-    ]
-  },
-  "node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": "node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
-    "files": [
-      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__error_js.js"
     ]
   }
 }

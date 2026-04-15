@@ -280,7 +280,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
         <span className="text-[11px] tracking-[0.15em] uppercase font-medium" style={{ color: 'rgba(42,34,24,0.3)' }}>01</span>
       </div>
 
-      <Link href="/blog" className="block">
+      <Link href={`/blog/${article.slug}`} className="block">
         <div
           className="relative overflow-hidden"
           style={{

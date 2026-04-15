@@ -21,20 +21,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/icon/route.js"
     ],
-    "/products/sleep-alert/page": [
+    "/contact/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/products/sleep-alert/page.js"
-    ],
-    "/solutions/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/solutions/page.js"
-    ],
-    "/company/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/company/page.js"
+      "static/chunks/app/contact/page.js"
     ]
   }
 }
