@@ -1,0 +1,1465 @@
+'use client'
+
+import dynamic from 'next/dynamic'
+import { useState, useRef, useEffect } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
+import Image from 'next/image'
+import Link from 'next/link'
+
+const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
+const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
+const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
+const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
+const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
+
+// ─── Country codes for phone dropdown ───
+// Apr 16: expanded from 20 to full ITU-T E.164 country list (~240 entries
+// covering all UN member states + major territories). India first as the
+// default, rest alphabetical for fast scanning.
+const countryCodes = [
+  { code: '+91', country: 'India', flag: '🇮🇳' },
+  { code: '+93', country: 'Afghanistan', flag: '🇦🇫' },
+  { code: '+355', country: 'Albania', flag: '🇦🇱' },
+  { code: '+213', country: 'Algeria', flag: '🇩🇿' },
+  { code: '+376', country: 'Andorra', flag: '🇦🇩' },
+  { code: '+244', country: 'Angola', flag: '🇦🇴' },
+  { code: '+1268', country: 'Antigua and Barbuda', flag: '🇦🇬' },
+  { code: '+54', country: 'Argentina', flag: '🇦🇷' },
+  { code: '+374', country: 'Armenia', flag: '🇦🇲' },
+  { code: '+297', country: 'Aruba', flag: '🇦🇼' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺' },
+  { code: '+43', country: 'Austria', flag: '🇦🇹' },
+  { code: '+994', country: 'Azerbaijan', flag: '🇦🇿' },
+  { code: '+1242', country: 'Bahamas', flag: '🇧🇸' },
+  { code: '+973', country: 'Bahrain', flag: '🇧🇭' },
+  { code: '+880', country: 'Bangladesh', flag: '🇧🇩' },
+  { code: '+1246', country: 'Barbados', flag: '🇧🇧' },
+  { code: '+375', country: 'Belarus', flag: '🇧🇾' },
+  { code: '+32', country: 'Belgium', flag: '🇧🇪' },
+  { code: '+501', country: 'Belize', flag: '🇧🇿' },
+  { code: '+229', country: 'Benin', flag: '🇧🇯' },
+  { code: '+1441', country: 'Bermuda', flag: '🇧🇲' },
+  { code: '+975', country: 'Bhutan', flag: '🇧🇹' },
+  { code: '+591', country: 'Bolivia', flag: '🇧🇴' },
+  { code: '+387', country: 'Bosnia and Herzegovina', flag: '🇧🇦' },
+  { code: '+267', country: 'Botswana', flag: '🇧🇼' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷' },
+  { code: '+673', country: 'Brunei', flag: '🇧🇳' },
+  { code: '+359', country: 'Bulgaria', flag: '🇧🇬' },
+  { code: '+226', country: 'Burkina Faso', flag: '🇧🇫' },
+  { code: '+257', country: 'Burundi', flag: '🇧🇮' },
+  { code: '+855', country: 'Cambodia', flag: '🇰🇭' },
+  { code: '+237', country: 'Cameroon', flag: '🇨🇲' },
+  { code: '+1', country: 'Canada', flag: '🇨🇦' },
+  { code: '+238', country: 'Cape Verde', flag: '🇨🇻' },
+  { code: '+1345', country: 'Cayman Islands', flag: '🇰🇾' },
+  { code: '+236', country: 'Central African Republic', flag: '🇨🇫' },
+  { code: '+235', country: 'Chad', flag: '🇹🇩' },
+  { code: '+56', country: 'Chile', flag: '🇨🇱' },
+  { code: '+86', country: 'China', flag: '🇨🇳' },
+  { code: '+57', country: 'Colombia', flag: '🇨🇴' },
+  { code: '+269', country: 'Comoros', flag: '🇰🇲' },
+  { code: '+242', country: 'Congo', flag: '🇨🇬' },
+  { code: '+243', country: 'Congo (DRC)', flag: '🇨🇩' },
+  { code: '+506', country: 'Costa Rica', flag: '🇨🇷' },
+  { code: '+225', country: "Côte d'Ivoire", flag: '🇨🇮' },
+  { code: '+385', country: 'Croatia', flag: '🇭🇷' },
+  { code: '+53', country: 'Cuba', flag: '🇨🇺' },
+  { code: '+357', country: 'Cyprus', flag: '🇨🇾' },
+  { code: '+420', country: 'Czech Republic', flag: '🇨🇿' },
+  { code: '+45', country: 'Denmark', flag: '🇩🇰' },
+  { code: '+253', country: 'Djibouti', flag: '🇩🇯' },
+  { code: '+1767', country: 'Dominica', flag: '🇩🇲' },
+  { code: '+1809', country: 'Dominican Republic', flag: '🇩🇴' },
+  { code: '+593', country: 'Ecuador', flag: '🇪🇨' },
+  { code: '+20', country: 'Egypt', flag: '🇪🇬' },
+  { code: '+503', country: 'El Salvador', flag: '🇸🇻' },
+  { code: '+240', country: 'Equatorial Guinea', flag: '🇬🇶' },
+  { code: '+291', country: 'Eritrea', flag: '🇪🇷' },
+  { code: '+372', country: 'Estonia', flag: '🇪🇪' },
+  { code: '+268', country: 'Eswatini', flag: '🇸🇿' },
+  { code: '+251', country: 'Ethiopia', flag: '🇪🇹' },
+  { code: '+679', country: 'Fiji', flag: '🇫🇯' },
+  { code: '+358', country: 'Finland', flag: '🇫🇮' },
+  { code: '+33', country: 'France', flag: '🇫🇷' },
+  { code: '+594', country: 'French Guiana', flag: '🇬🇫' },
+  { code: '+689', country: 'French Polynesia', flag: '🇵🇫' },
+  { code: '+241', country: 'Gabon', flag: '🇬🇦' },
+  { code: '+220', country: 'Gambia', flag: '🇬🇲' },
+  { code: '+995', country: 'Georgia', flag: '🇬🇪' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪' },
+  { code: '+233', country: 'Ghana', flag: '🇬🇭' },
+  { code: '+350', country: 'Gibraltar', flag: '🇬🇮' },
+  { code: '+30', country: 'Greece', flag: '🇬🇷' },
+  { code: '+299', country: 'Greenland', flag: '🇬🇱' },
+  { code: '+1473', country: 'Grenada', flag: '🇬🇩' },
+  { code: '+590', country: 'Guadeloupe', flag: '🇬🇵' },
+  { code: '+1671', country: 'Guam', flag: '🇬🇺' },
+  { code: '+502', country: 'Guatemala', flag: '🇬🇹' },
+  { code: '+224', country: 'Guinea', flag: '🇬🇳' },
+  { code: '+245', country: 'Guinea-Bissau', flag: '🇬🇼' },
+  { code: '+592', country: 'Guyana', flag: '🇬🇾' },
+  { code: '+509', country: 'Haiti', flag: '🇭🇹' },
+  { code: '+504', country: 'Honduras', flag: '🇭🇳' },
+  { code: '+852', country: 'Hong Kong', flag: '🇭🇰' },
+  { code: '+36', country: 'Hungary', flag: '🇭🇺' },
+  { code: '+354', country: 'Iceland', flag: '🇮🇸' },
+  { code: '+62', country: 'Indonesia', flag: '🇮🇩' },
+  { code: '+98', country: 'Iran', flag: '🇮🇷' },
+  { code: '+964', country: 'Iraq', flag: '🇮🇶' },
+  { code: '+353', country: 'Ireland', flag: '🇮🇪' },
+  { code: '+972', country: 'Israel', flag: '🇮🇱' },
+  { code: '+39', country: 'Italy', flag: '🇮🇹' },
+  { code: '+1876', country: 'Jamaica', flag: '🇯🇲' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵' },
+  { code: '+962', country: 'Jordan', flag: '🇯🇴' },
+  { code: '+7', country: 'Kazakhstan', flag: '🇰🇿' },
+  { code: '+254', country: 'Kenya', flag: '🇰🇪' },
+  { code: '+686', country: 'Kiribati', flag: '🇰🇮' },
+  { code: '+965', country: 'Kuwait', flag: '🇰🇼' },
+  { code: '+996', country: 'Kyrgyzstan', flag: '🇰🇬' },
+  { code: '+856', country: 'Laos', flag: '🇱🇦' },
+  { code: '+371', country: 'Latvia', flag: '🇱🇻' },
+  { code: '+961', country: 'Lebanon', flag: '🇱🇧' },
+  { code: '+266', country: 'Lesotho', flag: '🇱🇸' },
+  { code: '+231', country: 'Liberia', flag: '🇱🇷' },
+  { code: '+218', country: 'Libya', flag: '🇱🇾' },
+  { code: '+423', country: 'Liechtenstein', flag: '🇱🇮' },
+  { code: '+370', country: 'Lithuania', flag: '🇱🇹' },
+  { code: '+352', country: 'Luxembourg', flag: '🇱🇺' },
+  { code: '+853', country: 'Macau', flag: '🇲🇴' },
+  { code: '+389', country: 'North Macedonia', flag: '🇲🇰' },
+  { code: '+261', country: 'Madagascar', flag: '🇲🇬' },
+  { code: '+265', country: 'Malawi', flag: '🇲🇼' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾' },
+  { code: '+960', country: 'Maldives', flag: '🇲🇻' },
+  { code: '+223', country: 'Mali', flag: '🇲🇱' },
+  { code: '+356', country: 'Malta', flag: '🇲🇹' },
+  { code: '+692', country: 'Marshall Islands', flag: '🇲🇭' },
+  { code: '+596', country: 'Martinique', flag: '🇲🇶' },
+  { code: '+222', country: 'Mauritania', flag: '🇲🇷' },
+  { code: '+230', country: 'Mauritius', flag: '🇲🇺' },
+  { code: '+52', country: 'Mexico', flag: '🇲🇽' },
+  { code: '+691', country: 'Micronesia', flag: '🇫🇲' },
+  { code: '+373', country: 'Moldova', flag: '🇲🇩' },
+  { code: '+377', country: 'Monaco', flag: '🇲🇨' },
+  { code: '+976', country: 'Mongolia', flag: '🇲🇳' },
+  { code: '+382', country: 'Montenegro', flag: '🇲🇪' },
+  { code: '+212', country: 'Morocco', flag: '🇲🇦' },
+  { code: '+258', country: 'Mozambique', flag: '🇲🇿' },
+  { code: '+95', country: 'Myanmar', flag: '🇲🇲' },
+  { code: '+264', country: 'Namibia', flag: '🇳🇦' },
+  { code: '+674', country: 'Nauru', flag: '🇳🇷' },
+  { code: '+977', country: 'Nepal', flag: '🇳🇵' },
+  { code: '+31', country: 'Netherlands', flag: '🇳🇱' },
+  { code: '+687', country: 'New Caledonia', flag: '🇳🇨' },
+  { code: '+64', country: 'New Zealand', flag: '🇳🇿' },
+  { code: '+505', country: 'Nicaragua', flag: '🇳🇮' },
+  { code: '+227', country: 'Niger', flag: '🇳🇪' },
+  { code: '+234', country: 'Nigeria', flag: '🇳🇬' },
+  { code: '+850', country: 'North Korea', flag: '🇰🇵' },
+  { code: '+47', country: 'Norway', flag: '🇳🇴' },
+  { code: '+968', country: 'Oman', flag: '🇴🇲' },
+  { code: '+92', country: 'Pakistan', flag: '🇵🇰' },
+  { code: '+680', country: 'Palau', flag: '🇵🇼' },
+  { code: '+970', country: 'Palestine', flag: '🇵🇸' },
+  { code: '+507', country: 'Panama', flag: '🇵🇦' },
+  { code: '+675', country: 'Papua New Guinea', flag: '🇵🇬' },
+  { code: '+595', country: 'Paraguay', flag: '🇵🇾' },
+  { code: '+51', country: 'Peru', flag: '🇵🇪' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭' },
+  { code: '+48', country: 'Poland', flag: '🇵🇱' },
+  { code: '+351', country: 'Portugal', flag: '🇵🇹' },
+  { code: '+1787', country: 'Puerto Rico', flag: '🇵🇷' },
+  { code: '+974', country: 'Qatar', flag: '🇶🇦' },
+  { code: '+40', country: 'Romania', flag: '🇷🇴' },
+  { code: '+7', country: 'Russia', flag: '🇷🇺' },
+  { code: '+250', country: 'Rwanda', flag: '🇷🇼' },
+  { code: '+685', country: 'Samoa', flag: '🇼🇸' },
+  { code: '+378', country: 'San Marino', flag: '🇸🇲' },
+  { code: '+239', country: 'São Tomé and Príncipe', flag: '🇸🇹' },
+  { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: '+221', country: 'Senegal', flag: '🇸🇳' },
+  { code: '+381', country: 'Serbia', flag: '🇷🇸' },
+  { code: '+248', country: 'Seychelles', flag: '🇸🇨' },
+  { code: '+232', country: 'Sierra Leone', flag: '🇸🇱' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+  { code: '+421', country: 'Slovakia', flag: '🇸🇰' },
+  { code: '+386', country: 'Slovenia', flag: '🇸🇮' },
+  { code: '+677', country: 'Solomon Islands', flag: '🇸🇧' },
+  { code: '+252', country: 'Somalia', flag: '🇸🇴' },
+  { code: '+27', country: 'South Africa', flag: '🇿🇦' },
+  { code: '+82', country: 'South Korea', flag: '🇰🇷' },
+  { code: '+211', country: 'South Sudan', flag: '🇸🇸' },
+  { code: '+34', country: 'Spain', flag: '🇪🇸' },
+  { code: '+94', country: 'Sri Lanka', flag: '🇱🇰' },
+  { code: '+249', country: 'Sudan', flag: '🇸🇩' },
+  { code: '+597', country: 'Suriname', flag: '🇸🇷' },
+  { code: '+46', country: 'Sweden', flag: '🇸🇪' },
+  { code: '+41', country: 'Switzerland', flag: '🇨🇭' },
+  { code: '+963', country: 'Syria', flag: '🇸🇾' },
+  { code: '+886', country: 'Taiwan', flag: '🇹🇼' },
+  { code: '+992', country: 'Tajikistan', flag: '🇹🇯' },
+  { code: '+255', country: 'Tanzania', flag: '🇹🇿' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭' },
+  { code: '+670', country: 'Timor-Leste', flag: '🇹🇱' },
+  { code: '+228', country: 'Togo', flag: '🇹🇬' },
+  { code: '+676', country: 'Tonga', flag: '🇹🇴' },
+  { code: '+1868', country: 'Trinidad and Tobago', flag: '🇹🇹' },
+  { code: '+216', country: 'Tunisia', flag: '🇹🇳' },
+  { code: '+90', country: 'Turkey', flag: '🇹🇷' },
+  { code: '+993', country: 'Turkmenistan', flag: '🇹🇲' },
+  { code: '+688', country: 'Tuvalu', flag: '🇹🇻' },
+  { code: '+256', country: 'Uganda', flag: '🇺🇬' },
+  { code: '+380', country: 'Ukraine', flag: '🇺🇦' },
+  { code: '+971', country: 'United Arab Emirates', flag: '🇦🇪' },
+  { code: '+44', country: 'United Kingdom', flag: '🇬🇧' },
+  { code: '+1', country: 'United States', flag: '🇺🇸' },
+  { code: '+598', country: 'Uruguay', flag: '🇺🇾' },
+  { code: '+998', country: 'Uzbekistan', flag: '🇺🇿' },
+  { code: '+678', country: 'Vanuatu', flag: '🇻🇺' },
+  { code: '+379', country: 'Vatican City', flag: '🇻🇦' },
+  { code: '+58', country: 'Venezuela', flag: '🇻🇪' },
+  { code: '+84', country: 'Vietnam', flag: '🇻🇳' },
+  { code: '+967', country: 'Yemen', flag: '🇾🇪' },
+  { code: '+260', country: 'Zambia', flag: '🇿🇲' },
+  { code: '+263', country: 'Zimbabwe', flag: '🇿🇼' },
+]
+
+function CountryCodeDropdown({
+  value,
+  onChange,
+}: {
+  value: string
+  onChange: (val: string) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsOpen(false) }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [isOpen])
+
+  const selected = countryCodes.find(c => c.code === value) || countryCodes[0]
+
+  return (
+    <div ref={ref} style={{ position: 'relative', width: '110px', flexShrink: 0 }}>
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          background: 'rgba(255,255,255,0.45)',
+          border: isOpen ? '1px solid rgba(201,168,110,0.6)' : '1px solid rgba(201,168,110,0.3)',
+          borderRadius: '14px',
+          padding: '14px 12px',
+          paddingRight: '28px',
+          color: '#2a2218',
+          fontSize: '14px',
+          width: '100%',
+          textAlign: 'left',
+          cursor: 'inherit',
+          fontFamily: 'inherit',
+          outline: 'none',
+          transition: 'border-color 0.2s ease',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          position: 'relative',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span style={{ fontSize: '16px' }}>{selected.flag}</span>
+        <span style={{ fontWeight: 500 }}>{selected.code}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"
+          style={{ position: 'absolute', right: '10px', top: '50%', transform: `translateY(-50%) rotate(${isOpen ? 180 : 0}deg)`, transition: 'transform 0.3s ease' }}>
+          <path d="M1 1l4 4 4-4" stroke="rgba(90,70,40,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scaleY: 0.95 }}
+            animate={{ opacity: 1, y: 0, scaleY: 1 }}
+            exit={{ opacity: 0, y: -8, scaleY: 0.95 }}
+            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 6px)',
+              left: 0,
+              width: 'min(240px, calc(100vw - 3rem))',
+              maxWidth: 'calc(100vw - 3rem)',
+              zIndex: 50,
+              background: 'linear-gradient(165deg, rgba(201,168,110,0.45) 0%, rgba(180,130,55,0.35) 40%, rgba(220,195,150,0.40) 100%)',
+              backdropFilter: 'blur(28px) saturate(1.6)',
+              WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+              border: '1px solid rgba(201,168,110,0.3)',
+              borderRadius: '16px',
+              boxShadow: '0 12px 40px rgba(160,120,50,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
+              transformOrigin: 'top left',
+              padding: '4px',
+            }}
+          >
+            <div
+              ref={listRef}
+              data-lenis-prevent
+              onWheel={e => { e.stopPropagation(); if (listRef.current) listRef.current.scrollTop += e.deltaY }}
+              style={{
+                maxHeight: '240px',
+                overflowY: 'auto',
+                overscrollBehavior: 'contain',
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(201,168,110,0.3) transparent',
+              }}
+            >
+              {countryCodes.map((cc, i) => (
+                <motion.button
+                  key={cc.code}
+                  type="button"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.15, delay: i * 0.015, ease: [0.32, 0.72, 0, 1] }}
+                  onClick={() => { onChange(cc.code); setIsOpen(false) }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '10px 12px',
+                    fontSize: '13px',
+                    fontWeight: value === cc.code ? 600 : 450,
+                    color: value === cc.code ? '#2a2218' : 'rgba(42,34,24,0.92)',
+                    background: value === cc.code ? 'rgba(255,255,255,0.3)' : 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'inherit',
+                    fontFamily: 'inherit',
+                    transition: 'background 0.15s ease',
+                  }}
+                  onMouseEnter={e => { if (value !== cc.code) (e.target as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)' }}
+                  onMouseLeave={e => { if (value !== cc.code) (e.target as HTMLButtonElement).style.background = 'transparent' }}
+                >
+                  <span style={{ fontSize: '16px' }}>{cc.flag}</span>
+                  <span style={{ flex: 1 }}>{cc.country}</span>
+                  <span style={{ fontSize: '12px', opacity: 0.75, fontWeight: 500 }}>{cc.code}</span>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Custom Subject Dropdown ───
+// Apr 16: added product/CTA-specific options (Book a consultation, Start a
+// conversation, Join FlyHigh waitlist, Talk to Trinade about Sleep Alert,
+// Get started) matching every button across the site that routes to /contact
+// — so the reason the visitor clicked through is self-selected on arrival.
+const subjectOptions = [
+  { value: '', label: 'Select a topic' },
+  { value: 'consultation', label: 'Book a consultation' },
+  { value: 'start-conversation', label: 'Start a conversation' },
+  { value: 'get-started', label: 'Get started' },
+  { value: 'flyhigh-waitlist', label: 'Join the FlyHigh waitlist' },
+  { value: 'sleep-alert', label: 'Talk to Trinade about Sleep Alert' },
+  { value: 'partnership', label: 'Partnership' },
+  { value: 'enterprise', label: 'Enterprise Solutions' },
+  { value: 'support', label: 'Technical Support' },
+  { value: 'careers', label: 'Careers' },
+  { value: 'media', label: 'Media & Press' },
+  { value: 'billing', label: 'Billing & Accounts' },
+  { value: 'feedback', label: 'Feedback' },
+  { value: 'general', label: 'General Inquiry' },
+  { value: 'other', label: 'Other' },
+]
+
+function SubjectDropdown({
+  value,
+  onChange,
+  onOpen,
+  onClose,
+}: {
+  value: string
+  onChange: (val: string) => void
+  onOpen?: () => void
+  onClose?: () => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen(false)
+        if (onClose) onClose()
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [isOpen, onClose])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handler = (e: KeyboardEvent) => { 
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+        if (onClose) onClose()
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [isOpen, onClose])
+
+  const selectedLabel = subjectOptions.find(o => o.value === value)?.label || 'Select a topic'
+
+  return (
+    <div ref={ref} style={{ position: 'relative' }}>
+      <button
+        type="button"
+        onClick={() => {
+          const next = !isOpen
+          setIsOpen(next)
+          if (next && onOpen) onOpen()
+          else if (!next && onClose) onClose()
+        }}
+        style={{
+          background: 'rgba(255,255,255,0.45)',
+          border: isOpen ? '1px solid rgba(201,168,110,0.6)' : '1px solid rgba(201,168,110,0.3)',
+          borderRadius: '14px',
+          padding: '14px 18px',
+          paddingRight: '44px',
+          color: value ? '#2a2218' : 'rgba(90,70,40,0.45)',
+          fontSize: '15px',
+          width: '100%',
+          textAlign: 'left',
+          cursor: 'inherit',
+          fontFamily: 'inherit',
+          outline: 'none',
+          transition: 'border-color 0.2s ease',
+          position: 'relative',
+        }}
+      >
+        {selectedLabel}
+        <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
+          style={{ position: 'absolute', right: '16px', top: '50%', transform: `translateY(-50%) rotate(${isOpen ? 180 : 0}deg)`, transition: 'transform 0.3s ease' }}>
+          <path d="M1 1l5 5 5-5" stroke="rgba(90,70,40,0.5)" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scaleY: 0.95 }}
+            animate={{ opacity: 1, y: 0, scaleY: 1 }}
+            exit={{ opacity: 0, y: -8, scaleY: 0.95 }}
+            transition={{ duration: 0.25, ease: [0.32, 0.72, 0, 1] }}
+            style={{
+              position: 'absolute',
+              top: 'calc(100% + 6px)',
+              left: 0,
+              right: 0,
+              zIndex: 50,
+              background: 'linear-gradient(165deg, rgba(201,168,110,0.45) 0%, rgba(180,130,55,0.35) 40%, rgba(220,195,150,0.40) 100%)',
+              backdropFilter: 'blur(28px) saturate(1.6)',
+              WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+              border: '1px solid rgba(201,168,110,0.3)',
+              borderRadius: '16px',
+              boxShadow: '0 12px 40px rgba(160,120,50,0.2), inset 0 1px 0 rgba(255,255,255,0.3)',
+              transformOrigin: 'top center',
+              padding: '4px',
+            }}
+          >
+            <div
+              ref={listRef}
+              data-lenis-prevent
+              onWheel={e => { e.stopPropagation(); if (listRef.current) listRef.current.scrollTop += e.deltaY }}
+              style={{
+                maxHeight: '220px',
+                overflowY: 'auto',
+                overscrollBehavior: 'contain',
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(201,168,110,0.3) transparent',
+              }}
+            >
+              {subjectOptions.map((option, i) => (
+                <motion.button
+                  key={option.value}
+                  type="button"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2, delay: i * 0.03, ease: [0.32, 0.72, 0, 1] }}
+                  onClick={() => { 
+                    onChange(option.value)
+                    setIsOpen(false)
+                    if (onClose) onClose()
+                  }}
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    textAlign: 'left',
+                    padding: '11px 16px',
+                    fontSize: '14px',
+                    fontWeight: value === option.value ? 600 : 450,
+                    color: value === option.value ? '#2a2218' : 'rgba(42,34,24,0.92)',
+                    background: value === option.value ? 'rgba(255,255,255,0.3)' : 'transparent',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'inherit',
+                    fontFamily: 'inherit',
+                    transition: 'background 0.15s ease, color 0.15s ease',
+                  }}
+                  onMouseEnter={e => { if (value !== option.value) (e.target as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)' }}
+                  onMouseLeave={e => { if (value !== option.value) (e.target as HTMLButtonElement).style.background = 'transparent' }}
+                >
+                  {option.label}
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Main Page ───
+export default function SolutionsContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    countryCode: '+91',
+    phone: '',
+    subject: '',
+    message: '',
+  })
+  // Apr 16: DPDP Act / GDPR consent — required before enabling submit.
+  const [consent, setConsent] = useState(false)
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [hintsVisible, setHintsVisible] = useState<Record<string, boolean>>({})
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  const [heroInView, setHeroInView] = useState(false)
+  const [formInView, setFormInView] = useState(false)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const formSectionRef = useRef<HTMLDivElement>(null)
+
+  // Hero is always visible on load — trigger animations immediately after mount
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroInView(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Scroll-based trigger for form section (Lenis transform breaks IntersectionObserver)
+  useEffect(() => {
+    const checkFormVisibility = () => {
+      const el = formSectionRef.current
+      if (!el || formInView) return
+      const rect = el.getBoundingClientRect()
+      if (rect.top < window.innerHeight + 100) {
+        setFormInView(true)
+      }
+    }
+    window.addEventListener('scroll', checkFormVisibility, { passive: true })
+    // Also check after a delay in case Lenis doesn't fire native scroll
+    const timer = setTimeout(checkFormVisibility, 2000)
+    checkFormVisibility()
+    return () => {
+      window.removeEventListener('scroll', checkFormVisibility)
+      clearTimeout(timer)
+    }
+  }, [formInView])
+
+  const validateField = (name: string, value: string): string => {
+    const trimmed = value.trim()
+    switch (name) {
+      case 'name':
+        if (!trimmed) return 'Name is required'
+        if (trimmed.length < 3) return 'Name must be at least 3 characters'
+        if (!/^[A-Za-z\s]+$/.test(trimmed)) return 'Name must contain only letters and spaces'
+        return ''
+      case 'email':
+        if (!trimmed) return 'Email is required'
+        if (value.includes(' ')) return 'Email cannot contain spaces'
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return 'Please enter a valid email address'
+        return ''
+      case 'phone':
+        if (!trimmed) return 'Phone number is required'
+        if (!/^\d{10}$/.test(trimmed)) return 'Phone must be exactly 10 digits'
+        if (/^(\d)\1{9}$/.test(trimmed)) return 'Invalid phone number'
+        return ''
+      case 'subject':
+        if (!value) return 'Please select a valid option'
+        return ''
+      case 'message':
+        if (!trimmed) return 'Message is required'
+        if (trimmed.length < 5) return 'Message must be at least 5 characters'
+        return ''
+      default:
+        return ''
+    }
+  }
+
+  const getHint = (name: string): string => {
+    switch (name) {
+      case 'name': return 'Enter at least 3 alphabetic characters'
+      case 'email': return 'Enter a valid email (e.g., example@domain.com)'
+      case 'phone': return 'Enter 10-digit number (not all digits same)'
+      case 'subject': return 'Select a relevant topic'
+      case 'message': return 'Minimum 5 characters required'
+      default: return ''
+    }
+  }
+
+  const handleFocus = (name: string) => {
+    setHintsVisible(prev => ({ ...prev, [name]: true }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
+    setSubmitStatus('idle')
+  }
+
+  const handleBlur = (name: string, value: string) => {
+    setHintsVisible(prev => ({ ...prev, [name]: false }))
+    setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    const newErrors: Record<string, string> = {}
+    let isValid = true
+
+    Object.keys(formData).forEach(key => {
+      if (key === 'countryCode') return
+      const error = validateField(key, formData[key as keyof typeof formData])
+      if (error) {
+        newErrors[key] = error
+        isValid = false
+      }
+    })
+
+    if (!consent) {
+      newErrors['consent'] = 'You must accept the privacy policy'
+      isValid = false
+    }
+
+    setErrors(newErrors)
+
+    if (isValid) {
+      setSubmitStatus('success')
+    } else {
+      setSubmitStatus('error')
+    }
+  }
+
+  const renderMessage = (name: string) => {
+    if (errors[name]) {
+      return (
+        <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#e11d48', fontSize: '13px', marginTop: '6px', fontWeight: 500 }}>
+          {errors[name]}
+        </motion.div>
+      )
+    }
+    if (hintsVisible[name]) {
+      return (
+        <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: 'rgba(90,70,40,0.7)', fontSize: '12px', marginTop: '6px' }}>
+          {getHint(name)}
+        </motion.div>
+      )
+    }
+    return null
+  }
+
+  const inputStyle: React.CSSProperties = {
+    background: 'rgba(255,255,255,0.45)',
+    border: '1px solid rgba(201,168,110,0.3)',
+    borderRadius: '14px',
+    padding: '14px 18px',
+    color: '#2a2218',
+    fontSize: '15px',
+    width: '100%',
+    outline: 'none',
+    transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
+    fontFamily: 'inherit',
+  }
+
+  const labelStyle: React.CSSProperties = {
+    display: 'block',
+    fontSize: 'var(--text-eyebrow)',
+    fontWeight: 600,
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.2em',
+    color: 'rgba(90,70,40,0.55)',
+    marginBottom: '0.5rem',
+  }
+
+  // Hero headline words for staggered animation
+  const line1Words = ['Have', 'a', 'project']
+  const line2Words = ['in']
+
+  return (
+    <>
+      <style>{`
+        #message::-webkit-scrollbar { width: 6px; }
+        #message::-webkit-scrollbar-track { background: rgba(201,168,110,0.08); border-radius: 3px; margin: 8px 0; }
+        #message::-webkit-scrollbar-thumb { background: rgba(201,168,110,0.35); border-radius: 3px; }
+        #message::-webkit-scrollbar-thumb:hover { background: rgba(201,168,110,0.55); }
+      `}</style>
+      <div className="solutions-page relative">
+        <PremiumCursor />
+        <SolutionsNavbar />
+        <SmoothScroll>
+
+          {/* ══════════════════════════════════════════════
+              SECTION 1: HERO — Dark cinematic
+          ══════════════════════════════════════════════ */}
+          <section
+            ref={heroRef}
+            data-dark-section
+            style={{
+              minHeight: 'var(--hero-min-h)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              backgroundColor: '#0a0a0a',
+              textAlign: 'center',
+              paddingLeft: 'var(--spacing-gutter)',
+              paddingRight: 'var(--spacing-gutter)',
+            }}
+          >
+            {/* Background image — spiral-lines-gold at very low opacity */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 0,
+              pointerEvents: 'none',
+            }}>
+              <Image
+                src="/spiral-lines-gold.jpg"
+                alt=""
+                fill
+                style={{
+                  objectFit: 'cover',
+                  opacity: 0.11,
+                  mixBlendMode: 'lighten',
+                }}
+                priority
+              />
+            </div>
+
+            {/* Atmospheric gradient overlays */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              pointerEvents: 'none',
+              zIndex: 1,
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-20%',
+                right: '-10%',
+                width: '60%',
+                height: '60%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(201,168,110,0.08) 0%, transparent 70%)',
+                filter: 'blur(80px)',
+              }} />
+              <div style={{
+                position: 'absolute',
+                bottom: '-20%',
+                left: '-15%',
+                width: '70%',
+                height: '70%',
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(160,120,60,0.06) 0%, transparent 70%)',
+                filter: 'blur(100px)',
+              }} />
+            </div>
+
+            {/* Grain overlay */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 2,
+              opacity: 0.4,
+              pointerEvents: 'none',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'repeat',
+              backgroundSize: '128px 128px',
+            }} />
+
+            {/* CONTACT watermark */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ duration: 2, delay: 0.8 }}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: 'clamp(9rem, 28vw, 24rem)',
+                fontWeight: 900,
+                color: 'rgba(201,168,110,0.04)',
+                letterSpacing: '-0.04em',
+                userSelect: 'none',
+                pointerEvents: 'none',
+                whiteSpace: 'nowrap',
+                lineHeight: 1,
+                zIndex: 2,
+              }}
+            >
+              CONTACT
+            </motion.div>
+
+            {/* Hero content */}
+            <div style={{ position: 'relative', zIndex: 3, maxWidth: '900px' }}>
+              {/* Line 1: "Have a project" */}
+              <div style={{
+                fontSize: 'var(--text-hero)',
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.93)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                marginBottom: '0',
+              }}>
+                {line1Words.map((word, i) => (
+                  <motion.span
+                    key={word + i}
+                    initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }}
+                    animate={heroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                    transition={{
+                      duration: 0.9,
+                      delay: 0.2 + i * 0.1,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    style={{ display: 'inline-block', marginRight: '0.3em' }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
+
+              {/* Line 2: "in mind?" */}
+              <div style={{
+                fontSize: 'var(--text-hero)',
+                fontWeight: 300,
+                letterSpacing: '-0.03em',
+                lineHeight: 1.05,
+                marginBottom: '0',
+              }}>
+                {line2Words.map((word, i) => (
+                  <motion.span
+                    key={word + i}
+                    initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }}
+                    animate={heroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                    transition={{
+                      duration: 0.9,
+                      delay: 0.5 + i * 0.1,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    style={{
+                      display: 'inline-block',
+                      marginRight: '0.3em',
+                      color: 'rgba(255,255,255,0.93)',
+                    }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+                <motion.span
+                  initial={{ opacity: 0, y: 50, filter: 'blur(8px)' }}
+                  animate={heroInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                  transition={{
+                    duration: 0.9,
+                    delay: 0.65,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  style={{
+                    display: 'inline-block',
+                    background: 'linear-gradient(135deg, #d4bb8a 0%, #c9a86e 40%, #a0814a 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  mind?
+                </motion.span>
+              </div>
+
+              {/* Animated gold rule */}
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={heroInView ? { scaleX: 1, opacity: 1 } : {}}
+                transition={{ duration: 1.4, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  width: '100px',
+                  height: '1px',
+                  background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.6), transparent)',
+                  margin: '36px auto 32px',
+                  transformOrigin: 'center',
+                }}
+              />
+
+              {/* Subheadline */}
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={heroInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 1, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  fontSize: 'var(--text-lead)',
+                  color: 'rgba(255,255,255,0.45)',
+                  maxWidth: '620px',
+                  margin: '0 auto',
+                  lineHeight: 1.75,
+                  fontWeight: 400,
+                }}
+              >
+                We&apos;re always excited to discuss new opportunities and ideas. Whether you&apos;re
+                looking to transform operations, build intelligent systems, or explore what&apos;s
+                possible — reach out.
+              </motion.p>
+            </div>
+
+            {/* Scroll indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              transition={{ duration: 1, delay: 1.8 }}
+              style={{
+                position: 'absolute',
+                bottom: '48px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 3,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <span style={{
+                fontSize: '11px',
+                fontWeight: 500,
+                textTransform: 'uppercase',
+                letterSpacing: '0.15em',
+                color: 'rgba(201,168,110,0.4)',
+              }}>
+                Scroll
+              </span>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                style={{
+                  width: '1px',
+                  height: '28px',
+                  background: 'linear-gradient(180deg, rgba(201,168,110,0.4), transparent)',
+                }}
+              />
+            </motion.div>
+          </section>
+
+          {/* ══════════════════════════════════════════════
+              SECTION 2: SPLIT LAYOUT — Form + Info
+          ══════════════════════════════════════════════ */}
+          <section
+            ref={formSectionRef}
+            style={{
+              backgroundColor: '#f2ede6',
+              paddingTop: 'var(--spacing-rhythm-lg)',
+              paddingBottom: 'var(--spacing-rhythm-lg)',
+              paddingLeft: 'var(--spacing-gutter)',
+              paddingRight: 'var(--spacing-gutter)',
+              position: 'relative',
+            }}
+          >
+            {/* Grain overlay */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              opacity: 0.25,
+              pointerEvents: 'none',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`,
+              backgroundRepeat: 'repeat',
+              backgroundSize: '128px 128px',
+            }} />
+
+            <div style={{
+              maxWidth: 'var(--container-wide)',
+              margin: '0 auto',
+              display: 'flex',
+              gap: 'var(--spacing-fluid-m)',
+              position: 'relative',
+              zIndex: 1,
+              flexWrap: 'wrap',
+            }}>
+
+              {/* ── LEFT COLUMN: Info Card ── */}
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                animate={formInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  flex: '1 1 26rem',
+                  minWidth: 'min(20rem, 100%)',
+                  maxWidth: '100%',
+                  borderRadius: 'var(--radius-fluid-2xl)',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  minHeight: 'clamp(20rem, 58svh, 44rem)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}
+              >
+                {/* Background image */}
+                <Image
+                  src="/spiral-lines-gold.jpg"
+                  alt=""
+                  fill
+                  style={{
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                  }}
+                />
+                {/* Dark overlay */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.82) 60%, rgba(10,10,10,0.92) 100%)',
+                  zIndex: 1,
+                }} />
+
+                {/* Content on top of overlay — left-aligned, vertical center
+                    (outer motion.div uses justifyContent: 'center' now) */}
+                <div style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  padding: 'var(--spacing-fluid-xl)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '40px',
+                }}>
+                  {/* Headline */}
+                  <div>
+                    <motion.p
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={formInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.2em',
+                        color: 'rgba(201,168,110,0.7)',
+                        marginBottom: '20px',
+                      }}
+                    >
+                      Get in touch
+                    </motion.p>
+                    <motion.h2
+                      initial={{ opacity: 0, y: 25 }}
+                      animate={formInView ? { opacity: 1, y: 0 } : {}}
+                      transition={{ duration: 0.9, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        fontSize: 'var(--text-h2)',
+                        fontWeight: 300,
+                        color: 'rgba(255,255,255,0.93)',
+                        lineHeight: 1.2,
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
+                      Let&apos;s build<br className="hidden md:inline" />the future,<br className="hidden md:inline" />
+                      <span style={{
+                        background: 'linear-gradient(135deg, #d4bb8a 0%, #c9a86e 50%, #a0814a 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}>
+                        together.
+                      </span>
+                    </motion.h2>
+                  </div>
+
+                  {/* Value proposition text */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={formInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fontSize: '15px',
+                      color: 'rgba(255,255,255,0.5)',
+                      lineHeight: 1.8,
+                      fontWeight: 400,
+                    }}
+                  >
+                    Every great partnership starts with a conversation. Tell us about your challenges, your vision, and where you want to go — we&apos;ll show you how technology can get you there.
+                  </motion.p>
+
+                  {/* Separator */}
+                  <div style={{
+                    width: '100%',
+                    height: '1px',
+                    background: 'linear-gradient(90deg, rgba(201,168,110,0.3), rgba(201,168,110,0.08))',
+                  }} />
+
+                  {/* Response promise */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={formInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+                  >
+                    {[
+                      { num: '01', text: 'We respond within 24 hours' },
+                      { num: '02', text: 'Free initial consultation' },
+                      { num: '03', text: 'No commitment required' },
+                    ].map((item, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: '14px' }}>
+                        <span style={{
+                          fontSize: '11px',
+                          fontWeight: 600,
+                          color: 'rgba(201,168,110,0.5)',
+                          letterSpacing: '0.05em',
+                          fontVariantNumeric: 'tabular-nums',
+                        }}>
+                          {item.num}
+                        </span>
+                        <span style={{
+                          fontSize: '14px',
+                          color: 'rgba(255,255,255,0.65)',
+                          fontWeight: 400,
+                        }}>
+                          {item.text}
+                        </span>
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* ── RIGHT COLUMN: Form Card ── */}
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={formInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  flex: '1.22 1 30rem',
+                  minWidth: 'min(21rem, 100%)',
+                  maxWidth: '100%',
+                  background: 'linear-gradient(165deg, rgba(201,168,110,0.25) 0%, rgba(180,130,55,0.18) 40%, rgba(220,195,150,0.22) 100%)',
+                  backdropFilter: 'blur(24px) saturate(1.6)',
+                  WebkitBackdropFilter: 'blur(24px) saturate(1.6)',
+                  boxShadow: '0 8px 40px rgba(160,120,50,0.12), inset 0 1px 0 rgba(255,255,255,0.25)',
+                  border: '1px solid rgba(201,168,110,0.2)',
+                  borderRadius: 'var(--radius-fluid-2xl)',
+                  padding: 'var(--spacing-fluid-xl)',
+                }}
+              >
+                {/* Form header */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={formInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ marginBottom: '36px' }}
+                >
+                  <h3 style={{
+                    fontSize: 'var(--text-h3)',
+                    fontWeight: 400,
+                    color: '#2a2218',
+                    letterSpacing: '-0.01em',
+                    marginBottom: '10px',
+                  }}>
+                    Send us a message
+                  </h3>
+                  <p style={{
+                    fontSize: '14px',
+                    color: 'rgba(42,34,24,0.5)',
+                    lineHeight: 1.6,
+                  }}>
+                    Fill out the form below and we&apos;ll get back to you within 24 hours.
+                  </p>
+                </motion.div>
+
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+
+                  {/* Name & Email row */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: '22px',
+                  }}>
+                    <div>
+                      <label htmlFor="name" style={labelStyle}>Name</label>
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Your full name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors.name ? '#e11d48' : hintsVisible.name ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                          boxShadow: hintsVisible.name ? (errors.name ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
+                        }}
+                        onFocus={() => handleFocus('name')}
+                        onBlur={(e) => handleBlur('name', e.target.value)}
+                      />
+                      {renderMessage('name')}
+                    </div>
+                    <div>
+                      <label htmlFor="email" style={labelStyle}>Email</label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@company.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors.email ? '#e11d48' : hintsVisible.email ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                          boxShadow: hintsVisible.email ? (errors.email ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
+                        }}
+                        onFocus={() => handleFocus('email')}
+                        onBlur={(e) => handleBlur('email', e.target.value)}
+                      />
+                      {renderMessage('email')}
+                    </div>
+                  </div>
+
+                  {/* Phone & Subject row */}
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: '22px',
+                  }}>
+                    <div>
+                      <label htmlFor="phone" style={labelStyle}>Phone</label>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <CountryCodeDropdown
+                          value={formData.countryCode}
+                          onChange={(val) => setFormData(prev => ({ ...prev, countryCode: val }))}
+                        />
+                        <input
+                          id="phone"
+                          name="phone"
+                          type="tel"
+                          placeholder="12345 67890"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          style={{
+                            ...inputStyle,
+                            flex: 1,
+                            borderColor: errors.phone ? '#e11d48' : hintsVisible.phone ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                            boxShadow: hintsVisible.phone ? (errors.phone ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
+                          }}
+                          onFocus={() => handleFocus('phone')}
+                          onBlur={(e) => handleBlur('phone', e.target.value)}
+                        />
+                      </div>
+                      {renderMessage('phone')}
+                    </div>
+                    <div>
+                      <label style={labelStyle}>Subject</label>
+                      <SubjectDropdown
+                        value={formData.subject}
+                        onChange={(val) => {
+                           setFormData(prev => ({ ...prev, subject: val }))
+                           if (errors.subject) {
+                             setErrors(prev => ({ ...prev, subject: validateField('subject', val) }))
+                           }
+                        }}
+                        onOpen={() => handleFocus('subject')}
+                        onClose={() => handleBlur('subject', formData.subject)}
+                      />
+                      {renderMessage('subject')}
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label htmlFor="message" style={labelStyle}>Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={7}
+                      data-lenis-prevent
+                      placeholder="Tell us about your project or question..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      style={{
+                        ...inputStyle,
+                        resize: 'none',
+                        minHeight: '180px',
+                        maxHeight: '180px',
+                        overflowY: 'auto',
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: 'rgba(201,168,110,0.35) rgba(201,168,110,0.08)',
+                        overscrollBehavior: 'contain',
+                        borderColor: errors.message ? '#e11d48' : hintsVisible.message ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                        boxShadow: hintsVisible.message ? (errors.message ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
+                      }}
+                      onFocus={() => handleFocus('message')}
+                      onBlur={(e) => handleBlur('message', e.target.value)}
+                    />
+                    {/* Message hints and counter row */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1 }}>{renderMessage('message')}</div>
+                      <p style={{
+                        fontSize: '12px',
+                        color: formData.message.length > 280
+                          ? 'rgba(180,100,60,0.7)'
+                          : 'rgba(90,70,40,0.35)',
+                        textAlign: 'right',
+                        transition: 'color 0.2s ease',
+                        marginTop: errors.message || hintsVisible.message ? '6px' : '0px',
+                      }}>
+                        {formData.message.length} / 300
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Consent checkbox — required for DPDP Act / GDPR */}
+                  <label
+                    htmlFor="privacy-consent"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: '12px',
+                      marginTop: '8px',
+                      fontSize: '13px',
+                      lineHeight: 1.6,
+                      color: 'rgba(90,70,40,0.75)',
+                      cursor: 'pointer',
+                      userSelect: 'none',
+                    }}
+                  >
+                    <input
+                      id="privacy-consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={e => {
+                        setConsent(e.target.checked)
+                        if (e.target.checked && errors.consent) {
+                          setErrors(prev => ({ ...prev, consent: '' }))
+                        }
+                      }}
+                      style={{
+                        marginTop: '3px',
+                        accentColor: '#c9a86e',
+                        width: '16px',
+                        height: '16px',
+                        flexShrink: 0,
+                        cursor: 'pointer',
+                      }}
+                    />
+                    <span>
+                      I agree to the use or processing of my personal information by Trinade for the purpose of fulfilling this request and in accordance with{' '}
+                      <Link href="/privacy-policy" style={{ color: '#c9a86e', textDecoration: 'underline' }}>
+                        privacy policy
+                      </Link>
+                      .
+                    </span>
+                  </label>
+
+                  {errors.consent && (
+                    <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#e11d48', fontSize: '13px', marginTop: '-12px', fontWeight: 500 }}>
+                      {errors.consent}
+                    </motion.div>
+                  )}
+
+                  {submitStatus === 'success' && (
+                    <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#16a34a', fontSize: '14px', marginTop: '4px', fontWeight: 500, textAlign: 'center', background: 'rgba(22, 163, 74, 0.1)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(22, 163, 74, 0.2)' }}>
+                      Message sent successfully!
+                    </motion.div>
+                  )}
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    style={{
+                      background: '#1a1a1e',
+                      color: '#ffffff',
+                      fontWeight: 600,
+                      borderRadius: '9999px',
+                      height: '56px',
+                      width: '100%',
+                      border: 'none',
+                      fontSize: '15px',
+                      letterSpacing: '0.02em',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      fontFamily: 'inherit',
+                      marginTop: '8px',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                    onMouseEnter={e => {
+                      const el = e.currentTarget as HTMLButtonElement
+                      el.style.background = '#2a2a2e'
+                      el.style.transform = 'translateY(-1px)'
+                      el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
+                    }}
+                    onMouseLeave={e => {
+                      const el = e.currentTarget as HTMLButtonElement
+                      el.style.background = '#1a1a1e'
+                      el.style.transform = 'translateY(0)'
+                      el.style.boxShadow = 'none'
+                    }}
+                  >
+                    Send Message
+                    <span style={{
+                      display: 'inline-block',
+                      marginLeft: '10px',
+                      transition: 'transform 0.3s ease',
+                    }}>
+                      &rarr;
+                    </span>
+                  </button>
+                </form>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* ══════════════════════════════════════════════
+              SECTION 3: Footer
+          ══════════════════════════════════════════════ */}
+          <SolutionsFooter />
+
+          <SolutionsCookiePopup />
+
+        </SmoothScroll>
+      </div>
+    </>
+  )
+}
