@@ -1,0 +1,322 @@
+@import "tailwindcss";
+@source "../components";
+@source "../app";
+
+/* ══════════════════════════════════════════════════════════════════════════
+   TRINADE FLUID DESIGN SYSTEM  —  1440-CENTERED BASELINE
+   ──────────────────────────────────────────────────────────────────────────
+   Design baseline: 1440 px (Figma standard / Awwwards judge viewport).
+   Sweet spot: 1440 – 1536 CSS px  — where the design looks its best.
+
+   All fluid tokens interpolate between a DESIGN value at 1440 and a
+   CEILING value at 1920. Below 1440, values degrade gracefully via the
+   same linear slope until the clamp floor catches extreme widths.
+   Result: peak fidelity at 1440–1536, still correct from ~1024 to 2560+.
+
+   Formula per token:
+     slope     = (ceiling_px − design_px) ÷ (1920 − 1440)  =  Δ ÷ 480
+     intercept = design_px − slope × 1440
+     clamp( floor_rem,  slope·100vw + intercept_rem,  ceiling_rem )
+
+   Root font-size is FIXED at 16 px. Fluid scaling happens per-token.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ─── Font families ─────────────────────────────────────────────────── */
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  /* ─── Fluid type scale ──────────────────────────────────────────────── */
+  /*                                                @1440    @1536   @1920 */
+  --text-eyebrow: 0.75rem;                        /* 12      12      12   */
+  --text-caption: 0.8125rem;                       /* 13      13      13   */
+  --text-small:   0.875rem;                        /* 14      14      14   */
+
+  /* Body:   16 → 17 */
+  --text-body: clamp(0.9375rem, 0.208vw + 0.8125rem, 1.0625rem);
+
+  /* Lead:   18 → 20 */
+  --text-lead: clamp(1.0625rem, 0.417vw + 0.75rem, 1.25rem);
+
+  /* Card:   20 → 22 */
+  --text-card: clamp(1.125rem, 0.417vw + 0.875rem, 1.375rem);
+
+  /* Card-lg: 26 → 30 */
+  --text-card-lg: clamp(1.375rem, 0.833vw + 0.875rem, 1.875rem);
+
+  /* H3:     34 → 40 */
+  --text-h3: clamp(1.625rem, 1.25vw + 1rem, 2.5rem);
+
+  /* H2:     44 → 56 */
+  --text-h2: clamp(2rem, 2.5vw + 0.5rem, 3.5rem);
+
+  /* Display: 58 → 68 */
+  --text-display: clamp(2.375rem, 2.083vw + 1.75rem, 4.25rem);
+
+  /* Hero home: 76 → 84  (homepage headline — restrained editorial) */
+  --text-hero-home: clamp(4.25rem, 1.667vw + 3.25rem, 5.25rem);
+
+  /* Hero:   96 → 120  (flagship — owns the viewport at 1440) */
+  --text-hero: clamp(3.5rem, 5vw + 1.5rem, 7.5rem);
+
+  /* Hero XL: 120 → 160 (Company TRINADE reveal) */
+  --text-hero-xl: clamp(5rem, 8.333vw, 10rem);
+
+
+  /* ─── Fluid space scale ─────────────────────────────────────────────── */
+  /*                                                @1440    @1536   @1920 */
+  --spacing-fluid-3xs: 0.25rem;                    /* 4       4       4   */
+  --spacing-fluid-2xs: 0.5rem;                     /* 8       8       8   */
+  --spacing-fluid-xs:  clamp(0.75rem, 0.417vw + 0.5rem, 1rem);       /* 14→16 */
+  --spacing-fluid-s:   clamp(1rem, 0.833vw + 0.375rem, 1.375rem);    /* 18→22 */
+  --spacing-fluid-m:   clamp(1.5rem, 0.833vw + 1rem, 2rem);          /* 28→32 */
+  --spacing-fluid-l:   clamp(2rem, 2.5vw, 3rem);                     /* 36→48 */
+  --spacing-fluid-xl:  clamp(2.75rem, 3.333vw, 4rem);                /* 48→64 */
+  --spacing-fluid-2xl: clamp(4rem, 5vw, 6rem);                       /* 72→96 */
+  --spacing-fluid-3xl: clamp(5.5rem, 6.667vw, 8rem);                 /* 96→128 */
+  --spacing-fluid-4xl: clamp(7rem, 8.333vw, 10rem);                  /* 120→160 */
+
+
+  /* ─── Layout rhythm ─────────────────────────────────────────────────── */
+  /*                                                @1440    @1536   @1920 */
+
+  /* Horizontal gutter: 55 → 80 at design/ceiling */
+  --spacing-gutter: clamp(1.5rem, 5.208vw - 1.25rem, 5rem);
+
+  /* Section Y (standard): 128 → 160 */
+  --spacing-rhythm: clamp(6.25rem, 6.667vw + 2rem, 10rem);
+
+  /* Section Y (large): 128 → 160 */
+  --spacing-rhythm-lg: clamp(6.25rem, 6.667vw + 2rem, 10rem);
+
+  /* Hero section top padding: 130 → 160 */
+  --spacing-rhythm-hero: clamp(7rem, 6.25vw + 2.5rem, 10rem);
+
+
+  /* ─── Chrome offsets ───────────────────────────────────────────────── */
+  /*                                                @1440    @1536   @1920 */
+
+  --spacing-nav-top:   clamp(1.25rem, 1.25vw + 0.5rem, 2rem);        /* 26→32 */
+  --spacing-nav-edge:  clamp(1.5rem, 1.667vw + 0.5rem, 2.5rem);      /* 32→40 */
+  --spacing-nav-inset: clamp(1rem, 0.833vw + 0.25rem, 1.5rem);       /* 18→22 */
+
+
+  /* ─── Fluid radii ───────────────────────────────────────────────────── */
+  /*                                                @1440    @1536   @1920 */
+
+  --radius-fluid-sm:  clamp(0.625rem, 0.417vw + 0.375rem, 0.875rem);  /* 12→14 */
+  --radius-fluid-md:  clamp(0.875rem, 0.833vw + 0.25rem, 1.25rem);    /* 16→20 */
+  --radius-fluid-lg:  clamp(1.125rem, 0.833vw + 0.5rem, 1.5rem);      /* 20→24 */
+  --radius-fluid-xl:  clamp(1.5rem, 1.25vw + 0.5rem, 2rem);           /* 26→32 */
+  --radius-fluid-2xl: clamp(1.75rem, 2.083vw, 2.5rem);                /* 30→40 */
+
+
+  /* ─── Content containment ───────────────────────────────────────────── */
+  --container-hero:    100rem;  /* 1600 */
+  --container-wide:     90rem;  /* 1440 */
+  --container-narrow:   68rem;  /* 1088 */
+  --container-prose:    56rem;  /*  896 */
+  --container-reading:  44rem;  /*  704 */
+
+
+  /* ─── Breakpoint anchors ────────────────────────────────────────────── */
+  --breakpoint-xs:  30rem;   /*  480  — phone                               */
+  --breakpoint-sm:  40rem;   /*  640  — large phone                         */
+  --breakpoint-md:  48rem;   /*  768  — tablet                              */
+  --breakpoint-lg:  64rem;   /* 1024  — small laptop                        */
+  --breakpoint-xl:  80rem;   /* 1280  — graceful floor                      */
+  --breakpoint-2xl: 96rem;   /* 1536  — sweet-spot ceiling                  */
+  --breakpoint-3xl: 120rem;  /* 1920  — generous max                        */
+}
+
+
+@layer base {
+  :root {
+    /* Hero height — full viewport on desktop via svh (avoids mobile
+       chrome jank). Mobile override below (≤640px) reduces this to
+       content-driven so phones don't waste space. */
+    --hero-min-h:    100svh;
+    --hero-min-h-lg: 100svh;
+
+    /* Easing curves used across the app — defined once here so every
+       component file can consume the same constants. */
+    --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-ui:   cubic-bezier(0.32, 0.72, 0, 1);
+    --ease-text: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ─── HTML / Body ──────────────────────────────────────────────────── */
+
+  html {
+    /* Root font-size is FIXED. All fluid behavior happens per-token above. */
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+    /* Hide scrollbars — Lenis handles the scroll UI */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    background-color: #f2ede6;
+    color: #2a2218;
+    overflow-x: clip;
+    max-width: 100vw;
+  }
+
+  /* ─── Lenis smooth scroll ──────────────────────────────────────────── */
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* ─── Text selection (gold tint) ───────────────────────────────────── */
+
+  ::selection {
+    background: rgba(201, 168, 110, 0.25);
+    color: #2a2218;
+  }
+
+  /* ─── Mobile / Tablet overrides ──────────────────────────────────── */
+  /* Below 768px, reduce type floors and spacing floors so content
+     doesn't overflow narrow viewports. These override the @theme
+     clamp floors while preserving the fluid slope above 768px.
+     Desktop (1024px+) is entirely unaffected. */
+
+  @media (max-width: 768px) {
+    :root {
+      /* Type — reduce large headline floors ~40-50% */
+      --text-hero-xl:   clamp(2.5rem, 12vw, 5rem);      /* 40px floor (was 80px) */
+      --text-hero-home: clamp(2.5rem, 10vw, 4.25rem);    /* 40px floor (was 68px) */
+      --text-hero:      clamp(2.25rem, 9vw, 3.5rem);     /* 36px floor (was 56px) */
+      --text-display:   clamp(1.75rem, 6vw, 2.375rem);   /* 28px floor (was 38px) */
+      --text-h2:        clamp(1.625rem, 5.5vw, 2rem);    /* 26px floor (was 32px) */
+      --text-h3:        clamp(1.375rem, 4.5vw, 1.625rem);/* 22px floor (was 26px) */
+      --text-card-lg:   clamp(1.125rem, 3.5vw, 1.375rem);/* 18px floor (was 22px) */
+
+      /* Spacing — reduce section padding floors ~50% */
+      --spacing-rhythm:      clamp(3.5rem, 10vw, 6.25rem); /* 56px floor (was 100px) */
+      --spacing-rhythm-lg:   clamp(3.5rem, 10vw, 6.25rem); /* 56px floor (was 100px) */
+      /* Hero rhythm bumped on phones so the headline clears the
+         right-anchored navbar pill and gets generous top breathing
+         room (matches the IT Solutions inspiration aesthetic). */
+      --spacing-rhythm-hero: clamp(7.5rem, 14vw, 9rem);    /* 120px floor on phones, ~144 at iPad */
+
+      /* Spacing — reduce generous inner padding */
+      --spacing-fluid-2xl: clamp(1.5rem, 5vw, 4rem);   /* 24px floor (was 64px) */
+      --spacing-fluid-3xl: clamp(2rem, 6vw, 5.5rem);   /* 32px floor (was 88px) */
+      --spacing-fluid-4xl: clamp(2.5rem, 8vw, 7rem);   /* 40px floor (was 112px) */
+      --spacing-fluid-xl:  clamp(1.5rem, 4vw, 2.75rem);/* 24px floor (was 44px) */
+    }
+  }
+
+  /* Hero min-heights — phones now get full-viewport heroes too
+     (matches the inspiration design where the first landing covers
+     the entire viewport). With the bumped --spacing-rhythm-hero the
+     headline sits ~120px below the navbar with breathing room, and
+     the gradient card fills the remaining ~600px via flex-1. */
+  @media (max-width: 640px) {
+    :root {
+      --hero-min-h:    100svh;
+      --hero-min-h-lg: 100svh;
+    }
+  }
+
+  /* Below 480px — further reduce for very small phones */
+  @media (max-width: 480px) {
+    :root {
+      --text-hero-xl:   clamp(2rem, 11vw, 2.5rem);       /* 32px floor */
+      --text-hero-home: clamp(2rem, 9vw, 2.5rem);        /* 32px floor */
+      --text-hero:      clamp(1.875rem, 8vw, 2.25rem);   /* 30px floor */
+      --text-display:   clamp(1.5rem, 5.5vw, 1.75rem);   /* 24px floor */
+
+      --spacing-rhythm:      clamp(2.5rem, 8vw, 3.5rem); /* 40px floor */
+      --spacing-rhythm-lg:   clamp(2.5rem, 8vw, 3.5rem);
+      /* --spacing-rhythm-hero deliberately NOT overridden here so the
+         768px-block value (clamp(7.5rem, 14vw, 9rem)) cascades to the
+         smallest phones — the headline must always clear the navbar pill. */
+    }
+  }
+
+  /* ─── Custom cursor — only on devices with fine pointer ─────────── */
+  /* Scoped: cursor:none only applies when a mouse is present.
+     Touch devices keep their native tap feedback intact. */
+  @media (pointer: fine) {
+    .solutions-page,
+    .solutions-page * {
+      cursor: none !important;
+    }
+  }
+
+  /* ─── iOS input zoom prevention ─────────────────────────────────── */
+  /* iOS Safari auto-zooms when focusing inputs with font-size < 16px.
+     Force all form elements to 16px minimum on mobile. */
+  @media (max-width: 768px) {
+    input, select, textarea, .country-dropdown-trigger {
+      font-size: 16px !important;
+    }
+  }
+
+  /* ─── Safe area insets for notched devices ──────────────────────── */
+  @supports (padding: env(safe-area-inset-top)) {
+    body {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+  }
+
+  /* ─── Reduced-motion support ───────────────────────────────────────── */
+  /* Respects the OS-level user preference without destroying the design.
+     Entrance animations collapse to near-instant (content still reveals
+     in final state). Infinite loops (marquee, radar) are killed outright. */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .footer-marquee,
+    [data-marquee],
+    [data-radar] {
+      animation: none !important;
+    }
+
+    /* Restore text visibility for animated gradient text when motion is reduced.
+       The gradient-text animation uses -webkit-text-fill-color: transparent with
+       background-clip: text — when animation stops, text becomes invisible. */
+    [style*="text-fill-color"] {
+      -webkit-text-fill-color: currentColor !important;
+    }
+  }
+}
