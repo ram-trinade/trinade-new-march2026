@@ -7,6 +7,8 @@ export const size = {
   height: 32,
 }
 export const contentType = 'image/png'
+export const dynamic = 'force-static'
+export const revalidate = 0
 
 export default async function Icon() {
   const logoData = await readFile(join(process.cwd(), 'public', 'logo-transparent.png'))

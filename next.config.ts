@@ -9,6 +9,10 @@ import path from 'node:path'
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: path.join(__dirname),
+  output: 'export', // Enable static export for deployment
+  images: {
+    unoptimized: true,
+  },
 }
 
 export default nextConfig
