@@ -42,15 +42,17 @@ function PolicySection({
 }
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
+  // Apr 16: bumped from --text-h3 to --text-h2 for stronger section hierarchy
+  // across all viewports (previous h3 felt thin against the long body copy).
   return (
     <h2
       style={{
-        fontSize: 'var(--text-h3)',
+        fontSize: 'var(--text-h2)',
         fontWeight: 300,
         color: '#1a1510',
         marginBottom: '1.5rem',
-        letterSpacing: '-0.02em',
-        lineHeight: 1.25,
+        letterSpacing: '-0.025em',
+        lineHeight: 1.15,
       }}
     >
       {children}
@@ -283,7 +285,7 @@ export default function PrivacyPolicyPage() {
         </PolicySection>
 
         {/* Data Sharing & Transfer */}
-        <PolicySection>
+        <PolicySection alt>
           <SectionHeading>Data Sharing &amp; Transfer</SectionHeading>
           <AccentDivider />
           <BodyText>
@@ -301,7 +303,7 @@ export default function PrivacyPolicyPage() {
         </PolicySection>
 
         {/* Cookies and Tracking */}
-        <PolicySection alt>
+        <PolicySection>
           <SectionHeading>Cookies and Tracking</SectionHeading>
           <AccentDivider />
           <BodyText>
@@ -319,7 +321,7 @@ export default function PrivacyPolicyPage() {
         </PolicySection>
 
         {/* Data Security */}
-        <PolicySection>
+        <PolicySection alt>
           <SectionHeading>Data Security</SectionHeading>
           <AccentDivider />
           <BodyText>
@@ -372,7 +374,7 @@ export default function PrivacyPolicyPage() {
         </PolicySection>
 
         {/* Data Retention & Storage */}
-        <PolicySection alt>
+        <PolicySection>
           <SectionHeading>Data Retention &amp; Storage</SectionHeading>
           <AccentDivider />
           <BodyText>
@@ -387,7 +389,7 @@ export default function PrivacyPolicyPage() {
         </PolicySection>
 
         {/* Changes to This Policy */}
-        <PolicySection>
+        <PolicySection alt>
           <SectionHeading>Changes to This Policy</SectionHeading>
           <AccentDivider />
           <BodyText>
@@ -399,7 +401,7 @@ export default function PrivacyPolicyPage() {
         </PolicySection>
 
         {/* Grievance Officer */}
-        <PolicySection alt>
+        <PolicySection>
           <SectionHeading>Grievance Officer</SectionHeading>
           <AccentDivider />
           <BodyText>

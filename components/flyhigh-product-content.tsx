@@ -316,14 +316,16 @@ function HeroSection() {
         />
       </div>
 
-      {/* Main content — centered */}
-      <div ref={ref} className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 md:px-16 pt-20 md:pt-32 pb-16">
+      {/* Main content — centered.
+          Apr 16: trimmed vertical spacing on mobile/tablet so everything
+          fits inside the 100svh section without overflow. */}
+      <div ref={ref} className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 md:px-16 pt-14 md:pt-32 pb-8 md:pb-16">
         {/* Product badge */}
         <motion.div
           initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
           animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
           transition={{ duration: 1, delay: 0.2, ease: EASE_CINE }}
-          className="mb-12"
+          className="mb-6 md:mb-12"
         >
           <span
             className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em]"
@@ -345,12 +347,12 @@ function HeroSection() {
         </motion.div>
 
         {/* Main headline — split-text 3D reveal with gradient accent */}
-        <div className="mb-8" style={{ perspective: '1200px' }}>
+        <div className="mb-5 md:mb-8" style={{ perspective: '1200px' }}>
           <motion.h1
             initial={{ opacity: 0, y: '110%', rotateX: -80 }}
             animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
             transition={{ duration: 1.4, delay: 0.5, ease: EASE_CINE }}
-            className="tracking-[-0.05em]"
+            className="tracking-[-0.05em] max-lg:!text-[5rem]"
             style={{
               fontSize: 'var(--text-hero-xl)',
               lineHeight: 0.88,
@@ -378,7 +380,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
           animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
           transition={{ duration: 1, delay: 1, ease: EASE_CINE }}
-          className="max-w-2xl mb-5"
+          className="max-w-2xl mb-4 md:mb-5 max-lg:!text-[1.25rem]"
           style={{
             fontSize: 'var(--text-lead)',
             lineHeight: 1.5,
@@ -400,14 +402,14 @@ function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 1.3, ease: EASE_CINE }}
-          className="max-w-lg mb-14"
-          style={{ fontSize: '15px', lineHeight: 1.75, color: 'rgba(255,255,255,0.3)' }}
+          className="max-w-lg mb-8 md:mb-14 text-[15px] md:text-[15px] max-lg:!text-[1rem]"
+          style={{ lineHeight: 1.75, color: 'rgba(255,255,255,0.3)' }}
         >
           A platform connecting people with verified experts for real-time guidance —
           through chat, voice, or video.
         </motion.p>
 
-        {/* CTA */}
+        {/* CTA — responsive padding: smaller on mobile, full on md+ */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -416,10 +418,8 @@ function HeroSection() {
         >
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2.5 rounded-full font-semibold transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.35)]"
+            className="inline-flex items-center gap-2.5 rounded-full font-semibold transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.35)] px-6 py-3 md:px-9 md:py-4 text-[13px] md:text-[14px]"
             style={{
-              padding: '16px 36px',
-              fontSize: '14px',
               background: 'linear-gradient(165deg, #d4bb8a 0%, #c9a86e 30%, #a0814a 100%)',
               color: '#0a0a0a',
               boxShadow: '0 4px 32px rgba(201,168,110,0.3), 0 1px 0 rgba(255,255,255,0.15) inset',
@@ -460,14 +460,7 @@ function HeroSection() {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'rgba(255,255,255,0.2)' }}>Scroll</span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ width: 1, height: 20, background: 'linear-gradient(180deg, rgba(201,168,110,0.35), transparent)' }}
-            />
-          </div>
+          {/* Scroll indicator removed Apr 16 per founder request */}
         </div>
       </motion.div>
 
@@ -524,7 +517,7 @@ function NarrativeSection() {
         }}
       />
 
-      <div ref={ref} className="relative z-10 px-4 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
+      <div ref={ref} className="relative z-10 px-6 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -668,7 +661,9 @@ function HowItWorksSection() {
                   >
                     {step.title}
                   </h3>
-                  <p className="text-[14px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.55)' }}>
+                  {/* max-w-[16rem] on mobile centers the text block away from
+                      the screen edges. md+ uses full column width (4-col grid). */}
+                  <p className="text-[14px] leading-[1.8] mx-auto max-w-[16rem] md:max-w-none" style={{ color: 'rgba(42,34,24,0.55)' }}>
                     {step.desc}
                   </p>
                 </motion.div>
@@ -687,6 +682,32 @@ function HowItWorksSection() {
 function ValuePillarsSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  // Apr 16: mobile carousel state (same pattern as Home / Solutions carousels)
+  const pillarsCarouselRef = useRef<HTMLDivElement>(null)
+  const [pillarsActive, setPillarsActive] = useState(0)
+  const handlePillarsScroll = () => {
+    const el = pillarsCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setPillarsActive(Math.min(Math.max(0, idx), 3))
+  }
+  const scrollPillarsTo = (i: number) => {
+    const el = pillarsCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const containerW = el.clientWidth
+    const cardCenter = spacerW + i * step + step / 2 - 8
+    el.scrollTo({ left: cardCenter - containerW / 2, behavior: 'smooth' })
+  }
 
   const pillars = [
     {
@@ -744,7 +765,7 @@ function ValuePillarsSection() {
         }}
       />
 
-      <div ref={ref} className="relative z-10 px-4 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
+      <div ref={ref} className="relative z-10 px-6 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <motion.div
@@ -767,51 +788,79 @@ function ValuePillarsSection() {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {pillars.map((pillar, i) => (
+          {/* Shared card render for both mobile carousel and md+ grid */}
+          {(() => {
+            const renderCard = (pillar: typeof pillars[0], i: number) => (
               <motion.div
                 key={pillar.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: EASE_CINE }}
-                className="relative p-8 rounded-2xl transition-all duration-500 group overflow-hidden"
+                className="relative p-6 md:p-8 rounded-2xl transition-all duration-500 group overflow-hidden h-full"
                 style={{
                   background: 'rgba(255,255,255,0.03)',
                   border: '1px solid rgba(255,255,255,0.06)',
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(201,168,110,0.06)'
-                  e.currentTarget.style.borderColor = 'rgba(201,168,110,0.15)'
-                  e.currentTarget.style.transform = 'translateY(-4px)'
-                  e.currentTarget.style.boxShadow = '0 8px 40px rgba(201,168,110,0.08)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                  e.currentTarget.style.boxShadow = 'none'
-                }}
               >
-                {/* Inner glow on hover */}
                 <div
                   className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)' }}
                 />
                 <div className="relative z-10">
-                  <div className="mb-5 opacity-70 group-hover:opacity-100 transition-opacity duration-500">{pillar.icon}</div>
+                  <div className="mb-4 md:mb-5 opacity-70 group-hover:opacity-100 transition-opacity duration-500">{pillar.icon}</div>
                   <h3
-                    className="text-[20px] font-semibold tracking-[-0.02em] mb-3"
+                    className="text-[18px] md:text-[20px] font-semibold tracking-[-0.02em] mb-2 md:mb-3"
                     style={{ color: 'rgba(255,255,255,0.9)' }}
                   >
                     {pillar.title}
                   </h3>
-                  <p className="text-[14px] leading-[1.8]" style={{ color: 'rgba(255,255,255,0.45)' }}>
+                  <p className="text-[13px] md:text-[14px] leading-[1.75]" style={{ color: 'rgba(255,255,255,0.45)' }}>
                     {pillar.desc}
                   </p>
                 </div>
               </motion.div>
-            ))}
-          </div>
+            )
+            return (
+              <>
+                {/* Mobile swipe carousel + dots */}
+                <div className="md:hidden">
+                  <div
+                    ref={pillarsCarouselRef}
+                    onScroll={handlePillarsScroll}
+                    className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    style={{ gap: '16px' }}
+                  >
+                    <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                    {pillars.map((pillar, i) => (
+                      <div key={pillar.title} className="snap-center shrink-0 w-[72vw] max-w-[22rem] h-[18rem]">
+                        {renderCard(pillar, i)}
+                      </div>
+                    ))}
+                    <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                  </div>
+                  <div className="flex justify-center items-center gap-2 mt-5">
+                    {pillars.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => scrollPillarsTo(i)}
+                        aria-label={`Go to pillar ${i + 1}`}
+                        className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                        style={{
+                          width: pillarsActive === i ? '24px' : '8px',
+                          background: pillarsActive === i ? '#c9a86e' : 'rgba(255,255,255,0.18)',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* md+ grid (unchanged) */}
+                <div className="hidden md:grid md:grid-cols-2 gap-6">
+                  {pillars.map((pillar, i) => renderCard(pillar, i))}
+                </div>
+              </>
+            )
+          })()}
         </div>
       </div>
     </Section>
@@ -824,6 +873,31 @@ function ValuePillarsSection() {
 function FieldsSection() {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const fieldsCarouselRef = useRef<HTMLDivElement>(null)
+  const [fieldsActive, setFieldsActive] = useState(0)
+  const handleFieldsScroll = () => {
+    const el = fieldsCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setFieldsActive(Math.min(Math.max(0, idx), 7))
+  }
+  const scrollFieldsTo = (i: number) => {
+    const el = fieldsCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const containerW = el.clientWidth
+    const cardCenter = spacerW + i * step + step / 2 - 8
+    el.scrollTo({ left: cardCenter - containerW / 2, behavior: 'smooth' })
+  }
 
   const fields = [
     { name: 'Business & Finance', desc: 'Investments, financial planning, strategy, HR' },
@@ -838,7 +912,9 @@ function FieldsSection() {
 
   return (
     <Section dark={false}>
-      <div ref={ref} className="px-4 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
+      {/* Apr 16: bumped mobile px-4 → px-6 so heading + tagline don't hug the
+          screen edges. md+ unchanged. */}
+      <div ref={ref} className="px-6 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16">
             <div>
@@ -872,14 +948,15 @@ function FieldsSection() {
               </motion.p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {fields.map((field, i) => (
+            <div>
+            {(() => {
+              const renderField = (field: typeof fields[0], i: number) => (
                 <motion.div
                   key={field.name}
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.1 + i * 0.06, ease: EASE_CINE }}
-                  className="p-5 rounded-xl transition-all duration-500 group relative overflow-hidden"
+                  className="p-5 rounded-xl transition-all duration-500 group relative overflow-hidden h-full"
                   style={{
                     background: 'linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 100%)',
                     border: '1px solid rgba(42,34,24,0.06)',
@@ -913,7 +990,48 @@ function FieldsSection() {
                     </p>
                   </div>
                 </motion.div>
-              ))}
+              )
+              return (
+                <>
+                  {/* Mobile carousel + dots */}
+                  <div className="md:hidden">
+                    <div
+                      ref={fieldsCarouselRef}
+                      onScroll={handleFieldsScroll}
+                      className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                      style={{ gap: '16px' }}
+                    >
+                      <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                      {fields.map((field, i) => (
+                        <div key={field.name} className="snap-center shrink-0 w-[72vw] max-w-[20rem] h-[8rem]">
+                          {renderField(field, i)}
+                        </div>
+                      ))}
+                      <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                    </div>
+                    <div className="flex justify-center items-center gap-2 mt-5">
+                      {fields.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => scrollFieldsTo(i)}
+                          aria-label={`Go to field ${i + 1}`}
+                          className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                          style={{
+                            width: fieldsActive === i ? '24px' : '8px',
+                            background: fieldsActive === i ? '#c9a86e' : 'rgba(42,34,24,0.15)',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* sm+ grid (unchanged) */}
+                  <div className="hidden sm:grid sm:grid-cols-2 gap-4">
+                    {fields.map((field, i) => renderField(field, i))}
+                  </div>
+                </>
+              )
+            })()}
             </div>
           </div>
         </div>
@@ -955,7 +1073,7 @@ function ExpertsSection() {
         }}
       />
 
-      <div ref={ref} className="relative z-10 px-4 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
+      <div ref={ref} className="relative z-10 px-6 md:px-8 lg:px-16 xl:px-24 py-16 md:py-28 lg:py-40">
         <div className="max-w-5xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1014,7 +1132,7 @@ function ExpertsSection() {
                 >
                   {b.title}
                 </h3>
-                <p className="text-[14px] leading-[1.7]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                <p className="text-[14px] leading-[1.7] mx-auto max-w-[16rem] md:max-w-none" style={{ color: 'rgba(255,255,255,0.4)' }}>
                   {b.desc}
                 </p>
               </motion.div>

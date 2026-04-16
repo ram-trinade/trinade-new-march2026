@@ -470,11 +470,23 @@ function MilestonesCarousel() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: '-60px' })
 
+  // Apr 16: measure actual card width each scroll so the step matches one
+  // whole card (+ gap) instead of a fixed 360 that drifted mid-card at
+  // tablet/desktop. Also swipe 2 cards per click at tablet (768-1023) per
+  // founder request, 1 card per click otherwise.
   const scroll = useCallback((direction: 'left' | 'right') => {
-    if (!scrollRef.current) return
-    const amount = 360
-    scrollRef.current.scrollBy({
-      left: direction === 'left' ? -amount : amount,
+    const container = scrollRef.current
+    if (!container) return
+    const firstCard = container.firstElementChild as HTMLElement | null
+    if (!firstCard) return
+    const cardWidth = firstCard.getBoundingClientRect().width
+    const gap = 24  // matches container's inline gap style below
+    const step = cardWidth + gap
+    const w = window.innerWidth
+    const cardsPerSwipe = (w >= 768 && w < 1024) ? 2 : 1
+    const delta = step * cardsPerSwipe
+    container.scrollBy({
+      left: direction === 'left' ? -delta : delta,
       behavior: 'smooth',
     })
   }, [])
@@ -1297,15 +1309,21 @@ export default function CompanyPage() {
               <SectionEyebrow>Our Values</SectionEyebrow>
 
               <Reveal>
-                <h2 style={{
-                  fontSize: 'var(--text-h2)',
-                  fontWeight: 500,
-                  letterSpacing: '-0.03em',
-                  color: '#2a2218',
-                  marginBottom: '64px',
-                  maxWidth: '550px',
-                }}>
-                  Principles that guide every decision we make.
+                {/* Apr 16: leading-[1.1] tightens PC line-height; max-w scales
+                    from 550px (mobile/tablet natural wrap) to 900px (PC) so
+                    the desktop view forces exactly 2 lines at the <br /> which
+                    only renders on lg+. */}
+                <h2
+                  className="leading-[1.1] max-w-[550px] lg:max-w-[900px]"
+                  style={{
+                    fontSize: 'var(--text-h2)',
+                    fontWeight: 500,
+                    letterSpacing: '-0.03em',
+                    color: '#2a2218',
+                    marginBottom: '64px',
+                  }}
+                >
+                  Principles that guide<br className="hidden lg:inline" /> every decision we make.
                 </h2>
               </Reveal>
 

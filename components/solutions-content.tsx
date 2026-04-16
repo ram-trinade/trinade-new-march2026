@@ -35,48 +35,53 @@ const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
 // ─── Data ───
 const industries = [
-  // Positions 1-3: tall cards (span 2 rows) — longer descriptions fit well
+  // Apr 16: text lengths rebalanced per founder review.
+  // - Tall cards (Healthcare, Legal, Financial Services) now all ~120-130 chars
+  //   so Financial Services stops overflowing visually against Retail.
+  // - Logistics (wide card, spans 2 cols) expanded to ~200 chars to match
+  //   Healthcare visual weight.
+  // - Manufacturing bumped up so it doesn't look thin next to Retail.
+  // Positions 1-3: tall cards (span 2 rows)
   { name: 'Healthcare', desc: 'Patient records scattered across incompatible systems. Compliance audits that consume entire quarters. We unify clinical data, automate HIPAA workflows, and give care teams the tools to focus on medicine.' },
   { name: 'Legal', desc: 'Discovery timelines are shrinking while document volumes multiply. Our secure infrastructure and intelligent search platforms help firms move faster without compromising privilege or confidentiality.' },
-  { name: 'Financial Services', desc: 'Fraud patterns shift daily. Regulatory frameworks overlap. We build security architectures and compliance engines that keep pace with both, so your teams can focus on the business of finance.' },
-  // Positions 4-5: short cards (1 row) — shorter descriptions
+  { name: 'Financial Services', desc: 'Fraud patterns shift daily and regulations stack. We build security and compliance platforms that keep pace with both.' },
+  // Positions 4-5: short cards (1 row)
   { name: 'Retail', desc: 'Inventory blind spots, fragmented customer data, and seasonal demand spikes. We turn every transaction into insight.' },
-  { name: 'Manufacturing', desc: 'Downtime costs more per hour than most IT budgets. We deliver predictive monitoring and connected factory systems.' },
-  // Position 6: wide card (spans 2 columns) — medium description
-  { name: 'Logistics', desc: 'When shipment data arrives 48 hours late, decisions are already wrong. We build real-time tracking, demand sensing, and route intelligence that keeps operations moving.' },
+  { name: 'Manufacturing', desc: 'Downtime costs more per hour than most IT budgets. We deliver predictive monitoring, connected factory systems, and the edge infrastructure that keeps production running.' },
+  // Position 6: wide card (spans 2 columns)
+  { name: 'Logistics', desc: 'When shipment data arrives 48 hours late, decisions are already wrong. We build real-time tracking, demand sensing, and route intelligence platforms that keep operations moving ahead of disruption.' },
 ]
 
 
+// Apr 16: replaced client testimonials with forward-looking "our approach by
+// industry" content. Trinade has no live client list yet, so this section now
+// describes how we think about building for each sector. Same rotating
+// structure, no tags, fixed section height (see min-h-* on section below).
 const challengeTestimonials = [
   {
     domain: 'Enterprise',
-    quote: '\u201CWe were managing nine separate vendor relationships for infrastructure alone. Nothing talked to anything else. Trinade consolidated the entire stack in four months \u2014 and our teams didn\u2019t miss a single day of uptime.\u201D',
-    attribution: 'VP of Infrastructure, Global Industrial Conglomerate',
-    tags: ['Systems Integration', 'Managed IT'],
+    quote: '\u201CLarge organizations don\u2019t need more vendors \u2014 they need fewer, better ones. We consolidate fragmented infrastructure into coherent stacks with clear SLAs and a single point of accountability across the engagement.\u201D',
+    attribution: 'Consolidation \u00B7 Accountability \u00B7 Scale',
   },
   {
     domain: 'FinTech',
-    quote: '\u201CEvery new regulation meant six weeks of manual remediation. We brought Trinade in to build an automated compliance layer, and our last three audits closed without a single finding.\u201D',
-    attribution: 'Chief Risk Officer, Digital Payments Platform',
-    tags: ['Compliance Automation', 'Cloud Architecture'],
+    quote: '\u201CRegulation doesn\u2019t wait, and neither do fraud patterns. We build compliance automation and continuous monitoring so audit findings close before they open \u2014 and your risk team focuses on actual risk, not manual remediation.\u201D',
+    attribution: 'Compliance \u00B7 Risk \u00B7 Velocity',
   },
   {
     domain: 'Healthcare',
-    quote: '\u201CAfter two acquisitions, our clinicians were logging into five different systems to see one patient\u2019s history. Trinade unified everything behind a single pane of glass without disrupting a single clinical workflow.\u201D',
-    attribution: 'CIO, Multi-State Hospital Network',
-    tags: ['Data Unification', 'Legacy Modernization'],
+    quote: '\u201CClinicians shouldn\u2019t need five logins to treat one patient. We unify fragmented clinical systems behind a single pane of glass \u2014 preserving workflows, protecting PHI, and letting care teams focus on care.\u201D',
+    attribution: 'Unification \u00B7 Privacy \u00B7 Care-first',
   },
   {
     domain: 'Logistics',
-    quote: '\u201COur forecasting was based on spreadsheets and gut instinct. Trinade built a demand sensing platform that cut our inventory carrying costs by 23% in the first quarter alone.\u201D',
-    attribution: 'COO, Asia-Pacific Freight & Distribution',
-    tags: ['Predictive Analytics', 'Supply Chain Intelligence'],
+    quote: '\u201CDecisions made on 48-hour-old shipment data are already wrong. We design real-time tracking, demand sensing, and route intelligence so operations stay ahead of disruption instead of reacting to it.\u201D',
+    attribution: 'Real-time \u00B7 Predictive \u00B7 Operational',
   },
   {
     domain: 'Legal',
-    quote: '\u201CWe were spending more on IT firefighting than on strategic technology. Trinade gave us a three-year roadmap, migrated us to the cloud, and our per-attorney IT cost dropped by a third.\u201D',
-    attribution: 'Managing Partner, 200-Attorney National Firm',
-    tags: ['IT Strategy', 'Cloud Migration'],
+    quote: '\u201CDiscovery timelines keep shrinking while document volumes multiply. We build secure infrastructure and intelligent search platforms that let firms move faster \u2014 without compromising privilege or confidentiality.\u201D',
+    attribution: 'Secure \u00B7 Fast \u00B7 Confidential',
   },
 ]
 
@@ -171,21 +176,28 @@ function HeroSection() {
           transition={{ duration: 1.2, ease: EASE_OUT }}
           className="max-w-[1200px]"
         >
+          {/* max-md:leading-[1.6] opens up mobile line-spacing so the 3 inline
+              pills don't cramp the text. md+ keeps the tighter 1.25 lead.
+              Per-viewport type size:
+                mobile <md  → 2rem   (was 2.75 — too big on phone)
+                md..<lg    → 2.75rem (tablet feels right at this size)
+                lg+        → --text-display (fluid token)
+              Stacked with md:max-lg: so only the tablet range hits 2.75rem. */}
           <h1
-            className="leading-[1.25] tracking-[-0.03em]"
+            className="leading-[1.25] tracking-[-0.03em] max-md:leading-[1.6] max-md:!text-[2rem] md:max-lg:!text-[2.75rem]"
             style={{ fontSize: 'var(--text-display)', fontWeight: 400, color: P.textDark }}
           >
             We architect the systems{' '}
-            <span className="hidden md:inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(4rem, 6.5vw + 0.8rem, 8rem)', height: 'clamp(2.5rem, 3.75vw + 0.3rem, 4.5rem)' }}>
-              <Image src="/spiral-card.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
+            <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(3.5rem, 6.5vw + 0.8rem, 8rem)', height: 'clamp(2rem, 3.75vw + 0.3rem, 4.5rem)' }}>
+              <Image src="/solutions-first.jpeg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
             that enterprises depend on — security, cloud, infrastructure,{' '}
-            <span className="hidden md:inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(4rem, 6.5vw + 0.8rem, 8rem)', height: 'clamp(2.5rem, 3.75vw + 0.3rem, 4.5rem)' }}>
-              <Image src="/spiral-motion.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
+            <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(3.5rem, 6.5vw + 0.8rem, 8rem)', height: 'clamp(2rem, 3.75vw + 0.3rem, 4.5rem)' }}>
+              <Image src="/solutions-second.jpeg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>
             {' '}and intelligence — built precisely for how your business{' '}
-            <span className="hidden md:inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(4rem, 6.5vw + 0.8rem, 8rem)', height: 'clamp(2.5rem, 3.75vw + 0.3rem, 4.5rem)' }}>
-              <Image src="/spiral-rotated.jpg" alt="" width={120} height={68} className="w-full h-full object-cover" />
+            <span className="inline-block align-middle mx-2 rounded-full overflow-hidden" style={{ width: 'clamp(3.5rem, 6.5vw + 0.8rem, 8rem)', height: 'clamp(2rem, 3.75vw + 0.3rem, 4.5rem)' }}>
+              <Image src="/solutions-third.jpeg" alt="" width={120} height={68} className="w-full h-full object-cover" />
             </span>{' '}
             actually operates.
           </h1>
@@ -263,8 +275,14 @@ function MissionSection() {
 // ═══════════════════════════════════════════════════════════
 function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; isLarge: boolean; gridStyle?: React.CSSProperties }) {
   return (
+    // Apr 16 ROOT-CAUSE FIX: h-full so the card always stretches to the full
+    // height of its container (grid cell OR carousel slot). Without this,
+    // cards with shorter text rendered at their content height and looked
+    // visibly shorter than their siblings even when aligned in the same row.
+    // Now: title pins to top, description pins to bottom (justify-between),
+    // empty middle stays consistent across cards regardless of text length.
     <div
-      className="group flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
+      className="group h-full flex flex-col justify-between transition-all duration-500 cursor-pointer relative overflow-hidden hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
       style={{
         background: P.creamMid,
         border: `1px solid ${P.creamDark}`,
@@ -330,14 +348,42 @@ function IndustryCard({ ind, isLarge, gridStyle }: { ind: typeof industries[0]; 
 function IndustriesSection() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-60px' })
+  // Mobile carousel state — track which card is centered so the dot
+  // pagination can highlight it. Synced via onScroll on the scroll container.
+  const carouselRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const handleCarouselScroll = () => {
+    const el = carouselRef.current
+    if (!el) return
+    // First card width + its right gap (16px) = step size between snap points
+    const first = el.firstElementChild as HTMLElement | null
+    if (!first) return
+    const step = first.getBoundingClientRect().width + 16
+    const idx = Math.round(el.scrollLeft / step)
+    setActiveIndex(Math.min(Math.max(0, idx), industries.length - 1))
+  }
+
+  const scrollToCard = (i: number) => {
+    const el = carouselRef.current
+    if (!el) return
+    const first = el.firstElementChild as HTMLElement | null
+    if (!first) return
+    const step = first.getBoundingClientRect().width + 16
+    el.scrollTo({ left: i * step, behavior: 'smooth' })
+  }
 
   return (
+    // Apr 16 tweaks:
+    // - md:min-h-[var(--hero-min-h)] — tablet+ keeps full-viewport min-height;
+    //   mobile drops the min-h so there's no empty space under the carousel+dots.
+    // - max-lg:!pt-[var(--spacing-rhythm)] — more breathing room above
+    //   "Deep expertise" heading on mobile + tablet.
     <section
       ref={ref}
-      className="relative overflow-hidden flex flex-col"
+      className="relative overflow-hidden flex flex-col md:min-h-[var(--hero-min-h)] max-lg:!pt-[var(--spacing-rhythm)]"
       style={{
         background: P.cream,
-        minHeight: 'var(--hero-min-h)',
         paddingTop: 'var(--spacing-fluid-xl)',
         paddingBottom: 'var(--spacing-fluid-2xl)',
       }}
@@ -389,13 +435,61 @@ function IndustriesSection() {
           style={{ background: P.creamDark, marginBottom: 'var(--spacing-fluid-xl)' }}
         />
 
-        {/* Responsive asymmetric grid — 3 tall + 2 short + 1 wide.
-            <md: single column stack. md: 2 cols. lg+: full 5×2 asymmetric. */}
+        {/* MOBILE (<md): horizontal swipeable carousel with Instagram-style
+            dot pagination. Scroll-snap mandatory so each card lands centered.
+            Hidden on md+ where the asymmetric grid takes over.
+            Negative margins + equal padding pull the scroll area edge-to-edge
+            so swipes feel natural, while the content still aligns to gutters. */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          className="industries-grid grid grid-cols-1 md:grid-cols-2 flex-1"
+          className="md:hidden"
+        >
+          {/* Each slide is a fixed-height block-level slot (h-[22rem]) so
+              h-full on IndustryCard has a concrete height to stretch into.
+              Default block behavior = stretch width, h-full = stretch height.
+              This guarantees every card has identical dimensions regardless
+              of text length — fixes the "Logistics looks shorter" bug. */}
+          <div
+            ref={carouselRef}
+            onScroll={handleCarouselScroll}
+            className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 -mx-[var(--spacing-gutter)] px-[var(--spacing-gutter)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{ gap: '16px' }}
+          >
+            {industries.map((ind, i) => (
+              <div
+                key={i}
+                className="snap-center shrink-0 w-[85vw] h-[22rem]"
+              >
+                <IndustryCard ind={ind} isLarge={false} />
+              </div>
+            ))}
+          </div>
+
+          {/* Dot pagination — active dot is wider + gold, rest are cream-dark */}
+          <div className="flex justify-center items-center gap-2 mt-5">
+            {industries.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                aria-label={`Go to industry ${i + 1}`}
+                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                style={{
+                  width: activeIndex === i ? '24px' : '8px',
+                  background: activeIndex === i ? P.gold : P.creamDark,
+                }}
+              />
+            ))}
+          </div>
+        </motion.div>
+
+        {/* md+ grid (unchanged): 2-col on md, asymmetric 5×2 on lg. */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+          className="industries-grid hidden md:grid md:grid-cols-2 flex-1"
           style={{
             gap: 'var(--spacing-fluid-xs)',
           }}
@@ -464,13 +558,16 @@ function ChallengesSection() {
   const current = challengeTestimonials[activeIndex]
 
   return (
+    // Apr 16: trimmed paddingTop (rhythm → fluid-xl) and paddingBottom
+    // (fluid-2xl → fluid-l) on mobile/tablet. Desktop keeps rhythm via inline
+    // style; max-lg overrides kick in on smaller viewports.
     <section
       ref={ref}
-      className="relative overflow-hidden"
+      className="relative overflow-hidden max-lg:!pt-[var(--spacing-fluid-xl)] max-lg:!pb-[var(--spacing-fluid-l)]"
       data-dark-section
       style={{
         background: '#0a0a0a',
-        paddingTop: 'var(--spacing-fluid-2xl)',
+        paddingTop: 'var(--spacing-rhythm)',
         paddingBottom: 'var(--spacing-fluid-2xl)',
       }}
     >
@@ -494,16 +591,17 @@ function ChallengesSection() {
             marginBottom: 'var(--spacing-fluid-xl)',
           }}
         >
-          What our clients say
+          Our approach by industry
         </motion.p>
 
-        {/* Main layout: left column + vertical line + right column */}
+        {/* Main layout: left column + vertical line + right column.
+            min-h locks section height so shorter quotes don't collapse it.
+            Values tuned for the longest quote (Enterprise, ~5 lines at 390). */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.1, ease: EASE_OUT }}
-          className="flex flex-col lg:flex-row relative"
-          style={{ minHeight: 'auto' }}
+          className="flex flex-col lg:flex-row relative min-h-[380px] md:min-h-[320px] lg:min-h-[360px]"
         >
           {/* LEFT COLUMN — ~35% */}
           <div className="lg:w-[35%] flex flex-col justify-between pb-8 lg:pb-0 lg:pr-12 relative">
@@ -514,73 +612,51 @@ function ChallengesSection() {
             />
 
             <div className="lg:pl-10">
-              {/* Domain name — large bold */}
-              <AnimatePresence mode="wait">
-                <motion.h3
-                  key={current.domain}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.4, ease: EASE_OUT }}
-                  className="tracking-[-0.02em] leading-[1.1]"
-                  style={{
-                    fontSize: 'var(--text-h3)',
-                    fontWeight: 700,
-                    color: P.textOnDark,
-                  }}
-                >
-                  {current.domain}
-                </motion.h3>
-              </AnimatePresence>
+              {/* Row: domain name + inline up/down arrows.
+                  Arrows now sit BESIDE the heading (was below tags) — utilizing
+                  the horizontal space to the right of short domain names like
+                  "Legal" or "FinTech". Tags removed entirely per Apr 16 redesign. */}
+              <div className="flex items-center justify-between gap-4">
+                <AnimatePresence mode="wait">
+                  <motion.h3
+                    key={current.domain}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.4, ease: EASE_OUT }}
+                    className="tracking-[-0.02em] leading-[1.1]"
+                    style={{
+                      fontSize: 'var(--text-h3)',
+                      fontWeight: 700,
+                      color: P.textOnDark,
+                    }}
+                  >
+                    {current.domain}
+                  </motion.h3>
+                </AnimatePresence>
 
-              {/* Tags */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`tags-${activeIndex}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                  className="flex flex-wrap gap-2 mt-5"
-                >
-                  {current.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 rounded-full text-[11px] font-medium uppercase tracking-[0.06em]"
-                      style={{
-                        background: 'rgba(201,168,110,0.12)',
-                        color: P.goldLight,
-                        border: '1px solid rgba(201,168,110,0.25)',
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Up/Down nav buttons */}
-              <div className="flex items-center gap-3 mt-10">
-                <button
-                  onClick={goUp}
-                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
-                  style={{ borderColor: 'rgba(255,255,255,0.15)' }}
-                  aria-label="Previous challenge"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 12V2M3 6l4-4 4 4" />
-                  </svg>
-                </button>
-                <button
-                  onClick={goDown}
-                  className="w-11 h-11 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
-                  style={{ borderColor: 'rgba(255,255,255,0.15)' }}
-                  aria-label="Next challenge"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 2v10M3 8l4 4 4-4" />
-                  </svg>
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={goUp}
+                    className="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
+                    style={{ borderColor: 'rgba(255,255,255,0.15)' }}
+                    aria-label="Previous industry"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 12V2M3 6l4-4 4 4" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={goDown}
+                    className="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 hover:border-[#c9a86e] hover:bg-[rgba(201,168,110,0.12)] cursor-pointer"
+                    style={{ borderColor: 'rgba(255,255,255,0.15)' }}
+                    aria-label="Next industry"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(240,237,232,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 2v10M3 8l4 4 4-4" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -914,19 +990,30 @@ function CTASection() {
             maxWidth: 'var(--container-wide)',
           }}
         >
-          {/* spiral-lines-gold background */}
-          <div className="absolute inset-0">
-            <Image src="/spiral-lines-gold.jpg" alt="" fill className="object-cover" />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.55), rgba(10,10,12,0.25))' }} />
+          {/* spiral-lines-gold background — blurred + darker overlay so the
+              body copy reads cleanly. overflow-hidden + scale-110 on image so
+              the blur doesn't reveal hard edges. */}
+          <div className="absolute inset-0 overflow-hidden">
+            <Image
+              src="/spiral-lines-gold.jpg"
+              alt=""
+              fill
+              className="object-cover scale-110"
+              style={{ filter: 'blur(4px)' }}
+            />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.72), rgba(10,10,12,0.5))' }} />
           </div>
           <Grain id="ctaGrain" opacity={0.04} />
 
           <div className="relative z-10 text-center mx-auto" style={{ maxWidth: '36rem' }}>
+            {/* Heading: desktop uses the fluid --text-h3 token. Mobile+tablet
+                (<lg) bump to 2.5rem so the line reads with the same weight it
+                has at desktop. !important required because inline style wins. */}
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.08] tracking-[-0.03em]"
+              className="leading-[1.1] tracking-[-0.03em] max-lg:!text-[2rem]"
               style={{
                 fontSize: 'var(--text-h3)',
                 fontWeight: 400,
@@ -934,16 +1021,15 @@ function CTASection() {
                 marginBottom: 'var(--spacing-fluid-l)',
               }}
             >
-              The right conversation<br />starts here.
+              Let&apos;s talk.
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="leading-[1.9]"
+              className="leading-[1.7] text-[0.9rem] md:text-[0.95rem] lg:text-[var(--text-body)]"
               style={{
-                color: P.textOnDarkMuted,
-                fontSize: 'var(--text-body)',
+                color: 'rgba(240,237,232,0.82)',
                 marginBottom: 'var(--spacing-fluid-xl)',
               }}
             >
@@ -953,20 +1039,27 @@ function CTASection() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="flex items-center justify-center gap-4 flex-wrap"
+              className="flex items-center justify-center"
             >
-              <Link href="/contact"
-                className="group inline-flex items-center gap-3 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_32px_rgba(201,168,110,0.3)]"
-                style={{ background: P.gold, color: P.charcoal }}>
+              {/* Gold glass button (matches footer) + responsive sizing:
+                  small on mobile, medium on tablet, full on PC. */}
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-full transition-all duration-300 px-5 py-2.5 md:px-7 md:py-3 lg:px-9 lg:py-4 hover:shadow-[0_4px_24px_rgba(130,95,30,0.35)]"
+                style={{
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                  color: 'rgba(255,255,255,0.93)',
+                  background: 'linear-gradient(165deg, rgba(185,155,100,0.45) 0%, rgba(165,125,60,0.35) 40%, rgba(200,175,125,0.40) 100%)',
+                  backdropFilter: 'blur(12px) saturate(1.4)',
+                  WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+                  border: '1px solid rgba(180,150,95,0.35)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(130,95,30,0.1), 0 2px 12px rgba(130,95,30,0.2)',
+                }}
+              >
                 Start a conversation
-                <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-              <Link href="/contact"
-                className="inline-flex items-center gap-2 px-9 py-4 rounded-full text-[14px] font-medium transition-all duration-300 hover:bg-white/[0.1]"
-                style={{ color: P.textOnDarkMuted, border: '1px solid rgba(255,255,255,0.15)' }}>
-                See case studies
+                <span style={{ fontSize: '16px', marginLeft: '2px' }}>&rarr;</span>
               </Link>
             </motion.div>
           </div>

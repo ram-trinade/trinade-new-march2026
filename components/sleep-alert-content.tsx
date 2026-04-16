@@ -358,7 +358,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.4, delay: 0.6, ease: EASE_CINE }}
-          className="mt-10 tracking-[-0.04em] leading-[0.92]"
+          className="mt-6 md:mt-10 tracking-[-0.04em] leading-[0.95] max-lg:!text-[3.5rem]"
           style={{
             fontSize: 'var(--text-hero)',
             fontWeight: 200,
@@ -381,11 +381,11 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.0, ease: EASE_CINE }}
-          className="mt-8 mx-auto"
+          className="mt-5 md:mt-8 mx-auto max-lg:!text-[1rem]"
           style={{
             fontSize: 'var(--text-lead)',
             fontWeight: 400,
-            lineHeight: 1.8,
+            lineHeight: 1.7,
             color: 'rgba(255,255,255,0.4)',
             maxWidth: '600px',
           }}
@@ -398,17 +398,15 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 1.4, ease: EASE_CINE }}
-          className="mt-12 flex items-center justify-center gap-5"
+          className="mt-8 md:mt-12 flex items-center justify-center gap-5"
         >
           <Link
             href="/contact"
-            className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500"
+            className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500 px-6 py-3 md:px-9 md:py-[14px] text-[12px] md:text-[13px]"
             style={{
-              padding: '14px 36px',
               borderRadius: '100px',
               background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
               color: '#0a0a0a',
-              fontSize: '13px',
               fontWeight: 600,
               letterSpacing: '0.08em',
               textTransform: 'uppercase' as const,
@@ -451,6 +449,32 @@ function HeroSection() {
 // SECTION 2 — THE SILENT DANGER (Problem/Insight) with counters
 // ═══════════════════════════════════════════════════════════════════════
 function ProblemSection() {
+  const statsCarouselRef = useRef<HTMLDivElement>(null)
+  const [statsActive, setStatsActive] = useState(0)
+  const handleStatsScroll = () => {
+    const el = statsCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setStatsActive(Math.min(Math.max(0, idx), 2))
+  }
+  const scrollStatsTo = (i: number) => {
+    const el = statsCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const containerW = el.clientWidth
+    const cardCenter = spacerW + i * step + step / 2 - 8
+    el.scrollTo({ left: cardCenter - containerW / 2, behavior: 'smooth' })
+  }
+
   const stats = [
     { value: '1 in 25', label: 'adults report falling asleep at the wheel in the past 30 days' },
     { value: '100,000', suffix: '+', label: 'crashes annually are caused by drowsy driving' },
@@ -459,13 +483,13 @@ function ProblemSection() {
 
   return (
     <section
-      className="relative py-32 lg:py-40 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       <GrainOverlay opacity={0.02} />
 
       <div className="relative z-10 max-w-[1200px] mx-auto px-6">
-        <RevealSection className="text-center mb-20">
+        <RevealSection className="text-center mb-10 md:mb-20">
           <GoldPill>The Silent Danger</GoldPill>
           <WordReveal
             text="A few seconds of microsleep can change everything"
@@ -498,53 +522,75 @@ function ProblemSection() {
           </motion.p>
         </RevealSection>
 
-        {/* Stats grid with animated counters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {stats.map((stat, i) => (
-            <RevealSection key={i} delay={0.15 * i}>
-              <TiltCard
-                className="text-center p-10 lg:p-12 rounded-2xl cursor-default group"
-                style={{
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%)',
-                  border: '1px solid rgba(42,34,24,0.06)',
-                  backdropFilter: 'blur(12px)',
-                  transition: 'box-shadow 0.5s ease, border-color 0.5s ease',
-                }}
-              >
-                {/* Hover top glow */}
+        {/* Stats — mobile carousel, md+ grid */}
+        {(() => {
+          const renderStat = (stat: typeof stats[0]) => (
+            <TiltCard
+              className="text-center p-6 md:p-10 lg:p-12 rounded-2xl cursor-default group h-full"
+              style={{
+                background: 'linear-gradient(145deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.4) 100%)',
+                border: '1px solid rgba(42,34,24,0.06)',
+                backdropFilter: 'blur(12px)',
+                transition: 'box-shadow 0.5s ease, border-color 0.5s ease',
+              }}
+            >
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                style={{ background: 'linear-gradient(180deg, rgba(201,168,110,0.08) 0%, transparent 50%)' }}
+              />
+              <div className="relative" style={{ fontSize: 'var(--text-h2)', fontWeight: 200, color: '#c9a86e', letterSpacing: '-0.03em', lineHeight: 1 }}>
+                <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+              </div>
+              <div className="mt-4 md:mt-5 text-[13px] md:text-[14px]" style={{ lineHeight: 1.7, color: 'rgba(42,34,24,0.45)', fontWeight: 400 }}>
+                {stat.label}
+              </div>
+            </TiltCard>
+          )
+          return (
+            <>
+              {/* Mobile carousel */}
+              <div className="md:hidden">
                 <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(180deg, rgba(201,168,110,0.08) 0%, transparent 50%)',
-                  }}
-                />
-                <div
-                  className="relative"
-                  style={{
-                    fontSize: 'var(--text-h2)',
-                    fontWeight: 200,
-                    color: '#c9a86e',
-                    letterSpacing: '-0.03em',
-                    lineHeight: 1,
-                  }}
+                  ref={statsCarouselRef}
+                  onScroll={handleStatsScroll}
+                  className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  style={{ gap: '16px' }}
                 >
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                  {stats.map((stat, i) => (
+                    <div key={i} className="snap-center shrink-0 w-[78vw] max-w-[22rem] h-[16rem]">
+                      {renderStat(stat)}
+                    </div>
+                  ))}
+                  <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
                 </div>
-                <div
-                  className="mt-5"
-                  style={{
-                    fontSize: '14px',
-                    lineHeight: 1.7,
-                    color: 'rgba(42,34,24,0.45)',
-                    fontWeight: 400,
-                  }}
-                >
-                  {stat.label}
+                <div className="flex justify-center items-center gap-2 mt-5">
+                  {stats.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => scrollStatsTo(i)}
+                      aria-label={`Go to stat ${i + 1}`}
+                      className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                      style={{
+                        width: statsActive === i ? '24px' : '8px',
+                        background: statsActive === i ? '#c9a86e' : 'rgba(42,34,24,0.18)',
+                      }}
+                    />
+                  ))}
                 </div>
-              </TiltCard>
-            </RevealSection>
-          ))}
-        </div>
+              </div>
+
+              {/* md+ grid (unchanged) */}
+              <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
+                {stats.map((stat, i) => (
+                  <RevealSection key={i} delay={0.15 * i}>
+                    {renderStat(stat)}
+                  </RevealSection>
+                ))}
+              </div>
+            </>
+          )
+        })()}
       </div>
     </section>
   )
@@ -583,7 +629,7 @@ function HowItWorksSection() {
   return (
     <section
       id="how-it-works"
-      className="relative py-32 lg:py-40 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-40 overflow-hidden"
       style={{ background: '#0a0a0a' }}
     >
       {/* Atmospheric glow */}
@@ -702,6 +748,32 @@ function HowItWorksSection() {
 // SECTION 4 — KEY FEATURES (Bento-style with 3D tilt)
 // ═══════════════════════════════════════════════════════════════════════
 function FeaturesSection() {
+  const featuresCarouselRef = useRef<HTMLDivElement>(null)
+  const [featuresActive, setFeaturesActive] = useState(0)
+  const handleFeaturesScroll = () => {
+    const el = featuresCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setFeaturesActive(Math.min(Math.max(0, idx), 3))
+  }
+  const scrollFeaturesTo = (i: number) => {
+    const el = featuresCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const containerW = el.clientWidth
+    const cardCenter = spacerW + i * step + step / 2 - 8
+    el.scrollTo({ left: cardCenter - containerW / 2, behavior: 'smooth' })
+  }
+
   const features = [
     {
       title: 'Catches the Silent Drift',
@@ -753,7 +825,7 @@ function FeaturesSection() {
 
   return (
     <section
-      className="relative py-32 lg:py-40 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       <GrainOverlay opacity={0.02} />
@@ -775,62 +847,83 @@ function FeaturesSection() {
           />
         </RevealSection>
 
-        {/* Bento grid — 2+1 / 1+2 layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {features.map((feature, i) => (
-            <RevealSection key={i} delay={0.1 * i} className={feature.span}>
-              <TiltCard
-                className="group relative p-10 lg:p-12 rounded-2xl h-full cursor-default"
-                style={{
-                  background: 'linear-gradient(145deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.35) 100%)',
-                  border: '1px solid rgba(42,34,24,0.06)',
-                  backdropFilter: 'blur(16px)',
-                  transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
-                }}
-              >
-                {/* Hover gradient glow */}
+        {/* Shared feature card render */}
+        {(() => {
+          const renderFeature = (feature: typeof features[0], i: number) => (
+            <TiltCard
+              className="group relative p-6 md:p-10 lg:p-12 rounded-2xl h-full cursor-default"
+              style={{
+                background: 'linear-gradient(145deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.35) 100%)',
+                border: '1px solid rgba(42,34,24,0.06)',
+                backdropFilter: 'blur(16px)',
+                transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
+              }}
+            >
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)' }}
+              />
+              <div className="relative">
                 <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)',
-                  }}
-                />
-                <div className="relative">
-                  {/* Icon box with animated border */}
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-7 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(201,168,110,0.1)]"
-                    style={{
-                      background: 'rgba(201,168,110,0.06)',
-                      border: '1px solid rgba(201,168,110,0.12)',
-                    }}
-                  >
-                    {feature.icon}
-                  </div>
-                  <h3
-                    className="mb-4"
-                    style={{
-                      fontSize: '20px',
-                      fontWeight: 500,
-                      color: '#2a2218',
-                      letterSpacing: '-0.02em',
-                    }}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: '15px',
-                      lineHeight: 1.8,
-                      color: 'rgba(42,34,24,0.45)',
-                    }}
-                  >
-                    {feature.desc}
-                  </p>
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mb-5 md:mb-7 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(201,168,110,0.1)]"
+                  style={{ background: 'rgba(201,168,110,0.06)', border: '1px solid rgba(201,168,110,0.12)' }}
+                >
+                  {feature.icon}
                 </div>
-              </TiltCard>
-            </RevealSection>
-          ))}
-        </div>
+                <h3 className="mb-3 md:mb-4 text-[17px] md:text-[20px]" style={{ fontWeight: 500, color: '#2a2218', letterSpacing: '-0.02em' }}>
+                  {feature.title}
+                </h3>
+                <p className="text-[13px] md:text-[15px]" style={{ lineHeight: 1.75, color: 'rgba(42,34,24,0.45)' }}>
+                  {feature.desc}
+                </p>
+              </div>
+            </TiltCard>
+          )
+          return (
+            <>
+              {/* Mobile carousel + dots */}
+              <div className="md:hidden">
+                <div
+                  ref={featuresCarouselRef}
+                  onScroll={handleFeaturesScroll}
+                  className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  style={{ gap: '16px' }}
+                >
+                  <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                  {features.map((feature, i) => (
+                    <div key={i} className="snap-center shrink-0 w-[78vw] max-w-[22rem] h-[17rem]">
+                      {renderFeature(feature, i)}
+                    </div>
+                  ))}
+                  <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                </div>
+                <div className="flex justify-center items-center gap-2 mt-5">
+                  {features.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => scrollFeaturesTo(i)}
+                      aria-label={`Go to feature ${i + 1}`}
+                      className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                      style={{
+                        width: featuresActive === i ? '24px' : '8px',
+                        background: featuresActive === i ? '#c9a86e' : 'rgba(42,34,24,0.18)',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* md+ bento grid (unchanged) */}
+              <div className="hidden md:grid md:grid-cols-3 gap-5">
+                {features.map((feature, i) => (
+                  <RevealSection key={i} delay={0.1 * i} className={feature.span}>
+                    {renderFeature(feature, i)}
+                  </RevealSection>
+                ))}
+              </div>
+            </>
+          )
+        })()}
       </div>
     </section>
   )
@@ -840,6 +933,32 @@ function FeaturesSection() {
 // SECTION 5 — THOUGHTFUL TECHNOLOGY (Values with glowing borders)
 // ═══════════════════════════════════════════════════════════════════════
 function TechnologySection() {
+  const valuesCarouselRef = useRef<HTMLDivElement>(null)
+  const [valuesActive, setValuesActive] = useState(0)
+  const handleValuesScroll = () => {
+    const el = valuesCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setValuesActive(Math.min(Math.max(0, idx), 2))
+  }
+  const scrollValuesTo = (i: number) => {
+    const el = valuesCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const containerW = el.clientWidth
+    const cardCenter = spacerW + i * step + step / 2 - 8
+    el.scrollTo({ left: cardCenter - containerW / 2, behavior: 'smooth' })
+  }
+
   const values = [
     {
       num: '01',
@@ -860,7 +979,7 @@ function TechnologySection() {
 
   return (
     <section
-      className="relative py-32 lg:py-40 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-40 overflow-hidden"
       style={{ background: '#0a0a0a' }}
     >
       {/* Atmospheric orb */}
@@ -909,62 +1028,78 @@ function TechnologySection() {
             />
           </RevealSection>
 
-          {/* Right — values cards */}
-          <div className="space-y-6">
-            {values.map((value, i) => (
-              <RevealSection key={i} delay={0.15 * i}>
+          {/* Right — values cards. Mobile: carousel + dots. md+: vertical stack. */}
+          <div>
+            {(() => {
+              const renderValue = (value: typeof values[0]) => (
                 <div
-                  className="group relative p-8 rounded-2xl transition-all duration-500 cursor-default"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.06)',
-                  }}
+                  className="group relative p-6 md:p-8 rounded-2xl transition-all duration-500 cursor-default h-full"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
                 >
-                  {/* Hover border glow */}
                   <div
                     className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{
-                      boxShadow: 'inset 0 0 0 1px rgba(201,168,110,0.15), 0 0 30px rgba(201,168,110,0.05)',
-                    }}
+                    style={{ boxShadow: 'inset 0 0 0 1px rgba(201,168,110,0.15), 0 0 30px rgba(201,168,110,0.05)' }}
                   />
-                  <div className="relative flex items-start gap-6">
-                    <span
-                      className="flex-shrink-0 mt-1"
-                      style={{
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        color: 'rgba(201,168,110,0.5)',
-                        letterSpacing: '0.1em',
-                      }}
-                    >
+                  <div className="relative flex items-start gap-4 md:gap-6">
+                    <span className="flex-shrink-0 mt-1" style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(201,168,110,0.5)', letterSpacing: '0.1em' }}>
                       {value.num}
                     </span>
                     <div>
-                      <h3
-                        className="mb-3 transition-colors duration-500 group-hover:text-[#c9a86e]"
-                        style={{
-                          fontSize: '18px',
-                          fontWeight: 500,
-                          color: 'rgba(255,255,255,0.85)',
-                          letterSpacing: '-0.01em',
-                        }}
-                      >
+                      <h3 className="mb-3 transition-colors duration-500 group-hover:text-[#c9a86e] text-[17px] md:text-[18px]" style={{ fontWeight: 500, color: 'rgba(255,255,255,0.85)', letterSpacing: '-0.01em' }}>
                         {value.title}
                       </h3>
-                      <p
-                        style={{
-                          fontSize: '15px',
-                          lineHeight: 1.8,
-                          color: 'rgba(255,255,255,0.35)',
-                        }}
-                      >
+                      <p className="text-[14px] md:text-[15px]" style={{ lineHeight: 1.75, color: 'rgba(255,255,255,0.35)' }}>
                         {value.desc}
                       </p>
                     </div>
                   </div>
                 </div>
-              </RevealSection>
-            ))}
+              )
+              return (
+                <>
+                  {/* Mobile carousel */}
+                  <div className="md:hidden">
+                    <div
+                      ref={valuesCarouselRef}
+                      onScroll={handleValuesScroll}
+                      className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                      style={{ gap: '16px' }}
+                    >
+                      <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                      {values.map((value, i) => (
+                        <div key={i} className="snap-center shrink-0 w-[78vw] max-w-[22rem] h-[14rem]">
+                          {renderValue(value)}
+                        </div>
+                      ))}
+                      <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                    </div>
+                    <div className="flex justify-center items-center gap-2 mt-5">
+                      {values.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => scrollValuesTo(i)}
+                          aria-label={`Go to value ${i + 1}`}
+                          className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                          style={{
+                            width: valuesActive === i ? '24px' : '8px',
+                            background: valuesActive === i ? '#c9a86e' : 'rgba(255,255,255,0.18)',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* md+ stack (unchanged) */}
+                  <div className="hidden md:block space-y-6">
+                    {values.map((value, i) => (
+                      <RevealSection key={i} delay={0.15 * i}>
+                        {renderValue(value)}
+                      </RevealSection>
+                    ))}
+                  </div>
+                </>
+              )
+            })()}
           </div>
         </div>
       </div>
@@ -976,6 +1111,32 @@ function TechnologySection() {
 // SECTION 6 — BUILT FOR FLEETS (with gradient border cards)
 // ═══════════════════════════════════════════════════════════════════════
 function FleetSection() {
+  const fleetCarouselRef = useRef<HTMLDivElement>(null)
+  const [fleetActive, setFleetActive] = useState(0)
+  const handleFleetScroll = () => {
+    const el = fleetCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setFleetActive(Math.min(Math.max(0, idx), 2))
+  }
+  const scrollFleetTo = (i: number) => {
+    const el = fleetCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const containerW = el.clientWidth
+    const cardCenter = spacerW + i * step + step / 2 - 8
+    el.scrollTo({ left: cardCenter - containerW / 2, behavior: 'smooth' })
+  }
+
   const capabilities = [
     {
       label: 'Night Routes',
@@ -1011,7 +1172,7 @@ function FleetSection() {
 
   return (
     <section
-      className="relative py-32 lg:py-40 overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-40 overflow-hidden"
       style={{ background: '#f2ede6' }}
     >
       <GrainOverlay opacity={0.02} />
@@ -1049,70 +1210,83 @@ function FleetSection() {
           </motion.p>
         </RevealSection>
 
-        {/* Capability cards with gradient border */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {capabilities.map((cap, i) => (
-            <RevealSection key={i} delay={0.12 * i}>
+        {/* Capability cards with gradient border — mobile carousel, md+ grid */}
+        {(() => {
+          const renderCap = (cap: typeof capabilities[0]) => (
+            <div
+              className="group relative p-[1px] rounded-2xl transition-all duration-700 h-full"
+              style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.15), rgba(10,10,10,1), rgba(201,168,110,0.1))' }}
+            >
               <div
-                className="group relative p-[1px] rounded-2xl transition-all duration-700"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(201,168,110,0.15), rgba(10,10,10,1), rgba(201,168,110,0.1))',
-                }}
-              >
-                {/* Hover gradient shift */}
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.35), rgba(10,10,10,1), rgba(201,168,110,0.25))' }}
+              />
+              <div className="relative p-6 md:p-8 lg:p-10 rounded-[15px] text-center h-full" style={{ background: '#0a0a0a' }}>
                 <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(201,168,110,0.35), rgba(10,10,10,1), rgba(201,168,110,0.25))',
-                  }}
+                  className="absolute inset-0 rounded-[15px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(201,168,110,0.06) 0%, transparent 60%)' }}
                 />
-                <div
-                  className="relative p-8 lg:p-10 rounded-[15px] text-center h-full"
-                  style={{ background: '#0a0a0a' }}
-                >
-                  {/* Hover top glow inside card */}
-                  <div
-                    className="absolute inset-0 rounded-[15px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(ellipse at 50% 0%, rgba(201,168,110,0.06) 0%, transparent 60%)',
-                    }}
-                  />
-                  <div className="relative">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-6"
-                      style={{
-                        background: 'rgba(201,168,110,0.06)',
-                        border: '1px solid rgba(201,168,110,0.12)',
-                      }}
-                    >
-                      {cap.icon}
-                    </div>
-                    <div
-                      className="mb-4"
-                      style={{
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        letterSpacing: '0.15em',
-                        textTransform: 'uppercase' as const,
-                        color: '#c9a86e',
-                      }}
-                    >
-                      {cap.label}
-                    </div>
-                    <p
-                      style={{
-                        fontSize: '14px',
-                        lineHeight: 1.7,
-                        color: 'rgba(255,255,255,0.4)',
-                      }}
-                    >
-                      {cap.desc}
-                    </p>
+                <div className="relative">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-5 md:mb-6"
+                    style={{ background: 'rgba(201,168,110,0.06)', border: '1px solid rgba(201,168,110,0.12)' }}
+                  >
+                    {cap.icon}
                   </div>
+                  <div className="mb-3 md:mb-4" style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: '#c9a86e' }}>
+                    {cap.label}
+                  </div>
+                  <p className="text-[13px] md:text-[14px]" style={{ lineHeight: 1.7, color: 'rgba(255,255,255,0.4)' }}>
+                    {cap.desc}
+                  </p>
                 </div>
               </div>
-            </RevealSection>
-          ))}
-        </div>
+            </div>
+          )
+          return (
+            <>
+              {/* Mobile carousel + dots */}
+              <div className="md:hidden">
+                <div
+                  ref={fleetCarouselRef}
+                  onScroll={handleFleetScroll}
+                  className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                  style={{ gap: '16px' }}
+                >
+                  <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                  {capabilities.map((cap, i) => (
+                    <div key={i} className="snap-center shrink-0 w-[72vw] max-w-[20rem] h-[15rem]">
+                      {renderCap(cap)}
+                    </div>
+                  ))}
+                  <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                </div>
+                <div className="flex justify-center items-center gap-2 mt-5">
+                  {capabilities.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => scrollFleetTo(i)}
+                      aria-label={`Go to capability ${i + 1}`}
+                      className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                      style={{
+                        width: fleetActive === i ? '24px' : '8px',
+                        background: fleetActive === i ? '#c9a86e' : 'rgba(255,255,255,0.18)',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* md+ grid (unchanged) */}
+              <div className="hidden md:grid md:grid-cols-3 gap-5">
+                {capabilities.map((cap, i) => (
+                  <RevealSection key={i} delay={0.12 * i}>
+                    {renderCap(cap)}
+                  </RevealSection>
+                ))}
+              </div>
+            </>
+          )
+        })()}
       </div>
     </section>
   )
@@ -1126,7 +1300,7 @@ function CTASection() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ background: '#ebe5db', paddingTop: 'var(--spacing-fluid-3xl)', paddingBottom: 'var(--spacing-fluid-3xl)' }}
+      style={{ background: '#ebe5db', paddingTop: 'var(--spacing-fluid-3xl)', paddingBottom: 'var(--spacing-rhythm-lg)' }}
     >
       {/* Atmospheric orb */}
       <div
@@ -1150,8 +1324,8 @@ function CTASection() {
             text="Stay alert. Stay alive."
             className="mt-10"
             style={{
-              fontSize: 'var(--text-display)',
-              fontWeight: 200,
+              fontSize: 'var(--text-hero)',
+              fontWeight: 500,
               letterSpacing: '-0.04em',
               lineHeight: 1.05,
               color: '#2a2218',
@@ -1183,13 +1357,11 @@ function CTASection() {
           >
             <Link
               href="/contact"
-              className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.2)]"
+              className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.2)] px-6 py-3 md:px-9 md:py-4 text-[12px] md:text-[13px]"
               style={{
-                padding: '16px 44px',
                 borderRadius: '100px',
                 background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
                 color: '#0a0a0a',
-                fontSize: '13px',
                 fontWeight: 600,
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase' as const,

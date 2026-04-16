@@ -280,6 +280,76 @@ const cardDelays = [0, 0.06, 0.12, 0.04, 0.10, 0.16]
 function FloatingCardsSection() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  // Apr 16: mobile carousel + dot pagination (same pattern as Solutions
+  // Industries). Desktop keeps the existing 2/3-col grid.
+  const capCarouselRef = useRef<HTMLDivElement>(null)
+  const [capActiveIndex, setCapActiveIndex] = useState(0)
+
+  const handleCapScroll = () => {
+    const el = capCarouselRef.current
+    if (!el) return
+    const first = el.firstElementChild as HTMLElement | null
+    if (!first) return
+    const step = first.getBoundingClientRect().width + 16
+    const idx = Math.round(el.scrollLeft / step)
+    setCapActiveIndex(Math.min(Math.max(0, idx), capabilityCards.length - 1))
+  }
+
+  const scrollCapTo = (i: number) => {
+    const el = capCarouselRef.current
+    if (!el) return
+    const first = el.firstElementChild as HTMLElement | null
+    if (!first) return
+    const step = first.getBoundingClientRect().width + 16
+    el.scrollTo({ left: i * step, behavior: 'smooth' })
+  }
+
+  // Shared card JSX — rendered inside either the mobile carousel or the
+  // desktop grid. Background image now has a `sizes` prop so mobile gets the
+  // correct smaller variant (previously Enterprise Integration — a 1440×2160
+  // portrait source — was failing to render on some mobile devices because
+  // Next.js served a stale placeholder size).
+  const renderCard = (card: typeof capabilityCards[0], i: number) => (
+    <motion.div
+      key={card.title}
+      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ duration: 0.8, delay: cardDelays[i], ease: EASE_OUT }}
+      whileHover={{ y: -6, scale: 1.02, transition: { duration: 0.35, ease: EASE } }}
+      className="group relative rounded-2xl overflow-hidden cursor-pointer h-full"
+      style={{
+        aspectRatio: '4/5',
+        border: '1px solid rgba(255,255,255,0.06)',
+      }}
+    >
+      <div className="absolute inset-0">
+        <Image
+          src={card.image}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 85vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0" style={{
+          background: `linear-gradient(180deg, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.6) 50%, rgba(10,10,12,0.85) 100%)`,
+        }} />
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 h-[3px] transition-opacity duration-500 opacity-40 group-hover:opacity-100"
+        style={{ background: `linear-gradient(90deg, transparent, ${P.gold}88, transparent)` }} />
+      <div className="absolute inset-0 flex flex-col justify-end z-10" style={{ padding: 'var(--spacing-fluid-s)' }}>
+        <h3 className="font-medium tracking-[-0.01em] mb-1.5 transition-colors duration-300"
+          style={{ color: 'rgba(240,237,232,0.93)', fontSize: 'var(--text-card)' }}>
+          {card.title}
+        </h3>
+        <p className="leading-[1.5] transition-all duration-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-2 md:group-hover:translate-y-0"
+          style={{ color: 'rgba(240,237,232,0.5)', fontSize: 'var(--text-caption)' }}>
+          {card.subtitle}
+        </p>
+      </div>
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 50% 100%, ${card.accent}, transparent 70%)` }} />
+    </motion.div>
+  )
 
   return (
     <section
@@ -325,11 +395,13 @@ function FloatingCardsSection() {
               What we build
             </motion.p>
 
+            {/* max-lg:!text-[3.25rem] bumps mobile+tablet heading size for
+                better weight; desktop keeps --text-display fluid token. */}
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.9, ease: EASE_OUT }}
-              className="leading-[1.08] tracking-[-0.03em]"
+              className="leading-[1.08] tracking-[-0.03em] max-lg:!text-[3.25rem]"
               style={{
                 fontSize: 'var(--text-display)',
                 fontWeight: 300,
@@ -366,75 +438,46 @@ function FloatingCardsSection() {
             />
           </div>
 
-          {/* Right: card grid (3 cols x 2 rows).
-              w-full on mobile is REQUIRED — without it, parent `items-start`
-              collapses this column to ~2px wide and the 6 capability cards
-              (which use aspectRatio: 4/5 with no explicit width) shrink to 0,
-              making them appear as tiny dots. lg:w-[62%] preserves desktop. */}
+          {/* Right column:
+              - Mobile (<md): horizontal swipe carousel + dot pagination
+              - md+: existing responsive grid (2 cols on md, 3 cols on lg) */}
           <div className="w-full lg:w-[62%]">
+            {/* Mobile carousel */}
+            <div className="md:hidden">
+              <div
+                ref={capCarouselRef}
+                onScroll={handleCapScroll}
+                className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 -mx-[var(--spacing-gutter)] px-[var(--spacing-gutter)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                style={{ gap: '16px' }}
+              >
+                {capabilityCards.map((card, i) => (
+                  <div key={card.title} className="snap-center shrink-0 w-[75vw] max-w-[20rem]">
+                    {renderCard(card, i)}
+                  </div>
+                ))}
+              </div>
+              <div className="flex justify-center items-center gap-2 mt-5">
+                {capabilityCards.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => scrollCapTo(i)}
+                    aria-label={`Go to capability ${i + 1}`}
+                    className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                    style={{
+                      width: capActiveIndex === i ? '24px' : '8px',
+                      background: capActiveIndex === i ? P.gold : 'rgba(255,255,255,0.18)',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* md+ grid (unchanged) */}
             <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+              className="hidden md:grid md:grid-cols-2 lg:grid-cols-3"
               style={{ gap: 'var(--spacing-fluid-s)' }}
             >
-              {capabilityCards.map((card, i) => (
-                  <motion.div
-                    key={card.title}
-                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                    transition={{
-                      duration: 0.8,
-                      delay: cardDelays[i],
-                      ease: EASE_OUT,
-                    }}
-                    whileHover={{
-                      y: -6,
-                      scale: 1.02,
-                      transition: { duration: 0.35, ease: EASE },
-                    }}
-                    className="group relative rounded-2xl overflow-hidden cursor-pointer"
-                    style={{
-                      aspectRatio: '4/5',
-                      border: '1px solid rgba(255,255,255,0.06)',
-                    }}
-                  >
-                    {/* Background image */}
-                    <div className="absolute inset-0">
-                      <Image src={card.image} alt="" fill className="object-cover transition-transform duration-700 group-hover:scale-110" />
-                      <div className="absolute inset-0" style={{
-                        background: `linear-gradient(180deg, rgba(10,10,12,0.3) 0%, rgba(10,10,12,0.6) 50%, rgba(10,10,12,0.85) 100%)`,
-                      }} />
-                    </div>
-
-                    {/* Gold glass accent edge */}
-                    <div className="absolute bottom-0 left-0 right-0 h-[3px] transition-opacity duration-500 opacity-40 group-hover:opacity-100"
-                      style={{ background: `linear-gradient(90deg, transparent, ${P.gold}88, transparent)` }} />
-
-                    {/* Content */}
-                    <div
-                      className="absolute inset-0 flex flex-col justify-end z-10"
-                      style={{ padding: 'var(--spacing-fluid-s)' }}
-                    >
-                      <h3
-                        className="font-medium tracking-[-0.01em] mb-1.5 transition-colors duration-300"
-                        style={{ color: 'rgba(240,237,232,0.93)', fontSize: 'var(--text-card)' }}
-                      >
-                        {card.title}
-                      </h3>
-                      <p
-                        className="leading-[1.5] transition-all duration-500 opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-y-0 md:translate-y-2 md:group-hover:translate-y-0"
-                        style={{ color: 'rgba(240,237,232,0.5)', fontSize: 'var(--text-caption)' }}
-                      >
-                        {card.subtitle}
-                      </p>
-                    </div>
-
-                    {/* Hover glow */}
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{ background: `radial-gradient(ellipse at 50% 100%, ${card.accent}, transparent 70%)` }}
-                    />
-                  </motion.div>
-              ))}
+              {capabilityCards.map((card, i) => renderCard(card, i))}
             </div>
           </div>
         </div>
@@ -453,6 +496,39 @@ function HomeScrollCardsSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const cardsWrapperRef = useRef<HTMLDivElement>(null)
   const rightColRef = useRef<HTMLDivElement>(null)
+  // Apr 16: mobile carousel state (same pattern as Industries / What We Build).
+  // Only active when isMobile is true; desktop keeps the GSAP pinned layout.
+  const appCarouselRef = useRef<HTMLDivElement>(null)
+  const [appActiveIndex, setAppActiveIndex] = useState(0)
+
+  // children[0] is a start-spacer, children[1..6] are real cards, children[7]
+  // is an end-spacer — so reference children[1] for card width and offset
+  // scroll positions by the spacer width.
+  const handleAppScroll = () => {
+    const el = appCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
+    setAppActiveIndex(Math.min(Math.max(0, idx), scrollCards.length - 1))
+  }
+
+  const scrollAppTo = (i: number) => {
+    const el = appCarouselRef.current
+    if (!el) return
+    const card = el.children[1] as HTMLElement | null
+    const spacer = el.children[0] as HTMLElement | null
+    if (!card || !spacer) return
+    const step = card.getBoundingClientRect().width + 16
+    const spacerW = spacer.getBoundingClientRect().width + 16
+    // Scroll so card[i]'s center aligns near viewport center.
+    const containerW = el.clientWidth
+    const cardCenterOffset = spacerW + i * step + step / 2 - 8  // -8 = gap/2 correction
+    el.scrollTo({ left: cardCenterOffset - containerW / 2, behavior: 'smooth' })
+  }
 
   // Initialize isMobile synchronously from matchMedia so the FIRST render
   // already knows whether we're on mobile. Without this, React renders once
@@ -559,7 +635,7 @@ function HomeScrollCardsSection() {
         className={isMobile ? 'relative z-20' : 'absolute z-20'}
         style={{
           ...(isMobile
-            ? { paddingLeft: 'var(--spacing-gutter)', paddingRight: 'var(--spacing-gutter)', paddingTop: 'var(--spacing-rhythm)', paddingBottom: 'var(--spacing-fluid-xl)' }
+            ? { paddingLeft: 'var(--spacing-gutter)', paddingRight: 'var(--spacing-gutter)', paddingTop: 'var(--spacing-fluid-xl)', paddingBottom: 'var(--spacing-fluid-m)' }
             : { bottom: 'clamp(3.5rem, 10svh, 6.5rem)', left: 0, width: '50%', paddingLeft: 'var(--spacing-gutter)', paddingRight: 'var(--spacing-gutter)' }
           ),
         }}
@@ -574,8 +650,10 @@ function HomeScrollCardsSection() {
         >
           Our approach
         </p>
+        {/* max-lg:!text-[2.75rem] on mobile+tablet (reduced from 3.25rem
+            — too dominant). Desktop keeps --text-display fluid token. */}
         <h2
-          className="leading-[1.02] tracking-[-0.03em]"
+          className="leading-[1.02] tracking-[-0.03em] max-lg:!text-[2.75rem]"
           style={{
             fontSize: 'var(--text-display)',
             fontWeight: 500,
@@ -588,41 +666,27 @@ function HomeScrollCardsSection() {
         </h2>
       </div>
 
-      {/* Inner wrapper: lg:h-full (only on desktop, where section is 100svh).
-          On mobile, removing the height constraint lets the wrapper grow to
-          fit all 6 stacked cards instead of collapsing to the section's 100%. */}
-      <div
-        className="relative flex lg:h-full"
-        style={{
-          zIndex: 10,
-          maxWidth: 'var(--container-hero)',
-          margin: '0 auto',
-          alignItems: 'flex-start',
-        }}
-      >
-        {/* Right: Cards that scroll up via GSAP on desktop, normal flow on mobile */}
-        <div
-          ref={rightColRef}
-          style={{
-            width: isMobile ? '100%' : '50%',
-            marginLeft: isMobile ? 0 : '50%',
-            paddingTop: isMobile ? 0 : '100vh',
-            paddingLeft: isMobile ? 'var(--spacing-gutter)' : 'var(--spacing-fluid-m)',
-            paddingRight: 'var(--spacing-gutter)',
-            paddingBottom: 'var(--spacing-fluid-2xl)',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+      {/* Mobile branch: horizontal swipe carousel + dot pagination.
+          Completely separate from the desktop GSAP pinned layout — no shared
+          refs — so the two paths never interact. */}
+      {isMobile ? (
+        <div className="relative z-10 w-full" style={{ paddingBottom: 'var(--spacing-fluid-l)' }}>
+          {/* Edge-fix: spacer divs at start and end of the scroll track create
+              a reliable gutter-width visual gap when scrolled to either end.
+              The snap-start + scroll-px trick alone wasn't landing consistently
+              across browsers because the browser clamped max-scrollLeft before
+              the snap position could leave room at the right edge. */}
           <div
-            ref={cardsWrapperRef}
-            className="relative w-full flex flex-col"
-            style={{ maxWidth: '37.5rem', gap: 'var(--spacing-fluid-xl)' }}
+            ref={appCarouselRef}
+            onScroll={handleAppScroll}
+            className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{ gap: '16px' }}
           >
+            <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
             {scrollCards.map((card, i) => (
               <div
                 key={card.title}
-                className="group relative overflow-hidden transition-all duration-500 hover:-translate-y-[5px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
+                className="snap-center shrink-0 w-[78vw] max-w-[28rem] h-[22rem] group relative overflow-hidden"
                 style={{
                   background: 'linear-gradient(135deg, #1a1a1e 0%, #0f0f12 60%, #131318 100%)',
                   padding: 'var(--spacing-fluid-xl)',
@@ -631,9 +695,8 @@ function HomeScrollCardsSection() {
                   border: '1px solid rgba(255,255,255,0.06)',
                 }}
               >
-                {/* Gold glow from bottom-right corner */}
                 <div
-                  className="absolute pointer-events-none transition-opacity duration-700 opacity-60 group-hover:opacity-100"
+                  className="absolute pointer-events-none"
                   style={{
                     bottom: '-20%',
                     right: '-10%',
@@ -643,21 +706,10 @@ function HomeScrollCardsSection() {
                     filter: 'blur(30px)',
                   }}
                 />
-
-                {/* Subtle grain on card */}
-                <div className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay">
-                  <svg width="100%" height="100%">
-                    <filter id={`cardGrain${i}`}><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" /></filter>
-                    <rect width="100%" height="100%" filter={`url(#cardGrain${i})`} />
-                  </svg>
-                </div>
-
-                {/* Gold left edge accent */}
                 <div
-                  className="absolute top-[15%] bottom-[15%] left-0 w-[2px] transition-all duration-500 group-hover:top-[5%] group-hover:bottom-[5%]"
+                  className="absolute top-[15%] bottom-[15%] left-0 w-[2px]"
                   style={{ background: `linear-gradient(180deg, transparent, ${P.gold}55, transparent)` }}
                 />
-
                 <h3
                   className="relative z-10 tracking-[-0.015em]"
                   style={{
@@ -670,16 +722,115 @@ function HomeScrollCardsSection() {
                   {card.title}
                 </h3>
                 <p
-                  className="relative z-10 leading-[1.7] max-w-[30rem]"
-                  style={{ fontSize: 'var(--text-body)', color: 'rgba(240,237,232,0.45)' }}
+                  className="relative z-10 leading-[1.7]"
+                  style={{ fontSize: 'var(--text-body)', color: 'rgba(240,237,232,0.55)' }}
                 >
                   {card.body}
                 </p>
               </div>
             ))}
+            <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+          </div>
+          <div className="flex justify-center items-center gap-2 mt-5">
+            {scrollCards.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollAppTo(i)}
+                aria-label={`Go to approach ${i + 1}`}
+                className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                style={{
+                  width: appActiveIndex === i ? '24px' : '8px',
+                  background: appActiveIndex === i ? P.gold : 'rgba(42,34,24,0.25)',
+                }}
+              />
+            ))}
           </div>
         </div>
-      </div>
+      ) : (
+        /* Desktop: unchanged GSAP-pinned layout */
+        <div
+          className="relative flex lg:h-full"
+          style={{
+            zIndex: 10,
+            maxWidth: 'var(--container-hero)',
+            margin: '0 auto',
+            alignItems: 'flex-start',
+          }}
+        >
+          <div
+            ref={rightColRef}
+            style={{
+              width: '50%',
+              marginLeft: '50%',
+              paddingTop: '100vh',
+              paddingLeft: 'var(--spacing-fluid-m)',
+              paddingRight: 'var(--spacing-gutter)',
+              paddingBottom: 'var(--spacing-fluid-2xl)',
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <div
+              ref={cardsWrapperRef}
+              className="relative w-full flex flex-col"
+              style={{ maxWidth: '37.5rem', gap: 'var(--spacing-fluid-xl)' }}
+            >
+              {scrollCards.map((card, i) => (
+                <div
+                  key={card.title}
+                  className="group relative overflow-hidden transition-all duration-500 hover:-translate-y-[5px] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)]"
+                  style={{
+                    background: 'linear-gradient(135deg, #1a1a1e 0%, #0f0f12 60%, #131318 100%)',
+                    padding: 'var(--spacing-fluid-xl)',
+                    borderRadius: 'var(--radius-fluid-xl)',
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <div
+                    className="absolute pointer-events-none transition-opacity duration-700 opacity-60 group-hover:opacity-100"
+                    style={{
+                      bottom: '-20%',
+                      right: '-10%',
+                      width: '70%',
+                      height: '70%',
+                      background: `radial-gradient(ellipse at center, rgba(201,168,110,${i % 2 === 0 ? '0.15' : '0.12'}) 0%, rgba(201,168,110,0.04) 50%, transparent 80%)`,
+                      filter: 'blur(30px)',
+                    }}
+                  />
+                  <div className="absolute inset-0 pointer-events-none opacity-[0.06] mix-blend-overlay">
+                    <svg width="100%" height="100%">
+                      <filter id={`cardGrain${i}`}><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" /></filter>
+                      <rect width="100%" height="100%" filter={`url(#cardGrain${i})`} />
+                    </svg>
+                  </div>
+                  <div
+                    className="absolute top-[15%] bottom-[15%] left-0 w-[2px] transition-all duration-500 group-hover:top-[5%] group-hover:bottom-[5%]"
+                    style={{ background: `linear-gradient(180deg, transparent, ${P.gold}55, transparent)` }}
+                  />
+                  <h3
+                    className="relative z-10 tracking-[-0.015em]"
+                    style={{
+                      fontSize: 'var(--text-card-lg)',
+                      fontWeight: 500,
+                      color: 'rgba(240,237,232,0.93)',
+                      marginBottom: 'var(--spacing-fluid-s)',
+                    }}
+                  >
+                    {card.title}
+                  </h3>
+                  <p
+                    className="relative z-10 leading-[1.7] max-w-[30rem]"
+                    style={{ fontSize: 'var(--text-body)', color: 'rgba(240,237,232,0.45)' }}
+                  >
+                    {card.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
@@ -794,8 +945,10 @@ function ValueRow({ item, index, isLast, isActive, rowRef }: {
       >
         {/* Left: Title + Description */}
         <div className="flex-1 min-w-0">
+          {/* max-lg:!text-[1.5rem] slightly trims sub-heading size on
+              mobile+tablet (was too prominent against the body copy). */}
           <h3
-            className="tracking-[-0.02em] leading-[1.15]"
+            className="tracking-[-0.02em] leading-[1.15] max-lg:!text-[1.5rem]"
             style={{
               fontSize: 'var(--text-h3)',
               fontWeight: 500,
@@ -817,8 +970,10 @@ function ValueRow({ item, index, isLast, isActive, rowRef }: {
             }}
           >
             <div style={{ overflow: 'hidden' }}>
+              {/* max-lg:!text-[0.9rem] shrinks body copy on mobile+tablet
+                  so the card reads tighter there; desktop keeps --text-lead. */}
               <p
-                className="leading-[1.85] max-w-[35rem]"
+                className="leading-[1.75] max-w-[35rem] max-lg:!text-[0.9rem]"
                 style={{
                   color: P.textOnDarkMuted,
                   paddingTop: 'var(--spacing-fluid-s)',
@@ -894,12 +1049,17 @@ function WhyChooseUsSection() {
           paddingBottom: 'var(--spacing-rhythm)',
         }}
       >
-        {/* Section heading */}
+        {/* Section heading.
+            max-md:!mb-16 adds 64px bottom gap on phones only (<768px) so
+            the heading isn't cramped against the first ValueRow's rule.
+            max-lg:!text-[3.25rem] bumps mobile+tablet heading size (Apr 16 —
+            the fluid token felt too small for the section weight at those
+            viewports). Desktop keeps --text-display via inline style. */}
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="leading-[1.1] tracking-[-0.03em]"
+          className="leading-[1.05] tracking-[-0.03em] max-md:!mb-16 max-lg:!text-[2.5rem]"
           style={{
             fontSize: 'var(--text-display)',
             fontWeight: 300,
@@ -1069,24 +1229,28 @@ function HomeCTASection() {
             maxWidth: 'var(--container-wide)',
           }}
         >
-          <div className="absolute inset-0">
+          {/* Mirrored from Solutions CTA: blur(4px) + darker overlay so the
+              body copy reads cleanly on top of spiral-wide background. */}
+          <div className="absolute inset-0 overflow-hidden">
             <Image
               src="/spiral-wide.jpg"
               alt=""
               fill
               sizes="(max-width: 768px) 100vw, 1330px"
-              className="object-cover"
+              className="object-cover scale-110"
+              style={{ filter: 'blur(4px)' }}
             />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.55), rgba(10,10,12,0.25))' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.72), rgba(10,10,12,0.5))' }} />
           </div>
           <Grain id="homeCtaGrain" opacity={0.04} />
 
           <div className="relative z-10 text-center mx-auto" style={{ maxWidth: '36rem' }}>
+            {/* max-lg:!text-[2rem] matches Solutions CTA mobile/tablet sizing. */}
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.08] tracking-[-0.03em]"
+              className="leading-[1.1] tracking-[-0.03em] max-lg:!text-[2rem]"
               style={{
                 fontSize: 'var(--text-h3)',
                 fontWeight: 400,
@@ -1100,10 +1264,9 @@ function HomeCTASection() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="leading-[1.8]"
+              className="leading-[1.7] text-[0.9rem] md:text-[0.95rem] lg:text-[var(--text-body)]"
               style={{
-                color: P.textOnDarkMuted,
-                fontSize: 'var(--text-body)',
+                color: 'rgba(240,237,232,0.82)',
                 marginBottom: 'var(--spacing-fluid-xl)',
               }}
             >
@@ -1115,7 +1278,7 @@ function HomeCTASection() {
               transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
             >
               <Link href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-7 py-3 transition-all duration-300 hover:shadow-[0_4px_24px_rgba(130,95,30,0.35)]"
+                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 md:px-7 md:py-3 transition-all duration-300 hover:shadow-[0_4px_24px_rgba(130,95,30,0.35)]"
                 style={{
                   fontSize: '14px',
                   fontWeight: 600,

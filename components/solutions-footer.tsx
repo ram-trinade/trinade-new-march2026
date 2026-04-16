@@ -101,7 +101,7 @@ export default function SolutionsFooter() {
             </p>
             <MotionLink
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full px-7 py-3 transition-all duration-300"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 md:px-7 md:py-3 transition-all duration-300"
               style={{
                 fontSize: '14px',
                 fontWeight: 600,
@@ -296,15 +296,14 @@ export default function SolutionsFooter() {
         data-marquee
         style={{ userSelect: 'none', pointerEvents: 'none' }}
       >
-        {/* Floor bumped from 4rem to 7rem so the rolling TRINADE letters
-            are visibly taller on phones (where 20vw resolves below the
-            old floor). Above ~480px viewport the 20vw value takes over
-            and scales linearly to the 22rem desktop ceiling — so desktop
-            and large tablets remain pixel-identical. */}
+        {/* Apr 16: bumped clamp(7rem, 20vw, 22rem) → clamp(10rem, 24vw, 26rem)
+            for taller marquee across the board. Mobile 390 grows 112→160px
+            (+43%), tablet 768 grows 154→184px (+20%), desktop 1440 grows
+            288→346px (+20%), 1920+ ceiling lifts 352→416px. */}
         <div
           className="footer-marquee whitespace-nowrap leading-none"
           style={{
-            fontSize: 'clamp(7rem, 20vw, 22rem)',
+            fontSize: 'clamp(10rem, 24vw, 26rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
           }}

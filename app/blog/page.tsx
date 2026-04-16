@@ -368,7 +368,11 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
         <span className="text-[11px] tracking-[0.15em] uppercase font-medium" style={{ color: 'rgba(42,34,24,0.3)' }}>01</span>
       </div>
 
-      <Link href="/blog" className="block">
+      {/* Apr 16: wrapped in a plain <div> instead of <Link href="/blog">.
+          The old link navigated to the same page (/blog) which scrolled to
+          top on click. The individual article URL isn't built yet, so this
+          card is non-interactive for now. */}
+      <div className="block cursor-default">
         <div
           className="relative overflow-hidden"
           style={{
@@ -479,7 +483,7 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
             </div>
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   )
 }
