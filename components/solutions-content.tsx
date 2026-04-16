@@ -485,30 +485,35 @@ function IndustriesSection() {
         </motion.div>
 
         {/* md+ grid (unchanged): 2-col on md, asymmetric 5×2 on lg. */}
+        {/* lg override — 5 columns, 2 rows, asymmetric like inspiration.
+            Apr 16 BUG FIX: the <style> tag used to sit INSIDE the grid as a
+            child, which offset every nth-child by 1 — Healthcare ended up
+            in col 2, Logistics fell out of the map entirely to auto-placement,
+            and its height collapsed to a single row. Moving the <style>
+            outside the grid makes nth-child(1..6) target the real cards. */}
+        <style>{`
+          @media (min-width: 64rem) {
+            .industries-grid {
+              grid-template-columns: repeat(5, minmax(0, 1fr));
+              grid-template-rows: 1fr 1fr;
+            }
+            .industries-grid > :nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+            .industries-grid > :nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
+            .industries-grid > :nth-child(3) { grid-column: 3; grid-row: 1 / 3; }
+            .industries-grid > :nth-child(4) { grid-column: 4; grid-row: 1; }
+            .industries-grid > :nth-child(5) { grid-column: 5; grid-row: 1; }
+            .industries-grid > :nth-child(6) { grid-column: 4 / 6; grid-row: 2; }
+          }
+        `}</style>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
-          className="industries-grid hidden md:grid md:grid-cols-2 flex-1"
+          className="industries-grid hidden md:grid md:grid-cols-2 md:auto-rows-fr flex-1"
           style={{
             gap: 'var(--spacing-fluid-xs)',
           }}
         >
-          {/* lg override — 5 columns, 2 rows, asymmetric like inspiration */}
-          <style>{`
-            @media (min-width: 64rem) {
-              .industries-grid {
-                grid-template-columns: repeat(5, minmax(0, 1fr));
-                grid-template-rows: 1fr 1fr;
-              }
-              .industries-grid > :nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
-              .industries-grid > :nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
-              .industries-grid > :nth-child(3) { grid-column: 3; grid-row: 1 / 3; }
-              .industries-grid > :nth-child(4) { grid-column: 4; grid-row: 1; }
-              .industries-grid > :nth-child(5) { grid-column: 5; grid-row: 1; }
-              .industries-grid > :nth-child(6) { grid-column: 4 / 6; grid-row: 2; }
-            }
-          `}</style>
           <IndustryCard ind={industries[0]} isLarge />
           <IndustryCard ind={industries[1]} isLarge />
           <IndustryCard ind={industries[2]} isLarge />
