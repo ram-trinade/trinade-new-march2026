@@ -392,9 +392,13 @@ const subjectOptions = [
 function SubjectDropdown({
   value,
   onChange,
+  onOpen,
+  onClose,
 }: {
   value: string
   onChange: (val: string) => void
+  onOpen?: () => void
+  onClose?: () => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -403,18 +407,26 @@ function SubjectDropdown({
   useEffect(() => {
     if (!isOpen) return
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false)
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen(false)
+        if (onClose) onClose()
+      }
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
-  }, [isOpen])
+  }, [isOpen, onClose])
 
   useEffect(() => {
     if (!isOpen) return
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsOpen(false) }
+    const handler = (e: KeyboardEvent) => { 
+      if (e.key === 'Escape') {
+        setIsOpen(false)
+        if (onClose) onClose()
+      }
+    }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [isOpen])
+  }, [isOpen, onClose])
 
   const selectedLabel = subjectOptions.find(o => o.value === value)?.label || 'Select a topic'
 
@@ -422,7 +434,12 @@ function SubjectDropdown({
     <div ref={ref} style={{ position: 'relative' }}>
       <button
         type="button"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          const next = !isOpen
+          setIsOpen(next)
+          if (next && onOpen) onOpen()
+          else if (!next && onClose) onClose()
+        }}
         style={{
           background: 'rgba(255,255,255,0.45)',
           border: isOpen ? '1px solid rgba(201,168,110,0.6)' : '1px solid rgba(201,168,110,0.3)',
@@ -489,7 +506,11 @@ function SubjectDropdown({
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.2, delay: i * 0.03, ease: [0.32, 0.72, 0, 1] }}
-                  onClick={() => { onChange(option.value); setIsOpen(false) }}
+                  onClick={() => { 
+                    onChange(option.value)
+                    setIsOpen(false)
+                    if (onClose) onClose()
+                  }}
                   style={{
                     display: 'block',
                     width: '100%',
@@ -532,6 +553,10 @@ export default function SolutionsContactPage() {
   // Apr 16: DPDP Act / GDPR consent — required before enabling submit.
   const [consent, setConsent] = useState(false)
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [hintsVisible, setHintsVisible] = useState<Record<string, boolean>>({})
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
   const [heroInView, setHeroInView] = useState(false)
   const [formInView, setFormInView] = useState(false)
   const heroRef = useRef<HTMLDivElement>(null)
@@ -563,12 +588,111 @@ export default function SolutionsContactPage() {
     }
   }, [formInView])
 
+  const validateField = (name: string, value: string): string => {
+    const trimmed = value.trim()
+    switch (name) {
+      case 'name':
+        if (!trimmed) return 'Name is required'
+        if (trimmed.length < 3) return 'Name must be at least 3 characters'
+        if (!/^[A-Za-z\s]+$/.test(trimmed)) return 'Name must contain only letters and spaces'
+        return ''
+      case 'email':
+        if (!trimmed) return 'Email is required'
+        if (value.includes(' ')) return 'Email cannot contain spaces'
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return 'Please enter a valid email address'
+        return ''
+      case 'phone':
+        if (!trimmed) return 'Phone number is required'
+        if (!/^\d{10}$/.test(trimmed)) return 'Phone must be exactly 10 digits'
+        if (/^(\d)\1{9}$/.test(trimmed)) return 'Invalid phone number'
+        return ''
+      case 'subject':
+        if (!value) return 'Please select a valid option'
+        return ''
+      case 'message':
+        if (!trimmed) return 'Message is required'
+        if (trimmed.length < 5) return 'Message must be at least 5 characters'
+        return ''
+      default:
+        return ''
+    }
+  }
+
+  const getHint = (name: string): string => {
+    switch (name) {
+      case 'name': return 'Enter at least 3 alphabetic characters'
+      case 'email': return 'Enter a valid email (e.g., example@domain.com)'
+      case 'phone': return 'Enter 10-digit number (not all digits same)'
+      case 'subject': return 'Select a relevant topic'
+      case 'message': return 'Minimum 5 characters required'
+      default: return ''
+    }
+  }
+
+  const handleFocus = (name: string) => {
+    setHintsVisible(prev => ({ ...prev, [name]: true }))
+    setErrors(prev => ({ ...prev, [name]: '' }))
+    setSubmitStatus('idle')
+  }
+
+  const handleBlur = (name: string, value: string) => {
+    setHintsVisible(prev => ({ ...prev, [name]: false }))
+    setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: validateField(name, value) }))
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    
+    const newErrors: Record<string, string> = {}
+    let isValid = true
+
+    Object.keys(formData).forEach(key => {
+      if (key === 'countryCode') return
+      const error = validateField(key, formData[key as keyof typeof formData])
+      if (error) {
+        newErrors[key] = error
+        isValid = false
+      }
+    })
+
+    if (!consent) {
+      newErrors['consent'] = 'You must accept the privacy policy'
+      isValid = false
+    }
+
+    setErrors(newErrors)
+
+    if (isValid) {
+      setSubmitStatus('success')
+    } else {
+      setSubmitStatus('error')
+    }
+  }
+
+  const renderMessage = (name: string) => {
+    if (errors[name]) {
+      return (
+        <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#e11d48', fontSize: '13px', marginTop: '6px', fontWeight: 500 }}>
+          {errors[name]}
+        </motion.div>
+      )
+    }
+    if (hintsVisible[name]) {
+      return (
+        <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: 'rgba(90,70,40,0.7)', fontSize: '12px', marginTop: '6px' }}>
+          {getHint(name)}
+        </motion.div>
+      )
+    }
+    return null
   }
 
   const inputStyle: React.CSSProperties = {
@@ -1102,16 +1226,15 @@ export default function SolutionsContactPage() {
                         placeholder="Your full name"
                         value={formData.name}
                         onChange={handleChange}
-                        style={inputStyle}
-                        onFocus={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.6)'
-                          e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors.name ? '#e11d48' : hintsVisible.name ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                          boxShadow: hintsVisible.name ? (errors.name ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
                         }}
-                        onBlur={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
-                          e.target.style.boxShadow = 'none'
-                        }}
+                        onFocus={() => handleFocus('name')}
+                        onBlur={(e) => handleBlur('name', e.target.value)}
                       />
+                      {renderMessage('name')}
                     </div>
                     <div>
                       <label htmlFor="email" style={labelStyle}>Email</label>
@@ -1122,16 +1245,15 @@ export default function SolutionsContactPage() {
                         placeholder="you@company.com"
                         value={formData.email}
                         onChange={handleChange}
-                        style={inputStyle}
-                        onFocus={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.6)'
-                          e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors.email ? '#e11d48' : hintsVisible.email ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                          boxShadow: hintsVisible.email ? (errors.email ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
                         }}
-                        onBlur={e => {
-                          e.target.style.borderColor = 'rgba(201,168,110,0.3)'
-                          e.target.style.boxShadow = 'none'
-                        }}
+                        onFocus={() => handleFocus('email')}
+                        onBlur={(e) => handleBlur('email', e.target.value)}
                       />
+                      {renderMessage('email')}
                     </div>
                   </div>
 
@@ -1155,24 +1277,32 @@ export default function SolutionsContactPage() {
                           placeholder="12345 67890"
                           value={formData.phone}
                           onChange={handleChange}
-                          style={{ ...inputStyle, flex: 1 }}
-                          onFocus={e => {
-                            e.target.style.borderColor = 'rgba(201,168,110,0.6)'
-                            e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
+                          style={{
+                            ...inputStyle,
+                            flex: 1,
+                            borderColor: errors.phone ? '#e11d48' : hintsVisible.phone ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                            boxShadow: hintsVisible.phone ? (errors.phone ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
                           }}
-                          onBlur={e => {
-                            e.target.style.borderColor = 'rgba(201,168,110,0.3)'
-                            e.target.style.boxShadow = 'none'
-                          }}
+                          onFocus={() => handleFocus('phone')}
+                          onBlur={(e) => handleBlur('phone', e.target.value)}
                         />
                       </div>
+                      {renderMessage('phone')}
                     </div>
                     <div>
                       <label style={labelStyle}>Subject</label>
                       <SubjectDropdown
                         value={formData.subject}
-                        onChange={(val) => setFormData(prev => ({ ...prev, subject: val }))}
+                        onChange={(val) => {
+                           setFormData(prev => ({ ...prev, subject: val }))
+                           if (errors.subject) {
+                             setErrors(prev => ({ ...prev, subject: validateField('subject', val) }))
+                           }
+                        }}
+                        onOpen={() => handleFocus('subject')}
+                        onClose={() => handleBlur('subject', formData.subject)}
                       />
+                      {renderMessage('subject')}
                     </div>
                   </div>
 
@@ -1196,28 +1326,27 @@ export default function SolutionsContactPage() {
                         scrollbarWidth: 'thin',
                         scrollbarColor: 'rgba(201,168,110,0.35) rgba(201,168,110,0.08)',
                         overscrollBehavior: 'contain',
+                        borderColor: errors.message ? '#e11d48' : hintsVisible.message ? 'rgba(201,168,110,0.6)' : 'rgba(201,168,110,0.3)',
+                        boxShadow: hintsVisible.message ? (errors.message ? '0 0 0 3px rgba(225,29,72,0.1)' : '0 0 0 3px rgba(201,168,110,0.1)') : 'none',
                       }}
-                      onFocus={e => {
-                        e.target.style.borderColor = 'rgba(201,168,110,0.6)'
-                        e.target.style.boxShadow = '0 0 0 3px rgba(201,168,110,0.1)'
-                      }}
-                      onBlur={e => {
-                        e.target.style.borderColor = 'rgba(201,168,110,0.3)'
-                        e.target.style.boxShadow = 'none'
-                      }}
+                      onFocus={() => handleFocus('message')}
+                      onBlur={(e) => handleBlur('message', e.target.value)}
                     />
-                    {/* Character counter */}
-                    <p style={{
-                      fontSize: '12px',
-                      color: formData.message.length > 280
-                        ? 'rgba(180,100,60,0.7)'
-                        : 'rgba(90,70,40,0.35)',
-                      textAlign: 'right',
-                      marginTop: '6px',
-                      transition: 'color 0.2s ease',
-                    }}>
-                      {formData.message.length} / 300
-                    </p>
+                    {/* Message hints and counter row */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1 }}>{renderMessage('message')}</div>
+                      <p style={{
+                        fontSize: '12px',
+                        color: formData.message.length > 280
+                          ? 'rgba(180,100,60,0.7)'
+                          : 'rgba(90,70,40,0.35)',
+                        textAlign: 'right',
+                        transition: 'color 0.2s ease',
+                        marginTop: errors.message || hintsVisible.message ? '6px' : '0px',
+                      }}>
+                        {formData.message.length} / 300
+                      </p>
+                    </div>
                   </div>
 
                   {/* Consent checkbox — required for DPDP Act / GDPR */}
@@ -1239,8 +1368,12 @@ export default function SolutionsContactPage() {
                       id="privacy-consent"
                       type="checkbox"
                       checked={consent}
-                      onChange={e => setConsent(e.target.checked)}
-                      required
+                      onChange={e => {
+                        setConsent(e.target.checked)
+                        if (e.target.checked && errors.consent) {
+                          setErrors(prev => ({ ...prev, consent: '' }))
+                        }
+                      }}
                       style={{
                         marginTop: '3px',
                         accentColor: '#c9a86e',
@@ -1259,12 +1392,23 @@ export default function SolutionsContactPage() {
                     </span>
                   </label>
 
+                  {errors.consent && (
+                    <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#e11d48', fontSize: '13px', marginTop: '-12px', fontWeight: 500 }}>
+                      {errors.consent}
+                    </motion.div>
+                  )}
+
+                  {submitStatus === 'success' && (
+                    <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#16a34a', fontSize: '14px', marginTop: '4px', fontWeight: 500, textAlign: 'center', background: 'rgba(22, 163, 74, 0.1)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(22, 163, 74, 0.2)' }}>
+                      Message sent successfully!
+                    </motion.div>
+                  )}
+
                   {/* Submit */}
                   <button
                     type="submit"
-                    disabled={!consent}
                     style={{
-                      background: consent ? '#1a1a1e' : 'rgba(42,34,24,0.35)',
+                      background: '#1a1a1e',
                       color: '#ffffff',
                       fontWeight: 600,
                       borderRadius: '9999px',
@@ -1273,7 +1417,7 @@ export default function SolutionsContactPage() {
                       border: 'none',
                       fontSize: '15px',
                       letterSpacing: '0.02em',
-                      cursor: consent ? 'inherit' : 'not-allowed',
+                      cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       fontFamily: 'inherit',
                       marginTop: '8px',
@@ -1281,14 +1425,12 @@ export default function SolutionsContactPage() {
                       overflow: 'hidden',
                     }}
                     onMouseEnter={e => {
-                      if (!consent) return
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#2a2a2e'
                       el.style.transform = 'translateY(-1px)'
                       el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
                     }}
                     onMouseLeave={e => {
-                      if (!consent) return
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#1a1a1e'
                       el.style.transform = 'translateY(0)'

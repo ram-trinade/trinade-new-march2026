@@ -587,10 +587,11 @@ function HowItWorksSection() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   const steps = [
-    { num: '01', title: 'Describe', desc: 'Tell us what you need in a few lines. No forms, no friction — just your situation.' },
-    { num: '02', title: 'Match', desc: 'Our system matches you with a verified expert in the relevant field. Credentials checked, quality assured.' },
-    { num: '03', title: 'Connect', desc: 'Start a session — chat, voice, or video. Whatever feels right for the conversation.' },
-    { num: '04', title: 'Act', desc: 'Walk away with clear next steps you can act on immediately. Rate and improve future matches.' },
+    { num: '01', title: 'Register', desc: 'Register FlyHigh as a Customer to unlock access to our trusted network.' },
+    { num: '02', title: 'Describe', desc: 'Tell us what you need in a few lines. No forms, no friction — just your situation.' },
+    { num: '03', title: 'Match', desc: 'Our system matches you with a verified expert in the relevant field. Credentials checked, quality assured.' },
+    { num: '04', title: 'Connect', desc: 'Start a session — chat, voice, or video. Whatever feels right for the conversation.' },
+    { num: '05', title: 'Act', desc: 'Walk away with clear next steps you can act on immediately. Rate and improve future matches.' },
   ]
 
   return (
@@ -607,7 +608,7 @@ function HowItWorksSection() {
               <Eyebrow light={false}>How It Works</Eyebrow>
             </motion.div>
             <SplitTextReveal
-              text="From question to clarity in four steps."
+              text="From question to clarity in five steps."
               delay={0.2}
               className="tracking-[-0.03em]"
               style={{
@@ -625,16 +626,16 @@ function HowItWorksSection() {
               initial={{ scaleX: 0 }}
               animate={inView ? { scaleX: 1 } : {}}
               transition={{ duration: 1.8, delay: 0.5, ease: EASE_CINE }}
-              className="hidden md:block absolute"
+              className="hidden lg:block absolute"
               style={{
-                top: '36px', left: '12.5%', right: '12.5%',
+                top: '36px', left: '10%', right: '10%',
                 height: '1px',
                 background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.25), rgba(201,168,110,0.25), transparent)',
                 transformOrigin: 'left',
               }}
             />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12 md:gap-8">
               {steps.map((step, i) => (
                 <motion.div
                   key={step.num}
@@ -1048,6 +1049,7 @@ function ExpertsSection() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   const benefits = [
+    { title: 'Register', desc: 'Register FlyHigh as an expert to start sharing your professional knowledge.' },
     { title: 'Get Verified', desc: 'Build your professional profile with verified credentials in your field.' },
     { title: 'Help Real People', desc: 'Support individuals facing real problems with real deadlines.' },
     { title: 'Earn On Your Terms', desc: 'Monetize your expertise professionally — set your own availability.' },
@@ -1106,7 +1108,7 @@ function ExpertsSection() {
             with people who genuinely need your guidance.
           </motion.p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((b, i) => (
               <motion.div
                 key={b.title}
@@ -1158,6 +1160,7 @@ function FAQSection() {
     { q: 'Is FlyHigh powered entirely by AI?', a: 'FlyHigh uses AI to improve matching speed and accuracy, but expert guidance remains human-led and accountable. Real people, real expertise.' },
     { q: 'What does a session look like?', a: 'You choose the format — chat, voice, or video. Sessions are focused, time-bounded, and end with clear next steps you can act on.' },
     { q: 'How much does it cost?', a: 'Pricing varies by field and session type. We are designing a model that keeps guidance accessible while fairly compensating experts.' },
+    { q: 'How are experts being paid?', a: 'Experts set their own rates or adhere to category standards, and receive secure, timely payouts directly through our platform after completing successful sessions.' },
   ]
 
   return (

@@ -963,111 +963,7 @@ function DifferentiatorsSection() {
 // ═══════════════════════════════════════════════════════════
 // CTA — spiral-lines-gold.jpg background
 // ═══════════════════════════════════════════════════════════
-function CTASection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
 
-  return (
-    <section
-      ref={ref}
-      className="relative"
-      style={{
-        background: P.cream,
-        paddingTop: 'var(--spacing-fluid-xl)',
-        paddingBottom: 'var(--spacing-rhythm)',
-      }}
-    >
-      <div className="px-[var(--spacing-gutter)]">
-        <div
-          className="relative overflow-hidden mx-auto"
-          data-dark-section
-          style={{
-            borderRadius: 'var(--radius-fluid-2xl)',
-            paddingTop: 'var(--spacing-fluid-xl)',
-            paddingBottom: 'var(--spacing-fluid-xl)',
-            paddingLeft: 'var(--spacing-fluid-2xl)',
-            paddingRight: 'var(--spacing-fluid-2xl)',
-            maxWidth: 'var(--container-wide)',
-          }}
-        >
-          {/* spiral-lines-gold background — blurred + darker overlay so the
-              body copy reads cleanly. overflow-hidden + scale-110 on image so
-              the blur doesn't reveal hard edges. */}
-          <div className="absolute inset-0 overflow-hidden">
-            <Image
-              src="/spiral-lines-gold.jpg"
-              alt=""
-              fill
-              className="object-cover scale-110"
-              style={{ filter: 'blur(4px)' }}
-            />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.72), rgba(10,10,12,0.5))' }} />
-          </div>
-          <Grain id="ctaGrain" opacity={0.04} />
-
-          <div className="relative z-10 text-center mx-auto" style={{ maxWidth: '36rem' }}>
-            {/* Heading: desktop uses the fluid --text-h3 token. Mobile+tablet
-                (<lg) bump to 2.5rem so the line reads with the same weight it
-                has at desktop. !important required because inline style wins. */}
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.1] tracking-[-0.03em] max-lg:!text-[2rem]"
-              style={{
-                fontSize: 'var(--text-h3)',
-                fontWeight: 400,
-                color: P.textOnDark,
-                marginBottom: 'var(--spacing-fluid-l)',
-              }}
-            >
-              Let&apos;s talk.
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="leading-[1.7] text-[0.9rem] md:text-[0.95rem] lg:text-[var(--text-body)]"
-              style={{
-                color: 'rgba(240,237,232,0.82)',
-                marginBottom: 'var(--spacing-fluid-xl)',
-              }}
-            >
-              Tell us what&apos;s keeping you up at night. We&apos;ll tell you exactly how we&apos;d fix it — no pitch deck, no discovery phase, just a direct technical conversation.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-              className="flex items-center justify-center"
-            >
-              {/* Gold glass button (matches footer) + responsive sizing:
-                  small on mobile, medium on tablet, full on PC. */}
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full transition-all duration-300 px-5 py-2.5 md:px-7 md:py-3 lg:px-9 lg:py-4 hover:shadow-[0_4px_24px_rgba(130,95,30,0.35)]"
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  color: 'rgba(255,255,255,0.93)',
-                  background: 'linear-gradient(165deg, rgba(185,155,100,0.45) 0%, rgba(165,125,60,0.35) 40%, rgba(200,175,125,0.40) 100%)',
-                  backdropFilter: 'blur(12px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
-                  border: '1px solid rgba(180,150,95,0.35)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(130,95,30,0.1), 0 2px 12px rgba(130,95,30,0.2)',
-                }}
-              >
-                Start a conversation
-                <span style={{ fontSize: '16px', marginLeft: '2px' }}>&rarr;</span>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 
 
@@ -1082,7 +978,7 @@ export default function SolutionsContent() {
       <IndustriesSection />
       <ChallengesSection />
       <AccordionSection />
-      <CTASection />
+
       <SolutionsFooter />
     </main>
   )

@@ -1203,103 +1203,6 @@ function ChallengesSection() {
 // ═══════════════════════════════════════════════════════════
 // CTA — Reusing the gold spiral CTA pattern
 // ═══════════════════════════════════════════════════════════
-function HomeCTASection() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-
-  return (
-    <section
-      ref={ref}
-      className="relative"
-      style={{
-        background: P.cream,
-        paddingTop: 'var(--spacing-fluid-xl)',
-        paddingBottom: 'var(--spacing-rhythm)',
-      }}
-    >
-      <div style={{ paddingLeft: 'var(--spacing-gutter)', paddingRight: 'var(--spacing-gutter)' }}>
-        <div
-          className="relative overflow-hidden mx-auto"
-          style={{
-            borderRadius: 'var(--radius-fluid-2xl)',
-            paddingTop: 'var(--spacing-fluid-xl)',
-            paddingBottom: 'var(--spacing-fluid-xl)',
-            paddingLeft: 'var(--spacing-fluid-2xl)',
-            paddingRight: 'var(--spacing-fluid-2xl)',
-            maxWidth: 'var(--container-wide)',
-          }}
-        >
-          {/* Mirrored from Solutions CTA: blur(4px) + darker overlay so the
-              body copy reads cleanly on top of spiral-wide background. */}
-          <div className="absolute inset-0 overflow-hidden">
-            <Image
-              src="/spiral-wide.jpg"
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, 1330px"
-              className="object-cover scale-110"
-              style={{ filter: 'blur(4px)' }}
-            />
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,10,12,0.72), rgba(10,10,12,0.5))' }} />
-          </div>
-          <Grain id="homeCtaGrain" opacity={0.04} />
-
-          <div className="relative z-10 text-center mx-auto" style={{ maxWidth: '36rem' }}>
-            {/* max-lg:!text-[2rem] matches Solutions CTA mobile/tablet sizing. */}
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-              className="leading-[1.1] tracking-[-0.03em] max-lg:!text-[2rem]"
-              style={{
-                fontSize: 'var(--text-h3)',
-                fontWeight: 400,
-                color: P.textOnDark,
-                marginBottom: 'var(--spacing-fluid-l)',
-              }}
-            >
-              Let&apos;s build what<br />comes next.
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
-              className="leading-[1.7] text-[0.9rem] md:text-[0.95rem] lg:text-[var(--text-body)]"
-              style={{
-                color: 'rgba(240,237,232,0.82)',
-                marginBottom: 'var(--spacing-fluid-xl)',
-              }}
-            >
-              A 30-minute conversation is where most of our best work begins. No pitch deck, no pressure — just a clear look at where your technology stands and where it could go.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
-            >
-              <Link href="/contact"
-                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 md:px-7 md:py-3 transition-all duration-300 hover:shadow-[0_4px_24px_rgba(130,95,30,0.35)]"
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  color: 'rgba(255,255,255,0.93)',
-                  background: 'linear-gradient(165deg, rgba(185,155,100,0.45) 0%, rgba(165,125,60,0.35) 40%, rgba(200,175,125,0.40) 100%)',
-                  backdropFilter: 'blur(12px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
-                  border: '1px solid rgba(180,150,95,0.35)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(130,95,30,0.1), 0 2px 12px rgba(130,95,30,0.2)',
-                }}>
-                Start a conversation
-                <span style={{ fontSize: '16px', marginLeft: '2px' }}>&rarr;</span>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 
 // ═══════════════════════════════════════════════════════════
@@ -1313,7 +1216,7 @@ export default function HomepageContent() {
       <HomeScrollCardsSection />
       <WhyChooseUsSection />
       <ChallengesSection />
-      <HomeCTASection />
+
     </main>
   )
 }

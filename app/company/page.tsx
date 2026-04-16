@@ -80,7 +80,7 @@ const TIMELINE = [
   { year: '2023', title: 'Expansion Roadmap', desc: 'Defined plans to expand into multiple sectors guided by trust, reliability, and measurable outcomes.' },
   { year: '2024', title: 'Sleep Alert Device', desc: 'Initiated development of a safety-focused concept for automotive applications designed for real-world impact.' },
   { year: '2025', title: 'Fly High', desc: 'Began building Fly High as part of Trinade\u2019s product roadmap and platform direction.' },
-  { year: '2026', title: 'Website + Offerings Launch', desc: 'Launch of the website and structured offerings \u2014 opening collaborations with businesses, startups, and community initiatives.' },
+  { year: '2026', title: 'Website + Offerings Launch', desc: 'Re-launch of the website and structured offerings \u2014 opening collaborations with businesses, startups, and community initiatives.' },
 ]
 
 const TEAM = [
@@ -312,7 +312,7 @@ function AnimatedCounter({ target, isActive }: { target: number; isActive: boole
     }
 
     return () => cancelAnimationFrame(frameRef.current)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive, target])
 
   return <>{String(count).padStart(2, '0')}</>
@@ -384,7 +384,7 @@ function ValuesAccordion() {
                 minWidth: '80px',
                 textAlign: 'right',
               }}>
-{String(i + 1).padStart(2, '0')}
+                {String(i + 1).padStart(2, '0')}
               </span>
 
               {/* Toggle icon */}

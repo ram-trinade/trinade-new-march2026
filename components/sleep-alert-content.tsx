@@ -759,7 +759,7 @@ function FeaturesSection() {
     const step = card.getBoundingClientRect().width + 16
     const spacerW = spacer.getBoundingClientRect().width + 16
     const idx = Math.round(Math.max(0, el.scrollLeft - spacerW + step / 2) / step)
-    setFeaturesActive(Math.min(Math.max(0, idx), 3))
+    setFeaturesActive(Math.min(Math.max(0, idx), 4))
   }
   const scrollFeaturesTo = (i: number) => {
     const el = featuresCarouselRef.current
@@ -819,7 +819,18 @@ function FeaturesSection() {
           <path d="M16 4v3M16 25v3M4 16h3M25 16h3M8.5 8.5l2 2M21.5 21.5l2 2M8.5 23.5l2-2M21.5 10.5l2-2" stroke="#c9a86e" strokeWidth="1" opacity="0.5" />
         </svg>
       ),
-      span: 'md:col-span-2', // wide card
+      span: '',
+    },
+    {
+      title: 'Easy to Install',
+      desc: 'It can easily be fitted in vehicles externally. Later, it can easily be incorporated to automobiles while production.',
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 3v4M16 25v4M8 8l3 3M21 21l3 3M3 16h4M25 16h4M8 24l3-3M21 11l3-3" stroke="#c9a86e" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx="16" cy="16" r="5" stroke="#c9a86e" strokeWidth="1.2" />
+        </svg>
+      ),
+      span: '',
     },
   ]
 
