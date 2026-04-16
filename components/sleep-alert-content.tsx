@@ -230,7 +230,7 @@ function HeroSection() {
     <section
       className="relative w-full overflow-hidden flex items-center justify-center"
       data-dark-section
-      style={{ background: '#0a0a0a', height: '100svh', minHeight: 'var(--hero-min-h-lg)' }}
+      style={{ background: '#0a0a0a', minHeight: '100svh' }}
     >
       {/* Animated radar rings — pulsing outward from center
           Reduced to 3 on mobile for GPU performance */}

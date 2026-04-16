@@ -198,7 +198,7 @@ function HeroSection() {
     <Section
       dark
       className="flex flex-col justify-between relative"
-      style={{ height: '100svh', minHeight: 'var(--hero-min-h-lg)' }}
+      style={{ minHeight: '100svh' }}
     >
       {/* ── Aurora gradient background system ── */}
       <div className="absolute inset-0 overflow-hidden">
