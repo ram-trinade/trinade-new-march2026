@@ -28,6 +28,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={manrope.variable} suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/icon.png" />
+        <link rel="apple-touch-icon" href="/icon.png" />
+        <link rel="shortcut icon" href="/icon.png" />
+      </head>
       <body>
         {children}
       </body>
