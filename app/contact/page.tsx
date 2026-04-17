@@ -555,7 +555,7 @@ export default function SolutionsContactPage() {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [hintsVisible, setHintsVisible] = useState<Record<string, boolean>>({})
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   const [heroInView, setHeroInView] = useState(false)
   const [formInView, setFormInView] = useState(false)
@@ -648,7 +648,7 @@ export default function SolutionsContactPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     const newErrors: Record<string, string> = {}
@@ -671,7 +671,24 @@ export default function SolutionsContactPage() {
     setErrors(newErrors)
 
     if (isValid) {
-      setSubmitStatus('success')
+      setSubmitStatus('loading')
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        })
+        
+        if (res.ok) {
+          setSubmitStatus('success')
+          setFormData({ name: '', email: '', countryCode: '+91', phone: '', subject: '', message: '' })
+          setConsent(false)
+        } else {
+          setSubmitStatus('error')
+        }
+      } catch (err) {
+        setSubmitStatus('error')
+      }
     } else {
       setSubmitStatus('error')
     }
@@ -1404,11 +1421,18 @@ export default function SolutionsContactPage() {
                     </motion.div>
                   )}
 
+                  {submitStatus === 'error' && (
+                    <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} style={{ color: '#e11d48', fontSize: '14px', marginTop: '4px', fontWeight: 500, textAlign: 'center', background: 'rgba(225, 29, 72, 0.1)', padding: '12px', borderRadius: '8px', border: '1px solid rgba(225, 29, 72, 0.2)' }}>
+                      Failed to send message. Please try again later.
+                    </motion.div>
+                  )}
+
                   {/* Submit */}
                   <button
                     type="submit"
+                    disabled={submitStatus === 'loading'}
                     style={{
-                      background: '#1a1a1e',
+                      background: submitStatus === 'loading' ? 'rgba(42,34,24,0.35)' : '#1a1a1e',
                       color: '#ffffff',
                       fontWeight: 600,
                       borderRadius: '9999px',
@@ -1417,7 +1441,7 @@ export default function SolutionsContactPage() {
                       border: 'none',
                       fontSize: '15px',
                       letterSpacing: '0.02em',
-                      cursor: 'pointer',
+                      cursor: submitStatus === 'loading' ? 'not-allowed' : 'pointer',
                       transition: 'all 0.3s ease',
                       fontFamily: 'inherit',
                       marginTop: '8px',
@@ -1425,26 +1449,30 @@ export default function SolutionsContactPage() {
                       overflow: 'hidden',
                     }}
                     onMouseEnter={e => {
+                      if (submitStatus === 'loading') return
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#2a2a2e'
                       el.style.transform = 'translateY(-1px)'
                       el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
                     }}
                     onMouseLeave={e => {
+                      if (submitStatus === 'loading') return
                       const el = e.currentTarget as HTMLButtonElement
                       el.style.background = '#1a1a1e'
                       el.style.transform = 'translateY(0)'
                       el.style.boxShadow = 'none'
                     }}
                   >
-                    Send Message
-                    <span style={{
-                      display: 'inline-block',
-                      marginLeft: '10px',
-                      transition: 'transform 0.3s ease',
-                    }}>
-                      &rarr;
-                    </span>
+                    {submitStatus === 'loading' ? 'Sending...' : 'Send Message'}
+                    {submitStatus !== 'loading' && (
+                      <span style={{
+                        display: 'inline-block',
+                        marginLeft: '10px',
+                        transition: 'transform 0.3s ease',
+                      }}>
+                        &rarr;
+                      </span>
+                    )}
                   </button>
                 </form>
               </motion.div>
