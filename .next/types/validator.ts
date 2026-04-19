@@ -195,10 +195,136 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 
 
 
+// Validate ../../app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care">> = Specific
+  const handler = {} as typeof import("../../app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/building-secure-ai-infrastructure-at-scale/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/building-secure-ai-infrastructure-at-scale">> = Specific
+  const handler = {} as typeof import("../../app/blog/building-secure-ai-infrastructure-at-scale/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/from-pilot-to-production-scaling-ai-across-the-enterprise/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/from-pilot-to-production-scaling-ai-across-the-enterprise">> = Specific
+  const handler = {} as typeof import("../../app/blog/from-pilot-to-production-scaling-ai-across-the-enterprise/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations">> = Specific
+  const handler = {} as typeof import("../../app/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog">> = Specific
+  const handler = {} as typeof import("../../app/blog/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/predictive-intelligence-in-financial-services/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/predictive-intelligence-in-financial-services">> = Specific
+  const handler = {} as typeof import("../../app/blog/predictive-intelligence-in-financial-services/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/smart-factories-where-ai-meets-the-production-floor/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/smart-factories-where-ai-meets-the-production-floor">> = Specific
+  const handler = {} as typeof import("../../app/blog/smart-factories-where-ai-meets-the-production-floor/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/blog/why-ai-first-thinking-changes-everything/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/blog/why-ai-first-thinking-changes-everything">> = Specific
+  const handler = {} as typeof import("../../app/blog/why-ai-first-thinking-changes-everything/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/company/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/company">> = Specific
+  const handler = {} as typeof import("../../app/company/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/contact/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/contact">> = Specific
+  const handler = {} as typeof import("../../app/contact/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../app/layout.tsx
 {
   type __IsExpected<Specific extends LayoutConfig<"/">> = Specific
   const handler = {} as typeof import("../../app/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/privacy-policy/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/privacy-policy">> = Specific
+  const handler = {} as typeof import("../../app/privacy-policy/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/products/flyhigh/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/products/flyhigh">> = Specific
+  const handler = {} as typeof import("../../app/products/flyhigh/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/products/sleep-alert/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/products/sleep-alert">> = Specific
+  const handler = {} as typeof import("../../app/products/sleep-alert/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/solutions/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/solutions">> = Specific
+  const handler = {} as typeof import("../../app/solutions/layout.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

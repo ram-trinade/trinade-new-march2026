@@ -4,7 +4,7 @@
 type AppRoutes = "/" | "/blog" | "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care" | "/blog/building-secure-ai-infrastructure-at-scale" | "/blog/from-pilot-to-production-scaling-ai-across-the-enterprise" | "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations" | "/blog/predictive-intelligence-in-financial-services" | "/blog/smart-factories-where-ai-meets-the-production-floor" | "/blog/why-ai-first-thinking-changes-everything" | "/company" | "/contact" | "/privacy-policy" | "/products/flyhigh" | "/products/sleep-alert" | "/solutions"
 type AppRouteHandlerRoutes = "/api/contact"
 type PageRoutes = never
-type LayoutRoutes = "/"
+type LayoutRoutes = "/" | "/blog" | "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care" | "/blog/building-secure-ai-infrastructure-at-scale" | "/blog/from-pilot-to-production-scaling-ai-across-the-enterprise" | "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations" | "/blog/predictive-intelligence-in-financial-services" | "/blog/smart-factories-where-ai-meets-the-production-floor" | "/blog/why-ai-first-thinking-changes-everything" | "/company" | "/contact" | "/privacy-policy" | "/products/flyhigh" | "/products/sleep-alert" | "/solutions"
 type RedirectRoutes = never
 type RewriteRoutes = never
 type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes | AppRouteHandlerRoutes
@@ -34,6 +34,20 @@ export type ParamsOf<Route extends Routes> = ParamMap[Route]
 
 interface LayoutSlotMap {
   "/": never
+  "/blog": never
+  "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care": never
+  "/blog/building-secure-ai-infrastructure-at-scale": never
+  "/blog/from-pilot-to-production-scaling-ai-across-the-enterprise": never
+  "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations": never
+  "/blog/predictive-intelligence-in-financial-services": never
+  "/blog/smart-factories-where-ai-meets-the-production-floor": never
+  "/blog/why-ai-first-thinking-changes-everything": never
+  "/company": never
+  "/contact": never
+  "/privacy-policy": never
+  "/products/flyhigh": never
+  "/products/sleep-alert": never
+  "/solutions": never
 }
 
 

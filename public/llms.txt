@@ -1,0 +1,16 @@
+# Trinade AI Technologies
+> From intelligent products to enterprise services — engineered thoughtfully, delivered confidently, everywhere it ships.
+
+## Contact
+- Email: info@trinade.com
+- Machine-readable routes: /sitemap.xml
+
+## Pages
+- / — Corporate homepage
+- /company — Company story
+- /solutions — Enterprise IT solutions
+- /blog — Journal and articles
+- /contact — Contact form
+- /products/flyhigh — FlyHigh product
+- /products/sleep-alert — Sleep Alert Device product
+- /privacy-policy — Privacy policy (corporate site)
