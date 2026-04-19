@@ -150,7 +150,7 @@ const SECTIONS = [
   },
   {
     heading: 'Federated Learning and Differential Privacy',
-    content: `At Trinade, we architect AI infrastructure to decouple the intelligence from the raw data. Through federated learning, models train on local data silos without ever extracting the raw data into a centralized vulnerable warehouse.\n\nSimultaneously, differential privacy guarantees mathematically that a bad actor could not reverse-engineer individual attributes from a model's weights. By injecting calibrated noise during the training process, we ensure privacy without degrading model accuracy.`,
+    content: `We architect AI infrastructure to decouple the intelligence from the raw data. Through federated learning, models train on local data silos without ever extracting the raw data into a centralized vulnerable warehouse.\n\nSimultaneously, differential privacy guarantees mathematically that a bad actor could not reverse-engineer individual attributes from a model's weights. By injecting calibrated noise during the training process, we ensure privacy without degrading model accuracy.`,
   },
   {
     heading: 'Automated Compliance Workflows',
@@ -439,7 +439,7 @@ export default function ArticlePage() {
                     </div>
                     <div>
                       <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{ARTICLE.author}</p>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role} at Trinade AI Technologies</p>
+                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role}</p>
                       <p className="text-[15px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.5)' }}>
                         Neha architects the invisible fortress that protects enterprise applications processing petabytes of data. Combining cryptography with machine learning, she ensures that security scales harmoniously alongside artificial intelligence capabilities.
                       </p>

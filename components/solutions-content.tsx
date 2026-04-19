@@ -42,12 +42,12 @@ const industries = [
   //   Healthcare visual weight.
   // - Manufacturing bumped up so it doesn't look thin next to Retail.
   // Positions 1-3: tall cards (span 2 rows)
-  { name: 'Healthcare', desc: 'Patient records scattered across incompatible systems. Compliance audits that consume entire quarters. We unify clinical data, automate HIPAA workflows, and give care teams the tools to focus on medicine.' },
-  { name: 'Legal', desc: 'Discovery timelines are shrinking while document volumes multiply. Our secure infrastructure and intelligent search platforms help firms move faster without compromising privilege or confidentiality.' },
-  { name: 'Financial Services', desc: 'Fraud patterns shift daily and regulations stack. We build security and compliance platforms that keep pace with both.' },
+  { name: 'Healthcare', desc: 'Patient records scattered across incompatible systems. Compliance audits that consume entire quarters. We unify clinical data, automate HIPAA workflows, and  secure infrastructures, giving care teams the intelligent tools they need to stay focused entirely on medicine and patient outcomes.' },
+  { name: 'Legal', desc: 'Legal discovery timelines are shrinking rapidly while document volumes continuously multiply. Our secure infrastructure and intelligent search platforms help leading law firms move faster, streamline seamless comprehensive case management, and operate without ever compromising strict client confidentiality.' },
+  { name: 'Financial Services', desc: 'Fraud patterns shift daily, international regulations continuously stack up, and legacy systems often struggle to adapt. We build advanced security architectures and automated compliance platforms ensuring seamless transactions, ironclad data protection, and unmatched operational resilience.' },
   // Positions 4-5: short cards (1 row)
-  { name: 'Retail', desc: 'Inventory blind spots, fragmented customer data, and seasonal demand spikes. We turn every transaction into insight.' },
-  { name: 'Manufacturing', desc: 'Downtime costs more per hour than most IT budgets. We deliver predictive monitoring, connected factory systems, and the edge infrastructure that keeps production running.' },
+  { name: 'Retail', desc: 'Inventory blind spots, fragmented customer data, and seasonal demand spikes. We turn every retail transaction into valuable insight.' },
+  { name: 'Manufacturing', desc: 'Downtime costs more per hour than IT budgets. We deliver predictive monitoring and infrastructure to keep production lines running.' },
   // Position 6: wide card (spans 2 columns)
   { name: 'Logistics', desc: 'When shipment data arrives 48 hours late, decisions are already wrong. We build real-time tracking, demand sensing, and route intelligence platforms that keep operations moving ahead of disruption.' },
 ]
@@ -99,7 +99,7 @@ const services = [
   {
     title: 'Managed IT',
     body: 'Your internal team handles strategy. We handle everything else. Round-the-clock monitoring, helpdesk resolution, network health, and vendor coordination \u2014 all delivered under SLAs that hold us accountable, not just available.',
-    areas: ['24/7 Infrastructure Monitoring', 'Tiered Helpdesk Support', 'Network & Endpoint Management', 'Vendor Coordination', 'Co-Managed IT Partnerships'],
+    areas: ['Tiered Helpdesk Support', 'Vendor Coordination', 'Co-Managed IT Partnerships'],
   },
   {
     title: 'AI & Data Intelligence',

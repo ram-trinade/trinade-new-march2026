@@ -394,38 +394,7 @@ function HeroSection() {
           and triggers a clear alert — so you stay focused on the road.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.4, ease: EASE_CINE }}
-          className="mt-8 md:mt-12 flex items-center justify-center gap-5"
-        >
-          <Link
-            href="/contact"
-            className="group relative inline-flex items-center gap-3 overflow-hidden transition-all duration-500 px-6 py-3 md:px-9 md:py-[14px] text-[12px] md:text-[13px]"
-            style={{
-              borderRadius: '100px',
-              background: 'linear-gradient(135deg, #c9a86e, #a0814a)',
-              color: '#0a0a0a',
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase' as const,
-              textDecoration: 'none',
-            }}
-          >
-            {/* Shine sweep */}
-            <span
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-              style={{
-                background: 'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%)',
-              }}
-            />
-            <span className="relative">Talk to Trinade</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative transition-transform duration-300 group-hover:translate-x-[3px]">
-              <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </motion.div>
+
 
         {/* Scroll indicator removed — was obstructing CTA buttons */}
       </div>

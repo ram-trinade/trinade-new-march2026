@@ -158,7 +158,7 @@ const SECTIONS = [
   },
   {
     heading: 'The Responsible AI Imperative',
-    content: `The power of predictive intelligence brings profound responsibility. In the financial sector, algorithmic bias can result in discriminatory lending practices. At Trinade, we prioritize model transparency, explainability, and rigorous ethical reviews. A model predicting creditworthiness must be able to justify its decisions to a human auditor, ensuring that the future of banking remains both intelligent and equitable.`,
+    content: `The power of predictive intelligence brings profound responsibility. In the financial sector, algorithmic bias can result in discriminatory lending practices. we prioritize model transparency, explainability, and rigorous ethical reviews. A model predicting creditworthiness must be able to justify its decisions to a human auditor, ensuring that the future of banking remains both intelligent and equitable.`,
   },
 ]
 
@@ -439,7 +439,7 @@ export default function ArticlePage() {
                     </div>
                     <div>
                       <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{ARTICLE.author}</p>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role} at Trinade AI Technologies</p>
+                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role}</p>
                       <p className="text-[15px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.5)' }}>
                         Kavitha has spent her career re-architecting how financial institutions assess and react to risk. She pushes the boundaries of predictive modeling while heavily advocating for explainability and equitable design in AI lending algorithms.
                       </p>

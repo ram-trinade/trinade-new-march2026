@@ -146,7 +146,7 @@ function FloatingBackArrow() {
 const SECTIONS = [
   {
     heading: 'The Diagnostic Revolution',
-    content: `Medical diagnostics has entered a new era. Machine learning models trained on millions of medical images can now detect early-stage cancers, retinal diseases, and cardiac anomalies with accuracy that matches — and sometimes exceeds — seasoned specialists.\n\nAt Trinade, we approach diagnostic AI not as a replacement for clinical judgment, but as an augmentation layer. Our systems surface patterns that human eyes might miss during high-volume screening sessions, flagging anomalies for expert review while maintaining transparent confidence scores.\n\nThe key insight is that diagnostic AI works best when it respects the clinical workflow rather than disrupting it. Integration into existing PACS systems, DICOM-compatible pipelines, and EMR platforms means radiologists and pathologists can leverage AI without changing how they work.`,
+    content: `Medical diagnostics has entered a new era. Machine learning models trained on millions of medical images can now detect early-stage cancers, retinal diseases, and cardiac anomalies with accuracy that matches — and sometimes exceeds — seasoned specialists.\n\n we approach diagnostic AI not as a replacement for clinical judgment, but as an augmentation layer. Our systems surface patterns that human eyes might miss during high-volume screening sessions, flagging anomalies for expert review while maintaining transparent confidence scores.\n\nThe key insight is that diagnostic AI works best when it respects the clinical workflow rather than disrupting it. Integration into existing PACS systems, DICOM-compatible pipelines, and EMR platforms means radiologists and pathologists can leverage AI without changing how they work.`,
   },
   {
     heading: 'Patient-Centric Intelligence',
@@ -154,7 +154,7 @@ const SECTIONS = [
   },
   {
     heading: 'Compliance Without Compromise',
-    content: `Healthcare AI operates in one of the most regulated environments in technology. HIPAA, GDPR, and regional health data regulations create a complex compliance landscape that many AI initiatives fail to navigate.\n\nTrinade's approach embeds compliance into the architecture from day one. Our systems use federated learning approaches that keep patient data within institutional boundaries while still benefiting from collective intelligence. Differential privacy techniques ensure that individual patient information can never be reverse-engineered from model outputs.\n\nAudit trails, explainable AI interfaces for regulatory review, and automated compliance reporting are not afterthoughts — they are core features that enable healthcare organizations to adopt AI with confidence.`,
+    content: `Healthcare AI operates in one of the most regulated environments in technology. HIPAA, GDPR, and regional health data regulations create a complex compliance landscape that many AI initiatives fail to navigate.\n\n We approach embeds compliance into the architecture from day one. Our systems use federated learning approaches that keep patient data within institutional boundaries while still benefiting from collective intelligence. Differential privacy techniques ensure that individual patient information can never be reverse-engineered from model outputs.\n\nAudit trails, explainable AI interfaces for regulatory review, and automated compliance reporting are not afterthoughts — they are core features that enable healthcare organizations to adopt AI with confidence.`,
   },
   {
     heading: 'The Future of Clinical Workflows',
@@ -440,7 +440,6 @@ export default function ArticlePage() {
                     </div>
                     <div>
                       <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{ARTICLE.author}</p>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role} at Trinade AI Technologies</p>
                       <p className="text-[15px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.5)' }}>
                         Priya leads our Healthcare AI practice, bringing over a decade of experience in clinical informatics and machine learning to every engagement. She is passionate about creating AI systems that respect clinical workflows while pushing the boundaries of what is possible in patient care.
                       </p>

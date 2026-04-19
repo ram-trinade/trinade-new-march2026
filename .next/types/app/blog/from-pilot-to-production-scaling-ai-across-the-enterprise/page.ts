@@ -1,4 +1,4 @@
-// File: D:\akshay\trinade-new-march2026\app\blog\from-pilot-to-production-scaling-ai-across-the-enterprise\page.tsx
+// File: C:\Users\aksha\OneDrive\Desktop\new George\trinade-new-march2026\app\blog\from-pilot-to-production-scaling-ai-across-the-enterprise\page.tsx
 import * as entry from '../../../../../app/blog/from-pilot-to-production-scaling-ai-across-the-enterprise/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

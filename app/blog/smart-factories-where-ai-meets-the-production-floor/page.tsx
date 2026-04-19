@@ -439,7 +439,7 @@ export default function ArticlePage() {
                     </div>
                     <div>
                       <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{ARTICLE.author}</p>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role} at Trinade AI Technologies</p>
+                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role}</p>
                       <p className="text-[15px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.5)' }}>
                         Vikram translates cutting-edge AI into rugged, on-prem solutions for the world’s largest manufacturing floors. He is devoted to ensuring that technology serves as a tool to empower the blue-collar workforce rather than replace it.
                       </p>

@@ -105,7 +105,7 @@ const TEAM = [
   {
     name: 'Renu Kumari',
     role: 'Scrum Master / QA Project Manager',
-    bio: 'Scrum Master and QA Project Manager with 10+ years across STLC, UAT, defect management, and test leadership. Experienced with automation and performance tools (RPT, QTP, LoadRunner) and databases (DB2, Oracle). Drives planning, risk control, stakeholder reporting, and high-quality delivery across teams.',
+    bio: 'Scrum Master and QA Project Manager with expertise across STLC, UAT, defect management, and test leadership. Experienced with automation and performance tools (RPT, QTP, LoadRunner) and databases (DB2, Oracle). Drives planning, risk control, stakeholder reporting, and high-quality delivery across teams.',
     tagline: 'Leads delivery and quality with strong execution discipline',
   },
   {
@@ -117,13 +117,13 @@ const TEAM = [
   {
     name: 'Shubham Sakhare',
     role: 'AI & Full Stack Developer',
-    bio: 'AI & Full Stack Developer with 6+ years of experience delivering scalable web applications with AI/ML integrations. Strong in React/Angular, Node/Java/Spring Boot, and AWS, with hands-on work in predictive analytics, NLP, and recommendation systems. Known for leading builds end-to-end with a focus on performance, reliability, and business impact.',
+    bio: 'AI & Full Stack Developer delivering scalable web applications with AI/ML integrations. Strong in React/Angular, Node/Java/Spring Boot, and AWS, with hands-on work in predictive analytics, NLP, and recommendation systems. Known for leading builds end-to-end with a focus on performance, reliability, and business impact.',
     tagline: 'Builds AI-enhanced applications that scale cleanly from concept to production',
   },
   {
     name: 'Akash Sakhare',
     role: 'Software Developer',
-    bio: 'Software Developer with 1+ years of experience building modern full-stack applications using React/Angular, Java/Spring Boot, Node.js, SQL, and MongoDB. Comfortable designing REST APIs, optimizing performance, and writing clean, maintainable code. Works well in Agile teams and delivers user-focused solutions.',
+    bio: 'Software Developer building modern full-stack applications using React/Angular, Java/Spring Boot, Node.js, SQL, and MongoDB. Comfortable designing REST APIs, optimizing performance, and writing clean, maintainable code. Works well in Agile teams and delivers user-focused solutions.',
     tagline: 'Builds clean, scalable web applications with a user-first mindset',
   },
 ]

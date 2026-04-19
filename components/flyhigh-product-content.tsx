@@ -410,27 +410,7 @@ function HeroSection() {
         </motion.p>
 
         {/* CTA — responsive padding: smaller on mobile, full on md+ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.5, ease: EASE_CINE }}
-          className="flex items-center justify-center"
-        >
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2.5 rounded-full font-semibold transition-all duration-500 hover:shadow-[0_8px_40px_rgba(201,168,110,0.35)] px-6 py-3 md:px-9 md:py-4 text-[13px] md:text-[14px]"
-            style={{
-              background: 'linear-gradient(165deg, #d4bb8a 0%, #c9a86e 30%, #a0814a 100%)',
-              color: '#0a0a0a',
-              boxShadow: '0 4px 32px rgba(201,168,110,0.3), 0 1px 0 rgba(255,255,255,0.15) inset',
-            }}
-          >
-            Join the Waitlist
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
-        </motion.div>
+
       </div>
 
       {/* Bottom bar — stats */}
@@ -950,89 +930,89 @@ function FieldsSection() {
             </div>
 
             <div>
-            {(() => {
-              const renderField = (field: typeof fields[0], i: number) => (
-                <motion.div
-                  key={field.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 0.1 + i * 0.06, ease: EASE_CINE }}
-                  className="p-5 rounded-xl transition-all duration-500 group relative overflow-hidden h-full"
-                  style={{
-                    background: 'linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 100%)',
-                    border: '1px solid rgba(42,34,24,0.06)',
-                    backdropFilter: 'blur(8px)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(201,168,110,0.3)'
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(201,168,110,0.1)'
-                    e.currentTarget.style.transform = 'translateY(-3px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(42,34,24,0.06)'
-                    e.currentTarget.style.boxShadow = 'none'
-                    e.currentTarget.style.transform = 'translateY(0)'
-                  }}
-                >
-                  {/* Inner glow */}
-                  <div
-                    className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)' }}
-                  />
-                  <div className="relative z-10">
-                    <h4
-                      className="text-[15px] font-semibold tracking-[-0.01em] mb-1.5"
-                      style={{ color: '#2a2218' }}
-                    >
-                      {field.name}
-                    </h4>
-                    <p className="text-[13px] leading-[1.6]" style={{ color: 'rgba(42,34,24,0.45)' }}>
-                      {field.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              )
-              return (
-                <>
-                  {/* Mobile carousel + dots */}
-                  <div className="md:hidden">
+              {(() => {
+                const renderField = (field: typeof fields[0], i: number) => (
+                  <motion.div
+                    key={field.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.1 + i * 0.06, ease: EASE_CINE }}
+                    className="p-5 rounded-xl transition-all duration-500 group relative overflow-hidden h-full"
+                    style={{
+                      background: 'linear-gradient(165deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.5) 100%)',
+                      border: '1px solid rgba(42,34,24,0.06)',
+                      backdropFilter: 'blur(8px)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(201,168,110,0.3)'
+                      e.currentTarget.style.boxShadow = '0 8px 32px rgba(201,168,110,0.1)'
+                      e.currentTarget.style.transform = 'translateY(-3px)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(42,34,24,0.06)'
+                      e.currentTarget.style.boxShadow = 'none'
+                      e.currentTarget.style.transform = 'translateY(0)'
+                    }}
+                  >
+                    {/* Inner glow */}
                     <div
-                      ref={fieldsCarouselRef}
-                      onScroll={handleFieldsScroll}
-                      className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                      style={{ gap: '16px' }}
-                    >
-                      <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
-                      {fields.map((field, i) => (
-                        <div key={field.name} className="snap-center shrink-0 w-[72vw] max-w-[20rem] h-[8rem]">
-                          {renderField(field, i)}
-                        </div>
-                      ))}
-                      <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                      className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: 'linear-gradient(135deg, rgba(201,168,110,0.06) 0%, transparent 50%)' }}
+                    />
+                    <div className="relative z-10">
+                      <h4
+                        className="text-[15px] font-semibold tracking-[-0.01em] mb-1.5"
+                        style={{ color: '#2a2218' }}
+                      >
+                        {field.name}
+                      </h4>
+                      <p className="text-[13px] leading-[1.6]" style={{ color: 'rgba(42,34,24,0.45)' }}>
+                        {field.desc}
+                      </p>
                     </div>
-                    <div className="flex justify-center items-center gap-2 mt-5">
-                      {fields.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => scrollFieldsTo(i)}
-                          aria-label={`Go to field ${i + 1}`}
-                          className="h-2 rounded-full transition-all duration-300 cursor-pointer"
-                          style={{
-                            width: fieldsActive === i ? '24px' : '8px',
-                            background: fieldsActive === i ? '#c9a86e' : 'rgba(42,34,24,0.15)',
-                          }}
-                        />
-                      ))}
+                  </motion.div>
+                )
+                return (
+                  <>
+                    {/* Mobile carousel + dots */}
+                    <div className="md:hidden">
+                      <div
+                        ref={fieldsCarouselRef}
+                        onScroll={handleFieldsScroll}
+                        className="flex items-stretch overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                        style={{ gap: '16px' }}
+                      >
+                        <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                        {fields.map((field, i) => (
+                          <div key={field.name} className="snap-center shrink-0 w-[72vw] max-w-[20rem] h-[8rem]">
+                            {renderField(field, i)}
+                          </div>
+                        ))}
+                        <div aria-hidden className="shrink-0 self-stretch" style={{ width: 'var(--spacing-gutter)' }} />
+                      </div>
+                      <div className="flex justify-center items-center gap-2 mt-5">
+                        {fields.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => scrollFieldsTo(i)}
+                            aria-label={`Go to field ${i + 1}`}
+                            className="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                            style={{
+                              width: fieldsActive === i ? '24px' : '8px',
+                              background: fieldsActive === i ? '#c9a86e' : 'rgba(42,34,24,0.15)',
+                            }}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* sm+ grid (unchanged) */}
-                  <div className="hidden sm:grid sm:grid-cols-2 gap-4">
-                    {fields.map((field, i) => renderField(field, i))}
-                  </div>
-                </>
-              )
-            })()}
+                    {/* sm+ grid (unchanged) */}
+                    <div className="hidden sm:grid sm:grid-cols-2 gap-4">
+                      {fields.map((field, i) => renderField(field, i))}
+                    </div>
+                  </>
+                )
+              })()}
             </div>
           </div>
         </div>

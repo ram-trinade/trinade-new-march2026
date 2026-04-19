@@ -154,7 +154,7 @@ const SECTIONS = [
   },
   {
     heading: 'Mitigating Human Error at Scale',
-    content: `Fatigue is the enemy of accuracy. During high-stakes mergers and acquisitions, the demand for due diligence often stretches legal teams past their cognitive limits, leading to missed details.\n\nAt Trinade, we implement AI as a tireless partner. It systematically reviews portfolios at speed and never skips a line. By automating the extraction of key terms, obligations, and renewal dates, we empower legal operations to shift their focus from discovery to mitigation.`,
+    content: `Fatigue is the enemy of accuracy. During high-stakes mergers and acquisitions, the demand for due diligence often stretches legal teams past their cognitive limits, leading to missed details.\n\n We implement AI as a tireless partner. It systematically reviews portfolios at speed and never skips a line. By automating the extraction of key terms, obligations, and renewal dates, we empower legal operations to shift their focus from discovery to mitigation.`,
   },
   {
     heading: 'The Future Governance Layer',
@@ -439,7 +439,7 @@ export default function ArticlePage() {
                     </div>
                     <div>
                       <p className="font-semibold text-lg mb-1" style={{ color: '#2a2218' }}>{ARTICLE.author}</p>
-                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role} at Trinade AI Technologies</p>
+                      <p className="text-sm mb-4" style={{ color: 'rgba(42,34,24,0.45)' }}>{ARTICLE.role}</p>
                       <p className="text-[15px] leading-[1.8]" style={{ color: 'rgba(42,34,24,0.5)' }}>
                         Arjun has spent over a decade merging technology and law, pioneering intelligent processes to streamline corporate legal operations. His mission is to eliminate the tedious hours spent in document review so that lawyers can focus on what they do best: applying legal expertise.
                       </p>
