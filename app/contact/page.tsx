@@ -1330,7 +1330,6 @@ export default function SolutionsContactPage() {
                       id="message"
                       name="message"
                       rows={7}
-                      data-lenis-prevent
                       placeholder="Tell us about your project or question..."
                       value={formData.message}
                       onChange={handleChange}
