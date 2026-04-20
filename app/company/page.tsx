@@ -470,6 +470,26 @@ function MilestonesCarousel() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, margin: '-60px' })
 
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const checkScroll = useCallback(() => {
+    if (!scrollRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+    setCanScrollLeft(scrollLeft > 0)
+    setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth)
+  }, [])
+
+  useEffect(() => {
+    // Wait a brief moment for layout/fonts to settle before initial measurement
+    const timeoutId = setTimeout(checkScroll, 100)
+    window.addEventListener('resize', checkScroll)
+    return () => {
+      clearTimeout(timeoutId)
+      window.removeEventListener('resize', checkScroll)
+    }
+  }, [checkScroll])
+
   // Apr 16: measure actual card width each scroll so the step matches one
   // whole card (+ gap) instead of a fixed 360 that drifted mid-card at
   // tablet/desktop. Also swipe 2 cards per click at tablet (768-1023) per
@@ -521,6 +541,7 @@ function MilestonesCarousel() {
         <div style={{ display: 'flex', gap: '12px' }}>
           <button
             onClick={() => scroll('left')}
+            disabled={!canScrollLeft}
             style={{
               width: '48px',
               height: '48px',
@@ -530,7 +551,8 @@ function MilestonesCarousel() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              cursor: 'pointer',
+              cursor: canScrollLeft ? 'pointer' : 'not-allowed',
+              opacity: canScrollLeft ? 1 : 0.3,
               transition: 'all 0.3s ease',
               color: '#c9a86e',
             }}
@@ -542,6 +564,7 @@ function MilestonesCarousel() {
           </button>
           <button
             onClick={() => scroll('right')}
+            disabled={!canScrollRight}
             style={{
               width: '48px',
               height: '48px',
@@ -551,7 +574,8 @@ function MilestonesCarousel() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              cursor: 'pointer',
+              cursor: canScrollRight ? 'pointer' : 'not-allowed',
+              opacity: canScrollRight ? 1 : 0.3,
               transition: 'all 0.3s ease',
               color: '#c9a86e',
             }}
@@ -568,6 +592,7 @@ function MilestonesCarousel() {
       <div
         ref={scrollRef}
         className="scrollbar-none"
+        onScroll={checkScroll}
         style={{
           display: 'flex',
           gap: '24px',
