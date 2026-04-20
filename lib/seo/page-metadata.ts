@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-config'
+import { absoluteUrl } from '@/lib/seo/site-config'
 
 const OG_IMAGE = '/logo-transparent.png'
 
@@ -51,11 +51,29 @@ export function pageMetadata(input: {
   return {
     title,
     description,
-    alternates: { canonical: `${getSiteUrl()}${path.startsWith('/') ? path : `/${path}`}` },
+    alternates: { canonical: absoluteUrl(path) },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+        'max-video-preview': -1,
+      },
+    },
     ...withSocial(title, description, path, {
       type: type ?? 'website',
       publishedTime,
       authors,
     }),
+    other: {
+      bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+      gptbot: 'index, follow',
+      perplexitybot: 'index, follow',
+      claudebot: 'index, follow',
+    },
   }
 }

@@ -393,7 +393,7 @@
       "static/chunks/2619-38012e79151e370a.js",
       "static/chunks/5239-6e880675ae21a0d0.js",
       "static/chunks/7425.172602c506a892bf.js",
-      "static/chunks/477.ea23c6bae5f8728a.js"
+      "static/chunks/7620.ea23c6bae5f8728a.js"
     ]
   },
   "app\\privacy-policy\\page.tsx -> @/components/premium-cursor": {
@@ -429,7 +429,7 @@
       "static/chunks/2619-38012e79151e370a.js",
       "static/chunks/5239-6e880675ae21a0d0.js",
       "static/chunks/7425.172602c506a892bf.js",
-      "static/chunks/7620.ea23c6bae5f8728a.js"
+      "static/chunks/477.ea23c6bae5f8728a.js"
     ]
   },
   "app\\products\\flyhigh\\page.tsx -> @/components/flyhigh-product-content": {
@@ -478,7 +478,7 @@
       "static/chunks/2619-38012e79151e370a.js",
       "static/chunks/5239-6e880675ae21a0d0.js",
       "static/chunks/7425.172602c506a892bf.js",
-      "static/chunks/477.ea23c6bae5f8728a.js"
+      "static/chunks/7620.ea23c6bae5f8728a.js"
     ]
   },
   "app\\products\\sleep-alert\\page.tsx -> @/components/premium-cursor": {
@@ -525,7 +525,7 @@
       "static/chunks/2619-38012e79151e370a.js",
       "static/chunks/5239-6e880675ae21a0d0.js",
       "static/chunks/7425.172602c506a892bf.js",
-      "static/chunks/477.ea23c6bae5f8728a.js"
+      "static/chunks/7620.ea23c6bae5f8728a.js"
     ]
   },
   "app\\solutions\\page.tsx -> @/components/premium-cursor": {
@@ -566,7 +566,7 @@
       "static/chunks/2619-38012e79151e370a.js",
       "static/chunks/5239-6e880675ae21a0d0.js",
       "static/chunks/7425.172602c506a892bf.js",
-      "static/chunks/477.ea23c6bae5f8728a.js"
+      "static/chunks/7620.ea23c6bae5f8728a.js"
     ]
   },
   "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {

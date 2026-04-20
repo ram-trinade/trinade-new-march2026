@@ -17,18 +17,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/products/sleep-alert',
   ]
 
-  const main = staticPaths.map((path) => ({
-    url: `${base}${path}`,
-    lastModified: last,
-    changeFrequency: 'monthly' as const,
-    priority: path === '' ? 1 : path === '/blog' ? 0.85 : 0.8,
-  }))
+  const main = staticPaths.map((path) => {
+    const isHome = path === ''
+    const isBlogHub = path === '/blog'
+    const isContact = path === '/contact'
+    let changeFrequency: 'weekly' | 'monthly' = 'monthly'
+    if (isHome || isBlogHub) changeFrequency = 'weekly'
+    return {
+      url: `${base}${path}`,
+      lastModified: last,
+      changeFrequency,
+      priority: isHome ? 1 : isBlogHub ? 0.9 : isContact ? 0.85 : 0.8,
+    }
+  })
 
   const posts = BLOG_ENTRIES.map((e) => ({
     url: `${base}/blog/${e.slug}`,
     lastModified: new Date(e.datePublished),
-    changeFrequency: 'monthly' as const,
-    priority: 0.65,
+    changeFrequency: 'yearly' as const,
+    priority: 0.7,
   }))
 
   return [...main, ...posts]

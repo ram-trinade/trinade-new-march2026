@@ -1,4 +1,23 @@
 User-Agent: *
 Allow: /
 
+User-Agent: Googlebot
+Allow: /
+
+User-Agent: Bingbot
+Allow: /
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+Host: https://trinade.com
 Sitemap: https://trinade.com/sitemap.xml

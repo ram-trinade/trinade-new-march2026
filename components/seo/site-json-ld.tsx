@@ -1,4 +1,5 @@
 import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-config'
+import { BLOG_ENTRIES } from '@/lib/seo/blog-entries'
 
 /**
  * Organization + WebSite JSON-LD. Address and legal name match visible footer / privacy copy.
@@ -43,6 +44,45 @@ export function SiteJsonLd() {
       'From intelligent products to enterprise services — engineered thoughtfully, delivered confidently, everywhere it ships.',
     publisher: { '@id': `${url}/#organization` },
     inLanguage: 'en-IN',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${url}/blog`,
+      'query-input': 'required name=search_term_string',
+    },
+  }
+
+  const webpage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${url}/#webpage`,
+    url,
+    name: 'Trinade AI Technologies',
+    isPartOf: { '@id': `${url}/#website` },
+    about: { '@id': `${url}/#organization` },
+    inLanguage: 'en-IN',
+  }
+
+  const blogCollection = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${url}/blog#blog`,
+    url: absoluteUrl('/blog'),
+    name: 'Trinade AI Blog',
+    isPartOf: { '@id': `${url}/#website` },
+    publisher: { '@id': `${url}/#organization` },
+    inLanguage: 'en-IN',
+  }
+
+  const blogItemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${url}/blog#itemlist`,
+    itemListElement: BLOG_ENTRIES.map((entry, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: absoluteUrl(`/blog/${entry.slug}`),
+      name: entry.title,
+    })),
   }
 
   return (
@@ -54,6 +94,18 @@ export function SiteJsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webpage) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogCollection) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogItemList) }}
       />
     </>
   )

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope } from 'next/font/google'
 import { SiteJsonLd } from '@/components/seo/site-json-ld'
-import { getSiteUrl } from '@/lib/seo/site-config'
+import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-config'
 import './globals.css'
 
 const manrope = Manrope({
@@ -36,20 +36,46 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  keywords: [
+    'Trinade AI Technologies',
+    'AI solutions',
+    'enterprise AI services',
+    'AI products',
+    'predictive intelligence',
+    'intelligent automation',
+    'AI healthcare',
+    'AI financial services',
+    'AI manufacturing',
+    'secure AI infrastructure',
+  ],
+  category: 'technology',
+  referrer: 'origin-when-cross-origin',
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: '/',
+    url: absoluteUrl('/'),
     siteName: 'Trinade AI Technologies',
     title: defaultTitle,
     description: defaultDescription,
     images: [
       {
-        url: '/logo-transparent.png',
+        url: absoluteUrl('/logo-transparent.png'),
         width: 540,
         height: 720,
         alt: 'Trinade AI Technologies',
@@ -60,7 +86,15 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: ['/logo-transparent.png'],
+    images: [absoluteUrl('/logo-transparent.png')],
+  },
+  other: {
+    bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+    gptbot: 'index, follow',
+    perplexitybot: 'index, follow',
+    claudebot: 'index, follow',
+    google: 'notranslate',
+    'msapplication-TileColor': '#1a1a1e',
   },
 }
 
