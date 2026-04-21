@@ -9,9 +9,12 @@ import path from 'node:path'
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   outputFileTracingRoot: path.join(__dirname),
-  images: {
-    unoptimized: true,
-  },
+  // Image optimizer is ON by default (previously disabled via
+  // `images: { unoptimized: true }` with no documented reason). On Vercel
+  // this emits AVIF/WebP + responsive srcset automatically, meaningfully
+  // improving LCP and bandwidth vs. unoptimized originals. If a specific
+  // image proves incompatible with the optimizer, prefer per-image opt-out
+  // (the `unoptimized` prop on <Image>) over disabling globally.
 }
 
 export default nextConfig
