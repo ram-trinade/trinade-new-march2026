@@ -48,11 +48,12 @@ export function SiteJsonLd() {
       'From intelligent products to enterprise services — engineered thoughtfully, delivered confidently, everywhere it ships.',
     publisher: { '@id': `${url}/#organization` },
     inLanguage: 'en-IN',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${url}/blog`,
-      'query-input': 'required name=search_term_string',
-    },
+    // SearchAction intentionally omitted. The prior value targeted /blog,
+    // which is NOT a valid SearchAction target (spec requires a URL
+    // template containing {search_term_string}). A broken SearchAction
+    // causes Google to drop the sitelinks search box opportunity. Re-add
+    // this block only after a real /search?q={search_term_string}
+    // endpoint exists on the site.
   }
 
   const webpage = {
@@ -81,11 +82,32 @@ export function SiteJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     '@id': `${url}/blog#itemlist`,
+    // Explicit ordering + count help search engines treat this as a
+    // reverse-chronological feed of articles, not a disordered list.
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: BLOG_ENTRIES.length,
     itemListElement: BLOG_ENTRIES.map((entry, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       url: absoluteUrl(`/blog/${entry.slug}`),
-      name: entry.title,
+      // Full BlogPosting entity reference per ListItem lets Google build
+      // a proper article-list understanding of the blog hub (richer than
+      // a bare list of URL/name pairs).
+      item: {
+        '@type': 'BlogPosting',
+        '@id': absoluteUrl(`/blog/${entry.slug}`),
+        headline: entry.title,
+        description: entry.description,
+        url: absoluteUrl(`/blog/${entry.slug}`),
+        datePublished: `${entry.datePublished}T12:00:00+05:30`,
+        author: {
+          '@type': 'Person',
+          name: entry.author,
+        },
+        image: absoluteUrl(entry.image),
+        publisher: { '@id': `${url}/#organization` },
+        inLanguage: 'en-IN',
+      },
     })),
   }
 

@@ -123,11 +123,13 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [absoluteUrl(OG_IMAGE_PATH)],
   },
+  // bingbot / gptbot / perplexitybot / claudebot meta tags are intentionally
+  // omitted. None of those crawlers read per-agent <meta name=""> tags — they
+  // all respect only robots.txt (which app/robots.ts already allows). The
+  // standard <meta name="robots"> above covers Bing, Google, and general
+  // SERP-facing crawlers. The `google: 'notranslate'` tag stays because it
+  // is a genuine Google-specific hint.
   other: {
-    bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
-    gptbot: 'index, follow',
-    perplexitybot: 'index, follow',
-    claudebot: 'index, follow',
     google: 'notranslate',
     'msapplication-TileColor': '#1a1a1e',
   },

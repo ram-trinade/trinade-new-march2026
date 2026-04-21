@@ -79,32 +79,21 @@ export function pageMetadata(input: {
   authors?: string[]
 }): Metadata {
   const { title, description, path, type, publishedTime, authors } = input
+  // Intentional omissions:
+  //   - `robots` is inherited from app/layout.tsx, which emits a conditional
+  //     index directive via isProductionDeployment(). Defining robots here
+  //     would silently override that and cause every per-page metadata call
+  //     to force index:true on preview/dev deployments.
+  //   - `other: { bingbot, gptbot, ... }` is removed. Those crawlers read
+  //     robots.txt only; per-agent meta tags are not honored and are cargo-cult.
   return {
     title,
     description,
     alternates: { canonical: absoluteUrl(path) },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        noimageindex: false,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-        'max-video-preview': -1,
-      },
-    },
     ...withSocial(title, description, path, {
       type: type ?? 'website',
       publishedTime,
       authors,
     }),
-    other: {
-      bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
-      gptbot: 'index, follow',
-      perplexitybot: 'index, follow',
-      claudebot: 'index, follow',
-    },
   }
 }
