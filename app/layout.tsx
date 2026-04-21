@@ -47,10 +47,14 @@ export const metadata: Metadata = {
   applicationName: 'Trinade AI Technologies',
   authors: [{ name: 'Trinade AI Technologies' }],
   creator: 'Trinade AI Technologies',
+  // Enable iOS auto-detection of phone numbers so visible contact
+  // numbers become tappable "Call" links on mobile. Email/address
+  // auto-detection stays disabled to avoid unwanted linkification
+  // inside body copy (addresses are linked explicitly in the footer).
   formatDetection: {
     email: false,
     address: false,
-    telephone: false,
+    telephone: true,
   },
   // Icons field is the single source of truth for favicons and touch icons.
   // Next emits the correct <link> tags automatically — do not hand-roll
@@ -122,13 +126,11 @@ export const metadata: Metadata = {
   },
   // bingbot / gptbot / perplexitybot / claudebot meta tags are intentionally
   // omitted. None of those crawlers read per-agent <meta name=""> tags — they
-  // all respect only robots.txt (which app/robots.ts already allows). The
-  // standard <meta name="robots"> above covers Bing, Google, and general
-  // SERP-facing crawlers. The `google: 'notranslate'` tag stays because it
-  // is a genuine Google-specific hint.
+  // all respect only robots.txt (which app/robots.ts already allows).
+  // msapplication-TileColor was dropped too — it targets Windows 8.1 pinned
+  // tiles, which are irrelevant on any supported OS in 2026.
   other: {
     google: 'notranslate',
-    'msapplication-TileColor': '#1a1a1e',
   },
 }
 
