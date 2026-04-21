@@ -15,10 +15,12 @@ export const metadata: Metadata = pageMetadata({
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      {/* Two-item breadcrumb: Home > Sleep Alert Device. See companion
+          note in app/products/flyhigh/layout.tsx — "Products" middle
+          level intentionally omitted because no /products hub exists. */}
       <BreadcrumbJsonLd
         items={[
           { name: 'Home', path: '/' },
-          { name: 'Products', path: '/products/sleep-alert' },
           { name: 'Sleep Alert Device', path: '/products/sleep-alert' },
         ]}
       />

@@ -53,10 +53,15 @@ export const metadata: Metadata = pageMetadata({
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      {/* Two-item breadcrumb: Home > FlyHigh. A middle "Products" level
+          was considered but dropped because there is no /products
+          landing page — pointing it at /products/flyhigh would create a
+          duplicate URL in the breadcrumb, which Google's Rich Results
+          validator rejects. If a /products hub page is added later,
+          reintroduce the middle level pointing at /products. */}
       <BreadcrumbJsonLd
         items={[
           { name: 'Home', path: '/' },
-          { name: 'Products', path: '/products/flyhigh' },
           { name: 'FlyHigh', path: '/products/flyhigh' },
         ]}
       />
