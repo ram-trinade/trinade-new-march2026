@@ -47,14 +47,14 @@ export const metadata: Metadata = {
   applicationName: 'Trinade AI Technologies',
   authors: [{ name: 'Trinade AI Technologies' }],
   creator: 'Trinade AI Technologies',
-  // Enable iOS auto-detection of phone numbers so visible contact
-  // numbers become tappable "Call" links on mobile. Email/address
-  // auto-detection stays disabled to avoid unwanted linkification
-  // inside body copy (addresses are linked explicitly in the footer).
+  // Email and address auto-detection stay disabled to avoid unwanted
+  // linkification inside body copy (the footer links them explicitly).
+  // telephone is intentionally omitted from this object so iOS emits
+  // no opt-out meta tag and its default phone-detection behavior applies —
+  // visible phone numbers (footer, contact) become tappable "Call" links.
   formatDetection: {
     email: false,
     address: false,
-    telephone: true,
   },
   // Icons field is the single source of truth for favicons and touch icons.
   // Next emits the correct <link> tags automatically — do not hand-roll
