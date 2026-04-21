@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 
-const ErrorContent = dynamic(() => import('@/components/experimental-error-content'), { ssr: false })
+const ErrorContent = dynamic(() => import('@/components/experimental-error-content'))
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 
 export default function NotFound() {
