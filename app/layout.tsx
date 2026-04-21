@@ -84,22 +84,19 @@ export const metadata: Metadata = {
           noimageindex: true,
         },
       },
-  keywords: [
-    'Trinade AI Technologies',
-    'AI solutions',
-    'enterprise AI services',
-    'AI products',
-    'predictive intelligence',
-    'intelligent automation',
-    'AI healthcare',
-    'AI financial services',
-    'AI manufacturing',
-    'secure AI infrastructure',
-  ],
+  // `keywords` meta removed — Google stopped using it in 2009, Bing in
+  // 2014. It neither helps ranking nor AI-search visibility. Organization
+  // knowsAbout (in SiteJsonLd) is the modern, honored equivalent.
   category: 'technology',
   referrer: 'origin-when-cross-origin',
   alternates: {
     canonical: '/',
+    types: {
+      // Advertise the RSS feed so AI pipelines (which consume RSS
+      // aggressively for blog freshness) can find it without guessing
+      // the URL. Also lets browser feed-readers auto-discover.
+      'application/rss+xml': '/feed.xml',
+    },
   },
   openGraph: {
     type: 'website',

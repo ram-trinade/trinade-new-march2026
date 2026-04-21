@@ -18,6 +18,40 @@ export function SiteJsonLd() {
     // /logo-transparent.png is 540×720 and satisfies the minimum. Ideal
     // is a dedicated 512×512 square logo at /logo-512.png when produced.
     logo: absoluteUrl('/logo-transparent.png'),
+    // Description is the single most important field for LLM entity
+    // extraction — Gemini/ChatGPT/Perplexity quote this text verbatim
+    // when asked "what is Trinade?" Keep it factual, no marketing.
+    description:
+      'Trinade AI Technologies is an India-based enterprise AI consulting and products company. It designs, builds, and operates intelligent solutions across cybersecurity, cloud infrastructure, custom platforms, and data intelligence — and ships AI-first products for healthcare, legal, financial, and manufacturing sectors.',
+    // knowsAbout declares topical authority. LLMs use this to decide
+    // which queries the Organization should surface for during retrieval.
+    knowsAbout: [
+      'Artificial Intelligence',
+      'Enterprise AI consulting',
+      'AI product development',
+      'Machine Learning',
+      'Cloud infrastructure',
+      'Cybersecurity',
+      'Data intelligence',
+      'Healthcare AI',
+      'Legal AI',
+      'Financial AI',
+      'Manufacturing AI',
+      'Predictive analytics',
+    ],
+    // ContactPoint is Google's canonical schema for customer contact
+    // (preferred over loose email/telephone) and is what powers the
+    // "Call" / "Email" buttons in Knowledge Panel.
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'info@trinade.com',
+        telephone: '+91-9490754923',
+        availableLanguage: ['English'],
+        areaServed: 'IN',
+      },
+    ],
     email: 'info@trinade.com',
     telephone: '+91-9490754923',
     address: {
@@ -31,6 +65,10 @@ export function SiteJsonLd() {
       '@type': 'Country',
       name: 'India',
     },
+    // Note on sameAs: these URLs are verified against Google's entity
+    // graph. If any of the profiles doesn't exist, or doesn't link back
+    // to trinade.com from its bio, the relationship fails verification
+    // and Organization trust scoring drops. Audit each before publish.
     sameAs: [
       'https://linkedin.com/company/trinadeai',
       'https://instagram.com/trinadeai',
