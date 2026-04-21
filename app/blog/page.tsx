@@ -6,6 +6,8 @@ import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-json-ld'
+
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
 const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'))
 const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'))
@@ -492,6 +494,17 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
 export default function BlogPage() {
   return (
     <>
+      {/* Hub-level breadcrumb (Home > Blog). Lives at page-level, NOT
+          in /blog/layout.tsx, because layouts stack: if it were in the
+          layout, every /blog/* post page would also render it, producing
+          two BreadcrumbList JSON-LD blocks per post and confusing Google
+          about which is canonical. */}
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', path: '/' },
+          { name: 'Blog', path: '/blog' },
+        ]}
+      />
       <div className="solutions-page relative" style={{ background: '#f2ede6' }}>
         <PremiumCursor />
         <SolutionsNavbar />

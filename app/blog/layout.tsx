@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo/page-metadata'
-import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-json-ld'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Blog',
@@ -9,16 +8,10 @@ export const metadata: Metadata = pageMetadata({
   path: '/blog',
 })
 
+// BreadcrumbJsonLd is emitted at the page level (app/blog/page.tsx for
+// the hub, and each app/blog/<slug>/layout.tsx for the posts) — not at
+// this shared layout — because layouts stack and a hub-level breadcrumb
+// here would render a duplicate alongside each post's own breadcrumb.
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Home', path: '/' },
-          { name: 'Blog', path: '/blog' },
-        ]}
-      />
-      {children}
-    </>
-  )
+  return <>{children}</>
 }
