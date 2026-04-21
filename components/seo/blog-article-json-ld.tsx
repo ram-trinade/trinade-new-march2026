@@ -26,7 +26,13 @@ export function BlogArticleJsonLd({ slug }: { slug: string }) {
       name: 'Trinade AI Technologies',
       logo: {
         '@type': 'ImageObject',
-        url: absoluteUrl('/icon.png'),
+        // Google Article schema requires publisher.logo ≥112×112 for
+        // rich-result eligibility. Swapping from 32×32 /icon.png to
+        // 540×720 /logo-transparent.png satisfies the minimum while a
+        // proper 512×512 square is produced.
+        url: absoluteUrl('/logo-transparent.png'),
+        width: 540,
+        height: 720,
       },
     },
     mainEntityOfPage: {

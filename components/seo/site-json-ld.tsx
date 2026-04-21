@@ -13,7 +13,11 @@ export function SiteJsonLd() {
     name: 'Trinade AI Technologies',
     legalName: 'Trinade AI Technologies Pvt Ltd',
     url,
-    logo: absoluteUrl('/icon.png'),
+    // Organization.logo: Google requires ≥112×112 for knowledge-panel
+    // eligibility. /icon.png is 32×32 (favicon size) which fails this gate.
+    // /logo-transparent.png is 540×720 and satisfies the minimum. Ideal
+    // is a dedicated 512×512 square logo at /logo-512.png when produced.
+    logo: absoluteUrl('/logo-transparent.png'),
     email: 'info@trinade.com',
     telephone: '+91-9490754923',
     address: {

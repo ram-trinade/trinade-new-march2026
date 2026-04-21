@@ -1,7 +1,17 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope } from 'next/font/google'
 import { SiteJsonLd } from '@/components/seo/site-json-ld'
-import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-config'
+import {
+  absoluteUrl,
+  getSiteUrl,
+  isProductionDeployment,
+} from '@/lib/seo/site-config'
+import {
+  OG_IMAGE_ALT,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_PATH,
+  OG_IMAGE_WIDTH,
+} from '@/lib/seo/page-metadata'
 import './globals.css'
 
 const manrope = Manrope({
@@ -21,6 +31,12 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
+// Emit robots: noindex/nofollow on preview and development deployments so
+// Vercel preview URLs do not accumulate in Google's index and compete with
+// the production canonical. Only the real production deploy carries an
+// index directive. See isProductionDeployment() in lib/seo/site-config.ts.
+const shouldIndex = isProductionDeployment()
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
@@ -36,19 +52,38 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
+  // Icons field is the single source of truth for favicons and touch icons.
+  // Next emits the correct <link> tags automatically — do not hand-roll
+  // <link rel="icon"> in the layout <head>, which would duplicate output.
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
   },
+  robots: shouldIndex
+    ? {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+          noimageindex: false,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+          'max-video-preview': -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: false,
+          noimageindex: true,
+        },
+      },
   keywords: [
     'Trinade AI Technologies',
     'AI solutions',
@@ -75,10 +110,10 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [
       {
-        url: absoluteUrl('/logo-transparent.png'),
-        width: 540,
-        height: 720,
-        alt: 'Trinade AI Technologies',
+        url: absoluteUrl(OG_IMAGE_PATH),
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
+        alt: OG_IMAGE_ALT,
       },
     ],
   },
@@ -86,7 +121,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: [absoluteUrl('/logo-transparent.png')],
+    images: [absoluteUrl(OG_IMAGE_PATH)],
   },
   other: {
     bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
@@ -105,11 +140,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-IN" className={manrope.variable} suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/icon.png" />
-        <link rel="apple-touch-icon" href="/icon.png" />
-        <link rel="shortcut icon" href="/icon.png" />
-      </head>
       <body>
         <SiteJsonLd />
         {children}
