@@ -6,13 +6,11 @@ import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-json-ld'
-
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
-const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'))
-const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'))
-const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'))
-const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'))
+const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
+const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
+const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
+const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
 
 /* ─── Constants ─── */
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -494,17 +492,6 @@ function FeaturedCard({ article }: { article: typeof FEATURED_ARTICLE }) {
 export default function BlogPage() {
   return (
     <>
-      {/* Hub-level breadcrumb (Home > Blog). Lives at page-level, NOT
-          in /blog/layout.tsx, because layouts stack: if it were in the
-          layout, every /blog/* post page would also render it, producing
-          two BreadcrumbList JSON-LD blocks per post and confusing Google
-          about which is canonical. */}
-      <BreadcrumbJsonLd
-        items={[
-          { name: 'Home', path: '/' },
-          { name: 'Blog', path: '/blog' },
-        ]}
-      />
       <div className="solutions-page relative" style={{ background: '#f2ede6' }}>
         <PremiumCursor />
         <SolutionsNavbar />
