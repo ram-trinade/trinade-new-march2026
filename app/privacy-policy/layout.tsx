@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/seo/page-metadata'
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-json-ld'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Privacy Policy',
@@ -9,5 +10,15 @@ export const metadata: Metadata = pageMetadata({
 })
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return children
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', path: '/' },
+          { name: 'Privacy Policy', path: '/privacy-policy' },
+        ]}
+      />
+      {children}
+    </>
+  )
 }

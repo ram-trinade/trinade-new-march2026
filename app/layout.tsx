@@ -1,7 +1,17 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope } from 'next/font/google'
 import { SiteJsonLd } from '@/components/seo/site-json-ld'
-import { absoluteUrl, getSiteUrl } from '@/lib/seo/site-config'
+import {
+  absoluteUrl,
+  getSiteUrl,
+  isProductionDeployment,
+} from '@/lib/seo/site-config'
+import {
+  OG_IMAGE_ALT,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_PATH,
+  OG_IMAGE_WIDTH,
+} from '@/lib/seo/page-metadata'
 import './globals.css'
 
 const manrope = Manrope({
@@ -21,6 +31,12 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
+// Emit robots: noindex/nofollow on preview and development deployments so
+// Vercel preview URLs do not accumulate in Google's index and compete with
+// the production canonical. Only the real production deploy carries an
+// index directive. See isProductionDeployment() in lib/seo/site-config.ts.
+const shouldIndex = isProductionDeployment()
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
@@ -31,40 +47,60 @@ export const metadata: Metadata = {
   applicationName: 'Trinade AI Technologies',
   authors: [{ name: 'Trinade AI Technologies' }],
   creator: 'Trinade AI Technologies',
+  // Email and address auto-detection stay disabled to avoid unwanted
+  // linkification inside body copy (the footer links them explicitly).
+  // telephone is intentionally omitted from this object so iOS emits
+  // no opt-out meta tag and its default phone-detection behavior applies —
+  // visible phone numbers (footer, contact) become tappable "Call" links.
   formatDetection: {
     email: false,
     address: false,
-    telephone: false,
   },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
+  // Icons field is the single source of truth for favicons and touch icons.
+  // Next emits the correct <link> tags automatically — do not hand-roll
+  // <link rel="icon"> in the layout <head>, which would duplicate output.
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
   },
-  keywords: [
-    'Trinade AI Technologies',
-    'AI solutions',
-    'enterprise AI services',
-    'AI products',
-    'predictive intelligence',
-    'intelligent automation',
-    'AI healthcare',
-    'AI financial services',
-    'AI manufacturing',
-    'secure AI infrastructure',
-  ],
+  robots: shouldIndex
+    ? {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+          noimageindex: false,
+          'max-image-preview': 'large',
+          'max-snippet': -1,
+          'max-video-preview': -1,
+        },
+      }
+    : {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: false,
+          noimageindex: true,
+        },
+      },
+  // `keywords` meta removed — Google stopped using it in 2009, Bing in
+  // 2014. It neither helps ranking nor AI-search visibility. Organization
+  // knowsAbout (in SiteJsonLd) is the modern, honored equivalent.
   category: 'technology',
   referrer: 'origin-when-cross-origin',
   alternates: {
     canonical: '/',
+    types: {
+      // Advertise the RSS feed so AI pipelines (which consume RSS
+      // aggressively for blog freshness) can find it without guessing
+      // the URL. Also lets browser feed-readers auto-discover.
+      'application/rss+xml': '/feed.xml',
+    },
   },
   openGraph: {
     type: 'website',
@@ -75,10 +111,10 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [
       {
-        url: absoluteUrl('/logo-transparent.png'),
-        width: 540,
-        height: 720,
-        alt: 'Trinade AI Technologies',
+        url: absoluteUrl(OG_IMAGE_PATH),
+        width: OG_IMAGE_WIDTH,
+        height: OG_IMAGE_HEIGHT,
+        alt: OG_IMAGE_ALT,
       },
     ],
   },
@@ -86,15 +122,15 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: defaultTitle,
     description: defaultDescription,
-    images: [absoluteUrl('/logo-transparent.png')],
+    images: [absoluteUrl(OG_IMAGE_PATH)],
   },
+  // bingbot / gptbot / perplexitybot / claudebot meta tags are intentionally
+  // omitted. None of those crawlers read per-agent <meta name=""> tags — they
+  // all respect only robots.txt (which app/robots.ts already allows).
+  // msapplication-TileColor was dropped too — it targets Windows 8.1 pinned
+  // tiles, which are irrelevant on any supported OS in 2026.
   other: {
-    bingbot: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
-    gptbot: 'index, follow',
-    perplexitybot: 'index, follow',
-    claudebot: 'index, follow',
     google: 'notranslate',
-    'msapplication-TileColor': '#1a1a1e',
   },
 }
 
@@ -105,11 +141,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-IN" className={manrope.variable} suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/icon.png" />
-        <link rel="apple-touch-icon" href="/icon.png" />
-        <link rel="shortcut icon" href="/icon.png" />
-      </head>
       <body>
         <SiteJsonLd />
         {children}

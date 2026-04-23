@@ -5,10 +5,10 @@ import { useRef } from 'react'
 import { motion, useInView } from 'motion/react'
 
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
-const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
-const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
-const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
-const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
+const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'))
+const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'))
+const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'))
+const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'))
 
 function PolicySection({
   children,

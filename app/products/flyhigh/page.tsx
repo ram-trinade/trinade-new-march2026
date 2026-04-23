@@ -3,14 +3,13 @@
 import dynamic from 'next/dynamic'
 
 const FlyHighContent = dynamic(() => import('@/components/flyhigh-product-content'), {
-  ssr: false,
   loading: () => <div style={{ minHeight: '100svh', background: '#0a0a0a' }} />,
 })
-const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
-const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
+const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'))
+const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'))
 const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
-const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
-const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
+const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'))
+const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'))
 
 export default function FlyHighPage() {
   return (
