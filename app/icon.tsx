@@ -8,8 +8,11 @@ export const size = {
 }
 export const contentType = 'image/png'
 
+// Apr 20: use the proper gold-on-dark favicon asset instead of
+// filter-hacking the old transparent logo. The favicon-32x32.png
+// is a purpose-built 32×32 with exact brand gold on charcoal.
 export default async function Icon() {
-  const logoData = await readFile(join(process.cwd(), 'public', 'logo-transparent.png'))
+  const logoData = await readFile(join(process.cwd(), 'public', 'favicon-32x32.png'))
   const logoBase64 = `data:image/png;base64,${logoData.toString('base64')}`
 
   return new ImageResponse(
@@ -21,19 +24,14 @@ export default async function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#1a1a1e',
-          borderRadius: 6,
-          padding: 3,
+          background: 'transparent',
         }}
       >
         <img
           src={logoBase64}
-          width={26}
-          height={26}
-          style={{
-            objectFit: 'contain',
-            filter: 'brightness(1.8) contrast(1.2)',
-          }}
+          width={32}
+          height={32}
+          style={{ objectFit: 'contain' }}
         />
       </div>
     ),

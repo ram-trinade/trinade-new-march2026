@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'motion/react'
-import Image from 'next/image'
 import Link from 'next/link'
+import { TrinadeLogo } from './trinade-logo'
 
 const MotionLink = motion.create(Link)
 
@@ -134,9 +134,19 @@ export default function SolutionsNavbar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     compute()
+    // Apr 20: schedule delayed re-checks to catch the preloader→content
+    // transition. The preloader covers the page with a dark overlay for
+    // ~3s; the initial compute() fires during that window and sets
+    // isOnDark=true. These staggered calls re-sample AFTER the preloader
+    // has faded, catching the real background. Also catches HMR + slow
+    // hydration. Once scroll events take over, these are no-ops.
+    const delayIds = [800, 2000, 3500, 5000].map(
+      ms => setTimeout(compute, ms)
+    )
     return () => {
       if (rafId) cancelAnimationFrame(rafId)
       window.removeEventListener('scroll', handleScroll)
+      delayIds.forEach(id => clearTimeout(id))
     }
   }, [])
 
@@ -170,14 +180,15 @@ export default function SolutionsNavbar() {
   return (
     <>
       {/* ─── Logo + Trinade text on the left ─── */}
-      {/* min-h-[54px] on mobile makes this Link the same height as the
-          right-anchored pill (which has py-2.5 + a 34px scroll badge = 54px),
-          so flex `items-center` vertically centers the wordmark to match
-          the pill's center on the same horizontal level. md:min-h-0 resets
-          on desktop where the pill is centered above and alignment is moot. */}
+      {/* min-h-[54px] across ALL breakpoints matches the right-anchored
+          pill's collapsed height (py-2.5 + a 34px scroll badge = 54px).
+          Both this Link and the pill are anchored at
+          `top: var(--spacing-nav-top)`, so identical heights + `items-center`
+          place their vertical midlines on the same horizontal line — the
+          logo cluster sits parallel to the navbar pill at every viewport. */}
       <Link
         href="/"
-        className="fixed z-[9999] flex items-center gap-2.5 min-h-[54px] md:min-h-0"
+        className="fixed z-[9999] flex items-center gap-3 min-h-[54px]"
         data-navbar
         style={{
           pointerEvents: 'auto',
@@ -186,29 +197,32 @@ export default function SolutionsNavbar() {
           left: 'var(--spacing-nav-edge)',
         }}
       >
-        <Image
-          src="/logo-transparent.png"
-          alt="Trinade"
-          width={120}
-          height={120}
-          className="object-contain"
+        {/* Apr 24: inline SVG logomark — recolors via `currentColor`.
+            The wrapper's `color` is driven by isOnDark and transitions in
+            lockstep with the wordmark below. No network requests, no PNG
+            decode, no opacity crossfade: a single property animates.
+            Sized 2rem→2.5rem fluidly (32→40px) so it reads confidently next
+            to the enlarged wordmark without dominating the nav. */}
+        <span
+          className="block"
           style={{
-            width: 'clamp(1.625rem, 1.25vw + 0.625rem, 2rem)',
-            height: 'auto',
-            filter: isOnDark
-              ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
-              : 'brightness(0) contrast(3)',
-            opacity: 1,
-            transition: 'filter 0.5s ease',
+            width: 'clamp(2rem, 2.8vw, 2.5rem)',
+            height: 'clamp(2rem, 2.8vw, 2.5rem)',
+            color: isOnDark ? '#f2ede6' : '#1a1a1e',
+            transition: 'color 0.5s ease',
+            lineHeight: 0,
           }}
-        />
+        >
+          <TrinadeLogo title="Trinade" />
+        </span>
         {/* Wordmark hides only on extremely small viewports (<360px, iPhone SE 1st gen)
             where the pill on the right would otherwise overlap. Visible on all
-            modern phones (375+), tablets, and desktop. */}
+            modern phones (375+), tablets, and desktop. Sized 1.5rem→2.125rem
+            fluidly (24→34px) to match the bumped logomark. */}
         <span
           className="hidden min-[360px]:inline"
           style={{
-            fontSize: 'clamp(1.25rem, 1.25vw + 0.75rem, 1.75rem)',
+            fontSize: 'clamp(1.5rem, 2.4vw, 2.125rem)',
             fontWeight: 800,
             letterSpacing: '-0.03em',
             color: isOnDark ? '#d4bb8a' : '#2a2218',
