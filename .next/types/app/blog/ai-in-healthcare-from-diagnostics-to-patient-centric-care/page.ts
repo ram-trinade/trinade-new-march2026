@@ -1,4 +1,4 @@
-// File: D:\akshay\trinade-new-march2026\app\blog\ai-in-healthcare-from-diagnostics-to-patient-centric-care\page.tsx
+// File: C:\Users\aksha\OneDrive\Desktop\new George\trinade-new-march2026\app\blog\ai-in-healthcare-from-diagnostics-to-patient-centric-care\page.tsx
 import * as entry from '../../../../../app/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

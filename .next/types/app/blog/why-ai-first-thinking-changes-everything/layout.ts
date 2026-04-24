@@ -1,4 +1,4 @@
-// File: D:\akshay\trinade-new-march2026\app\blog\why-ai-first-thinking-changes-everything\layout.tsx
+// File: C:\Users\aksha\OneDrive\Desktop\new George\trinade-new-march2026\app\blog\why-ai-first-thinking-changes-everything\layout.tsx
 import * as entry from '../../../../../app/blog/why-ai-first-thinking-changes-everything/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
