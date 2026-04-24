@@ -8,10 +8,6 @@ export const metadata: Metadata = pageMetadata({
   path: '/blog',
 })
 
-// BreadcrumbJsonLd is emitted at the page level (app/blog/page.tsx for
-// the hub, and each app/blog/<slug>/layout.tsx for the posts) — not at
-// this shared layout — because layouts stack and a hub-level breadcrumb
-// here would render a duplicate alongside each post's own breadcrumb.
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return children
 }
