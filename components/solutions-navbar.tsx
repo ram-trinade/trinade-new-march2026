@@ -187,19 +187,16 @@ export default function SolutionsNavbar() {
         }}
       >
         <Image
-          src="/logo-transparent.png"
+          src={isOnDark ? "/logo-gold.svg" : "/logo-charcoal.svg"}
           alt="Trinade"
           width={120}
           height={120}
           className="object-contain"
           style={{
-            width: 'clamp(1.625rem, 1.25vw + 0.625rem, 2rem)',
+            width: 'clamp(2.5rem, 2vw + 1.5rem, 3.5rem)',
             height: 'auto',
-            filter: isOnDark
-              ? 'brightness(1.2) sepia(1) hue-rotate(-10deg) saturate(0.6) contrast(3)'
-              : 'brightness(0) contrast(3)',
             opacity: 1,
-            transition: 'filter 0.5s ease',
+            transition: 'opacity 0.5s ease',
           }}
         />
         {/* Wordmark hides only on extremely small viewports (<360px, iPhone SE 1st gen)
@@ -340,8 +337,8 @@ export default function SolutionsNavbar() {
                   <div className="space-y-0.5">
                     {menuLinks.map((link, i) => {
                       const isActive = link.href === '/'
-                          ? pathname === '/' || pathname === '/home'
-                          : link.hasDropdown
+                        ? pathname === '/' || pathname === '/home'
+                        : link.hasDropdown
                           ? pathname.startsWith('/products')
                           : pathname === link.href
 
