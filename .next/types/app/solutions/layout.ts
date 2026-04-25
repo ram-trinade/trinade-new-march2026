@@ -1,4 +1,4 @@
-// File: D:\akshay\trinade-new-march2026\app\solutions\layout.tsx
+// File: C:\Users\aksha\trinade-new-march2026\app\solutions\layout.tsx
 import * as entry from '../../../../app/solutions/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -30,102 +30,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/company": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/company",
-      "dataRoute": "/company.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/contact": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/contact",
-      "dataRoute": "/contact.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/privacy-policy",
-      "dataRoute": "/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/products/flyhigh": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/products/flyhigh",
-      "dataRoute": "/products/flyhigh.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/_not-found": {
       "initialStatus": 404,
       "experimentalBypassFor": [
@@ -180,6 +84,102 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/contact": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/contact",
+      "dataRoute": "/contact.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/products/flyhigh": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/products/flyhigh",
+      "dataRoute": "/products/flyhigh.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/privacy-policy": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/privacy-policy",
+      "dataRoute": "/privacy-policy.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/blog": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/blog",
+      "dataRoute": "/blog.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/products/sleep-alert": {
       "experimentalBypassFor": [
         {
@@ -204,7 +204,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care": {
+    "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -217,8 +217,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care",
-      "dataRoute": "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care.rsc",
+      "srcRoute": "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations",
+      "dataRoute": "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -243,6 +243,54 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/blog/from-pilot-to-production-scaling-ai-across-the-enterprise",
       "dataRoute": "/blog/from-pilot-to-production-scaling-ai-across-the-enterprise.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/blog/smart-factories-where-ai-meets-the-production-floor": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/blog/smart-factories-where-ai-meets-the-production-floor",
+      "dataRoute": "/blog/smart-factories-where-ai-meets-the-production-floor.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/blog/why-ai-first-thinking-changes-everything": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/blog/why-ai-first-thinking-changes-everything",
+      "dataRoute": "/blog/why-ai-first-thinking-changes-everything.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -300,30 +348,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog/smart-factories-where-ai-meets-the-production-floor": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/smart-factories-where-ai-meets-the-production-floor",
-      "dataRoute": "/blog/smart-factories-where-ai-meets-the-production-floor.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/": {
       "experimentalBypassFor": [
         {
@@ -339,30 +363,6 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/",
       "dataRoute": "/index.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/blog/why-ai-first-thinking-changes-everything": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/why-ai-first-thinking-changes-everything",
-      "dataRoute": "/blog/why-ai-first-thinking-changes-everything.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -396,7 +396,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog": {
+    "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -409,8 +409,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blog",
-      "dataRoute": "/blog.rsc",
+      "srcRoute": "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care",
+      "dataRoute": "/blog/ai-in-healthcare-from-diagnostics-to-patient-centric-care.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -420,7 +420,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations": {
+    "/company": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -433,8 +433,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations",
-      "dataRoute": "/blog/intelligent-contract-analysis-how-ai-is-reshaping-legal-operations.rsc",
+      "srcRoute": "/company",
+      "dataRoute": "/company.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",

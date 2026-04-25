@@ -99,7 +99,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "D:\\akshay\\trinade-new-march2026",
+    "outputFileTracingRoot": "C:\\Users\\aksha\\trinade-new-march2026",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -289,10 +289,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "D:\\akshay\\trinade-new-march2026"
+      "root": "C:\\Users\\aksha\\trinade-new-march2026"
     }
   },
-  "appDir": "D:\\akshay\\trinade-new-march2026",
+  "appDir": "C:\\Users\\aksha\\trinade-new-march2026",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",
