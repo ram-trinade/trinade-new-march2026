@@ -155,7 +155,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: clip;
+    overflow-x: hidden;
+    width: 100%;
     /* Hide scrollbars — Lenis handles the scroll UI */
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -171,8 +172,8 @@
     line-height: 1.6;
     background-color: #f2ede6;
     color: #2a2218;
-    overflow-x: clip;
-    max-width: 100vw;
+    overflow-x: hidden;
+    width: 100%;
   }
 
   /* ─── Lenis smooth scroll ──────────────────────────────────────────── */
