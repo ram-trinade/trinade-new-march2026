@@ -2,6 +2,9 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'motion/react'
+import Link from 'next/link'
+
+const MotionLink = motion.create(Link)
 
 const EASE = [0.25, 0.1, 0.25, 1] as const
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
@@ -11,11 +14,10 @@ export default function SolutionsFooter() {
   const isInView = useInView(ref, { once: true, margin: '-40px' })
 
   const navLinks = [
-    { label: 'Products', href: '#' },
-    { label: 'Solutions', href: '#' },
-    { label: 'Blog', href: '/exactly-copied-inspirations-solutions-page/blog' },
-    { label: 'Company', href: '/exactly-copied-inspirations-solutions-page/company' },
-    { label: 'Contact', href: '/exactly-copied-inspirations-solutions-page/contact' },
+    { label: 'Solutions', href: '/solutions' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Company', href: '/company' },
+    { label: 'Contact', href: '/contact' },
   ]
 
   const socials = [
@@ -25,26 +27,37 @@ export default function SolutionsFooter() {
   ]
 
   return (
-    <footer ref={ref} className="relative overflow-hidden" style={{ background: '#0a0a0a', maxHeight: '100vh' }}>
+    <footer ref={ref} className="relative overflow-hidden" data-dark-section style={{ background: '#0a0a0a', isolation: 'isolate' }}>
       <style>{`
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
+        @keyframes marquee-scroll {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
         }
         .footer-marquee {
-          animation: marquee 10s linear infinite;
+          display: flex;
+          width: max-content;
+          animation: marquee-scroll 28s linear infinite;
           will-change: transform;
         }
       `}</style>
 
       {/* Main content */}
-      <div className="px-[clamp(2rem,8vw,8rem)] py-14">
+      <div
+        style={{
+          paddingLeft: 'var(--spacing-gutter)',
+          paddingRight: 'var(--spacing-gutter)',
+          paddingTop: 'var(--spacing-fluid-3xl)',
+          paddingBottom: 'var(--spacing-fluid-2xl)',
+        }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_OUT }}
-          className="relative rounded-[28px] p-12"
+          className="relative"
           style={{
+            borderRadius: 'var(--radius-fluid-2xl)',
+            padding: 'var(--spacing-fluid-xl)',
             background: 'linear-gradient(165deg, rgba(185,155,100,0.22) 0%, rgba(165,125,60,0.16) 40%, rgba(200,175,125,0.19) 100%)',
             backdropFilter: 'blur(24px) saturate(1.5)',
             WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
@@ -52,11 +65,74 @@ export default function SolutionsFooter() {
             boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(130,95,30,0.08)',
           }}
         >
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-0">
+          {/* CTA Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.05, ease: EASE_OUT }}
+            style={{
+              borderBottom: '1px solid rgba(180,150,95,0.18)',
+              marginBottom: 'var(--spacing-fluid-xl)',
+              paddingBottom: 'var(--spacing-fluid-l)',
+            }}
+          >
+            <h2
+              className="tracking-[-0.03em] leading-[1.1]"
+              style={{
+                fontSize: 'var(--text-h2)',
+                fontWeight: 300,
+                color: 'rgba(255,255,255,0.93)',
+                marginBottom: 'var(--spacing-fluid-s)',
+              }}
+            >
+              Let&apos;s create something<br className="hidden sm:inline" />{' '}extraordinary
+            </h2>
+            <p
+              className="max-w-lg"
+              style={{
+                fontSize: 'var(--text-body)',
+                lineHeight: 1.7,
+                fontWeight: 400,
+                color: 'rgba(201,168,110,0.7)',
+                marginBottom: 'var(--spacing-fluid-l)',
+              }}
+            >
+              Ready to transform your business? We&apos;d love to hear your vision.
+            </p>
+            <MotionLink
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 md:px-7 md:py-3 transition-all duration-300"
+              style={{
+                fontSize: '14px',
+                fontWeight: 600,
+                letterSpacing: '0.02em',
+                color: 'rgba(255,255,255,0.93)',
+                background: 'linear-gradient(165deg, rgba(185,155,100,0.45) 0%, rgba(165,125,60,0.35) 40%, rgba(200,175,125,0.40) 100%)',
+                backdropFilter: 'blur(12px) saturate(1.4)',
+                WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+                border: '1px solid rgba(180,150,95,0.35)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(130,95,30,0.1), 0 2px 12px rgba(130,95,30,0.2)',
+              }}
+              whileHover={{
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(130,95,30,0.15), 0 4px 24px rgba(130,95,30,0.35)',
+              } as never}
+            >
+              Start a conversation
+              <span style={{ fontSize: '16px', marginLeft: '2px' }}>&rarr;</span>
+            </MotionLink>
+          </motion.div>
+
+          <div
+            className="flex flex-col lg:flex-row"
+            style={{ gap: 'var(--spacing-fluid-xl)' }}
+          >
             {/* LEFT — Nav */}
-            <div className="lg:w-[40%] flex flex-col gap-3">
+            <div
+              className="lg:w-[40%] flex flex-col"
+              style={{ gap: 'var(--spacing-fluid-xs)' }}
+            >
               {navLinks.map((link, i) => (
-                <motion.a
+                <MotionLink
                   key={link.label}
                   href={link.href}
                   initial={{ opacity: 0, x: -12 }}
@@ -64,33 +140,64 @@ export default function SolutionsFooter() {
                   transition={{ duration: 0.5, delay: 0.1 + i * 0.07, ease: EASE }}
                   className="group inline-block w-fit leading-none tracking-[-0.02em] transition-colors duration-300"
                   style={{
-                    fontSize: 'clamp(1.4rem, 2vw, 1.75rem)',
+                    fontSize: 'var(--text-card-lg)',
                     fontWeight: 600,
                     color: 'rgba(255,255,255,0.9)',
                   }}
                   whileHover={{ color: 'rgba(201,168,110,0.9)' } as never}
                 >
                   {link.label}
-                </motion.a>
+                </MotionLink>
               ))}
             </div>
 
             {/* RIGHT — Office + Social */}
-            <div className="lg:w-[60%] flex flex-col sm:flex-row gap-12 lg:gap-0 lg:justify-end">
+            <div
+              className="lg:w-[60%] flex flex-col sm:flex-row lg:justify-end"
+              style={{ gap: 'var(--spacing-fluid-2xl)' }}
+            >
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
                 className="lg:w-[50%]"
               >
-                <p className="mb-4 uppercase tracking-[0.08em]" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>OFFICE</p>
-                <p className="mb-3" style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>
+                <p
+                  className="uppercase tracking-[0.08em]"
+                  style={{
+                    fontSize: 'var(--text-eyebrow)',
+                    color: 'rgba(255,255,255,0.4)',
+                    marginBottom: 'var(--spacing-fluid-s)',
+                  }}
+                >
+                  OFFICE
+                </p>
+                <p
+                  style={{
+                    fontSize: 'var(--text-body)',
+                    color: 'rgba(255,255,255,0.7)',
+                    lineHeight: 1.6,
+                    marginBottom: 'var(--spacing-fluid-xs)',
+                  }}
+                >
                   #06, Green Valley Apartments,<br />
                   Gorantla, Guntur,<br />
                   Andhra Pradesh 522034, India
                 </p>
-                <a href="tel:+919490754923" className="block mb-2 transition-colors duration-200 hover:opacity-100" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)' }}>+91 9490754923</a>
-                <a href="mailto:info@trinade.com" className="block transition-colors duration-200 hover:underline hover:opacity-100" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.55)' }}>info@trinade.com</a>
+                <a
+                  href="tel:+919490754923"
+                  className="block transition-colors duration-200 hover:opacity-100"
+                  style={{ fontSize: 'var(--text-small)', color: 'rgba(255,255,255,0.55)', marginBottom: '0.5rem' }}
+                >
+                  +91 9490754923
+                </a>
+                <a
+                  href="mailto:info@trinade.com"
+                  className="block transition-colors duration-200 hover:underline hover:opacity-100"
+                  style={{ fontSize: 'var(--text-small)', color: 'rgba(255,255,255,0.55)' }}
+                >
+                  info@trinade.com
+                </a>
               </motion.div>
 
               <motion.div
@@ -99,7 +206,16 @@ export default function SolutionsFooter() {
                 transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
                 className="lg:w-[50%]"
               >
-                <p className="mb-4 uppercase tracking-[0.08em]" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)' }}>SOCIAL</p>
+                <p
+                  className="uppercase tracking-[0.08em]"
+                  style={{
+                    fontSize: 'var(--text-eyebrow)',
+                    color: 'rgba(255,255,255,0.4)',
+                    marginBottom: 'var(--spacing-fluid-s)',
+                  }}
+                >
+                  SOCIAL
+                </p>
                 <div className="flex gap-3">
                   {socials.map(s => (
                     <motion.a
@@ -139,34 +255,74 @@ export default function SolutionsFooter() {
       </div>
 
       {/* Separator */}
-      <div className="mx-[clamp(2rem,8vw,8rem)]" style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.3), transparent)' }} />
+      <div
+        aria-hidden="true"
+        style={{
+          height: '1px',
+          marginLeft: 'var(--spacing-gutter)',
+          marginRight: 'var(--spacing-gutter)',
+          background: 'linear-gradient(90deg, transparent, rgba(201,168,110,0.3), transparent)',
+        }}
+      />
 
       {/* Bottom bar */}
-      <div className="px-[clamp(2rem,8vw,8rem)] py-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex gap-6">
-          {[
-            { label: 'Privacy Policy', href: '/exactly-copied-inspirations-solutions-page/privacy-policy' },
-            { label: 'Terms of Service', href: '/exactly-copied-inspirations-solutions-page/terms-of-service' },
-          ].map(link => (
-            <a key={link.label} href={link.href} className="text-[12px] transition-opacity duration-200 hover:opacity-60" style={{ color: 'rgba(255,255,255,0.3)' }}>{link.label}</a>
-          ))}
+      <div
+        className="flex flex-wrap items-center justify-between"
+        style={{
+          paddingLeft: 'var(--spacing-gutter)',
+          paddingRight: 'var(--spacing-gutter)',
+          paddingTop: 'var(--spacing-fluid-m)',
+          paddingBottom: 'var(--spacing-fluid-m)',
+          gap: 'var(--spacing-fluid-s)',
+        }}
+      >
+        <div className="flex" style={{ gap: 'var(--spacing-fluid-m)' }}>
+          <Link
+            href="/privacy-policy"
+            className="transition-opacity duration-200 hover:opacity-60"
+            style={{ fontSize: 'var(--text-eyebrow)', color: 'rgba(255,255,255,0.3)' }}
+          >
+            Privacy Policy
+          </Link>
         </div>
-        <p className="text-[12px]" style={{ color: 'rgba(255,255,255,0.3)' }}>&copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.</p>
+        <p style={{ fontSize: 'var(--text-eyebrow)', color: 'rgba(255,255,255,0.3)' }}>
+          &copy; 2026 Trinade AI Technologies Pvt Ltd. All rights reserved.
+        </p>
       </div>
 
-      {/* Scrolling TRINADE marquee — 3x bigger */}
-      <div className="overflow-hidden" style={{ userSelect: 'none', pointerEvents: 'none' }}>
+      {/* Scrolling TRINADE marquee — seamless infinite loop */}
+      <div
+        className="overflow-hidden"
+        data-marquee
+        style={{ userSelect: 'none', pointerEvents: 'none' }}
+      >
+        {/* Apr 16: bumped clamp(7rem, 20vw, 22rem) → clamp(10rem, 24vw, 26rem)
+            for taller marquee across the board. Mobile 390 grows 112→160px
+            (+43%), tablet 768 grows 154→184px (+20%), desktop 1440 grows
+            288→346px (+20%), 1920+ ceiling lifts 352→416px. */}
         <div
-          className="footer-marquee flex whitespace-nowrap leading-none"
+          className="footer-marquee whitespace-nowrap leading-none"
           style={{
-            fontSize: 'clamp(280px, 38vw, 500px)',
-            fontWeight: 900,
-            color: 'rgba(255,255,255,0.06)',
-            letterSpacing: '-0.04em',
+            fontSize: 'clamp(10rem, 24vw, 26rem)',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
           }}
         >
-          <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
-          <span>TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;TRINADE&nbsp;·&nbsp;</span>
+          {[0, 1].map(copy => (
+            <span
+              key={copy}
+              className="inline-block"
+              style={{
+                color: 'transparent',
+                background: 'linear-gradient(165deg, rgba(185,155,100,0.4) 0%, rgba(165,125,60,0.3) 40%, rgba(200,175,125,0.35) 100%)',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                WebkitTextStroke: 'none',
+              }}
+            >
+              {'TRINADE \u00B7 TRINADE \u00B7 TRINADE \u00B7 TRINADE \u00B7 '}
+            </span>
+          ))}
         </div>
       </div>
     </footer>

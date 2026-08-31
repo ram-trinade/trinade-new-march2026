@@ -1,16 +1,34 @@
-node_modules/
+# Next.js
 .next/
-.claude/
-*.log
+/out
+
+# Dependencies
+node_modules/
+
+# Environment
 .env
 .env.local
 .env.*.local
-nul
-.vercel/
-.playwright-mcp/
-*.png
-*.jpeg
-!public/**/*.png
-!public/**/*.jpeg
 
-.vercel
+# Vercel
+.vercel/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+.playwright-mcp/

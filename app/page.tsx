@@ -1,71 +1,51 @@
 'use client'
 
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
+const PreloaderAnimation = dynamic(() => import('@/components/preloader-animation'), { ssr: false })
+const PremiumCursor = dynamic(() => import('@/components/premium-cursor'), { ssr: false })
+const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), { ssr: false })
+const SolutionsNavbar = dynamic(() => import('@/components/solutions-navbar'), { ssr: false })
+const HomepageContent = dynamic(() => import('@/components/homepage-content'), { ssr: false })
+const SolutionsFooter = dynamic(() => import('@/components/solutions-footer'), { ssr: false })
+const SolutionsCookiePopup = dynamic(() => import('@/components/solutions-cookie-popup'), { ssr: false })
 
-const SmoothScroll = dynamic(() => import('@/components/smooth-scroll'), {
-  ssr: false,
-})
+export default function HomePage() {
+  const [preloaderDone, setPreloaderDone] = useState(false)
 
-const HeroSection = dynamic(() => import('@/components/hero-section'), {
-  ssr: false,
-})
-
-const Navigation = dynamic(() => import('@/components/navigation'), {
-  ssr: false,
-})
-
-const TrustedBy = dynamic(() => import('@/components/trusted-by'), {
-  ssr: false,
-})
-
-const WhatWeDo = dynamic(() => import('@/components/what-we-do'), {
-  ssr: false,
-})
-
-const ProductShowcase = dynamic(() => import('@/components/product-showcase'), {
-  ssr: false,
-})
-
-const StatsSection = dynamic(() => import('@/components/stats-section'), {
-  ssr: false,
-})
-
-const Testimonials = dynamic(() => import('@/components/testimonials'), {
-  ssr: false,
-})
-
-const OrganicBackground = dynamic(() => import('@/components/organic-background'), {
-  ssr: false,
-})
-
-const Footer = dynamic(() => import('@/components/footer'), {
-  ssr: false,
-})
-
-export default function Home() {
   return (
-    <div className="relative">
-      <div className="fixed inset-0 z-0">
-        <OrganicBackground />
+    <>
+      {/* SSR dark overlay — renders immediately in HTML, covers cream body bg.
+          Sits below preloader (z-10001) but above content. Removed when preloader finishes.
+          This is a normal React element = no hydration mismatch. */}
+      {!preloaderDone && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9998,
+            background: 'linear-gradient(135deg, #0d0b08 0%, #1c160d 20%, #0f0d0a 40%, #201811 60%, #150f08 80%, #0d0b08 100%)',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      <PreloaderAnimation onComplete={() => setPreloaderDone(true)} />
+      <div
+        className="solutions-page relative bg-[#f2ede6]"
+        style={{
+          opacity: preloaderDone ? 1 : 0,
+          transition: 'opacity 0.5s ease',
+        }}
+      >
+        <PremiumCursor />
+        <SolutionsNavbar />
+        <SmoothScroll>
+          <HomepageContent />
+          <SolutionsFooter />
+        </SmoothScroll>
+        {preloaderDone && <SolutionsCookiePopup />}
       </div>
-      <SmoothScroll>
-        <Navigation />
-        <main>
-          <div data-cursor="light"><HeroSection /></div>
-          <div className="relative bg-[#e8e4de]">
-            <TrustedBy />
-            <WhatWeDo />
-          </div>
-          <div className="relative bg-[#060e09] section-dark">
-            <ProductShowcase />
-            <StatsSection />
-          </div>
-          <div className="relative bg-[#e8e4de]">
-            <Testimonials />
-          </div>
-          <Footer withBackground />
-        </main>
-      </SmoothScroll>
-    </div>
+    </>
   )
 }

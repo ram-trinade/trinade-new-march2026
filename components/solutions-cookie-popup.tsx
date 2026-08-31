@@ -8,7 +8,6 @@ interface CookieCategory {
   label: string;
   description: string;
   required: boolean;
-  defaultChecked: boolean;
 }
 
 const COOKIE_CATEGORIES: CookieCategory[] = [
@@ -17,7 +16,6 @@ const COOKIE_CATEGORIES: CookieCategory[] = [
     label: 'Strictly necessary',
     description: 'Cookies required to enable basic website functionality.',
     required: true,
-    defaultChecked: true,
   },
   {
     id: 'marketing',
@@ -25,7 +23,6 @@ const COOKIE_CATEGORIES: CookieCategory[] = [
     description:
       'Cookies used to deliver advertising that is more relevant to you and your interests.',
     required: false,
-    defaultChecked: false,
   },
   {
     id: 'personalization',
@@ -33,7 +30,6 @@ const COOKIE_CATEGORIES: CookieCategory[] = [
     description:
       'Cookies allowing the website to remember choices you make (such as your name, language, or the region you are in).',
     required: false,
-    defaultChecked: false,
   },
   {
     id: 'analytics',
@@ -41,7 +37,6 @@ const COOKIE_CATEGORIES: CookieCategory[] = [
     description:
       'Cookies helping understand how this website performs, how visitors interact with the site, and whether there may be technical issues.',
     required: false,
-    defaultChecked: false,
   },
 ];
 
@@ -63,21 +58,19 @@ const easing = [0.32, 0.72, 0, 1] as const;
 export default function SolutionsCookiePopup() {
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  // All categories checked by default
   const [categories, setCategories] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(COOKIE_CATEGORIES.map((c) => [c.id, c.defaultChecked]))
+    Object.fromEntries(COOKIE_CATEGORIES.map((c) => [c.id, true]))
   );
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
-        // Small delay so the page renders first
-        const timer = setTimeout(() => setVisible(true), 600);
-        return () => clearTimeout(timer);
-      }
+      if (localStorage.getItem(STORAGE_KEY)) return;
     } catch {
-      // localStorage unavailable (SSR, private mode, etc.)
+      // localStorage unavailable — show popup as fallback
     }
+    const timer = setTimeout(() => setVisible(true), 600);
+    return () => clearTimeout(timer);
   }, []);
 
   const persist = (value: Record<string, boolean> | 'all') => {
@@ -97,11 +90,6 @@ export default function SolutionsCookiePopup() {
 
   const handleSaveChanges = () => persist(categories);
 
-  const handleClose = () => {
-    setVisible(false);
-    setExpanded(false);
-  };
-
   const toggleCategory = (id: string) => {
     setCategories((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -110,7 +98,31 @@ export default function SolutionsCookiePopup() {
     <AnimatePresence>
       {visible && (
         <>
-          {/* Dark overlay — only shown in expanded state */}
+          {/* Custom scrollbar for expanded modal */}
+          <style>{`
+            .cookie-modal-expanded::-webkit-scrollbar {
+              width: 4px;
+            }
+            .cookie-modal-expanded::-webkit-scrollbar-track {
+              background: rgba(160,120,50,0.08);
+              border-radius: 4px;
+              margin: 24px 0;
+            }
+            .cookie-modal-expanded::-webkit-scrollbar-thumb {
+              background: rgba(201,168,110,0.35);
+              border-radius: 4px;
+              transition: background 0.2s;
+            }
+            .cookie-modal-expanded::-webkit-scrollbar-thumb:hover {
+              background: rgba(201,168,110,0.55);
+            }
+            .cookie-modal-expanded {
+              scrollbar-width: thin;
+              scrollbar-color: rgba(201,168,110,0.35) rgba(160,120,50,0.08);
+            }
+          `}</style>
+
+          {/* Dark overlay — only shown in expanded state, NOT dismissable */}
           <AnimatePresence>
             {expanded && (
               <motion.div
@@ -125,7 +137,6 @@ export default function SolutionsCookiePopup() {
                   background: 'rgba(0,0,0,0.4)',
                   zIndex: 9998,
                 }}
-                onClick={handleClose}
               />
             )}
           </AnimatePresence>
@@ -142,46 +153,15 @@ export default function SolutionsCookiePopup() {
                 style={{
                   ...glassStyle,
                   position: 'fixed',
-                  bottom: '24px',
-                  right: '24px',
-                  width: '380px',
+                  bottom: 'var(--spacing-nav-edge)',
+                  right: 'var(--spacing-nav-edge)',
+                  width: 'min(23.75rem, calc(100vw - 3rem))',
+                  maxWidth: 'calc(100vw - 3rem)',
                   zIndex: 9999,
-                  padding: '24px',
+                  padding: 'var(--spacing-fluid-m)',
                 }}
               >
-                {/* Close button */}
-                <button
-                  onClick={handleClose}
-                  aria-label="Close cookie popup"
-                  style={{
-                    position: 'absolute',
-                    top: '16px',
-                    right: '16px',
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    background: 'rgba(160,120,50,0.12)',
-                    border: '1px solid rgba(201,168,110,0.2)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: 'rgba(90,70,40,0.7)',
-                    transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.background =
-                      'rgba(160,120,50,0.22)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.background =
-                      'rgba(160,120,50,0.12)';
-                  }}
-                >
-                  <CloseIcon />
-                </button>
-
-                {/* Title */}
+                {/* Title — no close button */}
                 <h3
                   style={{
                     margin: '0 0 10px 0',
@@ -189,7 +169,6 @@ export default function SolutionsCookiePopup() {
                     fontWeight: 800,
                     color: '#2a2218',
                     lineHeight: 1.2,
-                    paddingRight: '32px',
                   }}
                 >
                   Cookie settings
@@ -279,9 +258,11 @@ export default function SolutionsCookiePopup() {
                 </div>
               </motion.div>
             ) : (
-              /* Expanded modal */
+              /* Expanded modal — no close button, no overlay dismiss */
               <motion.div
                 key="expanded"
+                className="cookie-modal-expanded"
+                data-lenis-prevent
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
@@ -300,45 +281,11 @@ export default function SolutionsCookiePopup() {
                   maxHeight: 'calc(100vh - 64px)',
                   overflowY: 'auto',
                   zIndex: 9999,
-                  padding: '32px',
+                  padding: 'clamp(16px, 5vw, 32px)',
                 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Close button */}
-                <button
-                  onClick={handleClose}
-                  aria-label="Close cookie popup"
-                  style={{
-                    position: 'absolute',
-                    top: '20px',
-                    right: '20px',
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '50%',
-                    background: 'rgba(160,120,50,0.12)',
-                    border: '1px solid rgba(201,168,110,0.2)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: 'rgba(90,70,40,0.7)',
-                    transition: 'background 0.2s',
-                    zIndex: 1,
-                    flexShrink: 0,
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.background =
-                      'rgba(160,120,50,0.22)';
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.background =
-                      'rgba(160,120,50,0.12)';
-                  }}
-                >
-                  <CloseIcon />
-                </button>
-
-                {/* Title */}
+                {/* Title — no close button */}
                 <h3
                   style={{
                     margin: '0 0 12px 0',
@@ -346,7 +293,6 @@ export default function SolutionsCookiePopup() {
                     fontWeight: 800,
                     color: '#2a2218',
                     lineHeight: 1.2,
-                    paddingRight: '40px',
                   }}
                 >
                   Cookie settings
@@ -501,9 +447,9 @@ function CategoryCard({
           height: '20px',
           borderRadius: '6px',
           border: checked
-            ? '2px solid #c9a86e'
-            : '2px solid rgba(160,120,50,0.35)',
-          background: checked ? '#c9a86e' : 'rgba(201,168,110,0.08)',
+            ? '2px solid #8a6b2f'
+            : '2px solid rgba(120,85,25,0.55)',
+          background: checked ? '#8a6b2f' : 'rgba(140,100,40,0.15)',
           cursor: category.required ? 'not-allowed' : 'pointer',
           display: 'flex',
           alignItems: 'center',
@@ -582,24 +528,5 @@ function CategoryCard({
         </p>
       </div>
     </div>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M1 1L11 11M11 1L1 11"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }
